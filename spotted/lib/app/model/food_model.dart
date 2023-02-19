@@ -1,24 +1,33 @@
 class Food {
-  final int idComida;
-  final String nomeComida;
-  final String tipoComida;
-  final String imagemComida;
-  final int idUsuario;
+  final int id_comida;
+  final String titulo_comida;
+  final String descricao_comida;
+  final String tipo_comida;
+  final String marca_comida;
+  final String oferta_comida;
+  final String imagem_comida;
+  final int id_usuario;
 
   Food({ 
-    required this.idComida,
-    required this.nomeComida,
-    required this.tipoComida,
-    required this.imagemComida,
-    required this.idUsuario
+    required this.id_comida,
+    required this.titulo_comida,
+    required this.descricao_comida,
+    required this.tipo_comida,
+    required this.marca_comida,
+    required this.oferta_comida,
+    required this.imagem_comida,
+    required this.id_usuario
     });
   factory Food.fromJson(Map<String, dynamic> json) {
     return Food(
-      idComida: json['idComida'],
-      nomeComida: json['nomeComida'],
-      tipoComida: json['tipoComida'],
-      imagemComida: json['imagemComida'],
-      idUsuario: json['idUsuario']
+      id_comida: json['idComida'],
+      titulo_comida: json['titulo_comida'],
+      descricao_comida: json['descricao_comida'],
+      tipo_comida: json['tipo_comida'],
+      marca_comida: json['marca_comida'],
+      oferta_comida: json['oferta_comida'],
+      imagem_comida: json['imagem_comida'],
+      id_usuario: json['id_usuario']
     );
   }
 }

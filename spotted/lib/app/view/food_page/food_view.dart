@@ -29,9 +29,9 @@ class _FoodPageState extends State<FoodPage> {
                   children: foodList!
                       .map(
                         (Food food) => ListTile(
-                          title: Text(food.nomeComida),
-                          subtitle: Text(food.tipoComida + 
-                                          '\n Usuário vendendo está comida:' + food.idUsuario.toString()),
+                          title: Text(food.titulo_comida),
+                          subtitle: Text(food.descricao_comida + 
+                                          '\n Usuário vendendo está comida:' + food.id_usuario.toString()),
                         ),
                       )
                       .toList(),
