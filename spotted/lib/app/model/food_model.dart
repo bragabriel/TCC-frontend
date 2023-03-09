@@ -18,6 +18,7 @@ class Food {
     required this.imagem_comida,
     required this.id_usuario
     });
+    
   factory Food.fromJson(Map<String, dynamic> json) {
     return Food(
       id_comida: json['idComida'],

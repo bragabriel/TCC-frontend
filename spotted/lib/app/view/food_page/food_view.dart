@@ -1,121 +1,63 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:spotted/app/controller/food_controller.dart';
 import 'package:spotted/app/model/food_model.dart';
-import '../../controller/food_controller.dart';
-import '../../repository/food_repository.dart';
+import 'package:spotted/app/repository/food_repository.dart';
+
 
 class FoodPage extends StatefulWidget {
+  const FoodPage({Key? key}) : super(key: key);
 
   @override
-  State<FoodPage> createState() => _FoodPageState();
+  _FoodPageState createState() => _FoodPageState();
 }
 
 class _FoodPageState extends State<FoodPage> {
+  List<Food> foodList = [];
 
-  final controller = FoodController();
-  final FoodRepository foodRepository = FoodRepository();
-
-    _success(){
-    return Scaffold(
-   
-          body: FutureBuilder(
-            future: foodRepository.getFood(),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Food>> snapshot) {
-              if (snapshot.hasData) {
-                List<Food>? foodList = snapshot.data;
-             
-                return
-                   ListView(
-                  children: foodList!
-                      .map(
-                        (Food food) => ListTile(
-                          title: Text(food.titulo_comida),
-                          subtitle: Text(food.descricao_comida + 
-                                          '\n Usuário vendendo está comida:' + food.id_usuario.toString()),
-                        ),
-                      )
-                      .toList(),
-                );
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
-        );
+  @override
+  void initState() {
+    super.initState();
+    _fetchFood();
   }
 
-  _error(){
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          controller.start();
-        },
-      child: Text('Tente novamente'),),
-    );
-  }
+  Future<void> _fetchFood() async {
+    var dio = Dio(); // with default Options
 
-  _loading(){
-    return Center(
-      child: CircularProgressIndicator(),
-    );
-  }
+    final response = await Dio().get('https://6d9c-45-172-242-31.sa.ngrok.io/api/comida?paginaAtual=1&qtdPorPagina=5');
 
-  _start(){
-    return Container();
-  }
 
-  //Método para a troca de estado
-  stateManagement(HomeState state){
-      switch (state) {
-      case HomeState.start:
-        return _start();
-      case HomeState.loading:
-        return _loading();
-      case HomeState.error:
-        return _error();
-      case HomeState.success:
-        return _success();
-      default: _start();
+    if(response.statusCode == 200){
+
+
+      print('AQUI');
+      print(response.data.runtimeType);
+
+      print('deu bom');
+    }else{
+      print('deu ruim');
     }
   }
 
   @override
-  void initState() {
- 
-    super.initState();
-
-    //Iniciou o Widget, chama o 'estado' .start()
-    controller.start();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.orange,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text("Comidas"),
-            actions: [
-              IconButton(
-                onPressed:(){
-                  controller.start();
-                },
-                icon: const Icon(Icons.refresh_outlined),
-                )
-            ],
-          ),
-          //Reatividade dos nossos estados:
-          body: AnimatedBuilder(
-            animation: controller.state, 
-            builder: (context, child) {
-
-              return _success();
-              //return stateManagement(controller.state.value);
-            }),
-    ));
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Food List'),
+      ),
+      body: ListView.builder(
+        itemCount: foodList.length,
+        itemBuilder: (context, index) {
+          final food = foodList[index];
+          return ListTile(
+            title: Text(food.titulo_comida),
+            subtitle: Text(food.descricao_comida),
+            leading: Image.network(food.imagem_comida),
+          );
+        },
+      ),
+    );
   }
-}
+} 

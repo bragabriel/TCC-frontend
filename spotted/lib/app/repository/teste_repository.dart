@@ -12,6 +12,10 @@ class TesteRepository {
 
     if (response.statusCode == 200) {
       // se o servidor retornar um response OK, vamos fazer o parse no JSON
+
+      print('AAAAAAAAAAAA');
+      print(response);
+
       List<dynamic> body = response.data;
 
       List<Post> posts = body
