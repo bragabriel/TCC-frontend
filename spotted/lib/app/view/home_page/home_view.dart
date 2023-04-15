@@ -1,7 +1,7 @@
 //StatefulWidget = Dinamico -> Pode ser modificado
 import 'dart:ui' as ui;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:spotted/app/view/food_page/postFood_view.dart';
 
 import '../../controller/app_controller.dart';
 
@@ -53,10 +53,45 @@ class HomePageState extends State<HomePage> {
               }),
           ListTile(
               leading: Icon(Icons.food_bank_outlined),
-              title: Text('Comida'),
-              subtitle: Text('encontre vendedores de gostosuras pelo campus'),
+              title: Text('Alimentação'),
+              subtitle: Text('Ai que fominha! 🍽'),
               onTap: () {
-                Navigator.of(context).pushNamed('/comida');
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return PostsPage();
+                    },
+                  ),
+                );
+              }),
+          ListTile(
+              leading: Icon(Icons.food_bank_outlined),
+              title: Text('Moradia'),
+              subtitle: Text('Espiadinha em lugares próximos ao campus? 👀'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return PostsPage(); //MUDAR AQUI
+                    },
+                  ),
+                );
+              }),
+          ListTile(
+              leading: Icon(Icons.food_bank_outlined),
+              title: Text('Transporte'),
+              subtitle: Text('Transportes mais economicos? 💸'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return PostsPage(); //MUDAR AQUI
+                    },
+                  ),
+                );
               }),
           ListTile(
               leading: Icon(Icons.logout),
@@ -68,7 +103,7 @@ class HomePageState extends State<HomePage> {
         ]),
       ),
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('Pagina inicial'),
 
         //botões que ficam na lateral direita
         actions: [
@@ -82,145 +117,32 @@ class HomePageState extends State<HomePage> {
           children: [
             Container(
               height: 150,
-              color: Colors.redAccent,
+              color: Colors.lightBlueAccent,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Contador: $counter'),
-                  Container(
-                    height: 10,
-                  ),
-                  Container(
-                    height: 50,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      'Bem-Vindo!',
-                      style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontSize: 50,
-                        foreground: Paint()
-                          ..style = PaintingStyle.stroke
-                          ..strokeWidth = 6
-                          ..color = Colors.blue[700]!,
-                      ),
-                    ),
-                  ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 100,
-                          height: 50,
-                          color: Colors.cyan,
-                          child: Text(
-                            'ARRASTA',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 100,
-                          height: 50,
-                          color: Colors.green,
-                          child: Text(
-                            'PARA',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 100,
-                          height: 50,
-                          color: Colors.orange,
-                          child: Text(
-                            'O',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                        ),
-                      ]),
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      'O melhor TCC da FHO!',
-                      style: TextStyle(
-                          fontSize: 40,
-                          foreground: Paint()
-                            ..shader = ui.Gradient.linear(
-                              const Offset(0, 20),
-                              const Offset(150, 20),
-                              <Color>[
-                                Colors.red,
-                                Colors.yellow,
-                              ],
-                            )),
-                    ),
-                  ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 100,
-                          height: 50,
-                          color: Color.fromARGB(255, 110, 110, 110),
-                          child: Text(
-                            'LADO',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 100,
-                          height: 50,
-                          color: Colors.pink,
-                          child: Text(
-                            'E',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 100,
-                          height: 50,
-                          color: Colors.purple,
-                          child: Text(
-                            'DIVIRTA-SE',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                        ),
-                      ]),
-                ],
+                ]            
               ),
             ),
+            // Navigator(
+            //   initialRoute: 'home/foodpage',
+            // ),
             Container(
               height: 150,
               color: Colors.orange,
-              child: Container(
-                padding: EdgeInsets.all(25.0),
-                child: Text('COMIDAS',
-                style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.black,
-                )),
-              ), 
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return PostsPage();
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
             Container(
               height: 150,

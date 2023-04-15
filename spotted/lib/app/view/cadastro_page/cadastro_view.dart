@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class CadastroPage extends StatefulWidget {
   const CadastroPage({super.key});
@@ -31,7 +29,7 @@ class _CadastroPageState extends State<CadastroPage> {
               height: 20,
             ),
             Card(
-                color: Colors.amber,
+                color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.only(
                       left: 12, right: 12, top: 20, bottom: 12),
@@ -101,7 +99,7 @@ class _CadastroPageState extends State<CadastroPage> {
                             textStyle: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.deepOrangeAccent)),
+                                color: Colors.white)),
                       ),
                     ],
                   ),

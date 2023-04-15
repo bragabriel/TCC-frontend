@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,14 +20,14 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.all(8.0),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Container(
-                width: 100,
-                height: 100,
+                width: 300,
+                height: 300,
                 child: Image.asset('assets/images/logo.png')),
             Container(
               height: 20,
             ),
             Card(
-                color: Colors.amber,
+                color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.only(
                       left: 12, right: 12, top: 20, bottom: 12),
@@ -92,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                             textStyle: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.deepOrangeAccent)),
+                                color: Colors.blue)),
                       ),
                     ],
                   ),
