@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:spotted/app/controller/food_controller.dart';
 import 'package:spotted/app/model/food_model.dart';
-import 'package:spotted/app/repository/food_repository.dart';
 
 
 class FoodPage extends StatefulWidget {
@@ -30,8 +26,6 @@ class _FoodPageState extends State<FoodPage> {
 
 
     if(response.statusCode == 200){
-
-
       print('AQUI');
       print(response.data.runtimeType);
 

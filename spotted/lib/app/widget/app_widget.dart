@@ -6,7 +6,7 @@ import 'package:spotted/app/view/food_page/food_view.dart';
 import 'package:spotted/app/view/profile_page/perfil_view.dart';
 
 import '../controller/app_controller.dart';
-import '../view/food_page/postFood_view.dart';
+import '../view/food_page/postfood_view.dart';
 import '../view/home_page/home_view.dart';
 import '../view/login_view.dart'; 
 

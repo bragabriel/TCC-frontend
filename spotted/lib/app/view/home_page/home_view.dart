@@ -1,7 +1,6 @@
 //StatefulWidget = Dinamico -> Pode ser modificado
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:spotted/app/view/food_page/postFood_view.dart';
+import 'package:spotted/app/view/food_page/postfood_view.dart';
 
 import '../../controller/app_controller.dart';
 
@@ -31,13 +30,6 @@ class HomePageState extends State<HomePage> {
               accountName: Text('Gabriel Braga'),
               accountEmail: Text('teste@teste.com')),
           ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Inicio'),
-              subtitle: Text('tela de inicio'),
-              onTap: () {
-                print('home');
-              }),
-          ListTile(
               leading: Icon(Icons.verified_user),
               title: Text('Perfil'),
               subtitle: Text('seu perfil'),
@@ -45,30 +37,9 @@ class HomePageState extends State<HomePage> {
                 Navigator.of(context).pushNamed('/perfil');
               }),
           ListTile(
-              leading: Icon(Icons.ads_click),
-              title: Text('Teste'),
-              subtitle: Text('teste req get api'),
-              onTap: () {
-                Navigator.of(context).pushNamed('/teste');
-              }),
-          ListTile(
-              leading: Icon(Icons.food_bank_outlined),
-              title: Text('Alimentação'),
-              subtitle: Text('Ai que fominha! 🍽'),
-              onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return PostsPage();
-                    },
-                  ),
-                );
-              }),
-          ListTile(
-              leading: Icon(Icons.food_bank_outlined),
-              title: Text('Moradia'),
-              subtitle: Text('Espiadinha em lugares próximos ao campus? 👀'),
+              leading: Icon(Icons.car_crash_outlined),
+              title: Text('Transportes'),
+              subtitle: Text('Transportes mais economicos? 💸'),
               onTap: () {
                 Navigator.pushReplacement(
                   context,
@@ -81,8 +52,78 @@ class HomePageState extends State<HomePage> {
               }),
           ListTile(
               leading: Icon(Icons.food_bank_outlined),
-              title: Text('Transporte'),
-              subtitle: Text('Transportes mais economicos? 💸'),
+              title: Text('Alimentos'),
+              subtitle: Text('Ai que fominha! 🍽'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return PostsPage();
+                    },
+                  ),
+                );
+              }),
+          // ListTile(
+          //     leading: Icon(Icons.food_bank_outlined),
+          //     title: Text('Crushs'),
+          //     subtitle: Text('E aquela paquerinha? 😏'),
+          //     onTap: () {
+          //       Navigator.pushReplacement(
+          //         context,
+          //         MaterialPageRoute(
+          //           builder: (context) {
+          //             return PostsPage(); //MUDAR AQUI
+          //           },
+          //         ),
+          //       );
+          //     }),
+          ListTile(
+              leading: Icon(Icons.business_center_outlined),
+              title: Text('Empregos'),
+              subtitle: Text('Bora trabalhar? 💻'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return PostsPage(); //MUDAR AQUI
+                    },
+                  ),
+                );
+              }),
+          ListTile(
+              leading: Icon(Icons.local_bar_outlined),
+              title: Text('Festas'),
+              subtitle: Text('Partiu pra revoada? 🎉'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return PostsPage(); //MUDAR AQUI
+                    },
+                  ),
+                );
+              }),
+          ListTile(
+              leading: Icon(Icons.add_location),
+              title: Text('Achados e perdidos'),
+              subtitle: Text('Será que alguém encontrou? 👀'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return PostsPage(); //MUDAR AQUI
+                    },
+                  ),
+                );
+              }),
+          ListTile(
+              leading: Icon(Icons.home_filled),
+              title: Text('Moradia'),
+              subtitle: Text('Lugares próximos ao campus? 🔑'),
               onTap: () {
                 Navigator.pushReplacement(
                   context,
@@ -104,11 +145,7 @@ class HomePageState extends State<HomePage> {
       ),
       appBar: AppBar(
         title: Text('Pagina inicial'),
-
         //botões que ficam na lateral direita
-        actions: [
-          CustomSwitch(),
-        ],
       ),
       body: Container(
         width: double.infinity,
@@ -119,60 +156,9 @@ class HomePageState extends State<HomePage> {
               height: 150,
               color: Colors.lightBlueAccent,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                ]            
-              ),
-            ),
-            // Navigator(
-            //   initialRoute: 'home/foodpage',
-            // ),
-            Container(
-              height: 150,
-              color: Colors.orange,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return PostsPage();
-                      },
-                    ),
-                  );
-                },
-              ),
-            ),
-            Container(
-              height: 150,
-              color: Colors.green,
-              child: Text('APÊS'),
-            ),
-            Container(
-              height: 150,
-              color: Colors.blue,
-              child: Text('CARONAS'),
-            ),
-            Container(
-              height: 150,
-              color: Colors.pink,
-              child: Text('COMIDAS'),
-            ),
-            Container(
-              height: 150,
-              color: Colors.purple,
-              child: Text('ESTÁGIOS'),
-            ),
-            Container(
-              height: 150,
-              color: Colors.yellow,
-              child: Text('FESTAS'),
-            ),
-            Container(
-              height: 150,
-              color: Colors.blue,
-              child: Text('ACHADOS/PERDIDOS'),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: []),
             ),
           ],
         ),
