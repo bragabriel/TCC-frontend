@@ -1,17 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:spotted/app/model/food_model.dart';
+import 'package:spotted/app/model/job_model.dart';
 
 
-class FoodPage extends StatefulWidget {
-  const FoodPage({Key? key}) : super(key: key);
+class JobPage extends StatefulWidget {
+  const JobPage({Key? key}) : super(key: key);
 
   @override
-  _FoodPageState createState() => _FoodPageState();
+  _JobPageState createState() => _JobPageState();
 }
 
-class _FoodPageState extends State<FoodPage> {
-  List<Food> foodList = [];
+class _JobPageState extends State<JobPage> {
+  List<Job> jobList = [];
 
   @override
   void initState() {
@@ -41,13 +41,13 @@ class _FoodPageState extends State<FoodPage> {
         title: Text('Food List'),
       ),
       body: ListView.builder(
-        itemCount: foodList.length,
+        itemCount: jobList.length,
         itemBuilder: (context, index) {
-          final food = foodList[index];
+          final job = jobList[index];
           return ListTile(
-            title: Text(food.titulo_comida),
-            subtitle: Text(food.descricao_comida),
-            leading: Image.network(food.imagem_comida),
+            title: Text(job.titulo_job),
+            subtitle: Text(job.descricao_job),
+            leading: Image.network(job.imagem_job),
           );
         },
       ),

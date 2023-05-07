@@ -19,7 +19,7 @@ class AppWidget extends StatelessWidget {
       builder: (context, child){
         return MaterialApp(
           theme: ThemeData(
-            primarySwatch: Colors.red,
+            primarySwatch: Colors.blue,
             
             //Se for true, retorna o dark. 
             //Se for false, retorna o light

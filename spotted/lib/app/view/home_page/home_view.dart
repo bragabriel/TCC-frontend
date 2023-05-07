@@ -32,7 +32,7 @@ class HomePageState extends State<HomePage> {
           ListTile(
               leading: Icon(Icons.verified_user),
               title: Text('Perfil'),
-              subtitle: Text('seu perfil'),
+              subtitle: Text('Deixa eu ver a minha beleza 😍'),
               onTap: () {
                 Navigator.of(context).pushNamed('/perfil');
               }),
