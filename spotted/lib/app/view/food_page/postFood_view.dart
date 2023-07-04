@@ -220,17 +220,21 @@ class RouteTwo extends StatelessWidget {
         body: ListView(
           shrinkWrap: true,
           children: <Widget>[
+            
+            // const Center(child: CircularProgressIndicator()),
             AspectRatio(
-              aspectRatio: 8,
+              aspectRatio: 1,
               child: SizedBox(
                 width: double.minPositive,
+                height: double.minPositive,
                 child: Image(
                   image: NetworkImage(image),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Text(name,
                     textAlign: TextAlign.left,
