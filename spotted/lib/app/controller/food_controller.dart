@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:spotted/app/model/food_model.dart';
-import 'package:spotted/app/view/food_page/post_model.dart';
 import '../repository/food_repository.dart';
 
 class FoodController{

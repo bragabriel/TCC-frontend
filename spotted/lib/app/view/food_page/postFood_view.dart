@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/controller/food_controller.dart';
+import 'package:spotted/app/repository/food_repository.dart';
 import 'package:spotted/app/view/home_page/home_view.dart';
-import '../../controller/teste_controller.dart';
-import '../../repository/teste_repository.dart';
-import 'post_model.dart';
+import 'food_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PostsPage extends StatefulWidget {
@@ -11,33 +11,33 @@ class PostsPage extends StatefulWidget {
 }
 
 class _PostsPageState extends State<PostsPage> {
-  final controller = TesteController();
-  final TesteRepository foodRepository = TesteRepository();
+  final controller = FoodController();
+  final FoodRepository foodRepository = FoodRepository();
 
-  _success() {
-    return Scaffold(
-      body: FutureBuilder(
-        future: foodRepository.getPosts(),
-        builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
-          if (snapshot.hasData) {
-            List<Post>? posts = snapshot.data;
-            return ListView(
-              children: posts!
-                  .map(
-                    (Post post) => ListTile(
-                      title: Text(post.title),
-                      subtitle: Text("${post.userId}"),
-                    ),
-                  )
-                  .toList(),
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-    );
-  }
+  // _success() {
+  //   return Scaffold(
+  //     body: FutureBuilder(
+  //       future: foodRepository.getFood(),
+  //       builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
+  //         if (snapshot.hasData) {
+  //           List<Post>? posts = snapshot.data;
+  //           return ListView(
+  //             children: posts!
+  //                 .map(
+  //                   (Post post) => ListTile(
+  //                     title: Text(post.title),
+  //                     subtitle: Text("${post.userId}"),
+  //                   ),
+  //                 )
+  //                 .toList(),
+  //           );
+  //         } else {
+  //           return Center(child: CircularProgressIndicator());
+  //         }
+  //       },
+  //     ),
+  //   );
+  // }
 
   _error() {
     return Center(
@@ -69,8 +69,8 @@ class _PostsPageState extends State<PostsPage> {
         return _loading();
       case HomeState.error:
         return _error();
-      case HomeState.success:
-        return _success();
+      // case HomeState.success:
+      //   return _success();
       default:
         _start();
     }

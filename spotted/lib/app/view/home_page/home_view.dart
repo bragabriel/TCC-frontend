@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:spotted/app/view/food_page/postfood_view.dart';
 
 import '../../controller/app_controller.dart';
+import '../jobs_page/postjobs_view.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -87,7 +88,7 @@ class HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PostsPage(); //MUDAR AQUI
+                      return PostsPageJobs(); //MUDAR AQUI
                     },
                   ),
                 );

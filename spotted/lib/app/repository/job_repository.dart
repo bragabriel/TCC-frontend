@@ -1,26 +1,21 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart';
-import '../view/food_page/post_model.dart';
+import 'package:spotted/app/model/job_model.dart';
+import '../view/food_page/food_model.dart';
 
-class TesteRepository {
+class JobsRepository {
   
   final String postsURL = "https://jsonplaceholder.typicode.com/posts";
 
-  Future<List<Post>> getPosts() async {
+  Future<List<Job>> getJobs() async {
+
     final response = await Dio().get(postsURL);
 
     if (response.statusCode == 200) {
       // se o servidor retornar um response OK, vamos fazer o parse no JSON
-
-      print('AAAAAAAAAAAA');
-      print(response);
-
       List<dynamic> body = response.data;
-
-      List<Post> posts = body
+      List<Job> posts = body
           .map(
-            (dynamic item) => Post.fromJson(item),
+            (dynamic item) => Job.fromJson(item),
           )
           .toList();
 
