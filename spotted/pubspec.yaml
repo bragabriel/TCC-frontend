@@ -41,6 +41,7 @@ dependencies:
   path_provider: ^2.0.4
   shared_preferences: ^2.0.8
   dio: ^4.0.6
+  sticky_headers: ^0.1.7
   
 dev_dependencies:
   url_launcher: ^6.1.10

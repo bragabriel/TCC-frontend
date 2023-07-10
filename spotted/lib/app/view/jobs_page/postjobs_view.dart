@@ -98,8 +98,7 @@ class _PostsPageState extends State<PostsPageJobs> {
             },
           )),
       body: ListView(children: [
-        Image.network(
-          job.imagem_job,
+        Image.asset('assets/images/teste.png',
           width: 600,
           height: 240,
           fit: BoxFit.cover,
@@ -112,23 +111,15 @@ class _PostsPageState extends State<PostsPageJobs> {
   }
 }
 
-Column _buildButtonColumn(Color color, IconData icon, String label) {
+Column _botaoNovo(
+    Color color, IconData icon, String textBase, String dado) {
   return Column(
     mainAxisSize: MainAxisSize.min,
     mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Icon(icon, color: color),
-      Container(
-        margin: const EdgeInsets.only(top: 8),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-            color: color,
-          ),
-        ),
-      ),
+    children: <Widget>[
+      IconButton(
+          icon: Icon(icon, color: color, size: 40),
+          onPressed: () => abrirUrl(textBase + dado)),
     ],
   );
 }
@@ -139,7 +130,9 @@ final String json = """
    "titulo_job": "Estágiario de Tecnologia",
    "descricao_job": "Precisamos de um estágiario do curso de sistemas de informação que tenha conhecimentos em C#, SQL, POO, e Clean code.",
    "imagem_job": "https://conteudo.imguol.com.br/c/noticias/a4/2022/03/29/clt-emprego-desemprego-carteira-de-trabalho-1648554135510_v2_4x3.jpg",
-   "id_usuario": "1"
+   "id_usuario": "1",
+   "contato": "19999138267",
+   "localizacao": "mogi guacu"
 }
   """;
 final Job job = Job.fromJson(jsonDecode(json));
@@ -147,17 +140,17 @@ final Job job = Job.fromJson(jsonDecode(json));
 Widget buttonSection = Row(
   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
   children: [
-    _buildButtonColumn(Colors.green, Icons.whatsapp, 'WHATSAPP'),
-    _buildButtonColumn(Colors.black, Icons.near_me, 'LOCALIZAÇÃO'),
-    _buildButtonColumn(
-        Colors.blueAccent, Icons.dataset_linked_rounded, 'NO LinkedIn'),
+    _botaoNovo(Colors.green, Icons.whatsapp,
+        'https://api.whatsapp.com/send/?phone=55', job.contato),
+    _botaoNovo(Colors.black, Icons.near_me,
+        'https://www.google.com/maps/search/', job.localizacao),
   ],
 );
 
 Widget textSection = const Padding(
   padding: EdgeInsets.all(32),
   child: Text(
-    '',
+    'Complementar dados',
     softWrap: true,
   ),
 );
@@ -194,13 +187,10 @@ Widget titleSection = Container(
   ),
 );
 
-void abrirUrl(String telefone) async {
-  const whatsapp = 'https://api.whatsapp.com/send/?phone=55';
-  const message = '&text=Ola+vi+o+anuncio+no+app+e+tenho+interesse';
-  var url = whatsapp + telefone + message;
+void abrirUrl(String url) async {
   if (await canLaunchUrl(Uri.parse(url))) {
     await launchUrl(Uri.parse(url));
   } else {
-    throw 'Could not launch $url';
+    throw '[LOG] NAO DEU PARA RODAR ESSA PORRA AQUI: $url';
   }
 }

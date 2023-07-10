@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:spotted/app/view/food_page/postfood_view.dart';
 
 import '../../controller/app_controller.dart';
+import '../jobs_page/job_home.dart';
 import '../jobs_page/postjobs_view.dart';
 
 class HomePage extends StatefulWidget {
@@ -65,20 +66,6 @@ class HomePageState extends State<HomePage> {
                   ),
                 );
               }),
-          // ListTile(
-          //     leading: Icon(Icons.food_bank_outlined),
-          //     title: Text('Crushs'),
-          //     subtitle: Text('E aquela paquerinha? 😏'),
-          //     onTap: () {
-          //       Navigator.pushReplacement(
-          //         context,
-          //         MaterialPageRoute(
-          //           builder: (context) {
-          //             return PostsPage(); //MUDAR AQUI
-          //           },
-          //         ),
-          //       );
-          //     }),
           ListTile(
               leading: Icon(Icons.business_center_outlined),
               title: Text('Empregos'),
@@ -88,7 +75,7 @@ class HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PostsPageJobs(); //MUDAR AQUI
+                      return JobHome(); //MUDAR AQUI
                     },
                   ),
                 );
@@ -102,7 +89,7 @@ class HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PostsPage(); //MUDAR AQUI
+                      return PostsPageJobs(); //MUDAR AQUI
                     },
                   ),
                 );

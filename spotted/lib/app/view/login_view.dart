@@ -58,10 +58,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          if (email == 'teste@teste.com' && password == '123') {
+                          if (email == 'teste' && password == '123') {
                             //Login correto
                             Navigator.of(context).pushReplacementNamed('/home');
-
                             showDialog(
                                 context: context,
                                 builder: (context) {

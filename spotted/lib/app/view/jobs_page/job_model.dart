@@ -6,6 +6,7 @@ class JobModel {
   final String descricao;
   final String localizacao;
   final String contato;
+  final String imagem;
 
   JobModel(
       {required this.beneficio,
@@ -14,7 +15,10 @@ class JobModel {
       required this.salario,
       required this.descricao,
       required this.localizacao,
-      required this.contato});
+      required this.contato,
+      required this.imagem});
+
+
   factory JobModel.fromJson(Map<String, dynamic> json) {
     return JobModel(
       beneficio: json['beneficio'],
@@ -24,6 +28,7 @@ class JobModel {
       descricao: json['descricao'],
       localizacao: json['localizacao'],
       contato: json['contato'],
+      imagem: json['imagem']
     );
   }
 }
