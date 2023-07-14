@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart';
-import '../view/food_page/post_model.dart';
+import '../view/alimento_page/post_model.dart';
 
 class TesteRepository {
   

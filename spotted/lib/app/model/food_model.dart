@@ -1,34 +1,38 @@
 class Food {
-  final int id_comida;
-  final String titulo_comida;
-  final String descricao_comida;
-  final String tipo_comida;
-  final String marca_comida;
-  final String oferta_comida;
-  final String imagem_comida;
-  final int id_usuario;
+  final int id_artefato;
+  final String titulo_artefato;
+  final String descricao_artefato;
+  final String tipo_alimento;
+  final String marca_alimento;
+  final String sabor_alimento;
+  final String unidade_alimento;
+  final double preco_alimento;
+  final String oferta_alimento;
+  //final String imagem_alimento;
 
-  Food({ 
-    required this.id_comida,
-    required this.titulo_comida,
-    required this.descricao_comida,
-    required this.tipo_comida,
-    required this.marca_comida,
-    required this.oferta_comida,
-    required this.imagem_comida,
-    required this.id_usuario
-    });
-    
+  Food({
+    required this.id_artefato,
+    required this.titulo_artefato,
+    required this.descricao_artefato,
+    required this.tipo_alimento,
+    required this.marca_alimento,
+    required this.sabor_alimento,
+    required this.unidade_alimento,
+    required this.preco_alimento,
+    required this.oferta_alimento,
+  });
+
   factory Food.fromJson(Map<String, dynamic> json) {
     return Food(
-      id_comida: json['idComida'],
-      titulo_comida: json['titulo_comida'],
-      descricao_comida: json['descricao_comida'],
-      tipo_comida: json['tipo_comida'],
-      marca_comida: json['marca_comida'],
-      oferta_comida: json['oferta_comida'],
-      imagem_comida: json['imagem_comida'],
-      id_usuario: json['id_usuario']
+      id_artefato: json['idArtefato'] ?? 0,
+      titulo_artefato: json['tituloArtefato'] ?? '',
+      descricao_artefato: json['descricaoArtefato'] ?? '',
+      tipo_alimento: json['tipoAlimento'] ?? '',
+      marca_alimento: json['marcaAlimento'] ?? '',
+      sabor_alimento: json['saborAlimento'] ?? '',
+      unidade_alimento: json['unidadeAlimento'] ?? '',
+      preco_alimento: json['precoAlimento']?.toDouble() ?? 0.0,
+      oferta_alimento: json['ofertaAlimento'] ?? '',
     );
   }
 }

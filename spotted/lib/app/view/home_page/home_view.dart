@@ -1,7 +1,7 @@
 //StatefulWidget = Dinamico -> Pode ser modificado
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:spotted/app/view/food_page/postFood_view.dart';
+import 'package:spotted/app/view/alimento_page/postFood_view.dart';
 
 import '../../controller/app_controller.dart';
 
@@ -49,7 +49,7 @@ class HomePageState extends State<HomePage> {
               title: Text('Teste'),
               subtitle: Text('teste req get api'),
               onTap: () {
-                Navigator.of(context).pushNamed('/teste');
+                Navigator.of(context).pushNamed('/comida');
               }),
           ListTile(
               leading: Icon(Icons.food_bank_outlined),

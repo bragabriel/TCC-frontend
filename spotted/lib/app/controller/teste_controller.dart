@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:spotted/app/repository/teste_repository.dart';
-import 'package:spotted/app/view/food_page/post_model.dart';
+import 'package:spotted/app/view/alimento_page/post_model.dart';
 
 class TesteController{
   List<Post> todos = [];
