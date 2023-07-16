@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:spotted/app/controller/alimento_controller.dart';
-import 'package:spotted/app/model/food_model.dart';
+import 'package:spotted/app/model/alimento_model.dart';
 import 'package:spotted/app/repository/alimento_repository.dart';
 import 'package:spotted/app/view/alimento_page/alimentoCadastrar_view.dart';
 
@@ -16,6 +15,13 @@ class FoodPage extends StatefulWidget {
 
 class _FoodPageState extends State<FoodPage> {
   List<Food> foodList = [];
+  List<Food> filteredFoodList = [];
+  double? minPrice;
+  double? maxPrice;
+  bool showOnlyOffers = false;
+  List<String> selectedTypes = [];
+
+  TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -25,24 +31,30 @@ class _FoodPageState extends State<FoodPage> {
 
   Future<void> _fetchFood() async {
     try {
-      final response = await Dio().get(
-          'https://249e-45-172-242-15.ngrok-free.app/api/alimento?paginaAtual=1&qtdPorPagina=5');
-      if (response.statusCode == 200) {
-        final responseData = response.data['objetoRetorno']['content'];
-        print(responseData);
-        if (responseData != null && responseData is List<dynamic>) {
-          setState(() {
-            foodList = responseData.map((item) => Food.fromJson(item)).toList();
-          });
-        } else {
-          print('Resposta inválida da API - conteúdo ausente');
-        }
-      } else {
-        print('Erro na requisição da API');
-      }
+      final foodList = await FoodRepository().getFood();
+      setState(() {
+        this.foodList = foodList;
+        filteredFoodList = foodList;
+      });
     } catch (e) {
-      print('Erro ao acessar a API: $e');
+      print('Erro ao obter a lista de alimentos: $e');
     }
+  }
+
+  void _filterFoodList() {
+    setState(() {
+      filteredFoodList = foodList.where((food) {
+        final meetsPriceCriteria =
+            (minPrice == null || food.preco_alimento >= minPrice!) &&
+                (maxPrice == null || food.preco_alimento <= maxPrice!);
+        final meetsOfferCriteria = showOnlyOffers
+            ? food.oferta_alimento.isNotEmpty
+            : food.oferta_alimento == null;
+        final meetsTypeCriteria =
+            selectedTypes.isEmpty || selectedTypes.contains(food.tipo_alimento);
+        return meetsPriceCriteria && meetsOfferCriteria && meetsTypeCriteria;
+      }).toList();
+    });
   }
 
   @override
@@ -59,44 +71,190 @@ class _FoodPageState extends State<FoodPage> {
           )
         ],
       ),
-      body: Stack(
+      body: Column(
         children: [
-          GridView.count(
-            crossAxisCount: 2,
-            padding: const EdgeInsets.all(20),
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            children: List.generate(
-              foodList.length,
-              (index) => Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.orange[100 + (index % 4) * 100],
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(foodList[index].titulo_artefato),
-                    Text(foodList[index].descricao_artefato),
-                  ],
-                ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _searchController,
+              onChanged: (value) {
+                _filterFoodList();
+              },
+              decoration: InputDecoration(
+                labelText: 'Pesquisar',
+                prefixIcon: Icon(Icons.search),
               ),
             ),
           ),
-          Positioned(
-            bottom:
-                16, // Ajuste a posição vertical do botão conforme necessário
-            right:
-                16, // Ajuste a posição horizontal do botão conforme necessário
-            child: FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => alimentoCadastrarPage()),
-                );
-              },
-            ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: [
+                  Text('Preço mínimo'),
+                  SizedBox(height: 4),
+                  SizedBox(
+                    width: 100,
+                    child: TextFormField(
+                      onChanged: (value) {
+                        setState(() {
+                          minPrice = value.isEmpty ? null : double.parse(value);
+                          _filterFoodList();
+                        });
+                      },
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: '0.0',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Text('Preço máximo'),
+                  SizedBox(height: 4),
+                  SizedBox(
+                    width: 100,
+                    child: TextFormField(
+                      onChanged: (value) {
+                        setState(() {
+                          maxPrice = value.isEmpty ? null : double.parse(value);
+                          _filterFoodList();
+                        });
+                      },
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: '0.0',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Text('Oferta'),
+                  SizedBox(height: 4),
+                  Checkbox(
+                    value: showOnlyOffers,
+                    onChanged: (value) {
+                      setState(() {
+                        showOnlyOffers = value!;
+                        _filterFoodList();
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
+          SizedBox(height: 10),
+          Wrap(
+            spacing: 8,
+            children: [
+              FilterChip(
+                label: Text('Salgado'),
+                selected: selectedTypes.contains('Salgado'),
+                onSelected: (selected) {
+                  setState(() {
+                    if (selected) {
+                      selectedTypes.add('Salgado');
+                    } else {
+                      selectedTypes.remove('Salgado');
+                    }
+                    _filterFoodList();
+                  });
+                },
+              ),
+              FilterChip(
+                label: Text('Doce'),
+                selected: selectedTypes.contains('Doce'),
+                onSelected: (selected) {
+                  setState(() {
+                    if (selected) {
+                      selectedTypes.add('Doce');
+                    } else {
+                      selectedTypes.remove('Doce');
+                    }
+                    _filterFoodList();
+                  });
+                },
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 2,
+              padding: const EdgeInsets.all(20),
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              children: List.generate(
+                filteredFoodList.length,
+                (index) => Card(
+                  elevation: 2,
+                  color: Colors.orange[100 + (index % 4) * 100],
+                  child: Container(
+                    margin: EdgeInsets.all(16),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      height: 450, // TENTANDO AUMENTAR A ALTURA DO QUADRADO LARANJA
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            filteredFoodList[index].titulo_artefato,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            'Descrição: ${filteredFoodList[index].descricao_artefato}',
+                          ),
+                          Text(
+                            'Tipo: ${filteredFoodList[index].tipo_alimento}',
+                          ),
+                          Text(
+                            'Marca: ${filteredFoodList[index].marca_alimento}',
+                          ),
+                          Text(
+                            'Sabor: ${filteredFoodList[index].sabor_alimento}',
+                          ),
+                          Text(
+                            'Unidade: ${filteredFoodList[index].unidade_alimento}',
+                          ),
+                          Text(
+                            'Preço: ${filteredFoodList[index].preco_alimento.toStringAsFixed(2)}',
+                          ),
+                          Text(
+                            'Oferta: ${filteredFoodList[index].oferta_alimento}',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => alimentoCadastrarPage(),
+            ),
+          );
+        },
       ),
     );
   }

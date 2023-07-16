@@ -1,30 +1,27 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart';
-import 'package:spotted/app/model/food_model.dart';
-import '../view/alimento_page/post_model.dart';
+import 'package:spotted/app/model/alimento_model.dart';
 
 class FoodRepository {
-  
-  final String foodsURL = "https://6d9c-45-172-242-31.sa.ngrok.io/api/comida?paginaAtual=1&qtdPorPagina=5";
+  final String foodsURL =
+      "https://1f18-45-172-242-15.ngrok-free.app/api/alimento?paginaAtual=1&qtdPorPagina=5";
 
   Future<List<Food>> getFood() async {
-
-    final response = await Dio().get(foodsURL);
-
-    if (response.statusCode == 200) {
-      //List<dynamic> body = json.decode(response.data);
-      List<dynamic> body = response.data;
-
-        List<Food> foodList = body
-          .map(
-            (dynamic item) => Food.fromJson(item),
-          )
-          .toList();  
-      return foodList;
-
-    } else {
-      throw "Não foi possível recuperar os dados.";
+    try {
+      final response = await Dio().get(foodsURL);
+      if (response.statusCode == 200) {
+        final responseData = response.data['objetoRetorno']['content'];
+        if (responseData != null && responseData is List<dynamic>) {
+          List<Food> foodList =
+              responseData.map((item) => Food.fromJson(item)).toList();
+          return foodList;
+        } else {
+          throw 'Resposta inválida da API - conteúdo ausente';
+        }
+      } else {
+        throw 'Erro na requisição da API';
+      }
+    } catch (e) {
+      throw 'Erro ao acessar a API: $e';
     }
   }
 }

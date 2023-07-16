@@ -6,7 +6,7 @@ import 'package:spotted/app/view/alimento_page/alimento_view.dart';
 import 'package:spotted/app/view/profile_page/perfil_view.dart';
 
 import '../controller/app_controller.dart';
-import '../view/alimento_page/postFood_view.dart';
+
 import '../view/home_page/home_view.dart';
 import '../view/login_view.dart'; 
 
@@ -32,7 +32,6 @@ class AppWidget extends StatelessWidget {
             '/cadastro': (context) => CadastroPage(),
             '/perfil': (context) => ProfilePage(),
             '/comida': (context) => FoodPage(),
-            '/teste': (context) => PostsPage(),
           },
         );
       },
