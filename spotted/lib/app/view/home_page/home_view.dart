@@ -1,9 +1,10 @@
 //StatefulWidget = Dinamico -> Pode ser modificado
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 import '../../controller/app_controller.dart';
 import '../alimento_page/alimento_view.dart';
+import '../jobs_page/job_home.dart';
+import '../jobs_page/postjobs_view.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -31,29 +32,22 @@ class HomePageState extends State<HomePage> {
               accountName: Text('Gabriel Braga'),
               accountEmail: Text('teste@teste.com')),
           ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Inicio'),
-              subtitle: Text('tela de inicio'),
-              onTap: () {
-                print('home');
-              }),
-          ListTile(
               leading: Icon(Icons.verified_user),
               title: Text('Perfil'),
-              subtitle: Text('seu perfil'),
+              subtitle: Text('Deixa eu ver a minha beleza 😍'),
               onTap: () {
                 Navigator.of(context).pushNamed('/perfil');
               }),
           ListTile(
-              leading: Icon(Icons.ads_click),
-              title: Text('Teste'),
-              subtitle: Text('teste req get api'),
+              leading: Icon(Icons.car_crash_outlined),
+              title: Text('Transportes'),
+              subtitle: Text('Transportes mais economicos? 💸'),
               onTap: () {
                 Navigator.of(context).pushNamed('/comida');
               }),
           ListTile(
               leading: Icon(Icons.food_bank_outlined),
-              title: Text('Alimentação'),
+              title: Text('Alimentos'),
               subtitle: Text('Ai que fominha! 🍽'),
               onTap: () {
                 Navigator.pushReplacement(
@@ -61,6 +55,34 @@ class HomePageState extends State<HomePage> {
                   MaterialPageRoute(
                     builder: (context) {
                       return FoodPage();
+                    },
+                  ),
+                );
+              }),
+          ListTile(
+              leading: Icon(Icons.business_center_outlined),
+              title: Text('Empregos'),
+              subtitle: Text('Bora trabalhar? 💻'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return JobHome(); //MUDAR AQUI
+                    },
+                  ),
+                );
+              }),
+          ListTile(
+              leading: Icon(Icons.local_bar_outlined),
+              title: Text('Festas'),
+              subtitle: Text('Partiu pra revoada? 🎉'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return PostsPageJobs(); //MUDAR AQUI
                     },
                   ),
                 );
@@ -80,9 +102,9 @@ class HomePageState extends State<HomePage> {
                 );
               }),
           ListTile(
-              leading: Icon(Icons.food_bank_outlined),
-              title: Text('Transporte'),
-              subtitle: Text('Transportes mais economicos? 💸'),
+              leading: Icon(Icons.home_filled),
+              title: Text('Moradia'),
+              subtitle: Text('Lugares próximos ao campus? 🔑'),
               onTap: () {
                 Navigator.pushReplacement(
                   context,
@@ -104,11 +126,7 @@ class HomePageState extends State<HomePage> {
       ),
       appBar: AppBar(
         title: Text('Pagina inicial'),
-
         //botões que ficam na lateral direita
-        actions: [
-          CustomSwitch(),
-        ],
       ),
       body: Container(
         width: double.infinity,
