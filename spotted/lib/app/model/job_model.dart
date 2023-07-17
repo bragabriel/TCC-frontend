@@ -1,30 +1,38 @@
-class Job {
-  final String id_job;
-  final String titulo_job;
-  final String descricao_job;
-  final String imagem_job;
-  final String id_usuario;
+class JobModel {
+  final String beneficio;
+  final int id;
+  final String cargo;
+  final String salario;
+  final String descricao;
   final String localizacao;
   final String contato;
+  final String imagem;
+  final String link_vaga;
+  final String area;
 
-  Job(
-      {required this.id_job,
-      required this.titulo_job,
-      required this.descricao_job,
-      required this.imagem_job,
-      required this.id_usuario,
+  JobModel(
+      {required this.beneficio,
+      required this.id,
+      required this.cargo,
+      required this.salario,
+      required this.descricao,
       required this.localizacao,
-      required this.contato
-      });
+      required this.contato,
+      required this.imagem,
+      required this.link_vaga,
+      required this.area});
 
-  factory Job.fromJson(Map<String, dynamic> json) {
-    return Job(
-        id_job: json['id_job'],
-        titulo_job: json['titulo_job'],
-        descricao_job: json['descricao_job'],
-        imagem_job: json['imagem_job'],
+  factory JobModel.fromJson(Map<String, dynamic> json) {
+    return JobModel(
+        beneficio: json['beneficio'],
+        id: json['id'],
+        cargo: json['cargo'],
+        salario: json['salario'],
+        descricao: json['descricao'],
         localizacao: json['localizacao'],
         contato: json['contato'],
-        id_usuario: json['id_usuario']);
+        imagem: json['imagem'],
+        link_vaga: json['link_vaga'],
+        area: json['area']);
   }
 }

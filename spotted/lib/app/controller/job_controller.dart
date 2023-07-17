@@ -3,9 +3,9 @@ import 'package:spotted/app/model/job_model.dart';
 import 'package:spotted/app/repository/job_repository.dart';
 
 class JobController{
-  List<Job> todos = [];
+  List<JobModel> todos = [];
 
-  final _repository = JobsRepository();
+  final _repository = JobRepository();
 
   //Setando estado inicial
   final state = ValueNotifier<HomeState>(HomeState.start);
@@ -14,7 +14,7 @@ class JobController{
     state.value = HomeState.loading;
     
     try {
-      todos = await _repository.getJobs();
+      todos = await _repository.getJobModels();
 
       state.value = HomeState.success;
     } catch (e) {

@@ -13,32 +13,32 @@ class PostsPageJobs extends StatefulWidget {
 
 class _PostsPageState extends State<PostsPageJobs> {
   final controller = JobController();
-  final JobsRepository jobsRepository = JobsRepository();
+  final JobRepository jobsRepository = JobRepository();
 
-  // _success() {
-  //   return Scaffold(
-  //     body: FutureBuilder(
-  //       future: jobsRepository.getJobs(),
-  //       builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
-  //         if (snapshot.hasData) {
-  //           List<Post>? posts = snapshot.data;
-  //           return ListView(
-  //             children: posts!
-  //                 .map(
-  //                   (Post post) => ListTile(
-  //                     title: Text(post.title),
-  //                     subtitle: Text("${post.userId}"),
-  //                   ),
-  //                 )
-  //                 .toList(),
-  //           );
-  //         } else {
-  //           return Center(child: CircularProgressIndicator());
-  //         }
-  //       },
-  //     ),
-  //   );
-  // }
+  _success() {
+    return Scaffold(
+      body: FutureBuilder(
+        future: jobsRepository.getJobModels(),
+        builder: (BuildContext context, AsyncSnapshot<List<JobModel>> snapshot) {
+          if (snapshot.hasData) {
+            List<JobModel>? posts = snapshot.data;
+            return ListView(
+              children: posts!
+                  .map(
+                    (JobModel post) => ListTile(
+                      title: Text(post.cargo),
+                      subtitle: Text("${post.id}"),
+                    ),
+                  )
+                  .toList(),
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+    );
+  }
 
   _error() {
     return Center(
@@ -90,7 +90,7 @@ class _PostsPageState extends State<PostsPageJobs> {
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
-          title: const Text('Jobs'),
+          title: const Text('Detalhes'),
           leading: BackButton(
             onPressed: () {
               Navigator.push(
@@ -98,61 +98,61 @@ class _PostsPageState extends State<PostsPageJobs> {
             },
           )),
       body: ListView(children: [
-        Image.asset('assets/images/teste.png',
+        Image.asset(
+          'assets/images/jobs.jpg',
           width: 600,
           height: 240,
           fit: BoxFit.cover,
         ),
         titleSection,
-        buttonSection,
-        textSection
+        buttonSection
       ]),
+      
     ));
   }
 }
 
-Column _botaoNovo(
-    Color color, IconData icon, String textBase, String dado) {
+
+Column _botaoNovo(Color color, IconData icon, String textBase, String dado) {
   return Column(
     mainAxisSize: MainAxisSize.min,
-    mainAxisAlignment: MainAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.end,
     children: <Widget>[
       IconButton(
-          icon: Icon(icon, color: color, size: 40),
-          onPressed: () => abrirUrl(textBase + dado)),
+        icon: Icon(icon, color: color, size: 50),
+        onPressed: () => abrirUrl(textBase + dado),
+        alignment: Alignment.topCenter,
+      ),
     ],
+    
   );
 }
 
 final String json = """
 {
-   "id_job": "001",
-   "titulo_job": "Estágiario de Tecnologia",
-   "descricao_job": "Precisamos de um estágiario do curso de sistemas de informação que tenha conhecimentos em C#, SQL, POO, e Clean code.",
-   "imagem_job": "https://conteudo.imguol.com.br/c/noticias/a4/2022/03/29/clt-emprego-desemprego-carteira-de-trabalho-1648554135510_v2_4x3.jpg",
-   "id_usuario": "1",
-   "contato": "19999138267",
-   "localizacao": "mogi guacu"
+"beneficio": "VA, VT, e VR",
+"id": 1,
+"cargo":"Estágiario",
+"area": "Tecnologia",
+"salario":"1180,00",
+"descricao":"Estágiario do curso de sistemas de informação que tenha conhecimentos em C#, SQL, POO, e Clean code.",
+"localizacao":"Campinas SP",
+"contato":"19999138267",
+"imagem":"https://conteudo.imguol.com.br/c/noticias/a4/1822/03/29/clt-emprego-desemprego-carteira-de-trabalho-1648554135510_v2_4x3.jpg",
+"link_vaga":"https://www.linkedin.com/jobs/view/3636181640/?alternateChannel=search&refId=WwLT0zKtccDjHQHorcnWzA%3D%3D&trackingId=I7a2sLD7xQ%2FKn8scd3AxhA%3D%3D"
 }
   """;
-final Job job = Job.fromJson(jsonDecode(json));
+final JobModel job = JobModel.fromJson(jsonDecode(json));
 
 Widget buttonSection = Row(
   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
   children: [
     _botaoNovo(Colors.green, Icons.whatsapp,
         'https://api.whatsapp.com/send/?phone=55', job.contato),
-    _botaoNovo(Colors.black, Icons.near_me,
+    _botaoNovo(Color.fromARGB(255, 0, 170, 255), Icons.near_me,
         'https://www.google.com/maps/search/', job.localizacao),
+    _botaoNovo(Colors.black, Icons.link, '', job.link_vaga),
   ],
-);
-
-Widget textSection = const Padding(
-  padding: EdgeInsets.all(32),
-  child: Text(
-    'Complementar dados',
-    softWrap: true,
-  ),
 );
 
 Widget titleSection = Container(
@@ -168,18 +168,34 @@ Widget titleSection = Container(
             Container(
               padding: const EdgeInsets.only(bottom: 8),
               child: Text(
-                job.titulo_job,
+                "${job.cargo} – ${job.area} \n",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
+                  fontSize: 27,
                 ),
               ),
             ),
             Text(
-              job.descricao_job,
+              "Descrição: ${job.descricao} \n",
               style: TextStyle(
-                color: Colors.grey[500],
+                color: Colors.black,
+                fontSize: 18,
               ),
             ),
+            Text(
+              "Benefícios: ${job.beneficio} \n",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+              ),
+            ),
+            Text(
+              "Salário:R\$ ${job.salario} \n",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+              ),
+            )
           ],
         ),
       ),

@@ -11,7 +11,7 @@ class JobPage extends StatefulWidget {
 }
 
 class _JobPageState extends State<JobPage> {
-  List<Job> jobList = [];
+  List<JobModel> jobList = [];
 
   @override
   void initState() {
@@ -45,9 +45,9 @@ class _JobPageState extends State<JobPage> {
         itemBuilder: (context, index) {
           final job = jobList[index];
           return ListTile(
-            title: Text(job.titulo_job),
-            subtitle: Text(job.descricao_job),
-            leading: Image.network(job.imagem_job),
+            title: Text(job.cargo),
+            subtitle: Text(job.descricao),
+            leading: Image.network(job.imagem),
           );
         },
       ),

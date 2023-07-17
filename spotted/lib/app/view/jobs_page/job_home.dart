@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/view/jobs_page/postjobs_view.dart';
-import 'package:sticky_headers/sticky_headers.dart';
 import 'dart:convert';
 import '../../model/job_model.dart';
 import '../home_page/home_view.dart';
@@ -12,18 +11,22 @@ class JobHome extends StatefulWidget {
 
 var json = """
 {
-   "id_job": "001",
-   "titulo_job": "Estágiario de Tecnologia",
-   "descricao_job": "Precisamos de um estágiario do curso de sistemas de informação que tenha conhecimentos em C#, SQL, POO, e Clean code.",
-   "imagem_job": "https://conteudo.imguol.com.br/c/noticias/a4/2022/03/29/clt-emprego-desemprego-carteira-de-trabalho-1648554135510_v2_4x3.jpg",
-   "id_usuario": "1",
-   "contato": "19999138267",
-   "localizacao": "mogi guacu"
+"beneficio": "VA, VT, e VR",
+"id": 1,
+"cargo":"Estágiario",
+"area": "Tecnologia",
+"salario":"1200,00",
+"descricao":"Estágiario do curso de sistemas de informação que tenha conhecimentos em C#, SQL, POO, e Clean code.",
+"localizacao":"Campinas SP",
+"contato":"19999138267",
+"imagem":"https://conteudo.imguol.com.br/c/noticias/a4/2022/03/29/clt-emprego-desemprego-carteira-de-trabalho-1648554135510_v2_4x3.jpg",
+"link_vaga":"https://www.linkedin.com/jobs/view/3636181640/?alternateChannel=search&refId=WwLT0zKtccDjHQHorcnWzA%3D%3D&trackingId=I7a2sLD7xQ%2FKn8scd3AxhA%3D%3D"
 }
   """;
 
+var job = JobModel.fromJson(jsonDecode(json));
+
 class _JobHomeState extends State<JobHome> {
-  var job = Job.fromJson(jsonDecode(json));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,13 +43,12 @@ class _JobHomeState extends State<JobHome> {
   }
 
   final List<Map> _jobs = List.generate(
-      10,
+      1,
       (index) => {
             "id": index,
-            "title": 'Tecnico de TI',
-            "descricao": 'Entre 2 e 3 ano do curso de Sistemas de Informação',
-            "imagem":
-                'https://blog.fecap.br/wp-content/uploads/Fecap-programador.jpg'
+            "cargo": job.cargo,
+            "area": job.area,
+            "imagem": job.imagem
           }).toList();
 
   Widget JobHome() {
@@ -76,18 +78,18 @@ class _JobHomeState extends State<JobHome> {
                 footer: GridTileBar(
                   backgroundColor: Colors.black54,
                   title: Text(
-                    _jobs[index]['title'],
+                    _jobs[index]['cargo'],
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  subtitle:  Text(_jobs[index]['descricao']),
-                  trailing: const Icon(Icons.shopping_cart),
+                  subtitle: Text(_jobs[index]['area']),
                 ),
                 // child: Image.network(
                 //   _jobs[index]['imagem'],
                 //   fit: BoxFit.cover,
                 // ),
-                 child: Image.asset('assets/images/teste.png',
+                child: Image.asset(
+                  'assets/images/jobs.jpg',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -96,4 +98,3 @@ class _JobHomeState extends State<JobHome> {
     );
   }
 }
-
