@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../repository/alimento_repository.dart';
+
 class alimentoCadastrarPage extends StatefulWidget {
   @override
   _alimentoCadastrarPageState createState() => _alimentoCadastrarPageState();
@@ -19,11 +21,10 @@ class _alimentoCadastrarPageState extends State<alimentoCadastrarPage> {
   final TextEditingController _ofertaController = TextEditingController();
 
   Future<void> _cadastrar() async {
-  final url = Uri.parse('https://249e-45-172-242-15.ngrok-free.app/api/alimento');
   final body = {
     "artefato": {
       "descricaoArtefato": _descricaoController.text.isNotEmpty ? _descricaoController.text : null,
-      "idUsuario": 1,
+      "idUsuario": 1, //PEGAR ID DO USUARIO
       "tipoArtefato": "ALIMENTO",
       "tituloArtefato": _tituloController.text.isNotEmpty ? _tituloController.text : null,
     },
@@ -35,21 +36,15 @@ class _alimentoCadastrarPageState extends State<alimentoCadastrarPage> {
     "unidadeAlimento": _unidadeController.text.isNotEmpty ? _unidadeController.text : null,
   };
 
-  final response = await http.post(
-    url,
-    body: jsonEncode(body),
-    headers: {'Content-Type': 'application/json'},
-  );
-
-  if (response.statusCode == 201) {
+  try {
+    await FoodRepository().cadastrarFood(body);
     // Cadastro realizado com sucesso
     // Você pode adicionar um feedback visual ou realizar outras ações aqui
     print('Cadastro realizado com sucesso');
-  } else {
+  } catch (e) {
     // Erro ao cadastrar
     // Você pode tratar o erro ou fornecer um feedback visual adequado
-    print('Erro ao cadastrar: ${response.statusCode}');
-    print('Mensagem de erro da API: ${response.body}');
+    print('Erro ao cadastrar: $e');
   }
 }
 
