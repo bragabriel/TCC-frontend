@@ -1,8 +1,8 @@
 //StatefulWidget = Dinamico -> Pode ser modificado
 import 'package:flutter/material.dart';
-import 'package:spotted/app/view/food_page/postfood_view.dart';
 
 import '../../controller/app_controller.dart';
+import '../alimento_page/alimento_view.dart';
 import '../jobs_page/job_home.dart';
 import '../jobs_page/postjobs_view.dart';
 
@@ -43,14 +43,7 @@ class HomePageState extends State<HomePage> {
               title: Text('Transportes'),
               subtitle: Text('Transportes mais economicos? 💸'),
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return PostsPage(); //MUDAR AQUI
-                    },
-                  ),
-                );
+                Navigator.of(context).pushNamed('/comida');
               }),
           ListTile(
               leading: Icon(Icons.food_bank_outlined),
@@ -61,7 +54,7 @@ class HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PostsPage();
+                      return FoodPage();
                     },
                   ),
                 );
@@ -95,15 +88,15 @@ class HomePageState extends State<HomePage> {
                 );
               }),
           ListTile(
-              leading: Icon(Icons.add_location),
-              title: Text('Achados e perdidos'),
-              subtitle: Text('Será que alguém encontrou? 👀'),
+              leading: Icon(Icons.food_bank_outlined),
+              title: Text('Moradia'),
+              subtitle: Text('Espiadinha em lugares próximos ao campus? 👀'),
               onTap: () {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PostsPage(); //MUDAR AQUI
+                      return FoodPage(); //MUDAR AQUI
                     },
                   ),
                 );
@@ -117,7 +110,7 @@ class HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PostsPage(); //MUDAR AQUI
+                      return FoodPage();
                     },
                   ),
                 );
@@ -147,6 +140,55 @@ class HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: []),
+            ),
+            // Navigator(
+            //   initialRoute: 'home/foodpage',
+            // ),
+            Container(
+              height: 150,
+              color: Colors.orange,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return FoodPage();
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+            Container(
+              height: 150,
+              color: Colors.green,
+              child: Text('APÊS'),
+            ),
+            Container(
+              height: 150,
+              color: Colors.blue,
+              child: Text('CARONAS'),
+            ),
+            Container(
+              height: 150,
+              color: Colors.pink,
+              child: Text('COMIDAS'),
+            ),
+            Container(
+              height: 150,
+              color: Colors.purple,
+              child: Text('ESTÁGIOS'),
+            ),
+            Container(
+              height: 150,
+              color: Colors.yellow,
+              child: Text('FESTAS'),
+            ),
+            Container(
+              height: 150,
+              color: Colors.blue,
+              child: Text('ACHADOS/PERDIDOS'),
             ),
           ],
         ),
