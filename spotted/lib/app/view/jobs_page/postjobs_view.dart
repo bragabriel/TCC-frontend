@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:spotted/app/view/home_page/home_view.dart';
-import '../../controller/job_controller.dart';
 import '../../model/job_model.dart';
-import '../../repository/job_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PostsPageJobs extends StatefulWidget {
@@ -12,78 +10,78 @@ class PostsPageJobs extends StatefulWidget {
 }
 
 class _PostsPageState extends State<PostsPageJobs> {
-  final controller = JobController();
-  final JobRepository jobsRepository = JobRepository();
+  // final controller = JobController();
+  // final JobRepository jobsRepository = JobRepository();
 
-  _success() {
-    return Scaffold(
-      body: FutureBuilder(
-        future: jobsRepository.getJobModels(),
-        builder: (BuildContext context, AsyncSnapshot<List<JobModel>> snapshot) {
-          if (snapshot.hasData) {
-            List<JobModel>? posts = snapshot.data;
-            return ListView(
-              children: posts!
-                  .map(
-                    (JobModel post) => ListTile(
-                      title: Text(post.cargo),
-                      subtitle: Text("${post.id}"),
-                    ),
-                  )
-                  .toList(),
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-    );
-  }
+  // _success() {
+  //   return Scaffold(
+  //     body: FutureBuilder(
+  //       future: jobsRepository.getJobModels(),
+  //       builder: (BuildContext context, AsyncSnapshot<List<JobModel>> snapshot) {
+  //         if (snapshot.hasData) {
+  //           List<JobModel>? posts = snapshot.data;
+  //           return ListView(
+  //             children: posts!
+  //                 .map(
+  //                   (JobModel post) => ListTile(
+  //                     title: Text(post.cargo),
+  //                     subtitle: Text("${post.id}"),
+  //                   ),
+  //                 )
+  //                 .toList(),
+  //           );
+  //         } else {
+  //           return Center(child: CircularProgressIndicator());
+  //         }
+  //       },
+  //     ),
+  //   );
+  // }
 
-  _error() {
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          controller.start();
-        },
-        child: Text('Tente novamente'),
-      ),
-    );
-  }
+  // _error() {
+  //   return Center(
+  //     child: ElevatedButton(
+  //       onPressed: () {
+  //         controller.start();
+  //       },
+  //       child: Text('Tente novamente'),
+  //     ),
+  //   );
+  // }
 
-  _loading() {
-    return Center(
-      child: CircularProgressIndicator(),
-    );
-  }
+  // _loading() {
+  //   return Center(
+  //     child: CircularProgressIndicator(),
+  //   );
+  // }
 
-  _start() {
-    return Container();
-  }
+  // _start() {
+  //   return Container();
+  // }
 
-  //Método para a troca de estado
-  stateManagement(HomeState state) {
-    switch (state) {
-      case HomeState.start:
-        return _start();
-      case HomeState.loading:
-        return _loading();
-      case HomeState.error:
-        return _error();
-      // case HomeState.success:
-      //   return _success();
-      default:
-        _start();
-    }
-  }
+  // //Método para a troca de estado
+  // stateManagement(HomeState state) {
+  //   switch (state) {
+  //     case HomeState.start:
+  //       return _start();
+  //     case HomeState.loading:
+  //       return _loading();
+  //     case HomeState.error:
+  //       return _error();
+  //     // case HomeState.success:
+  //     //   return _success();
+  //     default:
+  //       _start();
+  //   }
+  // }
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    //Iniciou o Widget, chama o 'estado' .start()
-    controller.start();
-  }
+  //   //Iniciou o Widget, chama o 'estado' .start()
+  //   controller.start();
+  // }
 
   @override
   Widget build(BuildContext context) {
