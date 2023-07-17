@@ -1,9 +1,9 @@
 //StatefulWidget = Dinamico -> Pode ser modificado
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:spotted/app/view/food_page/postFood_view.dart';
 
 import '../../controller/app_controller.dart';
+import '../alimento_page/alimento_view.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -49,7 +49,7 @@ class HomePageState extends State<HomePage> {
               title: Text('Teste'),
               subtitle: Text('teste req get api'),
               onTap: () {
-                Navigator.of(context).pushNamed('/teste');
+                Navigator.of(context).pushNamed('/comida');
               }),
           ListTile(
               leading: Icon(Icons.food_bank_outlined),
@@ -60,7 +60,7 @@ class HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PostsPage();
+                      return FoodPage();
                     },
                   ),
                 );
@@ -74,7 +74,7 @@ class HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PostsPage(); //MUDAR AQUI
+                      return FoodPage(); //MUDAR AQUI
                     },
                   ),
                 );
@@ -88,7 +88,7 @@ class HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PostsPage(); //MUDAR AQUI
+                      return FoodPage();
                     },
                   ),
                 );
@@ -119,11 +119,9 @@ class HomePageState extends State<HomePage> {
               height: 150,
               color: Colors.lightBlueAccent,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                ]            
-              ),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: []),
             ),
             // Navigator(
             //   initialRoute: 'home/foodpage',
@@ -137,7 +135,7 @@ class HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return PostsPage();
+                        return FoodPage();
                       },
                     ),
                   );
