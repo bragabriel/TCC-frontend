@@ -20,10 +20,10 @@ class UserData {
         'puxar-da-api puxar-da-api puxar-da-api puxar-da-api puxar-da-api puxar-da-api puxar-da-api puxar-da-api puxar-da-api',
   );
 
-  static Future init() async =>
+  static dynamic init() async =>
       _preferences = await SharedPreferences.getInstance();
 
-  static Future setUser(UsuarioModel user) async {
+  static dynamic setUser(UsuarioModel user) async {
     final json = jsonEncode(user.toJson());
 
     await _preferences.setString(_keyUser, json);

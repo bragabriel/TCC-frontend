@@ -1,4 +1,4 @@
-class Food {
+class Alimento {
   final int id_artefato;
   final String titulo_artefato;
   final String descricao_artefato;
@@ -10,7 +10,7 @@ class Food {
   final String oferta_alimento;
   //final String imagem_alimento;
 
-  Food({
+  Alimento({
     required this.id_artefato,
     required this.titulo_artefato,
     required this.descricao_artefato,
@@ -22,8 +22,8 @@ class Food {
     required this.oferta_alimento,
   });
 
-  factory Food.fromJson(Map<String, dynamic> json) {
-    return Food(
+  factory Alimento.fromJson(Map<String, dynamic> json) {
+    return Alimento(
       id_artefato: json['idArtefato'] ?? 0,
       titulo_artefato: json['tituloArtefato'] ?? '',
       descricao_artefato: json['descricaoArtefato'] ?? '',
