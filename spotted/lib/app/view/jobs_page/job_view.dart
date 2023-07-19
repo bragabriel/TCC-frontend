@@ -19,7 +19,7 @@ class _JobPageState extends State<JobPage> {
     _fetchFood();
   }
 
-  Future<void> _fetchFood() async {
+  void _fetchFood() async {
     var dio = Dio(); // with default Options
 
     final response = await Dio().get('https://6d9c-45-172-242-31.sa.ngrok.io/api/comida?paginaAtual=1&qtdPorPagina=5');

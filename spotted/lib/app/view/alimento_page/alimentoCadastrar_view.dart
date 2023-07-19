@@ -119,3 +119,4 @@ class _alimentoCadastrarPageState extends State<AlimentoCadastrarView> {
     );
   }
 }
+

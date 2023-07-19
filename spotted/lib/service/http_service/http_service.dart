@@ -6,9 +6,9 @@ class HttpService {
   final String URL =
       "http://localhost:8080/api/usuario?paginaAtual=0&qtdPorPagina=19";
 
-  Future<List<UsuarioModel>> getListaUsuarios() async {
+  List<UsuarioModel> getListaUsuarios()  {
     Response res =
-        await get(Uri.parse(URL), headers: {"Accept": "application/json"});
+         get(Uri.parse(URL), headers: {"Accept": "application/json"}) as Response;
 
     if (res.statusCode == 200) {
       // se o servidor retornar um response OK, vamos fazer o parse no JSON

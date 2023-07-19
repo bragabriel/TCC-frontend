@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:spotted/app/model/alimento_model.dart';
+import 'dart:async';
 
 class AlimentoRepository {
   final String foodsURL =

@@ -11,6 +11,6 @@ Widget build(BuildContext context) {
     debugShowCheckedModeBanner: false,
     title: 'Alimentação',
     routes: <String, WidgetBuilder>{
-        '/foodpage' : (BuildContext context) => new FoodPage(),
+        '/foodpage' : (BuildContext context) => new AlimentoView(),
     },
  );}
