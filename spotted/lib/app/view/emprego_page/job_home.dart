@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:spotted/app/view/jobs_page/postjobs_view.dart';
+/* import 'package:flutter/material.dart';
+import 'package:spotted/app/view/emprego_page/postjobs_view.dart';
 import 'dart:convert';
-import '../../model/job_model.dart';
+import '../../model/emprego_model.dart';
 import '../home_page/home_view.dart';
 
 class JobHome extends StatefulWidget {
@@ -98,3 +98,4 @@ class _JobHomeState extends State<JobHome> {
     );
   }
 }
+ */

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/view/alimento_page/alimento_view.dart';
 import 'package:spotted/app/view/cadastro_page/cadastro_view.dart';
+import 'package:spotted/app/view/emprego_page/emprego_view.dart';
 import 'package:spotted/app/view/profile_page/perfil_view.dart';
 import '../controller/app_controller.dart';
 import '../view/home_page/home_view.dart';
@@ -29,6 +30,8 @@ class AppWidget extends StatelessWidget {
             '/cadastro': (context) => CadastroPage(),
             '/perfil': (context) => ProfilePage(),
             '/comida': (context) => AlimentoPage(),
+            '/emprego': (context) => EmpregoPage(),
+            '/transporte': (context) => EmpregoPage(),
           },
         );
       },

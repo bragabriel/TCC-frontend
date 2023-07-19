@@ -1,7 +1,7 @@
-import 'dart:convert';
+/* import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:spotted/app/view/home_page/home_view.dart';
-import '../../model/job_model.dart';
+import '../../model/emprego_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PostsPageJobs extends StatefulWidget {
@@ -208,3 +208,4 @@ void abrirUrl(String url) async {
     throw '[LOG] NAO DEU PARA RODAR ESSA PORRA AQUI: $url';
   }
 }
+ */

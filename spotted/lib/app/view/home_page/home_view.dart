@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../controller/app_controller.dart';
 import '../alimento_page/alimento_view.dart';
-import '../jobs_page/job_home.dart';
-import '../jobs_page/postjobs_view.dart';
+import '../emprego_page/job_home.dart';
+import '../emprego_page/postjobs_view.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -57,28 +57,21 @@ class HomePageState extends State<HomePage> {
               title: Text('Empregos'),
               subtitle: Text('Bora trabalhar? 💻'),
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return PostsPageJobs(); //MUDAR AQUI
-                    },
-                  ),
-                );
+                Navigator.of(context).pushNamed('/emprego');
               }),
           ListTile(
               leading: Icon(Icons.local_bar_outlined),
               title: Text('Festas'),
               subtitle: Text('Partiu pra revoada? 🎉'),
               onTap: () {
-                Navigator.pushReplacement(
+                /* Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PostsPageJobs(); //MUDAR AQUI
+                      return PostsPageJobs();
                     },
                   ),
-                );
+                ); */
               }),
           ListTile(
               leading: Icon(Icons.food_bank_outlined),
