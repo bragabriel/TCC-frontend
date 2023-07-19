@@ -2,23 +2,25 @@ import 'package:dio/dio.dart';
 import 'package:spotted/app/model/alimento_model.dart';
 import 'dart:async';
 
-class AlimentoRepository {
-  final String foodsURL =
-      "https://9c0f-45-172-242-15.ngrok-free.app/api/alimento";
+const String onlineApi = "https://4c5b-45-172-242-15.ngrok-free.app/api";
 
-  Future<List<Alimento>> getFood() async {
+class AlimentoRepository {
+  final String alimentosUrl =
+      "$onlineApi/alimento";
+
+  Future<List<Alimento>> getAllAlimentos() async {
     try {
-      final response = await Dio().get(foodsURL);
+      final response = await Dio().get(alimentosUrl);
       print(response.data);
       if (response.statusCode == 200) {
         final responseData = response.data;
         if (responseData != null &&
             responseData['objetoRetorno'] is List<dynamic>) {
-          List<Alimento> foodList =
+          List<Alimento> alimentoList =
               (responseData['objetoRetorno'] as List<dynamic>)
                   .map<Alimento>((item) => Alimento.fromJson(item))
                   .toList();
-          return foodList;
+          return alimentoList;
         } else {
           throw 'Resposta inválida da API - conteúdo ausente';
         }
@@ -30,12 +32,12 @@ class AlimentoRepository {
     }
   }
 
-  Future<void> cadastrarFood(Map<String, dynamic> body) async {
-    final String foodsURL =
-        "https://9c0f-45-172-242-15.ngrok-free.app/api/alimento";
+  Future<void> cadastrarAlimento(Map<String, dynamic> body) async {
+    const String alimentosUrl =
+        "$onlineApi/alimento";
 
     try {
-      final response = await Dio().post(foodsURL,
+      final response = await Dio().post(alimentosUrl,
           data: body, options: Options(contentType: 'application/json'));
 
       if (response.statusCode == 201) {

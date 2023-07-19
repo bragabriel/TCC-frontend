@@ -1,5 +1,3 @@
-//StateLess = Estatico -> Não pode ser modificado
-
 import 'package:flutter/material.dart';
 import 'package:spotted/app/view/alimento_page/alimento_view.dart';
 import 'package:spotted/app/view/cadastro_page/cadastro_view.dart';
@@ -30,7 +28,7 @@ class AppWidget extends StatelessWidget {
             '/home': (context) => HomePage(),
             '/cadastro': (context) => CadastroPage(),
             '/perfil': (context) => ProfilePage(),
-            '/comida': (context) => AlimentoView(),
+            '/comida': (context) => AlimentoPage(),
           },
         );
       },

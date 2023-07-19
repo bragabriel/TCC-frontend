@@ -46,7 +46,7 @@ class _alimentoCadastrarPageState extends State<AlimentoCadastrarView> {
     };
 
     try {
-      await AlimentoRepository().cadastrarFood(body);
+      await AlimentoRepository().cadastrarAlimento(body);
       print('Cadastro realizado com sucesso');
     } catch (e) {
       print('Erro ao cadastrar: $e');

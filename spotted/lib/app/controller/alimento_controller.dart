@@ -3,7 +3,7 @@ import 'package:spotted/app/model/alimento_model.dart';
 import '../repository/alimento_repository.dart';
 
 class AlimentoController{
-  List<Alimento> foodList = [];
+  List<Alimento> alimentoList = [];
 
   final _repository = AlimentoRepository();
 
@@ -14,7 +14,7 @@ class AlimentoController{
     state.value = HomeState.loading;
     
     try {
-      foodList = await _repository.getFood();
+      alimentoList = await _repository.getAllAlimentos();
 
       state.value = HomeState.success;
     } catch (e) {

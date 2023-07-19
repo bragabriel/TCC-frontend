@@ -103,7 +103,7 @@ class HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return AlimentoView();
+                      return AlimentoPage();
                     },
                   ),
                 );
@@ -146,7 +146,7 @@ class HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return AlimentoView();
+                        return AlimentoPage();
                       },
                     ),
                   );
