@@ -1,38 +1,60 @@
-class Food {
-  final int id_artefato;
-  final String titulo_artefato;
-  final String descricao_artefato;
-  final String tipo_alimento;
-  final String marca_alimento;
-  final String sabor_alimento;
-  final String unidade_alimento;
-  final double preco_alimento;
-  final String oferta_alimento;
-  //final String imagem_alimento;
+import 'artefato_model.dart';
 
-  Food({
-    required this.id_artefato,
-    required this.titulo_artefato,
-    required this.descricao_artefato,
-    required this.tipo_alimento,
-    required this.marca_alimento,
-    required this.sabor_alimento,
-    required this.unidade_alimento,
-    required this.preco_alimento,
-    required this.oferta_alimento,
-  });
+class Alimento extends Artefato {
+  final String? tipoAlimento;
+  final String? marcaAlimento;
+  final String? saborAlimento;
+  final String? unidadeAlimento;
+  final double? precoAlimento;
+  final String? ofertaAlimento;
 
-  factory Food.fromJson(Map<String, dynamic> json) {
-    return Food(
-      id_artefato: json['idArtefato'] ?? 0,
-      titulo_artefato: json['tituloArtefato'] ?? '',
-      descricao_artefato: json['descricaoArtefato'] ?? '',
-      tipo_alimento: json['tipoAlimento'] ?? '',
-      marca_alimento: json['marcaAlimento'] ?? '',
-      sabor_alimento: json['saborAlimento'] ?? '',
-      unidade_alimento: json['unidadeAlimento'] ?? '',
-      preco_alimento: json['precoAlimento']?.toDouble() ?? 0.0,
-      oferta_alimento: json['ofertaAlimento'] ?? '',
+  Alimento({
+    required int idArtefato,
+    required String tituloArtefato,
+    required String descricaoArtefato,
+    required String tipoArtefato,
+    required bool ativo,
+    required String dataCadastro,
+    required String? dataAtualizacao,
+    required int idUsuario,
+    required List<Imagem> listaImagens,
+    this.tipoAlimento,       // Alteração para aceitar null
+    this.marcaAlimento,      // Alteração para aceitar null
+    this.saborAlimento,      // Alteração para aceitar null
+    this.unidadeAlimento,    // Alteração para aceitar null
+    this.precoAlimento,      // Alteração para aceitar null
+    this.ofertaAlimento,     // Alteração para aceitar null
+  }) : super(
+          idArtefato: idArtefato,
+          tituloArtefato: tituloArtefato,
+          descricaoArtefato: descricaoArtefato,
+          tipoArtefato: tipoArtefato,
+          ativo: ativo,
+          dataCadastro: dataCadastro,
+          dataAtualizacao: dataAtualizacao,
+          idUsuario: idUsuario,
+          listaImagens: listaImagens,
+        );
+
+  factory Alimento.fromJson(Map<String, dynamic> json) {
+    return Alimento(
+      idArtefato: json['idArtefato'],
+      tituloArtefato: json['tituloArtefato'],
+      descricaoArtefato: json['descricaoArtefato'],
+      tipoArtefato: json['tipoArtefato'],
+      ativo: json['ativo'],
+      dataCadastro: json['dataCadastro'],
+      dataAtualizacao: json['dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?
+      idUsuario: json['idUsuario'],
+      listaImagens: (json['listaImagens'] as List<dynamic>)
+          .map((image) => Imagem.fromJson(image))
+          .toList(),
+      tipoAlimento: json['tipoAlimento'],
+      marcaAlimento: json['marcaAlimento'],
+      saborAlimento: json['saborAlimento'],
+      unidadeAlimento: json['unidadeAlimento'],
+      precoAlimento: json['precoAlimento']?.toDouble(), // Uso do operador ? para converter para double ou aceitar null
+      ofertaAlimento: json['ofertaAlimento'],
     );
   }
 }

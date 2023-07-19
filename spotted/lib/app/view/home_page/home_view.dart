@@ -50,14 +50,7 @@ class HomePageState extends State<HomePage> {
               title: Text('Alimentos'),
               subtitle: Text('Ai que fominha! 🍽'),
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return FoodPage();
-                    },
-                  ),
-                );
+                Navigator.of(context).pushNamed('/comida');
               }),
           ListTile(
               leading: Icon(Icons.business_center_outlined),
@@ -96,7 +89,7 @@ class HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return FoodPage(); //MUDAR AQUI
+                      return FoodPage();
                     },
                   ),
                 );

@@ -145,8 +145,8 @@ final JobModel job = JobModel.fromJson(jsonDecode(json));
 Widget buttonSection = Row(
   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
   children: [
-    _botaoNovo(Colors.green, Icons.whatsapp,
-        'https://api.whatsapp.com/send/?phone=55', job.contato),
+   // _botaoNovo(Colors.green, Icons.whatsapp,
+      //  'https://api.whatsapp.com/send/?phone=55', job.contato),
     _botaoNovo(Color.fromARGB(255, 0, 170, 255), Icons.near_me,
         'https://www.google.com/maps/search/', job.localizacao),
     _botaoNovo(Colors.black, Icons.link, '', job.link_vaga),

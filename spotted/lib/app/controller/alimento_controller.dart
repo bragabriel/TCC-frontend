@@ -3,9 +3,9 @@ import 'package:spotted/app/model/alimento_model.dart';
 import '../repository/alimento_repository.dart';
 
 class FoodController{
-  List<Food> foodList = [];
+  List<Alimento> foodList = [];
 
-  final _repository = FoodRepository();
+  final _repository = AlimentoRepository();
 
   //Setando estado inicial
   final state = ValueNotifier<HomeState>(HomeState.start);
