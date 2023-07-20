@@ -3,6 +3,7 @@ import 'package:spotted/app/repository/alimento_repository.dart';
 import 'package:spotted/app/model/alimento_model.dart';
 
 import 'alimentoCadastrar_view.dart';
+import 'alimentoDetalhes_view.dart';
 
 class AlimentoPage extends StatefulWidget {
   const AlimentoPage({Key? key}) : super(key: key);
@@ -76,14 +77,6 @@ class _AlimentoPageState extends State<AlimentoPage> {
               builder: (context) => AlimentoCadastrarView(),
             ),
           );
-          _botaoNovo(
-              Colors.green,
-              Icons.message,
-              'https://api.whatsapp.com/send/?phone=55',
-              "filteredFoodList[].id_artefato");
-          _botaoNovo(Colors.blueAccent, Icons.near_me,
-              'https://www.google.com/maps/search/', "localizao");
-          _botaoNovo(Colors.black, Icons.link, '', "linkvaga");
         },
       ),
     );
@@ -312,52 +305,41 @@ class _AlimentoPageState extends State<AlimentoPage> {
                 mainAxisSpacing: 20),
             itemCount: filteredFoodList.length,
             itemBuilder: (BuildContext ctx, index) {
-              return GridTile(
-                key: ValueKey(filteredFoodList[index].idArtefato),
-                footer: GridTileBar(
-                  backgroundColor: Colors.black54,
-                  title: Text(
-                    filteredFoodList[index].tituloArtefato,
-                    style: const TextStyle(
-                        fontSize: 11, fontWeight: FontWeight.bold),
+              return InkWell(
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return AlimentoDetalheView(
+                            filteredFoodList[index]); //MUDAR AQUI
+                      },
+                    ),
+                  );
+                },
+                child: GridTile(
+                  key: ValueKey(filteredFoodList[index].idArtefato),
+                  footer: GridTileBar(
+                    backgroundColor: Colors.black54,
+                    title: Text(
+                      filteredFoodList[index].tituloArtefato,
+                      style: const TextStyle(
+                          fontSize: 11, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(filteredFoodList[index].tipoArtefato),
                   ),
-                  subtitle: Text(filteredFoodList[index].tipoArtefato),
-                ),
-                // child: Image.network(
-                //   _jobs[index]['imagem'],
-                //   fit: BoxFit.cover,
-                // ),
-                child: Image.asset(
-                  'assets/images/jobs.jpg',
-                  fit: BoxFit.cover,
+                  // child: Image.network(
+                  //   filteredFoodList[index].listaImagens[index].url,
+                  //   fit: BoxFit.cover,
+                  // ),
+                  child: Image.asset(
+                    'assets/images/jobs.jpg',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               );
             }),
       )
     ]);
   }
-
-  Column _botaoNovo(Color color, IconData icon, String textBase, String dado) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        IconButton(
-          icon: Icon(icon, color: color, size: 50),
-          onPressed: () => abrirUrl(textBase + dado),
-          alignment: Alignment.topCenter,
-        ),
-      ],
-    );
-  }
-}
-
-void abrirUrl(String url) async {
- /*
-  if (await canLaunchUrl(Uri.parse(url))) {
-    await launchUrl(Uri.parse(url));
-  } else {
-    throw '[LOG] NAO DEU PARA RODAR ESSA PORRA AQUI: $url';
-  } 
-  */
 }

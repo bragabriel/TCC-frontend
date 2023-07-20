@@ -4,11 +4,11 @@ import 'package:spotted/app/model/usuario_model.dart';
 
 class HttpService {
   final String URL =
-      "http://localhost:8080/api/usuario?paginaAtual=0&qtdPorPagina=19";
+      "https://5f3b-45-172-242-15.ngrok-free.app/api/usuario?paginaAtual=1&qtdPorPagina=19";
 
-  List<UsuarioModel> getListaUsuarios()  {
-    Response res =
-         get(Uri.parse(URL), headers: {"Accept": "application/json"}) as Response;
+  List<UsuarioModel> getListaUsuarios() {
+    Response res = get(Uri.parse(URL), headers: {"Accept": "application/json"})
+        as Response;
 
     if (res.statusCode == 200) {
       // se o servidor retornar um response OK, vamos fazer o parse no JSON
@@ -23,7 +23,6 @@ class HttpService {
       print(usuario);
 
       return usuario;
-      
     } else {
       // se a responsta não for OK , lançamos um erro
       throw "Não foi possível recuperar os posts.";

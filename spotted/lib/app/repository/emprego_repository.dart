@@ -2,11 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:spotted/app/model/emprego_model.dart';
 import 'dart:async';
 
-const String onlineApi = "https://4c5b-45-172-242-15.ngrok-free.app/api";
+const String onlineApi = "https://5f3b-45-172-242-15.ngrok-free.app/api/";
 
 class EmpregoRepository {
-  final String empregosUrl =
-      "$onlineApi/emprego";
+  final String empregosUrl = "$onlineApi/emprego";
 
   Future<List<Emprego>> getAllEmpregos() async {
     try {
@@ -33,8 +32,7 @@ class EmpregoRepository {
   }
 
   Future<void> cadastrarEmprego(Map<String, dynamic> body) async {
-    const String empregosUrl =
-        "$onlineApi/emprego";
+    const String empregosUrl = "$onlineApi/emprego";
 
     try {
       final response = await Dio().post(empregosUrl,
