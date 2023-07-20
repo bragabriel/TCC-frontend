@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:spotted/app/model/alimento_model.dart';
-import '../repository/alimento_repository.dart';
+import 'package:spotted/app/model/emprego_model.dart';
+import '../repository/emprego_repository.dart';
 
-class AlimentoController{
-  List<Alimento> listResponse = [];
+class EmpregoController{
+  List<Emprego> listResponse = [];
 
-  final _repository = AlimentoRepository();
+  final _repository = EmpregoRepository();
 
   //Setando estado inicial
   final state = ValueNotifier<HomeState>(HomeState.start);
@@ -14,7 +14,7 @@ class AlimentoController{
     state.value = HomeState.loading;
     
     try {
-      listResponse = await _repository.getAllAlimentos();
+      listResponse = await _repository.getAllEmpregos();
       state.value = HomeState.success;
     } catch (e) {
       state.value = HomeState.error;
