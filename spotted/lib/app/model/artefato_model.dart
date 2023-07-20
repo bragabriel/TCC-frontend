@@ -7,7 +7,7 @@ class Artefato {
   final String dataCadastro;
   final String? dataAtualizacao;
   final int idUsuario;
-  final List<Imagem> listaImagens;
+  final List<Imagem>? listaImagens;
 
   Artefato({
     required this.idArtefato,
