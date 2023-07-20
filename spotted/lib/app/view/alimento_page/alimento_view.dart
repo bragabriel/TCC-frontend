@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/alimento_repository.dart';
 import 'package:spotted/app/model/alimento_model.dart';
-
 import 'alimentoCadastrar_view.dart';
 import 'alimentoDetalhes_view.dart';
 
@@ -82,75 +81,6 @@ class _AlimentoPageState extends State<AlimentoPage> {
     );
   }
 
-  List<Container> _titleSection() {
-    return List.generate(
-      filteredFoodList.length,
-      (index) =>
-          /*2*/
-          Container(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Column(
-                children: [
-                  Text(
-                    "${filteredFoodList[index].tituloArtefato} – ${filteredFoodList[index].saborAlimento} \n",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 27,
-                    ),
-                  ),
-                  Text(
-                    "Descrição: ${filteredFoodList[index].descricaoArtefato} \n",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 11,
-                    ),
-                  ),
-                  Text(
-                    "Tipo: ${filteredFoodList[index].tipoAlimento} \n",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 11,
-                    ),
-                  ),
-                  Text(
-                    "Marca: ${filteredFoodList[index].descricaoArtefato} \n",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 11,
-                    ),
-                  ),
-                  Text(
-                    "Sabor: ${filteredFoodList[index].saborAlimento} \n",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 11,
-                    ),
-                  ),
-                  Text(
-                    "Unidades: ${filteredFoodList[index].unidadeAlimento} \n",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 11,
-                    ),
-                  ),
-                  Text(
-                    "Preço: ${filteredFoodList[index].tipoAlimento} \n",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 11,
-                    ),
-                  ),
-                  Text(
-                    "Oferta: Preço: R\$ ${filteredFoodList[index].precoAlimento?.toStringAsFixed(2) ?? '0.00'} \n",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 11,
-                    ),
-                  )
-                ],
-              )),
-    );
-  }
 
   void _filterFoodList() {
     setState(() {
@@ -312,7 +242,7 @@ class _AlimentoPageState extends State<AlimentoPage> {
                     MaterialPageRoute(
                       builder: (context) {
                         return AlimentoDetalheView(
-                            filteredFoodList[index]); //MUDAR AQUI
+                            filteredFoodList[index]); 
                       },
                     ),
                   );

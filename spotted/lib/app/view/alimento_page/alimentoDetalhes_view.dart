@@ -11,8 +11,6 @@ class AlimentoDetalheView extends StatefulWidget {
   const AlimentoDetalheView(this.filteredFoodList);
 }
 
-
-
 class AlimentoDetalheState extends State<AlimentoDetalheView> {
   @override
   Widget build(BuildContext context) {
@@ -31,11 +29,16 @@ class AlimentoDetalheState extends State<AlimentoDetalheView> {
           ),
         ),
         body: ListView(
+          // children: [
+          // Image.network(
+          //   alimento.listaImagens?[0].url as String,
+          //   width: 600,
+          //   height: 240,
+          //   fit: BoxFit.cover,
+          // ),
           children: [
             Image.asset(
-              alimento.listaImagens[1].url,
-              width: 600,
-              height: 240,
+              'assets/images/jobs.jpg',
               fit: BoxFit.cover,
             ),
             DetalhesAlimento(alimento: alimento),
@@ -57,8 +60,11 @@ class BotaoAlimento extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        BotaoNovo(Colors.green, Icons.message,
-            'https://api.whatsapp.com/send/?phone=55', "19999138267") //alimento.contato)
+        BotaoNovo(
+            Colors.blue,
+            Icons.message,
+            'https://api.whatsapp.com/send/?phone=55',
+            "19999138267") //alimento.contato)
       ],
     );
   }
@@ -67,13 +73,13 @@ class BotaoAlimento extends StatelessWidget {
 class DetalhesAlimento extends StatelessWidget {
   final Alimento alimento;
 
-  const DetalhesAlimento({required this.alimento});
+  DetalhesAlimento({required this.alimento});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(32),
-      child: Row(
+      child: Wrap(
         children: [
           Text(
             "${alimento.tituloArtefato} – ${alimento.saborAlimento} \n",
@@ -83,54 +89,34 @@ class DetalhesAlimento extends StatelessWidget {
             ),
           ),
           Text(
-            "Descrição: ${alimento.descricaoArtefato} \n",
+            "${alimento.descricaoArtefato} \n",
             style: TextStyle(
               color: Colors.black,
-              fontSize: 11,
+              fontSize: 18,
             ),
           ),
           Text(
-            "Tipo: ${alimento.tipoAlimento} \n",
+            "${alimento.saborAlimento} \n",
             style: TextStyle(
               color: Colors.black,
-              fontSize: 11,
+              fontSize: 18,
             ),
           ),
           Text(
-            "Marca: ${alimento.descricaoArtefato} \n",
+            "${alimento.unidadeAlimento} \n",
             style: TextStyle(
               color: Colors.black,
-              fontSize: 11,
+              fontSize: 18,
             ),
           ),
           Text(
-            "Sabor: ${alimento.saborAlimento} \n",
+            "R\$ ${alimento.precoAlimento?.toStringAsFixed(2) ?? '0.00'} \n",
             style: TextStyle(
               color: Colors.black,
-              fontSize: 11,
+              fontSize: 18,
             ),
           ),
-          Text(
-            "Unidades: ${alimento.unidadeAlimento} \n",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 11,
-            ),
-          ),
-          Text(
-            "Preço: ${alimento.tipoAlimento} \n",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 11,
-            ),
-          ),
-          Text(
-            "Oferta: Preço: R\$ ${alimento.precoAlimento?.toStringAsFixed(2) ?? '0.00'} \n",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 11,
-            ),
-          )
+
         ],
       ),
     );
@@ -153,7 +139,6 @@ Column BotaoNovo(Color color, IconData icon, String textBase, String dado) {
       IconButton(
         icon: Icon(icon, color: color, size: 50),
         onPressed: () => AbrirURL(textBase + dado),
-        alignment: Alignment.topCenter,
       ),
     ],
   );

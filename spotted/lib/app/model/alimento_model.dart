@@ -17,7 +17,7 @@ class Alimento extends Artefato {
     required String dataCadastro,
     required String? dataAtualizacao,
     required int idUsuario,
-    required List<Imagem> listaImagens,
+    required List<Imagem>? listaImagens,
     this.tipoAlimento,       
     this.marcaAlimento,      
     this.saborAlimento,      
