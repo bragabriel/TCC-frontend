@@ -21,7 +21,7 @@ class Usuario extends Artefato {
     required String dataCadastro,
     required String? dataAtualizacao,
     required int idUsuario,
-    required List<Imagem> listaImagens,
+    required List<Imagem>? listaImagens,
     required this.nomeUsuario,
     required this.sobrenomeUsuario,
     required this.emailUsuario,
