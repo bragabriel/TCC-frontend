@@ -1,25 +1,25 @@
 import 'package:dio/dio.dart';
-import 'package:spotted/app/model/emprego_model.dart';
 import 'dart:async';
+import 'package:spotted/app/model/moradia_model.dart';
 
 import '../constants/constants.dart';
 
-class EmpregoRepository {
-  final String empregosUrl = "$onlineApi/emprego";
+class MoradiaRepository {
+  final String moradiasUrl = "$onlineApi/moradia";
 
-  Future<List<Emprego>> getAllEmpregos() async {
+  Future<List<Moradia>> getAllMoradias() async {
     try {
-      final response = await Dio().get(empregosUrl);
+      final response = await Dio().get(moradiasUrl);
       print(response.data);
       if (response.statusCode == 200) {
         final responseData = response.data;
         if (responseData != null &&
             responseData['objetoRetorno'] is List<dynamic>) {
-          List<Emprego> empregoList =
+          List<Moradia> moradiaList =
               (responseData['objetoRetorno'] as List<dynamic>)
-                  .map<Emprego>((item) => Emprego.fromJson(item))
+                  .map<Moradia>((item) => Moradia.fromJson(item))
                   .toList();
-          return empregoList;
+          return moradiaList;
         } else {
           throw 'Resposta inválida da API - conteúdo ausente';
         }
@@ -31,11 +31,11 @@ class EmpregoRepository {
     }
   }
 
-  Future<void> cadastrarEmprego(Map<String, dynamic> body) async {
-    const String empregosUrl = "$onlineApi/emprego";
+  Future<void> cadastrarFesta(Map<String, dynamic> body) async {
+    const String festasUrl = "$onlineApi/festa";
 
     try {
-      final response = await Dio().post(empregosUrl,
+      final response = await Dio().post(festasUrl,
           data: body, options: Options(contentType: 'application/json'));
 
       if (response.statusCode == 201) {
