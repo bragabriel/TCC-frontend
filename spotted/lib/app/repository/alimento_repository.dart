@@ -5,8 +5,7 @@ import 'dart:async';
 const String onlineApi = "https://5f3b-45-172-242-15.ngrok-free.app/api";
 
 class AlimentoRepository {
-  final String alimentosUrl =
-      "$onlineApi/alimento";
+  final String alimentosUrl = "$onlineApi/alimento";
 
   Future<List<Alimento>> getAllAlimentos() async {
     try {
@@ -33,8 +32,7 @@ class AlimentoRepository {
   }
 
   Future<void> cadastrarAlimento(Map<String, dynamic> body) async {
-    const String alimentosUrl =
-        "$onlineApi/alimento";
+    const String alimentosUrl = "$onlineApi/alimento";
 
     try {
       final response = await Dio().post(alimentosUrl,

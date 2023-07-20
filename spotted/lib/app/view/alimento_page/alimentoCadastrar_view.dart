@@ -1,7 +1,5 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-
 import '../../repository/alimento_repository.dart';
 
 class AlimentoCadastrarView extends StatefulWidget {
@@ -78,7 +76,7 @@ class _alimentoCadastrarPageState extends State<AlimentoCadastrarView> {
           children: [
             TextField(
               controller: _tituloController,
-              decoration: InputDecoration(labelText: 'Título'),
+              decoration: InputDecoration(labelText: 'Titulo'),
             ),
             TextField(
               controller: _descricaoController,
