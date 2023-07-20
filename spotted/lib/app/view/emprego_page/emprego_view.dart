@@ -12,60 +12,87 @@ class EmpregoPage extends StatefulWidget {
 }
 
 class _EmpregoPageState extends State<EmpregoPage> {
-  List<Emprego> empregoList = [];
-  List<Emprego> filteredEmpregoList = [];
-  List<String> selectedBenefits = [];
-  String selectedCity = '';
-  double? minSalary;
-  double? maxSalary;
+  List<Emprego> listaDeEmpregos = [];
+  List<Emprego> listaFiltradaDeEmpregos = [];
+  String cidadeSelecionada = 'Selecione uma cidade';
+  String empresaSelecionada = 'Selecione uma empresa';
+  String? presencialSelecionado;
+  double? salarioMinimo;
+  double? salarioMaximo;
 
   @override
   void initState() {
     super.initState();
-    _fetchEmprego();
+    _carregarEmpregos();
   }
 
-  Future<void> _fetchEmprego() async {
+  Future<void> _carregarEmpregos() async {
     try {
-      final empregoList = await EmpregoRepository().getAllEmpregos();
+      final listaDeEmpregos = await EmpregoRepository().getAllEmpregos();
       setState(() {
-        this.empregoList = empregoList;
-        filteredEmpregoList = empregoList;
+        this.listaDeEmpregos = listaDeEmpregos;
+        listaFiltradaDeEmpregos = listaDeEmpregos;
       });
     } catch (e) {
       print('Erro ao obter a lista de empregos: $e');
     }
   }
 
-  /* List<String> _getAllBenefits() {
-    return empregoList
-        .expand((emprego) => emprego.beneficiosEmprego?.split(',') ?? [])
-        .map((benefit) => benefit.trim())
-        .toSet()
+  List<String> _obterListaDeCidades() {
+    final cidades = listaDeEmpregos
+        .map((emprego) => emprego.cidadeEmprego)
+        .where((cidade) => cidade != null) // Remover valores nulos
+        .map((cidade) => cidade!) // Converter String? para String
+        .toSet() // Remover valores duplicados
         .toList();
-  } */
 
-  List<String> _getCitiesList() {
-    return empregoList.map((emprego) => emprego.localizacaoEmprego).toSet().toList();
+    // Adicionar valor padrão "Selecione uma cidade" no início da lista
+    cidades.insert(0, "Selecione uma cidade");
+
+    return cidades;
   }
 
-  void _filterEmpregoList() {
+  List<String> _obterListaDeEmpresas() {
+    final empresas = listaDeEmpregos
+        .map((emprego) => emprego.empresaEmprego)
+        .where((empresa) => empresa != null) // Remover valores nulos
+        .map((empresa) => empresa!) // Converter String? para String
+        .toSet() // Remover valores duplicados
+        .toList();
+
+    // Adicionar valor padrão "Selecione uma empresa" no início da lista
+    empresas.insert(0, "Selecione uma empresa");
+
+    return empresas;
+  }
+
+  void _filtrarListaDeEmpregos() {
     setState(() {
-      filteredEmpregoList = empregoList.where((emprego) {
-        final meetsBenefitCriteria = selectedBenefits.isEmpty ||
-            emprego.beneficiosEmprego != null &&
-                selectedBenefits.any(
-                  (benefit) => emprego.beneficiosEmprego!.toLowerCase().contains(benefit.toLowerCase()),
-                );
+      listaFiltradaDeEmpregos = listaDeEmpregos.where((emprego) {
+        final atendeCriterioCidade =
+            cidadeSelecionada == "Selecione uma cidade" ||
+                emprego.cidadeEmprego?.toLowerCase() ==
+                    cidadeSelecionada.toLowerCase();
 
-        final meetsCityCriteria =
-            selectedCity.isEmpty || emprego.localizacaoEmprego.toLowerCase() == selectedCity.toLowerCase();
+        final atendeCriterioEmpresa =
+            empresaSelecionada == "Selecione uma empresa" ||
+                emprego.empresaEmprego?.toLowerCase() ==
+                    empresaSelecionada.toLowerCase();
 
-        final meetsSalaryCriteria =
-            (minSalary == null || emprego.salarioEmprego! >= minSalary!) &&
-                (maxSalary == null || emprego.salarioEmprego! <= maxSalary!);
+        final atendeCriterioPresencial = presencialSelecionado == null ||
+            presencialSelecionado == "TODOS" ||
+            emprego.presencialEmprego?.toLowerCase() ==
+                presencialSelecionado?.toLowerCase();
 
-        return meetsBenefitCriteria && meetsCityCriteria && meetsSalaryCriteria;
+        final atendeCriterioSalario = (salarioMinimo == null ||
+                emprego.salarioEmprego! >= salarioMinimo!) &&
+            (salarioMaximo == null ||
+                emprego.salarioEmprego! <= salarioMaximo!);
+
+        return atendeCriterioCidade &&
+            atendeCriterioEmpresa &&
+            atendeCriterioPresencial &&
+            atendeCriterioSalario;
       }).toList();
     });
   }
@@ -78,13 +105,13 @@ class _EmpregoPageState extends State<EmpregoPage> {
         actions: [
           IconButton(
             onPressed: () {
-              _fetchEmprego();
+              _carregarEmpregos();
             },
             icon: const Icon(Icons.refresh_outlined),
           )
         ],
       ),
-      body: _buildFiltersAndList(),
+      body: _construirFiltrosELista(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -99,13 +126,13 @@ class _EmpregoPageState extends State<EmpregoPage> {
     );
   }
 
-  Widget _buildFiltersAndList() {
+  Widget _construirFiltrosELista() {
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
-            onChanged: (value) {
+            onChanged: (valor) {
               setState(() {
                 // Implemente o filtro por título aqui, se necessário
               });
@@ -118,46 +145,84 @@ class _EmpregoPageState extends State<EmpregoPage> {
           ),
         ),
         SizedBox(height: 10),
-        Wrap(
-          spacing: 8,
-          children: [
-            /* for (var benefit in _getAllBenefits()) ...[
-              FilterChip(
-                label: Text(benefit),
-                selected: selectedBenefits.contains(benefit),
-                onSelected: (selected) {
-                  setState(() {
-                    if (selected) {
-                      selectedBenefits.add(benefit);
-                    } else {
-                      selectedBenefits.remove(benefit);
-                    }
-                    _filterEmpregoList();
-                  });
-                },
-              ),
-            ], */
-          ],
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: DropdownButtonFormField<String>(
+            value: cidadeSelecionada,
+            onChanged: (novaCidade) {
+              setState(() {
+                cidadeSelecionada = novaCidade!;
+                _filtrarListaDeEmpregos();
+              });
+            },
+            items:
+                _obterListaDeCidades().map<DropdownMenuItem<String>>((cidade) {
+              return DropdownMenuItem<String>(
+                value: cidade,
+                child: Text(cidade),
+              );
+            }).toList(),
+            decoration: InputDecoration(
+              labelText: 'Cidade',
+              border: OutlineInputBorder(),
+            ),
+          ),
         ),
         SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: DropdownButtonFormField<String>(
-            value: selectedCity,
-            onChanged: (newValue) {
+            value: empresaSelecionada,
+            onChanged: (novaEmpresa) {
               setState(() {
-                selectedCity = newValue!;
-                _filterEmpregoList();
+                empresaSelecionada = novaEmpresa!;
+                _filtrarListaDeEmpregos();
               });
             },
-            items: _getCitiesList().map<DropdownMenuItem<String>>((city) {
+            items: _obterListaDeEmpresas()
+                .map<DropdownMenuItem<String>>((empresa) {
               return DropdownMenuItem<String>(
-                value: city,
-                child: Text(city),
+                value: empresa,
+                child: Text(empresa),
               );
             }).toList(),
             decoration: InputDecoration(
-              labelText: 'Localização',
+              labelText: 'Empresa',
+              border: OutlineInputBorder(),
+            ),
+          ),
+        ),
+        SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: DropdownButtonFormField<String>(
+            value: presencialSelecionado,
+            onChanged: (novaSelecao) {
+              setState(() {
+                presencialSelecionado = novaSelecao!;
+                _filtrarListaDeEmpregos();
+              });
+            },
+            items: [
+              DropdownMenuItem<String>(
+                value: "TODOS",
+                child: Text("TODOS"),
+              ),
+              DropdownMenuItem<String>(
+                value: "Presencial",
+                child: Text("Presencial"),
+              ),
+              DropdownMenuItem<String>(
+                value: "Remoto",
+                child: Text("Remoto"),
+              ),
+              DropdownMenuItem<String>(
+                value: "Híbrido",
+                child: Text("Híbrido"),
+              ),
+            ],
+            decoration: InputDecoration(
+              labelText: 'Presencial/Remoto',
               border: OutlineInputBorder(),
             ),
           ),
@@ -172,17 +237,19 @@ class _EmpregoPageState extends State<EmpregoPage> {
               crossAxisSpacing: 20,
               mainAxisSpacing: 20,
             ),
-            itemCount: filteredEmpregoList.length,
+            itemCount: listaFiltradaDeEmpregos.length,
             itemBuilder: (BuildContext ctx, index) {
               return GridTile(
-                key: ValueKey(filteredEmpregoList[index].idArtefato),
+                key: ValueKey(listaFiltradaDeEmpregos[index].idArtefato),
                 footer: GridTileBar(
                   backgroundColor: Colors.black54,
                   title: Text(
-                    filteredEmpregoList[index].tituloArtefato,
-                    style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                    listaFiltradaDeEmpregos[index].tituloArtefato,
+                    style: const TextStyle(
+                        fontSize: 11, fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text(filteredEmpregoList[index].localizacaoEmprego),
+                  subtitle: Text(listaFiltradaDeEmpregos[index].cidadeEmprego ??
+                      "Cidade não disponível"),
                 ),
                 child: Image.asset(
                   'assets/images/jobs.jpg',
