@@ -7,10 +7,8 @@ import 'package:spotted/app/view/profile_page/edit_image.dart';
 import 'package:spotted/app/view/profile_page/edit_name.dart';
 import 'package:spotted/app/view/profile_page/edit_phone.dart';
 import '../../model/usuario_model.dart';
-import '../../widget/appbar_widget.dart';
 import '../../widget/display_image_widget.dart';
 import '../../model/user_data.dart';
-import '../../model/usuario_model.dart';
 
 // This class handles the Page to dispaly the user's info on the "Edit Profile" Screen
 class ProfilePage extends StatefulWidget {
@@ -47,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 navigateSecondPage(EditImagePage());
               },
               child: DisplayImage(
-                imagePath: user.image,
+                imagePath: user.url,
                 onPressed: () {},
               )),
           buildUserInfoDisplay(user.nomeUsuario, 'Nome', EditNameFormPage()),
@@ -109,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ));
 
   // Widget builds the About Me Section
-  Widget buildAbout(UsuarioModel user) => Padding(
+  Widget buildAbout(Usuario user) => Padding(
       padding: EdgeInsets.only(bottom: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  user.descricaoUsuario,
+                                  user.descricaoArtefato,
                                   style: TextStyle(
                                     fontSize: 16,
                                     height: 1.4,

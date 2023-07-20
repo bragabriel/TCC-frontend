@@ -80,7 +80,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
                     empresaSelecionada.toLowerCase();
 
         final atendeCriterioPresencial = presencialSelecionado == null ||
-            presencialSelecionado == "TODOS" ||
+            presencialSelecionado == "Todos" ||
             emprego.presencialEmprego?.toLowerCase() ==
                 presencialSelecionado?.toLowerCase();
 
@@ -205,8 +205,8 @@ class _EmpregoPageState extends State<EmpregoPage> {
             },
             items: [
               DropdownMenuItem<String>(
-                value: "TODOS",
-                child: Text("TODOS"),
+                value: "Todos",
+                child: Text("Todos"),
               ),
               DropdownMenuItem<String>(
                 value: "Presencial",

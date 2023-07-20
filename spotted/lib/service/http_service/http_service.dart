@@ -6,7 +6,7 @@ class HttpService {
   final String URL =
       "https://5f3b-45-172-242-15.ngrok-free.app/api/usuario?paginaAtual=1&qtdPorPagina=19";
 
-  List<UsuarioModel> getListaUsuarios() {
+  List<Usuario> getListaUsuarios() {
     Response res = get(Uri.parse(URL), headers: {"Accept": "application/json"})
         as Response;
 
@@ -14,9 +14,9 @@ class HttpService {
       // se o servidor retornar um response OK, vamos fazer o parse no JSON
       List<dynamic> body = jsonDecode(res.body);
 
-      List<UsuarioModel> usuario = body
+      List<Usuario> usuario = body
           .map(
-            (dynamic item) => UsuarioModel.fromJson(item),
+            (dynamic item) => Usuario.fromJson(item),
           )
           .toList();
 

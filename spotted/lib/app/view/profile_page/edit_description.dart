@@ -21,7 +21,7 @@ class _EditDescriptionFormPageState extends State<EditDescriptionFormPage> {
   }
 
   void updateUserValue(String description) {
-    user.descricaoUsuario = description;
+    user.descricaoArtefato = description;
   }
 
   @override
