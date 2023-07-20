@@ -1,7 +1,7 @@
 class Artefato {
   final int idArtefato;
   final String tituloArtefato;
-  final String descricaoArtefato;
+  String descricaoArtefato;
   final String tipoArtefato;
   final bool ativo;
   final String dataCadastro;
