@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:spotted/app/model/alimento_model.dart';
 import 'dart:async';
 
-const String onlineApi = "https://5f3b-45-172-242-15.ngrok-free.app/api";
+import '../constants/constants.dart';
 
 class AlimentoRepository {
   final String alimentosUrl = "$onlineApi/alimento";

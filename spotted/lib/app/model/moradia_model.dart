@@ -1,6 +1,6 @@
 import 'artefato_model.dart';
 
-class Emprego extends Artefato {
+class Moradia extends Artefato {
   final String? localizacaoMoradia;
   final num? qtdMoradoresPermitidoMoradia;
   final num? qtdMoradoresAtuaisMoradia;
@@ -9,7 +9,7 @@ class Emprego extends Artefato {
   final String? vagaGaragemMoradia;
   final String? animaisEstimacaoMoradia;				
 
-  Emprego({
+  Moradia({
     required int idArtefato,
     required String tituloArtefato,
     required String descricaoArtefato,
@@ -38,8 +38,8 @@ class Emprego extends Artefato {
           listaImagens: listaImagens,
         );
 
-  factory Emprego.fromJson(Map<String, dynamic> json) {
-    return Emprego(
+  factory Moradia.fromJson(Map<String, dynamic> json) {
+    return Moradia(
       idArtefato: json['idArtefato'],
       tituloArtefato: json['tituloArtefato'],
       descricaoArtefato: json['descricaoArtefato'],
