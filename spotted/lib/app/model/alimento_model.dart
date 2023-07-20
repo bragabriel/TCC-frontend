@@ -18,12 +18,12 @@ class Alimento extends Artefato {
     required String? dataAtualizacao,
     required int idUsuario,
     required List<Imagem> listaImagens,
-    this.tipoAlimento,       // Alteração para aceitar null
-    this.marcaAlimento,      // Alteração para aceitar null
-    this.saborAlimento,      // Alteração para aceitar null
-    this.unidadeAlimento,    // Alteração para aceitar null
-    this.precoAlimento,      // Alteração para aceitar null
-    this.ofertaAlimento,     // Alteração para aceitar null
+    this.tipoAlimento,       
+    this.marcaAlimento,      
+    this.saborAlimento,      
+    this.unidadeAlimento,    
+    this.precoAlimento,      
+    this.ofertaAlimento,     
   }) : super(
           idArtefato: idArtefato,
           tituloArtefato: tituloArtefato,
@@ -44,7 +44,7 @@ class Alimento extends Artefato {
       tipoArtefato: json['tipoArtefato'],
       ativo: json['ativo'],
       dataCadastro: json['dataCadastro'],
-      dataAtualizacao: json['dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?
+      dataAtualizacao: json['dataAtualizacao'],
       idUsuario: json['idUsuario'],
       listaImagens: (json['listaImagens'] as List<dynamic>)
           .map((image) => Imagem.fromJson(image))
@@ -53,7 +53,7 @@ class Alimento extends Artefato {
       marcaAlimento: json['marcaAlimento'],
       saborAlimento: json['saborAlimento'],
       unidadeAlimento: json['unidadeAlimento'],
-      precoAlimento: json['precoAlimento']?.toDouble(), // Uso do operador ? para converter para double ou aceitar null
+      precoAlimento: json['precoAlimento']?.toDouble(), 
       ofertaAlimento: json['ofertaAlimento'],
     );
   }
