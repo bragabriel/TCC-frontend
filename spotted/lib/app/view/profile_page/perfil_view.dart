@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:spotted/app/view/profile_page/edit_description.dart';
 import 'package:spotted/app/view/profile_page/edit_email.dart';
 import 'package:spotted/app/view/profile_page/edit_image.dart';
 import 'package:spotted/app/view/profile_page/edit_name.dart';
@@ -45,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 navigateSecondPage(EditImagePage());
               },
               child: DisplayImage(
-                imagePath: user.url,
+                imagePath: user.url!,
                 onPressed: () {},
               )),
           buildUserInfoDisplay(user.nomeUsuario, 'Nome', EditNameFormPage()),
@@ -121,38 +120,6 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           const SizedBox(height: 1),
-          Container(
-              width: 350,
-              height: 200,
-              decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                color: Colors.grey,
-                width: 1,
-              ))),
-              child: Row(children: [
-                Expanded(
-                    child: TextButton(
-                        onPressed: () {
-                          navigateSecondPage(EditDescriptionFormPage());
-                        },
-                        child: Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
-                            child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  user.descricaoArtefato,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    height: 1.4,
-                                  ),
-                                ))))),
-                Icon(
-                  Icons.keyboard_arrow_right,
-                  color: Colors.grey,
-                  size: 40.0,
-                )
-              ]))
         ],
       ));
 

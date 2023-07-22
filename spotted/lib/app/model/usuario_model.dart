@@ -1,47 +1,26 @@
-import 'artefato_model.dart';
-
-class Usuario extends Artefato {
+class Usuario {
+  final int idUsuario;
   String nomeUsuario;
   String sobrenomeUsuario;
   String emailUsuario;
   String senhaUsuario;
   String telefoneUsuario;
-  String dataNascimento;
-  String url;
-  String? fileName;
-  String? descricaoUsuario;
+  DateTime dataNascimento; // Alterado para DateTime
+  final String? url;
+  final String? fileName;
 
   // Constructor
   Usuario({
-    required int idArtefato,
-    required String tituloArtefato,
-    required String descricaoArtefato,
-    required String tipoArtefato,
-    required bool ativo,
-    required String dataCadastro,
-    required String? dataAtualizacao,
-    required int idUsuario,
-    required List<Imagem>? listaImagens,
+    required this.idUsuario,
     required this.nomeUsuario,
     required this.sobrenomeUsuario,
     required this.emailUsuario,
     required this.senhaUsuario,
     required this.telefoneUsuario,
     required this.dataNascimento,
-    required this.url,
-    required this.fileName,
-    required this.descricaoUsuario,
-  }) : super(
-          idArtefato: idArtefato,
-          tituloArtefato: tituloArtefato,
-          descricaoArtefato: descricaoArtefato,
-          tipoArtefato: tipoArtefato,
-          ativo: ativo,
-          dataCadastro: dataCadastro,
-          dataAtualizacao: dataAtualizacao,
-          idUsuario: idUsuario,
-          listaImagens: listaImagens,
-        );
+    this.url,
+    this.fileName,
+  });
 
   Usuario copy({
     int? idUsuario,
@@ -51,52 +30,31 @@ class Usuario extends Artefato {
     String? senhaUsuario,
     String? telefoneUsuario,
     String? descricaoUsuario,
-    String? imagePath,
+    String? url,
+    String? fileName,
   }) =>
       Usuario(
-        idArtefato: idArtefato,
-        tituloArtefato: tituloArtefato,
-        descricaoArtefato: descricaoArtefato,
-        tipoArtefato: tipoArtefato,
-        ativo: ativo,
-        dataCadastro: dataCadastro,
-        dataAtualizacao: dataAtualizacao,
-        listaImagens: listaImagens,
         idUsuario: idUsuario ?? this.idUsuario,
         nomeUsuario: nomeUsuario ?? this.nomeUsuario,
         sobrenomeUsuario: sobrenomeUsuario ?? this.sobrenomeUsuario,
         emailUsuario: emailUsuario ?? this.emailUsuario,
         senhaUsuario: senhaUsuario ?? this.senhaUsuario,
         telefoneUsuario: telefoneUsuario ?? this.telefoneUsuario,
-        descricaoUsuario: descricaoUsuario ?? this.descricaoUsuario,
         dataNascimento: dataNascimento,
-        fileName: fileName,
-        url: imagePath ?? '',
+        url: url ?? this.url,
+        fileName: fileName ?? this.fileName,
       );
 
   static Usuario fromJson(Map<String, dynamic> json) => Usuario(
-        idArtefato: json['idArtefato'],
-        tituloArtefato: json['tituloArtefato'],
-        descricaoArtefato: json['descricaoArtefato'],
-        tipoArtefato: json['tipoArtefato'],
-        ativo: json['ativo'],
-        dataCadastro: json['dataCadastro'],
-        dataAtualizacao: json[
-            'dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?
         idUsuario: json['idUsuario'],
-        listaImagens: (json['listaImagens'] as List<dynamic>)
-            .map((image) => Imagem.fromJson(image))
-            .toList(),
-
         nomeUsuario: json['nomeUsuario'],
         sobrenomeUsuario: json['sobrenomeUsuario'],
         emailUsuario: json['emailUsuario'],
         senhaUsuario: json['senhaUsuario'],
-        descricaoUsuario: json['descricaoUsuario'],
         telefoneUsuario: json['telefoneUsuario'],
-        dataNascimento: json['dataNascimento'],
-        fileName: json['fileName'],
-        url: json['imagePath'],
+        dataNascimento: DateTime.parse(json['dataNascimento']), // Parse para DateTime
+        fileName: json['fileName'] as String?,
+        url: json['url'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
@@ -105,8 +63,9 @@ class Usuario extends Artefato {
         'sobrenomeUsuario': sobrenomeUsuario,
         'emailUsuario': emailUsuario,
         'senhaUsuario': senhaUsuario,
-        'descricaoUsuario': descricaoUsuario,
         'telefoneUsuario': telefoneUsuario,
-        'imagePath': url,
+        'dataNascimento': dataNascimento.toIso8601String(), // Convertendo para String
+        'url': url,
+        'fileName': fileName,
       };
 }

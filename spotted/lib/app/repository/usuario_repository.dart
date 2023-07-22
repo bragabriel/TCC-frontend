@@ -10,8 +10,7 @@ class UsuarioRepository {
   Future<List<Usuario>> getAllUsuarios() async {
     try {
       final response = await Dio().get(usuariosUrl);
-      print(response.data);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 && response.statusCode != null ) {
         final responseData = response.data;
         if (responseData != null &&
             responseData['objetoRetorno'] is List<dynamic>) {
