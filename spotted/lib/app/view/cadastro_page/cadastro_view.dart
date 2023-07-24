@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../controller/usuario_controller.dart';
 import '../../repository/usuario_repository.dart';
 
 class CadastroPage extends StatefulWidget {
@@ -18,18 +19,60 @@ class _CadastroPageState extends State<CadastroPage> {
   String sobrenome = '';
   String telefone = '';
 
-  Widget _buildTextFormField(String label, Function(String) onChanged) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: TextFormField(
-        onChanged: onChanged,
-        decoration: InputDecoration(
-          labelText: label,
-          border: OutlineInputBorder(),
-          contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
-        ),
+  final controller = UsuarioController();
+
+  _success() {
+    return _body();
+  }
+
+  _error() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Ops, algo de errado aconteceu',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              controller.start();
+            },
+            child: Text('Tentar novamente'),
+          ),
+        ],
       ),
     );
+  }
+
+  _loading() {
+    return Center(child: CircularProgressIndicator());
+  }
+
+  _start() {
+    return Container();
+  }
+
+  stateManagement(HomeState state) {
+    switch (state) {
+      case HomeState.start:
+        return _start();
+      case HomeState.loading:
+        return _loading();
+      case HomeState.error:
+        return _error();
+      case HomeState.success:
+        return _success();
+      default:
+        _start();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller.start();
   }
 
   Widget _body() {
@@ -59,18 +102,22 @@ class _CadastroPageState extends State<CadastroPage> {
                       SizedBox(height: 8),
                       _buildTextFormField('Email', (text) => email = text),
                       SizedBox(height: 8),
-                      _buildTextFormField('Password', (text) => password = text),
-                      SizedBox(height: 8),
                       _buildTextFormField(
-                          'Confirm your Password', (text) => confirmPassword = text),
+                          'Password', (text) => password = text),
                       SizedBox(height: 8),
-                      _buildTextFormField('Data de Nascimento', (text) => dataNascimento = text),
+                      _buildTextFormField('Confirm your Password',
+                          (text) => confirmPassword = text),
+                      SizedBox(height: 8),
+                      _buildTextFormField('Data de Nascimento',
+                          (text) => dataNascimento = text),
                       SizedBox(height: 8),
                       _buildTextFormField('Nome', (text) => nome = text),
                       SizedBox(height: 8),
-                      _buildTextFormField('Sobrenome', (text) => sobrenome = text),
+                      _buildTextFormField(
+                          'Sobrenome', (text) => sobrenome = text),
                       SizedBox(height: 8),
-                      _buildTextFormField('Telefone', (text) => telefone = text),
+                      _buildTextFormField(
+                          'Telefone', (text) => telefone = text),
                     ],
                   ),
                 ),
@@ -116,7 +163,21 @@ class _CadastroPageState extends State<CadastroPage> {
     );
   }
 
-  // Método para chamar a API e cadastrar o usuário
+  Widget _buildTextFormField(String label, Function(String) onChanged) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: TextFormField(
+        onChanged: onChanged,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(),
+          contentPadding:
+              EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+        ),
+      ),
+    );
+  }
+
   void _cadastrarUsuario() async {
     // Construir o corpo da requisição com os dados do usuário
     final Map<String, dynamic> body = {
@@ -126,7 +187,6 @@ class _CadastroPageState extends State<CadastroPage> {
       'sobrenome': sobrenome,
       'telefone': telefone,
       'dataNascimento': dataNascimento,
-      // Adicione outros campos necessários para o cadastro
     };
 
     try {
@@ -141,6 +201,17 @@ class _CadastroPageState extends State<CadastroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Cadastro'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh_outlined),
+            onPressed: () {
+              controller.start();
+            },
+          )
+        ],
+      ),
       body: Stack(
         children: [
           SizedBox(
@@ -153,7 +224,12 @@ class _CadastroPageState extends State<CadastroPage> {
           Container(
             color: Colors.black.withOpacity(0.3),
           ),
-          _body(),
+          AnimatedBuilder(
+            animation: controller.state,
+            builder: (context, child) {
+              return stateManagement(controller.state.value);
+            },
+          )
         ],
       ),
     );

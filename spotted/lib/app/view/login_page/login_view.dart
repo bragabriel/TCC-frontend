@@ -99,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).pushReplacementNamed('/cadastro');
+                Navigator.of(context).pushNamed('/cadastro');
               },
               child: Text(
                 'Novo aqui? Cadastre-se',
