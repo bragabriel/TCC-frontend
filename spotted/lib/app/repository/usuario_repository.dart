@@ -10,7 +10,12 @@ class UsuarioRepository {
   Future<List<Usuario>> getAllUsuarios() async {
     try {
       final response = await Dio().get(usuariosUrl);
-      if (response.statusCode == 200 && response.statusCode != null ) {
+
+      print(response);
+
+      if (response.statusCode == 200 && response.statusCode != null) {
+
+        print('entrou');
         final responseData = response.data;
         if (responseData != null &&
             responseData['objetoRetorno'] is List<dynamic>) {
@@ -26,6 +31,7 @@ class UsuarioRepository {
         throw 'Erro na requisição da API';
       }
     } catch (e) {
+      print('Erro ao acessar a API: $e');
       throw 'Erro ao acessar a API: $e';
     }
   }

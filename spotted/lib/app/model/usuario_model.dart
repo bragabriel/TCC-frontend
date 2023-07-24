@@ -3,11 +3,11 @@ class Usuario {
   String nomeUsuario;
   String sobrenomeUsuario;
   String emailUsuario;
-  String senhaUsuario;
+  String? senhaUsuario;
   String telefoneUsuario;
-  DateTime dataNascimento; // Alterado para DateTime
-  final String? url;
-  final String? fileName;
+  DateTime dataNascimento;
+  String? url; 
+  String? fileName;
 
   // Constructor
   Usuario({
@@ -15,7 +15,7 @@ class Usuario {
     required this.nomeUsuario,
     required this.sobrenomeUsuario,
     required this.emailUsuario,
-    required this.senhaUsuario,
+    this.senhaUsuario,
     required this.telefoneUsuario,
     required this.dataNascimento,
     this.url,
@@ -50,11 +50,11 @@ class Usuario {
         nomeUsuario: json['nomeUsuario'],
         sobrenomeUsuario: json['sobrenomeUsuario'],
         emailUsuario: json['emailUsuario'],
-        senhaUsuario: json['senhaUsuario'],
+        senhaUsuario: json['senhaUsuario'] as String? ?? "",
         telefoneUsuario: json['telefoneUsuario'],
-        dataNascimento: DateTime.parse(json['dataNascimento']), // Parse para DateTime
-        fileName: json['fileName'] as String?,
-        url: json['url'] as String?,
+        dataNascimento: DateTime.parse(json['dataNascimento']),
+        fileName: json['fileName'] as String? ?? "", 
+        url: json['url'] as String? ?? "", 
       );
 
   Map<String, dynamic> toJson() => {
@@ -64,7 +64,7 @@ class Usuario {
         'emailUsuario': emailUsuario,
         'senhaUsuario': senhaUsuario,
         'telefoneUsuario': telefoneUsuario,
-        'dataNascimento': dataNascimento.toIso8601String(), // Convertendo para String
+        'dataNascimento': dataNascimento.toIso8601String(),
         'url': url,
         'fileName': fileName,
       };

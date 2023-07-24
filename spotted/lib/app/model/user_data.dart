@@ -10,12 +10,13 @@ class UserData {
   static Usuario myUser = Usuario(
     idUsuario: 1,
     dataNascimento: DateTime(2021, 9, 7, 17, 30),
+    //dataNascimento: "asdasddas",
     fileName: "",
     url:
         "https://upload.wikimedia.org/wikipedia/en/0/0b/Darth_Vader_in_The_Empire_Strikes_Back.jpg",
     nomeUsuario: 'puxar-da-api',
     sobrenomeUsuario: 'puardaaspdiasodi',
-    senhaUsuario: 'asjdhasjkdh',
+    //senhaUsuario: 'asjdhasjkdh',
     emailUsuario: 'puxar-da-api',
     telefoneUsuario: '1999999 puxar da api',
   );
