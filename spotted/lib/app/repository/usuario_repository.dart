@@ -10,12 +10,8 @@ class UsuarioRepository {
   Future<List<Usuario>> getAllUsuarios() async {
     try {
       final response = await Dio().get(usuariosUrl);
-
-      print(response);
-
+      
       if (response.statusCode == 200 && response.statusCode != null) {
-
-        print('entrou');
         final responseData = response.data;
         if (responseData != null &&
             responseData['objetoRetorno'] is List<dynamic>) {
@@ -31,7 +27,6 @@ class UsuarioRepository {
         throw 'Erro na requisição da API';
       }
     } catch (e) {
-      print('Erro ao acessar a API: $e');
       throw 'Erro ao acessar a API: $e';
     }
   }
@@ -46,12 +41,29 @@ class UsuarioRepository {
       if (response.statusCode == 201) {
         print('Cadastro realizado com sucesso');
       } else {
-        print('Erro ao cadastrar: ${response.statusCode}');
-        print('Mensagem de erro da API: ${response.data}');
         throw 'Erro ao cadastrar: ${response.statusCode}';
       }
     } catch (e) {
-      print('Erro ao acessar a API: $e');
+      throw 'Erro ao acessar a API: $e';
+    }
+  }
+
+  Future<Usuario> getUsuario(num id) async {
+     try {
+      String url = '$usuariosUrl/$id';
+      final response = await Dio().get(url);
+      if (response.statusCode == 200 && response.statusCode != null) {
+        final responseData = response.data;
+        if (responseData != null && responseData is Map<String, dynamic>) {
+          Usuario usuario = Usuario.fromJson(responseData);
+          return usuario;
+        } else {
+          throw 'Resposta inválida da API - conteúdo ausente ou inválido';
+        }
+      } else {
+        throw 'Erro na requisição da API';
+      }
+    } catch (e) {
       throw 'Erro ao acessar a API: $e';
     }
   }

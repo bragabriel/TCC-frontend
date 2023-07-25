@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spotted/app/repository/usuario_repository.dart';
 
 import '../../../service/change_notifier.dart';
 import '../../model/usuario_model.dart';
@@ -14,6 +15,20 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String email = '';
   String password = '';
+  late Usuario usuario;
+
+//BATER NO ENDPOINT LOGIN
+//GET USUARIO SERA NA HOMEPAGE
+/* Future<void> _getUsuario(num id) async {
+    try {
+      final response = await UsuarioRepository().getUsuario(id);
+      setState(() {
+        this.usuario = response;
+      });
+    } catch (e) {
+      print('Erro ao obter o usuário: $e');
+    }
+  } */
 
   Widget _body() {
     return SingleChildScrollView(
@@ -151,19 +166,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(
-      //Vai para trás, como um background
       children: [
         SizedBox(
-            height: MediaQuery.of(context)
-                .size
-                .height, //pegando o tamanho da tela em si
-
+            height: MediaQuery.of(context).size.height,
             child: Image.asset(
               'assets/images/wallpaper.png',
               fit: BoxFit.cover,
             )),
-        Container(
-            color: Colors.black.withOpacity(0.3)), //diminuindo a opacidade
+        Container(color: Colors.black.withOpacity(0.3)),
         _body(),
       ],
     ));
