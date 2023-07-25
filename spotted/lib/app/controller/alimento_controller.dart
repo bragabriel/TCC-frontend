@@ -12,7 +12,6 @@ class AlimentoController{
 
   start() async {
     state.value = HomeState.loading;
-    
     try {
       listResponse = await _repository.getAllAlimentos();
       state.value = HomeState.success;
