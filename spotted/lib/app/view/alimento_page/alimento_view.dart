@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/alimento_repository.dart';
 import 'package:spotted/app/model/alimento_model.dart';
-import '../../controller/alimento_controller.dart';
 import 'alimentoCadastrar_view.dart';
 import 'alimentoDetalhes_view.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import '../../controller/alimento_controller.dart';
+import '../../model/artefato_model.dart';
 
 class AlimentoPage extends StatefulWidget {
   const AlimentoPage({Key? key}) : super(key: key);
@@ -28,8 +30,7 @@ class _AlimentoPageState extends State<AlimentoPage> {
   final controller = AlimentoController();
 
   _success() {
-    print('CAIU NO SUCCESS');
-    return _filtros();
+    return _body();
   }
 
   _error() {
@@ -281,16 +282,9 @@ class _AlimentoPageState extends State<AlimentoPage> {
                       style: const TextStyle(
                           fontSize: 11, fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text(filteredFoodList[index].tipoArtefato),
+                    subtitle: Text("R\$ ${filteredFoodList[index].precoAlimento}"),
                   ),
-                  // child: Image.network(
-                  //   filteredFoodList[index].listaImagens[index].url,
-                  //   fit: BoxFit.cover,
-                  // ),
-                  child: Image.asset(
-                    'assets/images/jobs.jpg',
-                    fit: BoxFit.cover,
-                  ),
+                  child: _buildImagens(filteredFoodList[index].listaImagens),
                 ),
               );
             }),
@@ -333,3 +327,43 @@ class _AlimentoPageState extends State<AlimentoPage> {
     );
   }
 }
+
+Widget _buildImagens(List<Imagem>? listaDeImagens) {
+  if (!listaDeImagens!.isEmpty) {
+    final imageAspectRatio = 2 / 3;
+    return Scaffold(
+      body: AspectRatio(
+        aspectRatio: imageAspectRatio,
+        child: Container(
+          width: double.infinity,
+          child: CarouselSlider(
+            options: CarouselOptions(
+              height: double.infinity,
+              enlargeCenterPage: true,
+              autoPlay: true,
+              autoPlayInterval: Duration(seconds: 3),
+              autoPlayAnimationDuration: Duration(milliseconds: 800),
+              autoPlayCurve: Curves.easeInExpo,
+              pauseAutoPlayOnTouch: true,
+            ),
+            items: listaDeImagens?.map((imagemPath) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Image.network(
+                    imagemPath.url,
+                    fit: BoxFit.cover,
+                  );
+                },
+              );
+            }).toList(),
+          ),
+        ),
+      ),
+    );
+  } else {
+    return Center(
+      child: Image.asset('assets/images/imagem_nao_cadastrada.png'),
+    );
+  }
+}
+

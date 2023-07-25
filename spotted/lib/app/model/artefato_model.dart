@@ -40,6 +40,7 @@ class Artefato {
 
 class Imagem {
   final int idImage;
+  // final String localUrl;
   final String url;
   final int sequence;
   final String fileName;
@@ -47,6 +48,7 @@ class Imagem {
 
   Imagem({
     required this.idImage,
+    // required this.localUrl,
     required this.url,
     required this.sequence,
     required this.fileName,
@@ -56,6 +58,7 @@ class Imagem {
   factory Imagem.fromJson(Map<String, dynamic> json) {
     return Imagem(
       idImage: json['idImage'],
+      // localUrl: json['localUrl'],
       url: json['url'],
       sequence: json['sequence'],
       fileName: json['fileName'],
