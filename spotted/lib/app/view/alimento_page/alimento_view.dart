@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/alimento_repository.dart';
 import 'package:spotted/app/model/alimento_model.dart';
+import '../../controller/alimento_controller.dart';
 import 'alimentoCadastrar_view.dart';
 import 'alimentoDetalhes_view.dart';
 
@@ -8,7 +9,8 @@ class AlimentoPage extends StatefulWidget {
   const AlimentoPage({Key? key}) : super(key: key);
 
   @override
-  _AlimentoPageState createState() => _AlimentoPageState();
+  State<AlimentoPage> createState() =>
+   _AlimentoPageState();
 }
 
 class _AlimentoPageState extends State<AlimentoPage> {
@@ -23,12 +25,98 @@ class _AlimentoPageState extends State<AlimentoPage> {
   bool _showAllItems = true;
   String _searchTerm = '';
 
-  TextEditingController _searchController = TextEditingController();
+  final _searchController = TextEditingController();
+  final controller = AlimentoController();
+
+  _success() {
+    print('CAIU NO SUCCESS');
+    return _filtros();
+  }
+
+  _error() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Ops, algo de errado aconteceu',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              controller.start();
+            },
+            child: Text('Tentar novamente'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _loading() {
+    print("CAIU NO LAODING");
+    return Center(child: CircularProgressIndicator());
+  }
+
+  _start() {
+    return Container();
+  }
+
+  stateManagement(HomeState state) {
+    switch (state) {
+      case HomeState.start:
+        return _start();
+      case HomeState.loading:
+        return _loading();
+      case HomeState.error:
+        return _error();
+      case HomeState.success:
+        return _success();
+      default:
+        _start();
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    _fetchFood();
+    controller.start();
+    //_fetchFood();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Alimentação"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              controller.start();
+              //_fetchFood();
+            },
+            icon: const Icon(Icons.refresh_outlined),
+          )
+        ],
+      ),
+      body: stateManagement(controller.state.value),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AlimentoCadastrarView(),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _body() {
+    return _filtros();
   }
 
   Future<void> _fetchFood() async {
@@ -51,36 +139,6 @@ class _AlimentoPageState extends State<AlimentoPage> {
     // Verifica se o tipo do alimento está na lista de tipos selecionados
     return selectedTypes.contains(food.tipoAlimento);
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Alimentação"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              _fetchFood();
-            },
-            icon: const Icon(Icons.refresh_outlined),
-          )
-        ],
-      ),
-      body: _filtros(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AlimentoCadastrarView(),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
 
   void _filterFoodList() {
     setState(() {
@@ -117,6 +175,12 @@ class _AlimentoPageState extends State<AlimentoPage> {
 
   Column _filtros() {
     return Column(children: [
+      AnimatedBuilder(
+        animation: controller.state,
+        builder: (context, child) {
+          return stateManagement(controller.state.value);
+        },
+      ),
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextField(
@@ -241,8 +305,7 @@ class _AlimentoPageState extends State<AlimentoPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return AlimentoDetalheView(
-                            filteredFoodList[index]); 
+                        return AlimentoDetalheView(filteredFoodList[index]);
                       },
                     ),
                   );
