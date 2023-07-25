@@ -9,8 +9,7 @@ class AlimentoPage extends StatefulWidget {
   const AlimentoPage({Key? key}) : super(key: key);
 
   @override
-  State<AlimentoPage> createState() =>
-   _AlimentoPageState();
+  State<AlimentoPage> createState() => _AlimentoPageState();
 }
 
 class _AlimentoPageState extends State<AlimentoPage> {
@@ -55,7 +54,6 @@ class _AlimentoPageState extends State<AlimentoPage> {
   }
 
   _loading() {
-    print("CAIU NO LAODING");
     return Center(child: CircularProgressIndicator());
   }
 
@@ -82,37 +80,7 @@ class _AlimentoPageState extends State<AlimentoPage> {
   void initState() {
     super.initState();
     controller.start();
-    //_fetchFood();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Alimentação"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              controller.start();
-              //_fetchFood();
-            },
-            icon: const Icon(Icons.refresh_outlined),
-          )
-        ],
-      ),
-      body: stateManagement(controller.state.value),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AlimentoCadastrarView(),
-            ),
-          );
-        },
-      ),
-    );
+    _fetchFood();
   }
 
   Widget _body() {
@@ -175,12 +143,6 @@ class _AlimentoPageState extends State<AlimentoPage> {
 
   Column _filtros() {
     return Column(children: [
-      AnimatedBuilder(
-        animation: controller.state,
-        builder: (context, child) {
-          return stateManagement(controller.state.value);
-        },
-      ),
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextField(
@@ -334,5 +296,40 @@ class _AlimentoPageState extends State<AlimentoPage> {
             }),
       )
     ]);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Alimentação"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              controller.start();
+              _fetchFood();
+            },
+            icon: const Icon(Icons.refresh_outlined),
+          )
+        ],
+      ),
+      body: AnimatedBuilder(
+        animation: controller.state,
+        builder: (context, child) {
+          return stateManagement(controller.state.value);
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AlimentoCadastrarView(),
+            ),
+          );
+        },
+      ),
+    );
   }
 }
