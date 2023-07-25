@@ -1,7 +1,10 @@
 //StatefulWidget = Dinamico -> Pode ser modificado
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../service/change_notifier.dart';
 import '../../controller/app_controller.dart';
+import '../../model/usuario_model.dart';
 import '../alimento_page/alimento_view.dart';
 import '../emprego_page/job_home.dart';
 import '../emprego_page/postjobs_view.dart';
@@ -15,22 +18,24 @@ class HomePage extends StatefulWidget {
 
 //Criando uma classe para ser retornada e funcionar como um estado
 class HomePageState extends State<HomePage> {
-  int counter = 0;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       drawer: Drawer(
         child: Column(children: [
-          UserAccountsDrawerHeader(
-              currentAccountPicture:
-                  //ClipRRect(
-                  ClipOval(
-                      //borderRadius: BorderRadius.circular(30),
-                      child: Image.asset('assets/images/user.png')),
-              accountName: Text('Gabriel Braga'),
-              accountEmail: Text('teste@teste.com')),
+          Consumer<UserProvider>(
+          builder: (context, userProvider, _) {
+              Usuario? user = userProvider.user;
+              return UserAccountsDrawerHeader(
+                currentAccountPicture: ClipOval(
+                  child: Image.asset('assets/images/user.png'),
+                ),
+                accountName: Text(user?.nomeUsuario ?? 'Usuário não logado'),
+                accountEmail: Text(user?.emailUsuario ?? ''),
+              );
+            },
+          ),
           ListTile(
               leading: Icon(Icons.verified_user),
               title: Text('Perfil'),
@@ -64,42 +69,21 @@ class HomePageState extends State<HomePage> {
               title: Text('Festas'),
               subtitle: Text('Partiu pra revoada? 🎉'),
               onTap: () {
-                /* Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return PostsPageJobs();
-                    },
-                  ),
-                ); */
+                Navigator.of(context).pushNamed('/festas');
               }),
           ListTile(
               leading: Icon(Icons.food_bank_outlined),
-              title: Text('Moradia'),
-              subtitle: Text('Espiadinha em lugares próximos ao campus? 👀'),
+              title: Text('Objetos Perdidos'),
+              subtitle: Text('Perdeu seu casaco favorito? 👀'),
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return AlimentoPage(); //MUDAR AQUI
-                    },
-                  ),
-                );
+                Navigator.of(context).pushNamed('/objetos');
               }),
           ListTile(
               leading: Icon(Icons.home_filled),
               title: Text('Moradia'),
               subtitle: Text('Lugares próximos ao campus? 🔑'),
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return AlimentoPage();
-                    },
-                  ),
-                );
+                Navigator.of(context).pushNamed('/moradia');
               }),
           ListTile(
               leading: Icon(Icons.logout),
@@ -178,14 +162,6 @@ class HomePageState extends State<HomePage> {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          setState(() {
-            counter++; //necessario dizer que o estado vai ser modificado e precisa ser reconstuido
-          });
-        },
       ),
     );
   }

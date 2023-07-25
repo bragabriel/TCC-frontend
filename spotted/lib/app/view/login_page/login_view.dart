@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../service/change_notifier.dart';
+import '../../model/usuario_model.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -60,6 +64,17 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {
                           if (email == 'teste' && password == '123') {
                             //Login correto
+                            Usuario user = Usuario(
+                              idUsuario: 1,
+                              nomeUsuario: 'Nome do Usuário',
+                              sobrenomeUsuario: 'Sobrenome do Usuário',
+                              emailUsuario: email,
+                              senhaUsuario: '123',
+                              telefoneUsuario: '123456789',
+                              dataNascimento: DateTime(2000, 1, 1),
+                            );
+                            Provider.of<UserProvider>(context, listen: false)
+                                .setUser(user);
                             Navigator.of(context).pushReplacementNamed('/home');
                             showDialog(
                                 context: context,
