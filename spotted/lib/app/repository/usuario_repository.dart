@@ -10,7 +10,7 @@ class UsuarioRepository {
   Future<List<Usuario>> getAllUsuarios() async {
     try {
       final response = await Dio().get(usuariosUrl);
-      
+
       if (response.statusCode == 200 && response.statusCode != null) {
         final responseData = response.data;
         if (responseData != null &&
@@ -49,7 +49,7 @@ class UsuarioRepository {
   }
 
   Future<Usuario> getUsuario(num id) async {
-     try {
+    try {
       String url = '$usuariosUrl/$id';
       final response = await Dio().get(url);
       if (response.statusCode == 200 && response.statusCode != null) {
@@ -59,6 +59,43 @@ class UsuarioRepository {
           return usuario;
         } else {
           throw 'Resposta inválida da API - conteúdo ausente ou inválido';
+        }
+      } else {
+        throw 'Erro na requisição da API';
+      }
+    } catch (e) {
+      throw 'Erro ao acessar a API: $e';
+    }
+  }
+
+  Future<Usuario> logarUsuario(String email, String senha) async {
+    try {
+      final requestData = {
+        "email": email,
+        "senha": senha,
+      };
+
+      final response = await Dio().post(
+        "$onlineApi/usuarioLogar",
+        data: requestData,
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = response.data;
+        if (responseData != null && responseData is Map<String, dynamic>) {
+          Usuario usuario = Usuario.fromJson(responseData);
+          return usuario;
+        } else {
+          throw 'Resposta inválida da API - conteúdo ausente ou inválido';
+        }
+      } else if (response.statusCode == 400) {
+        final responseData = response.data;
+        if (responseData != null &&
+            responseData is Map<String, dynamic> &&
+            responseData.containsKey('message')) {
+          throw responseData['message'];
+        } else {
+          throw 'Erro na requisição da API';
         }
       } else {
         throw 'Erro na requisição da API';

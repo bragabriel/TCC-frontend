@@ -1,8 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
 
 import '../../../service/change_notifier.dart';
+import '../../constants/constants.dart';
 import '../../model/usuario_model.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,19 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   String email = '';
   String password = '';
   late Usuario usuario;
-
-//BATER NO ENDPOINT LOGIN
-//GET USUARIO SERA NA HOMEPAGE
-/* Future<void> _getUsuario(num id) async {
-    try {
-      final response = await UsuarioRepository().getUsuario(id);
-      setState(() {
-        this.usuario = response;
-      });
-    } catch (e) {
-      print('Erro ao obter o usuário: $e');
-    }
-  } */
 
   Widget _body() {
     return SingleChildScrollView(
@@ -76,17 +65,19 @@ class _LoginPageState extends State<LoginPage> {
                         height: 15,
                       ),
                       ElevatedButton(
-                        onPressed: () {
-                          if (email == 'teste' && password == '123') {
-                            //Login correto
+                        onPressed: () async {
+                          try {
+                            final usuario = await UsuarioRepository()
+                                .logarUsuario(email, password);
+
                             Usuario user = Usuario(
-                              idUsuario: 1,
-                              nomeUsuario: 'Nome do Usuário',
-                              sobrenomeUsuario: 'Sobrenome do Usuário',
+                              idUsuario: usuario.idUsuario,
+                              nomeUsuario: usuario.nomeUsuario,
+                              sobrenomeUsuario: usuario.sobrenomeUsuario,
                               emailUsuario: email,
-                              senhaUsuario: '123',
-                              telefoneUsuario: '123456789',
-                              dataNascimento: DateTime(2000, 1, 1),
+                              senhaUsuario: '',
+                              telefoneUsuario: usuario.telefoneUsuario,
+                              dataNascimento: usuario.dataNascimento,
                             );
                             Provider.of<UserProvider>(context, listen: false)
                                 .setUser(user);
@@ -107,8 +98,13 @@ class _LoginPageState extends State<LoginPage> {
                                     ],
                                   );
                                 });
-                          } else {
-                            print('login inválido');
+
+                            setState(() {
+                              this.usuario = usuario;
+                            });
+                          } catch (e) {
+                            print('Erro ao fazer login: $e');
+                            _showErrorDialog('Erro ao fazer login: $e');
                           }
                         },
                         child: Container(
@@ -161,6 +157,26 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  void _showErrorDialog(String errorMessage) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Erro'),
+        content: Text(errorMessage),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
