@@ -74,7 +74,7 @@ class DetalhesMoradia extends StatelessWidget {
       child: Wrap(
         children: [
           Text(
-            "${moradia.tituloArtefato} - ${moradia.localizacaoMoradia} \n",
+            "${moradia.tituloArtefato} - ${moradia.cidadeMoradia} \n",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 27,
@@ -88,7 +88,7 @@ class DetalhesMoradia extends StatelessWidget {
             ),
           ),
           Text(
-            "${moradia.localizacaoMoradia} \n",
+            "${moradia.cidadeMoradia} \n",
             style: TextStyle(
               color: Colors.black,
               fontSize: 18,

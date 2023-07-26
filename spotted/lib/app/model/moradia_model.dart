@@ -1,7 +1,10 @@
 import 'artefato_model.dart';
 
 class Moradia extends Artefato {
-  final String? localizacaoMoradia;
+  final String? estadoMoradia;
+  final String? cidadeMoradia;
+  final String? bairroMoradia;
+  final String? cepMoradia;
   final num? qtdMoradoresPermitidoMoradia;
   final num? qtdMoradoresAtuaisMoradia;
   final num? precoAluguelTotalMoradia;
@@ -19,7 +22,10 @@ class Moradia extends Artefato {
     required String? dataAtualizacao,
     required int idUsuario,
     required List<Imagem> listaImagens,
-    required this.localizacaoMoradia,
+    required this.cidadeMoradia,
+    required this.bairroMoradia,
+    required this.estadoMoradia,
+    required this.cepMoradia,
     required this.qtdMoradoresPermitidoMoradia,
     required this.qtdMoradoresAtuaisMoradia,
     required this.precoAluguelTotalMoradia,
@@ -51,7 +57,10 @@ class Moradia extends Artefato {
       listaImagens: (json['listaImagens'] as List<dynamic>)
           .map((image) => Imagem.fromJson(image))
           .toList(),
-      localizacaoMoradia: json['localizacaoMoradia'],
+      estadoMoradia: json['estadoMoradia'],
+      cidadeMoradia: json['cidadeMoradia'],
+      bairroMoradia: json['bairroMoradia'],
+      cepMoradia: json['cepMoradia'],
       qtdMoradoresPermitidoMoradia: json['qtdMoradoresPermitidoMoradia'],
       qtdMoradoresAtuaisMoradia: json['qtdMoradoresAtuaisMoradia'],
       precoAluguelTotalMoradia: json['precoAluguelTotalMoradia'],

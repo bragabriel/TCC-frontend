@@ -21,10 +21,11 @@ class MoradiaPageState extends State<MoradiaPage> {
   double? maxPrice;
   bool showOnlyOffers = false;
   List<String> selectedTypes = [];
-  bool _noGarageSelected = false;
-  bool _hasGarageSelected = false;
+  int? qtdMoradoresFilter; // Novo filtro "qtdMoradoresAtuaisMoradia"
   bool _showAllItems = true;
   String _searchTerm = '';
+  String _cidadeFilter = ''; // Novo filtro "cidadeMoradia"
+  String _estadoFilter = ''; // Novo filtro "estadoMoradia"
 
   final _searchController = TextEditingController();
   final controller = MoradiaController();
@@ -139,10 +140,8 @@ class MoradiaPageState extends State<MoradiaPage> {
             (maxPrice == null ||
                 moradia.precoAluguelTotalMoradia! <= maxPrice!);
 
-        final meetsOfferCriteria = _showAllItems
-            ? true // Sem filtro de oferta, mostrar todos os itens
-            : moradia.animaisEstimacaoMoradia?.isNotEmpty ??
-                false; // Exibir apenas os itens que permitem animais de estimação
+        final meetsMoradoresCriteria = (qtdMoradoresFilter == null ||
+            moradia.qtdMoradoresAtuaisMoradia! <= qtdMoradoresFilter!);
 
         final searchTerm = _searchTerm.toLowerCase();
         final titleContainsTerm =
@@ -150,8 +149,22 @@ class MoradiaPageState extends State<MoradiaPage> {
         final descriptionContainsTerm =
             moradia.descricaoArtefato.toLowerCase().contains(searchTerm);
 
+          final meetsCidadeCriteria = _cidadeFilter.isEmpty ||
+          (moradia.cidadeMoradia != null &&
+              moradia.cidadeMoradia!
+                  .toLowerCase()
+                  .contains(_cidadeFilter.toLowerCase()));
+
+      final meetsEstadoCriteria = _estadoFilter.isEmpty ||
+          (moradia.estadoMoradia != null &&
+              moradia.estadoMoradia!
+                  .toLowerCase()
+                  .contains(_estadoFilter.toLowerCase()));;
+
         return meetsPriceCriteria &&
-            meetsOfferCriteria &&
+            meetsMoradoresCriteria &&
+            meetsCidadeCriteria &&
+            meetsEstadoCriteria &&
             (titleContainsTerm || descriptionContainsTerm);
       }).toList();
     });
@@ -224,49 +237,82 @@ class MoradiaPageState extends State<MoradiaPage> {
                 ),
               ],
             ),
-            Column(
-              children: [
-                Text('Aceita animais'),
-                SizedBox(height: 4),
-                Checkbox(
-                  value: !_showAllItems,
-                  onChanged: (value) {
-                    setState(() {
-                      _showAllItems = !value!;
-                      _filterMoradiaList();
-                    });
-                  },
+          ],
+        ),
+        SizedBox(height: 10),
+        // Filtro qtdMoradoresAtuaisMoradia
+        Column(
+          children: [
+            Text('Quantidade Max de Moradores Atuais'),
+            SizedBox(height: 4),
+            SizedBox(
+              width: 100,
+              child: TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    qtdMoradoresFilter =
+                        value.isEmpty ? null : int.parse(value);
+                    _filterMoradiaList();
+                  });
+                },
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: '0',
                 ),
-              ],
+              ),
             ),
           ],
         ),
         SizedBox(height: 10),
-        Wrap(
-          spacing: 8,
+
+        // Filtro cidadeMoradia
+        Column(
           children: [
-            FilterChip(
-              label: Text('Moradia com vaga de garagem'),
-              selected: _hasGarageSelected,
-              onSelected: (selected) {
-                setState(() {
-                  _hasGarageSelected = selected;
-                  _filterMoradiaList();
-                });
-              },
-            ),
-            FilterChip(
-              label: Text('Moradia sem vaga de garagem'),
-              selected: _noGarageSelected,
-              onSelected: (selected) {
-                setState(() {
-                  _noGarageSelected = selected;
-                  _filterMoradiaList();
-                });
-              },
+            Text('Cidade'),
+            SizedBox(height: 4),
+            SizedBox(
+              width: 150,
+              child: TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    _cidadeFilter = value;
+                    _filterMoradiaList();
+                  });
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Digite a cidade',
+                ),
+              ),
             ),
           ],
         ),
+        SizedBox(height: 10),
+
+        // Filtro estadoMoradia
+        Column(
+          children: [
+            Text('Estado'),
+            SizedBox(height: 4),
+            SizedBox(
+              width: 150,
+              child: TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    _estadoFilter = value;
+                    _filterMoradiaList();
+                  });
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Digite o estado',
+                ),
+              ),
+            ),
+          ],
+        ),
+
         SizedBox(height: 10),
         Expanded(
           child: GridView.builder(

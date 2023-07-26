@@ -30,7 +30,7 @@ class AlimentoPageState extends State<AlimentoPage> {
   final controller = AlimentoController();
 
   _success() {
-    return _filtros();
+    return _body();
   }
 
   _error() {
@@ -117,6 +117,10 @@ class AlimentoPageState extends State<AlimentoPage> {
         },
       ),
     );
+  }
+
+  Widget _body() {
+    return _filtros();
   }
 
   Future<void> _fetchFood() async {
@@ -302,7 +306,11 @@ class AlimentoPageState extends State<AlimentoPage> {
                       style: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text("R\$ ${filteredFoodList[index].precoAlimento}", style: const TextStyle(fontSize: 13, fontWeight:  FontWeight.bold),),
+                    subtitle: Text(
+                      "R\$ ${filteredFoodList[index].precoAlimento}",
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.bold),
+                    ),
                   ),
                   child: _buildImagens(filteredFoodList[index].listaImagens),
                 ),
@@ -351,4 +359,3 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
     );
   }
 }
-
