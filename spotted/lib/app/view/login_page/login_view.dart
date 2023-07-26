@@ -1,4 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:spotted/app/repository/usuario_repository.dart';
+
+import '../../../service/change_notifier.dart';
+import '../../constants/constants.dart';
+import '../../model/usuario_model.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,6 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String email = '';
   String password = '';
+  late Usuario usuario;
 
   Widget _body() {
     return SingleChildScrollView(
@@ -57,9 +65,22 @@ class _LoginPageState extends State<LoginPage> {
                         height: 15,
                       ),
                       ElevatedButton(
-                        onPressed: () {
-                          if (email == 'teste' && password == '123') {
-                            //Login correto
+                        onPressed: () async {
+                          try {
+                            final usuario = await UsuarioRepository()
+                                .logarUsuario(email, password);
+
+                            Usuario user = Usuario(
+                              idUsuario: usuario.idUsuario,
+                              nomeUsuario: usuario.nomeUsuario,
+                              sobrenomeUsuario: usuario.sobrenomeUsuario,
+                              emailUsuario: email,
+                              senhaUsuario: '',
+                              telefoneUsuario: usuario.telefoneUsuario,
+                              dataNascimento: usuario.dataNascimento,
+                            );
+                            Provider.of<UserProvider>(context, listen: false)
+                                .setUser(user);
                             Navigator.of(context).pushReplacementNamed('/home');
                             showDialog(
                                 context: context,
@@ -77,8 +98,12 @@ class _LoginPageState extends State<LoginPage> {
                                     ],
                                   );
                                 });
-                          } else {
-                            print('login inválido');
+
+                            setState(() {
+                              this.usuario = usuario;
+                            });
+                          } catch (e) {
+                            print('Erro ao fazer login: $e');
                           }
                         },
                         child: Container(
@@ -132,23 +157,20 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+ 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(
-      //Vai para trás, como um background
       children: [
         SizedBox(
-            height: MediaQuery.of(context)
-                .size
-                .height, //pegando o tamanho da tela em si
-
+            height: MediaQuery.of(context).size.height,
             child: Image.asset(
               'assets/images/wallpaper.png',
               fit: BoxFit.cover,
             )),
-        Container(
-            color: Colors.black.withOpacity(0.3)), //diminuindo a opacidade
+        Container(color: Colors.black.withOpacity(0.3)),
         _body(),
       ],
     ));

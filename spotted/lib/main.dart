@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:spotted/app/view/alimento_page/alimento_view.dart';
 import 'package:spotted/app/widget/app_widget.dart';
+import 'package:spotted/service/change_notifier.dart';
 
 main(){
-  runApp(AppWidget());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: AppWidget(),
+    ),
+  );
 }
 
 Widget build(BuildContext context) {
