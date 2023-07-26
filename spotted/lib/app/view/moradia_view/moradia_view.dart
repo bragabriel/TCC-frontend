@@ -21,11 +21,11 @@ class MoradiaPageState extends State<MoradiaPage> {
   double? maxPrice;
   bool showOnlyOffers = false;
   List<String> selectedTypes = [];
-  int? qtdMoradoresFilter; // Novo filtro "qtdMoradoresAtuaisMoradia"
+  int? qtdMoradoresFilter;
   bool _showAllItems = true;
   String _searchTerm = '';
-  String _cidadeFilter = ''; // Novo filtro "cidadeMoradia"
-  String _estadoFilter = ''; // Novo filtro "estadoMoradia"
+  String cidadeSelecionada = 'Selecione uma cidade';
+  String estadoSelecionado = 'Selecione um estado';
 
   final _searchController = TextEditingController();
   final controller = MoradiaController();
@@ -141,25 +141,23 @@ class MoradiaPageState extends State<MoradiaPage> {
                 moradia.precoAluguelTotalMoradia! <= maxPrice!);
 
         final meetsMoradoresCriteria = (qtdMoradoresFilter == null ||
-            moradia.qtdMoradoresAtuaisMoradia! <= qtdMoradoresFilter!);
+            moradia.qtdMoradoresAtuaisMoradia! >= qtdMoradoresFilter!);
+
+        final meetsCidadeCriteria =
+            cidadeSelecionada == "Selecione uma cidade" ||
+                moradia.cidadeMoradia?.toLowerCase() ==
+                    cidadeSelecionada.toLowerCase();
+
+        final meetsEstadoCriteria =
+            estadoSelecionado == "Selecione um estado" ||
+                moradia.estadoMoradia?.toLowerCase() ==
+                    estadoSelecionado.toLowerCase();
 
         final searchTerm = _searchTerm.toLowerCase();
         final titleContainsTerm =
             moradia.tituloArtefato.toLowerCase().contains(searchTerm);
         final descriptionContainsTerm =
             moradia.descricaoArtefato.toLowerCase().contains(searchTerm);
-
-          final meetsCidadeCriteria = _cidadeFilter.isEmpty ||
-          (moradia.cidadeMoradia != null &&
-              moradia.cidadeMoradia!
-                  .toLowerCase()
-                  .contains(_cidadeFilter.toLowerCase()));
-
-      final meetsEstadoCriteria = _estadoFilter.isEmpty ||
-          (moradia.estadoMoradia != null &&
-              moradia.estadoMoradia!
-                  .toLowerCase()
-                  .contains(_estadoFilter.toLowerCase()));;
 
         return meetsPriceCriteria &&
             meetsMoradoresCriteria &&
@@ -265,54 +263,54 @@ class MoradiaPageState extends State<MoradiaPage> {
           ],
         ),
         SizedBox(height: 10),
-
-        // Filtro cidadeMoradia
-        Column(
-          children: [
-            Text('Cidade'),
-            SizedBox(height: 4),
-            SizedBox(
-              width: 150,
-              child: TextFormField(
-                onChanged: (value) {
-                  setState(() {
-                    _cidadeFilter = value;
-                    _filterMoradiaList();
-                  });
-                },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Digite a cidade',
-                ),
-              ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: DropdownButtonFormField<String>(
+            value: cidadeSelecionada,
+            onChanged: (novaCidade) {
+              setState(() {
+                cidadeSelecionada = novaCidade!;
+                _filterMoradiaList();
+              });
+            },
+            items:
+                _obterListaDeCidades().map<DropdownMenuItem<String>>((cidade) {
+              return DropdownMenuItem<String>(
+                value: cidade,
+                child: Text(cidade),
+              );
+            }).toList(),
+            decoration: InputDecoration(
+              labelText: 'Cidade',
+              border: OutlineInputBorder(),
             ),
-          ],
-        ),
-        SizedBox(height: 10),
-
-        // Filtro estadoMoradia
-        Column(
-          children: [
-            Text('Estado'),
-            SizedBox(height: 4),
-            SizedBox(
-              width: 150,
-              child: TextFormField(
-                onChanged: (value) {
-                  setState(() {
-                    _estadoFilter = value;
-                    _filterMoradiaList();
-                  });
-                },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Digite o estado',
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
 
+        // Filtro por Estado
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: DropdownButtonFormField<String>(
+            value: estadoSelecionado,
+            onChanged: (novoEstado) {
+              setState(() {
+                estadoSelecionado = novoEstado!;
+                _filterMoradiaList();
+              });
+            },
+            items:
+                _obterListaDeEstados().map<DropdownMenuItem<String>>((estado) {
+              return DropdownMenuItem<String>(
+                value: estado,
+                child: Text(estado),
+              );
+            }).toList(),
+            decoration: InputDecoration(
+              labelText: 'Estado',
+              border: OutlineInputBorder(),
+            ),
+          ),
+        ),
         SizedBox(height: 10),
         Expanded(
           child: GridView.builder(
@@ -363,6 +361,34 @@ class MoradiaPageState extends State<MoradiaPage> {
         )
       ],
     );
+  }
+
+  List<String> _obterListaDeCidades() {
+    final cidades = moradiaList
+        .map((moradia) => moradia.cidadeMoradia)
+        .where((cidade) => cidade != null) // Remover valores nulos
+        .map((cidade) => cidade!) // Converter String? para String
+        .toSet() // Remover valores duplicados
+        .toList();
+
+    // Adicionar valor padrão "Selecione uma cidade" no início da lista
+    cidades.insert(0, "Selecione uma cidade");
+
+    return cidades;
+  }
+
+  List<String> _obterListaDeEstados() {
+    final estados = moradiaList
+        .map((moradia) => moradia.estadoMoradia)
+        .where((estado) => estado != null) // Remover valores nulos
+        .map((estado) => estado!) // Converter String? para String
+        .toSet() // Remover valores duplicados
+        .toList();
+
+    // Adicionar valor padrão "Selecione um estado" no início da lista
+    estados.insert(0, "Selecione um estado");
+
+    return estados;
   }
 
   Widget _buildImagens(List<Imagem>? listaDeImagens) {
