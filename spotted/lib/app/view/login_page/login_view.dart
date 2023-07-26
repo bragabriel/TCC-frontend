@@ -104,7 +104,6 @@ class _LoginPageState extends State<LoginPage> {
                             });
                           } catch (e) {
                             print('Erro ao fazer login: $e');
-                            _showErrorDialog('Erro ao fazer login: $e');
                           }
                         },
                         child: Container(
@@ -158,25 +157,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _showErrorDialog(String errorMessage) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Erro'),
-        content: Text(errorMessage),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text('OK'),
-          ),
-        ],
-      );
-    },
-  );
-}
+ 
 
   @override
   Widget build(BuildContext context) {
