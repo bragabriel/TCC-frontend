@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:spotted/app/model/usuario_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
