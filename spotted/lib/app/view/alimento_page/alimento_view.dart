@@ -11,10 +11,10 @@ class AlimentoPage extends StatefulWidget {
   const AlimentoPage({Key? key}) : super(key: key);
 
   @override
-  State<AlimentoPage> createState() => _AlimentoPageState();
+  State<AlimentoPage> createState() => AlimentoPageState();
 }
 
-class _AlimentoPageState extends State<AlimentoPage> {
+class AlimentoPageState extends State<AlimentoPage> {
   List<Alimento> foodList = [];
   List<Alimento> filteredFoodList = [];
   double? minPrice;
@@ -30,7 +30,7 @@ class _AlimentoPageState extends State<AlimentoPage> {
   final controller = AlimentoController();
 
   _success() {
-    return _body();
+    return _filtros();
   }
 
   _error() {
@@ -84,8 +84,39 @@ class _AlimentoPageState extends State<AlimentoPage> {
     _fetchFood();
   }
 
-  Widget _body() {
-    return _filtros();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Alimentação"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              controller.start();
+              _fetchFood();
+            },
+            icon: const Icon(Icons.refresh_outlined),
+          )
+        ],
+      ),
+      body: AnimatedBuilder(
+        animation: controller.state,
+        builder: (context, child) {
+          return stateManagement(controller.state.value);
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AlimentoCadastrarView(),
+            ),
+          );
+        },
+      ),
+    );
   }
 
   Future<void> _fetchFood() async {
@@ -98,15 +129,6 @@ class _AlimentoPageState extends State<AlimentoPage> {
     } catch (e) {
       print('Erro ao obter a lista de alimentos: $e');
     }
-  }
-
-  bool _isTypeSelected(Alimento food) {
-    // Se não houver tipos selecionados, todos os alimentos são válidos
-    if (selectedTypes.isEmpty) {
-      return true;
-    }
-    // Verifica se o tipo do alimento está na lista de tipos selecionados
-    return selectedTypes.contains(food.tipoAlimento);
   }
 
   void _filterFoodList() {
@@ -126,14 +148,12 @@ class _AlimentoPageState extends State<AlimentoPage> {
                 (_isDoceSelected && food.tipoAlimento == 'DOCE') ||
                 (!_isSalgadoSelected && !_isDoceSelected);
 
-        // Verifica se o termo de pesquisa está contido no título ou na descrição (ignorando maiúsculas e minúsculas)
         final searchTerm = _searchTerm.toLowerCase();
         final titleContainsTerm =
             food.tituloArtefato.toLowerCase().contains(searchTerm);
         final descriptionContainsTerm =
             food.descricaoArtefato.toLowerCase().contains(searchTerm);
 
-        // Retorna true apenas se o alimento atender a todos os critérios de filtragem
         return meetsPriceCriteria &&
             meetsOfferCriteria &&
             meetsTypeCriteria &&
@@ -276,13 +296,13 @@ class _AlimentoPageState extends State<AlimentoPage> {
                 child: GridTile(
                   key: ValueKey(filteredFoodList[index].idArtefato),
                   footer: GridTileBar(
-                    backgroundColor: Colors.black54,
+                    backgroundColor: const Color.fromARGB(137, 107, 98, 98),
                     title: Text(
                       filteredFoodList[index].tituloArtefato,
                       style: const TextStyle(
-                          fontSize: 11, fontWeight: FontWeight.bold),
+                          fontSize: 15, fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text("R\$ ${filteredFoodList[index].precoAlimento}"),
+                    subtitle: Text("R\$ ${filteredFoodList[index].precoAlimento}", style: const TextStyle(fontSize: 13, fontWeight:  FontWeight.bold),),
                   ),
                   child: _buildImagens(filteredFoodList[index].listaImagens),
                 ),
@@ -290,41 +310,6 @@ class _AlimentoPageState extends State<AlimentoPage> {
             }),
       )
     ]);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Alimentação"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              controller.start();
-              _fetchFood();
-            },
-            icon: const Icon(Icons.refresh_outlined),
-          )
-        ],
-      ),
-      body: AnimatedBuilder(
-        animation: controller.state,
-        builder: (context, child) {
-          return stateManagement(controller.state.value);
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AlimentoCadastrarView(),
-            ),
-          );
-        },
-      ),
-    );
   }
 }
 

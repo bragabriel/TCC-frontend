@@ -1,23 +1,22 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:spotted/app/model/alimento_model.dart';
 import 'package:spotted/app/view/home_page/home_view.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../model/artefato_model.dart';
+import '../../model/moradia_model.dart';
 
-class AlimentoDetalheView extends StatefulWidget {
+class MoradiaDetalheView extends StatefulWidget {
   @override
-  State<AlimentoDetalheView> createState() => AlimentoDetalheState();
+  State<MoradiaDetalheView> createState() => MoradiaDetalheState();
 
-  final Alimento filteredFoodList;
-  const AlimentoDetalheView(this.filteredFoodList, {super.key});
+  final Moradia filteredMoradiaList;
+  const MoradiaDetalheView(this.filteredMoradiaList, {super.key});
 }
 
-class AlimentoDetalheState extends State<AlimentoDetalheView> {
+class MoradiaDetalheState extends State<MoradiaDetalheView> {
   @override
   Widget build(BuildContext context) {
-    Alimento alimento = widget.filteredFoodList;
+    Moradia moradia = widget.filteredMoradiaList;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -33,9 +32,9 @@ class AlimentoDetalheState extends State<AlimentoDetalheView> {
         ),
         body: ListView(
           children: [
-            _buildImagens(alimento.listaImagens),
-            DetalhesAlimento(alimento: alimento),
-            BotaoAlimento(alimento: alimento),
+            _buildImagens(moradia.listaImagens),
+            DetalhesMoradia(moradia: moradia),
+            BotaoMoradia(moradia: moradia),
           ],
         ),
       ),
@@ -43,10 +42,10 @@ class AlimentoDetalheState extends State<AlimentoDetalheView> {
   }
 }
 
-class BotaoAlimento extends StatelessWidget {
-  final Alimento alimento;
+class BotaoMoradia extends StatelessWidget {
+  final Moradia moradia;
 
-  BotaoAlimento({required this.alimento});
+  BotaoMoradia({required this.moradia});
 
   @override
   Widget build(BuildContext context) {
@@ -57,16 +56,16 @@ class BotaoAlimento extends StatelessWidget {
             Colors.blue,
             Icons.message,
             'https://api.whatsapp.com/send/?phone=55',
-            "19999138267") //alimento.contato)
+            "19999138267") // moradia.contato)
       ],
     );
   }
 }
 
-class DetalhesAlimento extends StatelessWidget {
-  final Alimento alimento;
+class DetalhesMoradia extends StatelessWidget {
+  final Moradia moradia;
 
-  DetalhesAlimento({required this.alimento});
+  DetalhesMoradia({required this.moradia});
 
   @override
   Widget build(BuildContext context) {
@@ -75,41 +74,40 @@ class DetalhesAlimento extends StatelessWidget {
       child: Wrap(
         children: [
           Text(
-            "${alimento.tituloArtefato} - ${alimento.saborAlimento} \n",
+            "${moradia.tituloArtefato} - ${moradia.localizacaoMoradia} \n",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 27,
             ),
           ),
           Text(
-            "${alimento.descricaoArtefato} \n",
+            "${moradia.descricaoArtefato} \n",
             style: TextStyle(
               color: Colors.black,
               fontSize: 18,
             ),
           ),
           Text(
-            "${alimento.saborAlimento} \n",
+            "${moradia.localizacaoMoradia} \n",
             style: TextStyle(
               color: Colors.black,
               fontSize: 18,
             ),
           ),
           Text(
-            "${alimento.unidadeAlimento} \n",
+            "${moradia.vagaGaragemMoradia} \n",
             style: TextStyle(
               color: Colors.black,
               fontSize: 18,
             ),
           ),
           Text(
-            "R\$ ${alimento.precoAlimento?.toStringAsFixed(2) ?? '0.00'} \n",
+            "R\$ ${moradia.precoAluguelTotalMoradia?.toStringAsFixed(2) ?? '0.00'} \n",
             style: TextStyle(
               color: Colors.black,
               fontSize: 18,
             ),
           ),
-
         ],
       ),
     );
@@ -117,8 +115,8 @@ class DetalhesAlimento extends StatelessWidget {
 }
 
 void _openURL(String url) async {
-  if (await canLaunchUrl(Uri.parse(url))) {
-    await launchUrl(Uri.parse(url));
+  if (await canLaunch(url)) {
+    await launch(url);
   } else {
     throw 'Não foi possível abrir $url';
   }
