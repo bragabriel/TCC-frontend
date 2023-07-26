@@ -1,13 +1,14 @@
-
 import 'package:flutter/material.dart';
 import '../../repository/alimento_repository.dart';
 
 class AlimentoCadastrarView extends StatefulWidget {
+  const AlimentoCadastrarView({super.key});
+
   @override
-  _alimentoCadastrarPageState createState() => _alimentoCadastrarPageState();
+  AlimentoCadastrarPageState createState() => AlimentoCadastrarPageState();
 }
 
-class _alimentoCadastrarPageState extends State<AlimentoCadastrarView> {
+class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
   final TextEditingController _tituloController = TextEditingController();
   final TextEditingController _descricaoController = TextEditingController();
   final TextEditingController _tipoController = TextEditingController();
@@ -70,7 +71,12 @@ class _alimentoCadastrarPageState extends State<AlimentoCadastrarView> {
       appBar: AppBar(
         title: Text('Cadastrar alimento'),
       ),
-      body: SingleChildScrollView(
+      body: _cadastroAlimento()
+    );
+  }
+
+  SingleChildScrollView _cadastroAlimento() {
+    return SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
@@ -113,8 +119,7 @@ class _alimentoCadastrarPageState extends State<AlimentoCadastrarView> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }
 

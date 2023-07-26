@@ -31,8 +31,8 @@ class MoradiaRepository {
     }
   }
 
-  Future<void> cadastrarFesta(Map<String, dynamic> body) async {
-    const String festasUrl = "$onlineApi/festa";
+  Future<void> cadastrarMoradia(Map<String, dynamic> body) async {
+    const String festasUrl = "$onlineApi/moradia";
 
     try {
       final response = await Dio().post(festasUrl,
