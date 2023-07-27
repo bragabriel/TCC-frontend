@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/moradia_repository.dart';
 import 'package:spotted/app/model/moradia_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import '../../controller/moradia_controller.dart';
-import '../../model/artefato_model.dart';
 import 'moradiaCadastrar_view.dart';
 import 'moradiaDetalhe_view.dart';
+import '../../controller/moradia_controller.dart';
+import '../../model/artefato_model.dart';
 
 class MoradiaPage extends StatefulWidget {
   const MoradiaPage({Key? key}) : super(key: key);
@@ -22,7 +22,6 @@ class MoradiaPageState extends State<MoradiaPage> {
   bool showOnlyOffers = false;
   List<String> selectedTypes = [];
   int? qtdMoradoresFilter;
-  bool _showAllItems = true;
   String _searchTerm = '';
   String cidadeSelecionada = 'Selecione uma cidade';
   String estadoSelecionado = 'Selecione um estado';
@@ -30,94 +29,11 @@ class MoradiaPageState extends State<MoradiaPage> {
   final _searchController = TextEditingController();
   final controller = MoradiaController();
 
-  _success() {
-    return _filtros();
-  }
-
-  _error() {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            'Ops, algo de errado aconteceu',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {
-              controller.start();
-            },
-            child: Text('Tentar novamente'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  _loading() {
-    return Center(child: CircularProgressIndicator());
-  }
-
-  _start() {
-    return Container();
-  }
-
-  stateManagement(HomeState state) {
-    switch (state) {
-      case HomeState.start:
-        return _start();
-      case HomeState.loading:
-        return _loading();
-      case HomeState.error:
-        return _error();
-      case HomeState.success:
-        return _success();
-      default:
-        _start();
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     controller.start();
     _fetchMoradia();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Moradia"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              controller.start();
-              _fetchMoradia();
-            },
-            icon: const Icon(Icons.refresh_outlined),
-          )
-        ],
-      ),
-      body: AnimatedBuilder(
-        animation: controller.state,
-        builder: (context, child) {
-          return stateManagement(controller.state.value);
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MoradiaCadastrarView(),
-            ),
-          );
-        },
-      ),
-    );
   }
 
   Future<void> _fetchMoradia() async {
@@ -168,6 +84,89 @@ class MoradiaPageState extends State<MoradiaPage> {
     });
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Moradia"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              controller.start();
+              _fetchMoradia();
+            },
+            icon: const Icon(Icons.refresh_outlined),
+          )
+        ],
+      ),
+      body: AnimatedBuilder(
+        animation: controller.state,
+        builder: (context, child) {
+          return stateManagement(controller.state.value);
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MoradiaCadastrarView(),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  _success() {
+    return _filtros();
+  }
+
+  _error() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Ops, algo de errado aconteceu',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              controller.start();
+            },
+            child: Text('Tentar novamente'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _loading() {
+    return Center(child: CircularProgressIndicator());
+  }
+
+  _start() {
+    return Container();
+  }
+
+  stateManagement(HomeState state) {
+    switch (state) {
+      case HomeState.start:
+        return _start();
+      case HomeState.loading:
+        return _loading();
+      case HomeState.error:
+        return _error();
+      case HomeState.success:
+        return _success();
+      default:
+        _start();
+    }
+  }
+
   Column _filtros() {
     return Column(
       children: [
@@ -191,125 +190,34 @@ class MoradiaPageState extends State<MoradiaPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Column(
-              children: [
-                Text('Preço mínimo'),
-                SizedBox(height: 4),
-                SizedBox(
-                  width: 100,
-                  child: TextFormField(
-                    onChanged: (value) {
-                      setState(() {
-                        minPrice = value.isEmpty ? null : double.parse(value);
-                        _filterMoradiaList();
-                      });
-                    },
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: '0.0',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Text('Preço máximo'),
-                SizedBox(height: 4),
-                SizedBox(
-                  width: 100,
-                  child: TextFormField(
-                    onChanged: (value) {
-                      setState(() {
-                        maxPrice = value.isEmpty ? null : double.parse(value);
-                        _filterMoradiaList();
-                      });
-                    },
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: '0.0',
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            _newButton(minPrice, "Min preço", (value) => minPrice = value),
+            _newButton(maxPrice, "Max preço", (value) => maxPrice = value),
+            _newButton(qtdMoradoresFilter, "Max moradores",
+                (value) => qtdMoradoresFilter = value),
           ],
         ),
         SizedBox(height: 10),
-        // Filtro qtdMoradoresAtuaisMoradia
-        Column(
-          children: [
-            Text('Quantidade Max de Moradores Atuais'),
-            SizedBox(height: 4),
-            SizedBox(
-              width: 100,
-              child: TextFormField(
-                onChanged: (value) {
-                  setState(() {
-                    qtdMoradoresFilter =
-                        value.isEmpty ? null : int.parse(value);
-                    _filterMoradiaList();
-                  });
-                },
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: '0',
-                ),
-              ),
-            ),
-          ],
+        _buildDropdownButtonFormField(
+          cidadeSelecionada,
+          "Cidade",
+          _obterListaDeCidades(),
+          (novaCidade) {
+            setState(() {
+              cidadeSelecionada = novaCidade!;
+              _filterMoradiaList();
+            });
+          },
         ),
-        SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: DropdownButtonFormField<String>(
-            value: cidadeSelecionada,
-            onChanged: (novaCidade) {
-              setState(() {
-                cidadeSelecionada = novaCidade!;
-                _filterMoradiaList();
-              });
-            },
-            items:
-                _obterListaDeCidades().map<DropdownMenuItem<String>>((cidade) {
-              return DropdownMenuItem<String>(
-                value: cidade,
-                child: Text(cidade),
-              );
-            }).toList(),
-            decoration: InputDecoration(
-              labelText: 'Cidade',
-              border: OutlineInputBorder(),
-            ),
-          ),
-        ),
-
-        // Filtro por Estado
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: DropdownButtonFormField<String>(
-            value: estadoSelecionado,
-            onChanged: (novoEstado) {
-              setState(() {
-                estadoSelecionado = novoEstado!;
-                _filterMoradiaList();
-              });
-            },
-            items:
-                _obterListaDeEstados().map<DropdownMenuItem<String>>((estado) {
-              return DropdownMenuItem<String>(
-                value: estado,
-                child: Text(estado),
-              );
-            }).toList(),
-            decoration: InputDecoration(
-              labelText: 'Estado',
-              border: OutlineInputBorder(),
-            ),
-          ),
+        _buildDropdownButtonFormField(
+          estadoSelecionado,
+          "Estado",
+          _obterListaDeEstados(),
+          (novoEstado) {
+            setState(() {
+              estadoSelecionado = novoEstado!;
+              _filterMoradiaList();
+            });
+          },
         ),
         SizedBox(height: 10),
         Expanded(
@@ -363,32 +271,53 @@ class MoradiaPageState extends State<MoradiaPage> {
     );
   }
 
-  List<String> _obterListaDeCidades() {
-    final cidades = moradiaList
-        .map((moradia) => moradia.cidadeMoradia)
-        .where((cidade) => cidade != null) // Remover valores nulos
-        .map((cidade) => cidade!) // Converter String? para String
-        .toSet() // Remover valores duplicados
-        .toList();
-
-    // Adicionar valor padrão "Selecione uma cidade" no início da lista
-    cidades.insert(0, "Selecione uma cidade");
-
-    return cidades;
+  Widget _buildDropdownButtonFormField(String value, String labelText,
+      List<String> items, Function(String?) onChanged) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: DropdownButtonFormField<String>(
+        value: value,
+        onChanged: onChanged,
+        items: items.map<DropdownMenuItem<String>>((item) {
+          return DropdownMenuItem<String>(
+            value: item,
+            child: Text(item),
+          );
+        }).toList(),
+        decoration: InputDecoration(
+          labelText: labelText,
+          border: OutlineInputBorder(),
+        ),
+      ),
+    );
   }
 
-  List<String> _obterListaDeEstados() {
-    final estados = moradiaList
-        .map((moradia) => moradia.estadoMoradia)
-        .where((estado) => estado != null) // Remover valores nulos
-        .map((estado) => estado!) // Converter String? para String
-        .toSet() // Remover valores duplicados
-        .toList();
-
-    // Adicionar valor padrão "Selecione um estado" no início da lista
-    estados.insert(0, "Selecione um estado");
-
-    return estados;
+  Column _newButton(
+    dynamic filter,
+    String placeholder,
+    void Function(dynamic) updateFilter,
+  ) {
+    return Column(
+      children: [
+        SizedBox(height: 4),
+        SizedBox(
+          width: 100,
+          child: TextFormField(
+            onChanged: (value) {
+              setState(() {
+                filter = value.isEmpty ? null : int.parse(value);
+                _filterMoradiaList();
+              });
+            },
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: placeholder,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _buildImagens(List<Imagem>? listaDeImagens) {
@@ -409,7 +338,7 @@ class MoradiaPageState extends State<MoradiaPage> {
                 autoPlayCurve: Curves.easeInExpo,
                 pauseAutoPlayOnTouch: true,
               ),
-              items: listaDeImagens?.map((imagemPath) {
+              items: listaDeImagens.map((imagemPath) {
                 return Builder(
                   builder: (BuildContext context) {
                     return Image.network(
@@ -425,8 +354,32 @@ class MoradiaPageState extends State<MoradiaPage> {
       );
     } else {
       return Center(
-        child: Image.asset('assets/images/imagem_nao_cadastrada.png'),
+        child: Image.asset('assets/images/imagem.png'),
       );
     }
+  }
+
+  List<String> _obterListaDeCidades() {
+    final cidades = moradiaList
+        .map((moradia) => moradia.cidadeMoradia)
+        .where((cidade) => cidade != null) 
+        .map((cidade) => cidade!) 
+        .toSet() 
+        .toList();
+
+    cidades.insert(0, "Selecione uma cidade");
+    return cidades;
+  }
+
+  List<String> _obterListaDeEstados() {
+    final estados = moradiaList
+        .map((moradia) => moradia.estadoMoradia)
+        .where((estado) => estado != null) 
+        .map((estado) => estado!) 
+        .toSet()
+        .toList();
+
+    estados.insert(0, "Selecione um estado");
+    return estados;
   }
 }

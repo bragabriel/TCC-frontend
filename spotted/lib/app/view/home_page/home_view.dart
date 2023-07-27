@@ -88,20 +88,6 @@ class HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-                leading: Icon(Icons.verified_user),
-                title: Text('Perfil'),
-                subtitle: Text('Deixa eu ver a minha beleza 😍'),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/perfil');
-                }),
-            ListTile(
-                leading: Icon(Icons.car_crash_outlined),
-                title: Text('Transportes'),
-                subtitle: Text('Transportes mais economicos? 💸'),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/comida');
-                }),
-            ListTile(
                 leading: Icon(Icons.food_bank_outlined),
                 title: Text('Alimentos'),
                 subtitle: Text('Ai que fominha! 🍽'),
@@ -123,6 +109,13 @@ class HomePageState extends State<HomePage> {
                   Navigator.of(context).pushNamed('/festas');
                 }),
             ListTile(
+                leading: Icon(Icons.home_filled),
+                title: Text('Moradia'),
+                subtitle: Text('Lugares próximos ao campus? 🔑'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/moradia');
+                }),
+            ListTile(
                 leading: Icon(Icons.food_bank_outlined),
                 title: Text('Objetos Perdidos'),
                 subtitle: Text('Perdeu seu casaco favorito? 👀'),
@@ -130,11 +123,11 @@ class HomePageState extends State<HomePage> {
                   Navigator.of(context).pushNamed('/objetos');
                 }),
             ListTile(
-                leading: Icon(Icons.home_filled),
-                title: Text('Moradia'),
-                subtitle: Text('Lugares próximos ao campus? 🔑'),
+                leading: Icon(Icons.verified_user),
+                title: Text('Perfil'),
+                subtitle: Text('Deixa eu ver a minha beleza 😍'),
                 onTap: () {
-                  Navigator.of(context).pushNamed('/moradia');
+                  Navigator.of(context).pushNamed('/perfil');
                 }),
             ListTile(
                 leading: Icon(Icons.logout),
@@ -175,46 +168,9 @@ Widget _body() {
           height: 150,
           color: Colors.lightBlueAccent,
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: []),
-        ),
-        Container(
-          height: 150,
-          color: Colors.orange,
-          child: GestureDetector(
-            onTap: () {},
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
           ),
-        ),
-        Container(
-          height: 150,
-          color: Colors.green,
-          child: Text('APÊS'),
-        ),
-        Container(
-          height: 150,
-          color: Colors.blue,
-          child: Text('CARONAS'),
-        ),
-        Container(
-          height: 150,
-          color: Colors.pink,
-          child: Text('COMIDAS'),
-        ),
-        Container(
-          height: 150,
-          color: Colors.purple,
-          child: Text('ESTÁGIOS'),
-        ),
-        Container(
-          height: 150,
-          color: Colors.yellow,
-          child: Text('FESTAS'),
-        ),
-        Container(
-          height: 150,
-          color: Colors.blue,
-          child: Text('ACHADOS/PERDIDOS'),
         ),
       ],
     ),

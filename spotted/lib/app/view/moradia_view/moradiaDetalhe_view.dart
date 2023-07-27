@@ -1,9 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:spotted/app/view/home_page/home_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../model/artefato_model.dart';
 import '../../model/moradia_model.dart';
+import '../home_page/home_view.dart';
+import 'moradia_view.dart';
 
 class MoradiaDetalheView extends StatefulWidget {
   @override
@@ -88,13 +89,6 @@ class DetalhesMoradia extends StatelessWidget {
             ),
           ),
           Text(
-            "${moradia.cidadeMoradia} \n",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-            ),
-          ),
-          Text(
             "${moradia.vagaGaragemMoradia} \n",
             style: TextStyle(
               color: Colors.black,
@@ -153,7 +147,7 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
               autoPlayCurve: Curves.easeInExpo,
               pauseAutoPlayOnTouch: true,
             ),
-            items: listaDeImagens?.map((imagemPath) {
+            items: listaDeImagens.map((imagemPath) {
               return Builder(
                 builder: (BuildContext context) {
                   return Image.network(
@@ -169,7 +163,7 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
     );
   } else {
     return Center(
-      child: Image.asset('assets/images/imagem_nao_cadastrada.png'),
+      child: Image.asset('assets/images/imagem.png'),
     );
   }
 }

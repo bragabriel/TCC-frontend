@@ -109,7 +109,6 @@ class DetalhesAlimento extends StatelessWidget {
               fontSize: 18,
             ),
           ),
-
         ],
       ),
     );
@@ -155,7 +154,7 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
               autoPlayCurve: Curves.easeInExpo,
               pauseAutoPlayOnTouch: true,
             ),
-            items: listaDeImagens?.map((imagemPath) {
+            items: listaDeImagens.map((imagemPath) {
               return Builder(
                 builder: (BuildContext context) {
                   return Image.network(
@@ -171,7 +170,7 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
     );
   } else {
     return Center(
-      child: Image.asset('assets/images/imagem_nao_cadastrada.png'),
+      child: Image.asset('assets/images/imagem.png'),
     );
   }
 }
