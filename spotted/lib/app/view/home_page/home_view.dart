@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../service/change_notifier.dart';
-import '../../controller/app_controller.dart';
 import '../../controller/usuario_controller.dart';
 import '../../model/usuario_model.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:location/location.dart';
+
+const String apiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
 
 class HomePage extends StatefulWidget {
   @override
@@ -68,6 +71,39 @@ class HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     controller.start();
+    _fetchWeather();
+  }
+
+  String _weatherDescription = '';
+  double _temperature = 0.0;
+
+  Future<void> _fetchWeather() async {
+    LocationData? locationData;
+    final location = Location();
+    try {
+      locationData = await location.getLocation();
+    } catch (e) {
+      print('Error getting location: $e');
+    }
+
+    if (locationData != null) {
+      final lat = locationData.latitude!;
+      final lon = locationData.longitude!;
+      final url =
+          'http://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=$apiKey';
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          _weatherDescription = data['weather'][0]['description'];
+          _temperature = data['main']['temp'];
+        });
+      }
+    }
+  }
+
+  _body() {
+    build(context);
   }
 
   @override
@@ -116,7 +152,7 @@ class HomePageState extends State<HomePage> {
                   Navigator.of(context).pushNamed('/moradia');
                 }),
             ListTile(
-                leading: Icon(Icons.food_bank_outlined),
+                leading: Icon(Icons.food_bank_sharp),
                 title: Text('Objetos Perdidos'),
                 subtitle: Text('Perdeu seu casaco favorito? 👀'),
                 onTap: () {
@@ -139,53 +175,35 @@ class HomePageState extends State<HomePage> {
           ]),
         ),
         appBar: AppBar(
-          title: Text('Pagina inicial'),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.refresh_outlined),
-              onPressed: () {
-                controller.start();
-              },
-            )
-          ],
+          title: Text('Página inicial'),
         ),
-        body: AnimatedBuilder(
-          animation: controller.state,
-          builder: (context, child) {
-            return stateManagement(controller.state.value);
-          },
-        ));
-  }
-}
-
-Widget _body() {
-  return Container(
-    width: double.infinity,
-    height: double.infinity,
-    child: PageView(
-      children: [
-        Container(
-          height: 150,
-          color: Colors.lightBlueAccent,
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'SPOTTED MAIS PROFISSIONAL IMPOSSÍVEL',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Previsão do Tempo:',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              Text(
+                '$_weatherDescription',
+                style: TextStyle(fontSize: 18),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Temperatura: $_temperature°C',
+                style: TextStyle(fontSize: 18),
+              ),
+            ],
           ),
-        ),
-      ],
-    ),
-  );
-}
-
-class CustomSwitch extends StatelessWidget {
-  const CustomSwitch({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Switch(
-        value: AppController.instance.isDartTheme,
-        onChanged: (value) {
-          AppController.instance.changeTheme();
-        });
+        ));
   }
 }

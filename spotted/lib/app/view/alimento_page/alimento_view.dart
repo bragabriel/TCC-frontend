@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/alimento_repository.dart';
 import 'package:spotted/app/model/alimento_model.dart';
+import '../home_page/home_view.dart';
 import 'alimentoCadastrar_view.dart';
 import 'alimentoDetalhes_view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -89,6 +90,14 @@ class AlimentoPageState extends State<AlimentoPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Alimentação"),
+        leading: BackButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
         actions: [
           IconButton(
             onPressed: () {

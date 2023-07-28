@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/moradia_repository.dart';
 import 'package:spotted/app/model/moradia_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import '../home_page/home_view.dart';
 import 'moradiaCadastrar_view.dart';
 import 'moradiaDetalhe_view.dart';
 import '../../controller/moradia_controller.dart';
@@ -89,6 +90,14 @@ class MoradiaPageState extends State<MoradiaPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Moradia"),
+         leading: BackButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+            },
+          ),
         actions: [
           IconButton(
             onPressed: () {
