@@ -1,19 +1,30 @@
 import 'dart:convert';
+import 'package:provider/provider.dart';
 import 'package:spotted/app/model/usuario_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../service/change_notifier.dart';
 
 class UserData {
   static late SharedPreferences _preferences;
   static const _keyUser = 'user';
 
+  late UserProvider userProvider;
+  Usuario? user; 
+
+  UserData() {
+    userProvider = UserProvider();
+    user = userProvider.user;
+  }
+
   static Usuario myUser = Usuario(
-    idUsuario: 1,
+    idUsuario: user!.idUsuario,
     dataNascimento: DateTime(2021, 9, 7, 17, 30),
     //dataNascimento: "asdasddas",
     fileName: "",
     url:
         "https://upload.wikimedia.org/wikipedia/en/0/0b/Darth_Vader_in_The_Empire_Strikes_Back.jpg",
-    nomeUsuario: 'puxar-da-api',
+    nomeUsuario: user.nomeUsuario,
     sobrenomeUsuario: 'puardaaspdiasodi',
     //senhaUsuario: 'asjdhasjkdh',
     emailUsuario: 'puxar-da-api',
