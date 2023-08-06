@@ -1,5 +1,9 @@
+// ---------------------------------
+// Recuperar email novo do usuário através do INPUT
+// Bater na API de PUT de Usuário passando o email novo
+// ---------------------------------
+
 import 'package:flutter/material.dart';
-import 'package:spotted/app/model/user_data.dart';
 import 'package:spotted/app/widget/appbar_widget.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -16,7 +20,7 @@ class EditEmailFormPage extends StatefulWidget {
 class EditEmailFormPageState extends State<EditEmailFormPage> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
-  var user = UserData.myUser;
+  //var user = UserData.myUser;
 
   @override
   void dispose() {
@@ -25,7 +29,7 @@ class EditEmailFormPageState extends State<EditEmailFormPage> {
   }
 
   void updateUserValue(String email) {
-    user.emailUsuario = email;
+    //user.emailUsuario = email;
   }
 
   @override

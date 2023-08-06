@@ -1,7 +1,11 @@
+// ---------------------------------
+// Recuperar img novo do usuário através do INPUT
+// Bater na API de PUT de Usuário passando o img novo
+// ---------------------------------
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:spotted/app/model/user_data.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:spotted/app/widget/appbar_widget.dart';
@@ -15,7 +19,7 @@ class EditImagePage extends StatefulWidget {
 }
 
 class _EditImagePageState extends State<EditImagePage> {
-  var user = UserData.myUser;
+  //var user = UserData.myUser;
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +54,10 @@ class _EditImagePageState extends State<EditImagePage> {
                       final imageFile = File('${location.path}/$name');
                       final newImage =
                           await File(image.path).copy(imageFile.path);
-                      setState(
-                          () => user = user.copy(url: newImage.path));
+                    //  setState(
+                       //   () => user = user.copy(url: newImage.path));
                     },
-                    child: Image.network(user.url!),
+                    //child: Image.network(user.url!),
                   ))),
           Padding(
               padding: EdgeInsets.only(top: 40),

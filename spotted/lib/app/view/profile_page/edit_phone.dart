@@ -1,6 +1,10 @@
+// ---------------------------------
+// Recuperar telefone novo do usuário através do INPUT
+// Bater na API de PUT de Usuário passando o telefone novo
+// ---------------------------------
+
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
-import 'package:spotted/app/model/user_data.dart';
 import 'package:spotted/app/widget/appbar_widget.dart';
 
 
@@ -16,7 +20,7 @@ class EditPhoneFormPage extends StatefulWidget {
 class EditPhoneFormPageState extends State<EditPhoneFormPage> {
   final _formKey = GlobalKey<FormState>();
   final phoneController = TextEditingController();
-  var user = UserData.myUser;
+  //var user = UserData.myUser;
 
   @override
   void dispose() {
@@ -31,7 +35,7 @@ class EditPhoneFormPageState extends State<EditPhoneFormPage> {
         phone.substring(3, 6) +
         "-" +
         phone.substring(6, phone.length);
-    user.telefoneUsuario = formattedPhoneNumber;
+    //user.telefoneUsuario = formattedPhoneNumber;
   }
 
   @override

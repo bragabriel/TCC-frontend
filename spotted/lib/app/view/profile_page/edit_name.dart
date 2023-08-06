@@ -1,6 +1,10 @@
+// ---------------------------------
+// Recuperar nome novo do usuário através do INPUT
+// Bater na API de PUT de Usuário passando o nome novo
+// ---------------------------------
+
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
-import 'package:spotted/app/model/user_data.dart';
 import 'package:spotted/app/widget/appbar_widget.dart';
 
 // This class handles the Page to edit the Name Section of the User Profile.
@@ -17,7 +21,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
   final _formKey = GlobalKey<FormState>();
   final firstNameController = TextEditingController();
   final secondNameController = TextEditingController();
-  var user = UserData.myUser;
+  //var user = UserData.myUser;
 
   @override
   void dispose() {
@@ -26,7 +30,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
   }
 
   void updateUserValue(String name) {
-    user.nomeUsuario = name;
+    //user.nomeUsuario = name;
   }
 
   @override
