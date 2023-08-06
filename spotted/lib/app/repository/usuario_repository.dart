@@ -3,6 +3,7 @@ import 'package:spotted/app/model/usuario_model.dart';
 import 'dart:async';
 
 import '../constants/constants.dart';
+import '../view/login_page/dto/login_response.dart';
 
 class UsuarioRepository {
   final String usuariosUrl = "$onlineApi/usuario";
@@ -68,7 +69,7 @@ class UsuarioRepository {
     }
   }
 
-  Future<Usuario> logarUsuario(String email, String senha) async {
+  Future<LoginResponse> logarUsuario(String email, String senha) async {
     try {
       final requestData = {
         "email": email,
@@ -84,7 +85,7 @@ class UsuarioRepository {
         final responseData = response.data;
         if (responseData != null && responseData is Map<String, dynamic>) {
           Usuario usuario = Usuario.fromJson(responseData);
-          return usuario;
+          return LoginResponse(usuario: usuario, statusCode: 200);
         } else {
           throw 'Resposta inválida da API - conteúdo ausente ou inválido';
         }
@@ -93,7 +94,7 @@ class UsuarioRepository {
         if (responseData != null &&
             responseData is Map<String, dynamic> &&
             responseData.containsKey('message')) {
-          throw responseData['message'];
+          return LoginResponse(usuario: null, statusCode: 400);
         } else {
           throw 'Erro na requisição da API';
         }

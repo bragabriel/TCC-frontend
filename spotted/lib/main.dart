@@ -8,6 +8,7 @@ main(){
   runApp(
     ChangeNotifierProvider(
       create: (context) => UserProvider(),
+      
       child: AppWidget(),
     ),
   );

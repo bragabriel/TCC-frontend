@@ -63,22 +63,27 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       ElevatedButton(
                         onPressed: () async {
-                          try {
-                            final usuario = await UsuarioRepository()
-                                .logarUsuario(email, password);
+                          final response = await UsuarioRepository()
+                              .logarUsuario(email, password);
 
+                          if (response.statusCode == 200) {
                             Usuario user = Usuario(
-                              idUsuario: usuario.idUsuario,
-                              nomeUsuario: usuario.nomeUsuario,
-                              sobrenomeUsuario: usuario.sobrenomeUsuario,
+                              idUsuario: response.usuario!.idUsuario,
+                              nomeUsuario: response.usuario!.nomeUsuario,
+                              sobrenomeUsuario:
+                                  response.usuario!.sobrenomeUsuario,
                               emailUsuario: email,
                               senhaUsuario: '',
-                              telefoneUsuario: usuario.telefoneUsuario,
-                              dataNascimento: usuario.dataNascimento,
+                              telefoneUsuario:
+                                  response.usuario!.telefoneUsuario,
+                              dataNascimento: response.usuario!.dataNascimento,
                             );
+
                             Provider.of<UserProvider>(context, listen: false)
                                 .setUser(user);
+
                             Navigator.of(context).pushReplacementNamed('/home');
+
                             showDialog(
                                 context: context,
                                 builder: (context) {
@@ -99,8 +104,26 @@ class _LoginPageState extends State<LoginPage> {
                             setState(() {
                               this.usuario = usuario;
                             });
-                          } catch (e) {
-                            print('Erro ao fazer login: $e');
+                          } //fim if
+                          else if (response.statusCode == 400) {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("Atenção"),
+                                    content:
+                                        Text("Login realizado com sucesso!"),
+                                    actions: [
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("OK"))
+                                    ],
+                                  );
+                                });
+                          } else {
+                            throw ("Ocorreu um erro inesperado");
                           }
                         },
                         child: Container(

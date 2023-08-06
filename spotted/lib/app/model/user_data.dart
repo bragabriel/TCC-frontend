@@ -13,7 +13,7 @@ class UserData {
     fileName: "",
     url:
         "https://upload.wikimedia.org/wikipedia/en/0/0b/Darth_Vader_in_The_Empire_Strikes_Back.jpg",
-    nomeUsuario: 'puxar-da-api',
+    nomeUsuario: "asd",
     sobrenomeUsuario: 'puardaaspdiasodi',
     //senhaUsuario: 'asjdhasjkdh',
     emailUsuario: 'puxar-da-api',
