@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
 import '../../repository/emprego_repository.dart';
 
 class EmpregoCadastrarView extends StatefulWidget {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/alimento_repository.dart';
 import 'package:spotted/app/model/alimento_model.dart';
+import '../home_page/home_view.dart';
 import 'alimentoCadastrar_view.dart';
 import 'alimentoDetalhes_view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -89,6 +90,14 @@ class AlimentoPageState extends State<AlimentoPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Alimentação"),
+        leading: BackButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -339,7 +348,7 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
               autoPlayCurve: Curves.easeInExpo,
               pauseAutoPlayOnTouch: true,
             ),
-            items: listaDeImagens?.map((imagemPath) {
+            items: listaDeImagens.map((imagemPath) {
               return Builder(
                 builder: (BuildContext context) {
                   return Image.network(
@@ -355,7 +364,7 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
     );
   } else {
     return Center(
-      child: Image.asset('assets/images/imagem_nao_cadastrada.png'),
+      child: Image.asset('assets/images/imagem.png'),
     );
   }
 }

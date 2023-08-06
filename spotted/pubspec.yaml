@@ -48,9 +48,10 @@ dependencies:
 
   
 dev_dependencies:
-  url_launcher: ^6.1.10
   flutter_test:
     sdk: flutter
+  http: ^0.13.3
+  location: ^4.3.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -77,7 +78,7 @@ flutter:
     - assets/images/logo.png
     - assets/images/wallpaper.png
     - assets/images/user.png
-    - assets/images/teste.png
+    - assets/images/imagem.png
     - assets/images/jobs.jpg
 
 
