@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:spotted/app/view/home_page/home_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../model/artefato_model.dart';
 import '../../model/moradia_model.dart';
+import 'moradia_view.dart';
 
 class MoradiaDetalheView extends StatefulWidget {
   @override
@@ -15,32 +15,32 @@ class MoradiaDetalheView extends StatefulWidget {
 
 class MoradiaDetalheState extends State<MoradiaDetalheView> {
   @override
-  Widget build(BuildContext context) {
-    Moradia moradia = widget.filteredMoradiaList;
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Detalhes'),
-          leading: BackButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()),
-              );
-            },
+    Widget build(BuildContext context) {
+      Moradia moradia = widget.filteredMoradiaList;
+      return MaterialApp(
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Detalhes'),
+            leading: BackButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MoradiaPage()),
+                );
+              },
+            ),
+          ),
+          body: ListView(
+            children: [
+              _buildImagens(moradia.listaImagens),
+              DetalhesMoradia(moradia: moradia),
+              BotaoMoradia(moradia: moradia),
+            ],
           ),
         ),
-        body: ListView(
-          children: [
-            _buildImagens(moradia.listaImagens),
-            DetalhesMoradia(moradia: moradia),
-            BotaoMoradia(moradia: moradia),
-          ],
-        ),
-      ),
-    );
+      );
+    }
   }
-}
 
 class BotaoMoradia extends StatelessWidget {
   final Moradia moradia;
@@ -69,46 +69,29 @@ class DetalhesMoradia extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(32),
-      child: Wrap(
-        children: [
-          Text(
-            "${moradia.tituloArtefato} - ${moradia.cidadeMoradia} \n",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 27,
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.all(32),
+        child: Wrap(
+          children: [
+            Text(
+              "${moradia.tituloArtefato} - ${moradia.cidadeMoradia} \n",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 27,
+              ),
             ),
-          ),
-          Text(
-            "${moradia.descricaoArtefato} \n",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
+            _buildText(moradia.descricaoArtefato),
+            _buildText(moradia.vagaGaragemMoradia),
+            Text(
+              "R\$ ${moradia.precoAluguelTotalMoradia?.toStringAsFixed(2) ?? '0.00'} \n",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+              ),
             ),
-          ),
-          Text(
-            "${moradia.cidadeMoradia} \n",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-            ),
-          ),
-          Text(
-            "${moradia.vagaGaragemMoradia} \n",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-            ),
-          ),
-          Text(
-            "R\$ ${moradia.precoAluguelTotalMoradia?.toStringAsFixed(2) ?? '0.00'} \n",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -131,9 +114,11 @@ Column _newButton(Color color, IconData icon, String textBase, String dado) {
         icon: Icon(icon, color: color, size: 50),
         onPressed: () => _openURL(textBase + dado),
       ),
+      SizedBox(height: 20), // Espaço adicionado abaixo do botão (pode ajustar o valor conforme necessário)
     ],
   );
 }
+
 
 Widget _buildImagens(List<Imagem>? listaDeImagens) {
   if (!listaDeImagens!.isEmpty) {
@@ -153,7 +138,7 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
               autoPlayCurve: Curves.easeInExpo,
               pauseAutoPlayOnTouch: true,
             ),
-            items: listaDeImagens?.map((imagemPath) {
+            items: listaDeImagens.map((imagemPath) {
               return Builder(
                 builder: (BuildContext context) {
                   return Image.network(
@@ -169,7 +154,17 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
     );
   } else {
     return Center(
-      child: Image.asset('assets/images/imagem_nao_cadastrada.png'),
+      child: Image.asset('assets/images/imagem.png'),
     );
   }
+}
+
+Text _buildText(String? text) {
+  return Text(
+    "$text \n",
+    style: TextStyle(
+      color: Colors.black,
+      fontSize: 18,
+    ),
+  );
 }

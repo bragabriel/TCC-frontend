@@ -1,7 +1,12 @@
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/emprego_repository.dart';
 import 'package:spotted/app/model/emprego_model.dart';
+import 'package:spotted/app/view/emprego_page/empregoDetalhe_view.dart';
 
+import '../../model/artefato_model.dart';
+import '../home_page/home_view.dart';
 import 'empregoCadastrar_view.dart';
 
 class EmpregoPage extends StatefulWidget {
@@ -41,12 +46,11 @@ class _EmpregoPageState extends State<EmpregoPage> {
   List<String> _obterListaDeCidades() {
     final cidades = listaDeEmpregos
         .map((emprego) => emprego.cidadeEmprego)
-        .where((cidade) => cidade != null) // Remover valores nulos
-        .map((cidade) => cidade!) // Converter String? para String
-        .toSet() // Remover valores duplicados
+        .where((cidade) => cidade != null)
+        .map((cidade) => cidade!)
+        .toSet()
         .toList();
 
-    // Adicionar valor padrão "Selecione uma cidade" no início da lista
     cidades.insert(0, "Selecione uma cidade");
 
     return cidades;
@@ -55,12 +59,11 @@ class _EmpregoPageState extends State<EmpregoPage> {
   List<String> _obterListaDeEmpresas() {
     final empresas = listaDeEmpregos
         .map((emprego) => emprego.empresaEmprego)
-        .where((empresa) => empresa != null) // Remover valores nulos
-        .map((empresa) => empresa!) // Converter String? para String
-        .toSet() // Remover valores duplicados
+        .where((empresa) => empresa != null)
+        .map((empresa) => empresa!)
+        .toSet()
         .toList();
 
-    // Adicionar valor padrão "Selecione uma empresa" no início da lista
     empresas.insert(0, "Selecione uma empresa");
 
     return empresas;
@@ -102,6 +105,14 @@ class _EmpregoPageState extends State<EmpregoPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Empregos"),
+        leading: BackButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -133,9 +144,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
           padding: const EdgeInsets.all(8.0),
           child: TextField(
             onChanged: (valor) {
-              setState(() {
-                // Implemente o filtro por título aqui, se necessário
-              });
+              setState(() {});
             },
             decoration: InputDecoration(
               labelText: 'Pesquisar',
@@ -239,27 +248,79 @@ class _EmpregoPageState extends State<EmpregoPage> {
             ),
             itemCount: listaFiltradaDeEmpregos.length,
             itemBuilder: (BuildContext ctx, index) {
-              return GridTile(
-                key: ValueKey(listaFiltradaDeEmpregos[index].idArtefato),
-                footer: GridTileBar(
-                  backgroundColor: Colors.black54,
-                  title: Text(
-                    listaFiltradaDeEmpregos[index].tituloArtefato,
-                    style: const TextStyle(
-                        fontSize: 11, fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(listaFiltradaDeEmpregos[index].cidadeEmprego ??
-                      "Cidade não disponível"),
-                ),
-                child: Image.asset(
-                  'assets/images/jobs.jpg',
-                  fit: BoxFit.cover,
-                ),
-              );
+              return InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return EmpregoDetalheView(
+                              listaFiltradaDeEmpregos[index]);
+                        },
+                      ),
+                    );
+                  },
+                  child: GridTile(
+                    key: ValueKey(listaFiltradaDeEmpregos[index].idArtefato),
+                    footer: GridTileBar(
+                      backgroundColor: const Color.fromARGB(137, 107, 98, 98),
+                      title: Text(
+                        listaFiltradaDeEmpregos[index].tituloArtefato,
+                        style: const TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        listaFiltradaDeEmpregos[index].cidadeEmprego ??
+                            "Cidade não disponível",
+                        style: const TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    child: _buildImagens(listaDeEmpregos[index].listaImagens),
+                  ));
             },
           ),
         ),
       ],
+    );
+  }
+}
+
+Widget _buildImagens(List<Imagem>? listaDeImagens) {
+  if (!listaDeImagens!.isEmpty) {
+    final imageAspectRatio = 2 / 3;
+    return Scaffold(
+      body: AspectRatio(
+        aspectRatio: imageAspectRatio,
+        child: Container(
+          width: double.infinity,
+          child: CarouselSlider(
+            options: CarouselOptions(
+              height: double.infinity,
+              enlargeCenterPage: true,
+              autoPlay: true,
+              autoPlayInterval: Duration(seconds: 3),
+              autoPlayAnimationDuration: Duration(milliseconds: 800),
+              autoPlayCurve: Curves.easeInExpo,
+              pauseAutoPlayOnTouch: true,
+            ),
+            items: listaDeImagens.map((imagemPath) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Image.network(
+                    imagemPath.url,
+                    fit: BoxFit.cover,
+                  );
+                },
+              );
+            }).toList(),
+          ),
+        ),
+      ),
+    );
+  } else {
+    return Center(
+      child: Image.asset('assets/images/imagem.png'),
     );
   }
 }
