@@ -1,25 +1,25 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:spotted/app/repository/emprego_repository.dart';
-import 'package:spotted/app/model/emprego_model.dart';
-import 'package:spotted/app/view/emprego_page/empregoDetalhe_view.dart';
+import 'package:spotted/app/model/objeto_model.dart';
+import 'package:spotted/app/repository/objeto_repository.dart';
 import '../../model/artefato_model.dart';
 import '../home_page/home_view.dart';
-import 'empregoCadastrar_view.dart';
+import 'objetoCadastrar_view.dart';
+import 'objetoDetalhe_view.dart';
 
-class EmpregoPage extends StatefulWidget {
-  const EmpregoPage({Key? key}) : super(key: key);
+class ObjetoPage extends StatefulWidget {
+  const ObjetoPage({Key? key}) : super(key: key);
 
   @override
-  _EmpregoPageState createState() => _EmpregoPageState();
+  _ObjetoPageState createState() => _ObjetoPageState();
 }
 
-class _EmpregoPageState extends State<EmpregoPage> {
-  List<Emprego> listaDeEmpregos = [];
-  List<Emprego> listaFiltradaDeEmpregos = [];
-  String cidadeSelecionada = 'Selecione uma cidade';
-  String empresaSelecionada = 'Selecione uma empresa';
+class _ObjetoPageState extends State<ObjetoPage> {
+  List<Objeto> listaDeObjetos = [];
+  List<Objeto> listaFiltradaDeObjetos = [];
+  String localizacaoAtual = 'Selecione localização atual';
+  String localizacaoEncontrada = 'Selecione localização encontrada';
   String? presencialSelecionado;
   double? salarioMinimo;
   double? salarioMaximo;
@@ -27,74 +27,62 @@ class _EmpregoPageState extends State<EmpregoPage> {
   @override
   void initState() {
     super.initState();
-    _carregarEmpregos();
+    _carregarObjetos();
   }
 
-  Future<void> _carregarEmpregos() async {
+  Future<void> _carregarObjetos() async {
     try {
-      final listaDeEmpregos = await EmpregoRepository().getAllEmpregos();
+      final listaDeObjetos = await ObjetoRepository().getAllObjetos();
       setState(() {
-        this.listaDeEmpregos = listaDeEmpregos;
-        listaFiltradaDeEmpregos = listaDeEmpregos;
+        this.listaDeObjetos = listaDeObjetos;
+        listaFiltradaDeObjetos = listaDeObjetos;
       });
     } catch (e) {
-      print('Erro ao obter a lista de empregos: $e');
+      print('Erro ao obter a lista de objetos: $e');
     }
   }
 
-  List<String> _obterListaDeCidades() {
-    final cidades = listaDeEmpregos
-        .map((emprego) => emprego.cidadeEmprego)
-        .where((cidade) => cidade != null)
-        .map((cidade) => cidade!)
+  List<String> _obterListaDeLocaisEncontrados() {
+    final objetos = listaDeObjetos
+        .map((objeto) => objeto.localizacaoAchadoObjeto)
+        .where((objeto) => objeto != null)
+        .map((objeto) => objeto!)
         .toSet()
         .toList();
 
-    cidades.insert(0, "Selecione uma cidade");
+    objetos.insert(0, "Selecione local encontrado");
 
-    return cidades;
+    return objetos;
   }
 
-  List<String> _obterListaDeEmpresas() {
-    final empresas = listaDeEmpregos
-        .map((emprego) => emprego.empresaEmprego)
-        .where((empresa) => empresa != null)
-        .map((empresa) => empresa!)
+  List<String> _obterListaDeLocaisAtual() {
+    final objetos = listaDeObjetos
+        .map((objeto) => objeto.localizacaoAtualObjeto)
+        .where((objeto) => objeto != null)
+        .map((objeto) => objeto!)
         .toSet()
         .toList();
 
-    empresas.insert(0, "Selecione uma empresa");
+    objetos.insert(0, "Selecione localização do objeto encontrado");
 
-    return empresas;
+    return objetos;
   }
 
-  void _filtrarListaDeEmpregos() {
+  void _filtrarlistaDeObjetos() {
     setState(() {
-      listaFiltradaDeEmpregos = listaDeEmpregos.where((emprego) {
-        final atendeCriterioCidade =
-            cidadeSelecionada == "Selecione uma cidade" ||
-                emprego.cidadeEmprego?.toLowerCase() ==
-                    cidadeSelecionada.toLowerCase();
+      listaFiltradaDeObjetos = listaDeObjetos.where((objeto) {
+        final atendelocalizacaoAtual =
+            localizacaoAtual == "Selecione localização atual" ||
+                objeto.localizacaoAtualObjeto?.toLowerCase() ==
+                    localizacaoAtual.toLowerCase();
 
-        final atendeCriterioEmpresa =
-            empresaSelecionada == "Selecione uma empresa" ||
-                emprego.empresaEmprego?.toLowerCase() ==
-                    empresaSelecionada.toLowerCase();
+        final atendelocalizacaoAchado =
+            localizacaoEncontrada == "Selecione localização encontrada" ||
+                objeto.localizacaoAchadoObjeto?.toLowerCase() ==
+                    localizacaoEncontrada.toLowerCase();
 
-        final atendeCriterioPresencial = presencialSelecionado == null ||
-            presencialSelecionado == "Todos" ||
-            emprego.presencialEmprego?.toLowerCase() ==
-                presencialSelecionado?.toLowerCase();
 
-        final atendeCriterioSalario = (salarioMinimo == null ||
-                emprego.salarioEmprego! >= salarioMinimo!) &&
-            (salarioMaximo == null ||
-                emprego.salarioEmprego! <= salarioMaximo!);
-
-        return atendeCriterioCidade &&
-            atendeCriterioEmpresa &&
-            atendeCriterioPresencial &&
-            atendeCriterioSalario;
+        return atendelocalizacaoAtual && atendelocalizacaoAchado;
       }).toList();
     });
   }
@@ -103,7 +91,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Empregos"),
+        title: Text("Objetos"),
         leading: BackButton(
           onPressed: () {
             Navigator.push(
@@ -115,7 +103,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
         actions: [
           IconButton(
             onPressed: () {
-              _carregarEmpregos();
+              _carregarObjetos();
             },
             icon: const Icon(Icons.refresh_outlined),
           )
@@ -128,7 +116,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => EmpregoCadastrarView(),
+              builder: (context) => ObjetoCadastrarView(),
             ),
           );
         },
@@ -156,22 +144,22 @@ class _EmpregoPageState extends State<EmpregoPage> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: DropdownButtonFormField<String>(
-            value: cidadeSelecionada,
+            value: localizacaoAtual,
             onChanged: (novaCidade) {
               setState(() {
-                cidadeSelecionada = novaCidade!;
-                _filtrarListaDeEmpregos();
+                localizacaoAtual = novaCidade!;
+                _filtrarlistaDeObjetos();
               });
             },
-            items:
-                _obterListaDeCidades().map<DropdownMenuItem<String>>((cidade) {
+            items: _obterListaDeLocaisEncontrados()
+                .map<DropdownMenuItem<String>>((cidade) {
               return DropdownMenuItem<String>(
                 value: cidade,
                 child: Text(cidade),
               );
             }).toList(),
             decoration: InputDecoration(
-              labelText: 'Cidade',
+              labelText: 'Locais encontrados',
               border: OutlineInputBorder(),
             ),
           ),
@@ -180,14 +168,14 @@ class _EmpregoPageState extends State<EmpregoPage> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: DropdownButtonFormField<String>(
-            value: empresaSelecionada,
+            value: localizacaoEncontrada,
             onChanged: (novaEmpresa) {
               setState(() {
-                empresaSelecionada = novaEmpresa!;
-                _filtrarListaDeEmpregos();
+                localizacaoEncontrada = novaEmpresa!;
+                _filtrarlistaDeObjetos();
               });
             },
-            items: _obterListaDeEmpresas()
+            items: _obterListaDeLocaisAtual()
                 .map<DropdownMenuItem<String>>((empresa) {
               return DropdownMenuItem<String>(
                 value: empresa,
@@ -195,42 +183,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
               );
             }).toList(),
             decoration: InputDecoration(
-              labelText: 'Empresa',
-              border: OutlineInputBorder(),
-            ),
-          ),
-        ),
-        SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: DropdownButtonFormField<String>(
-            value: presencialSelecionado,
-            onChanged: (novaSelecao) {
-              setState(() {
-                presencialSelecionado = novaSelecao!;
-                _filtrarListaDeEmpregos();
-              });
-            },
-            items: [
-              DropdownMenuItem<String>(
-                value: "Todos",
-                child: Text("Todos"),
-              ),
-              DropdownMenuItem<String>(
-                value: "Presencial",
-                child: Text("Presencial"),
-              ),
-              DropdownMenuItem<String>(
-                value: "Remoto",
-                child: Text("Remoto"),
-              ),
-              DropdownMenuItem<String>(
-                value: "Híbrido",
-                child: Text("Híbrido"),
-              ),
-            ],
-            decoration: InputDecoration(
-              labelText: 'Presencial/Remoto',
+              labelText: 'Localização atual',
               border: OutlineInputBorder(),
             ),
           ),
@@ -245,7 +198,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
               crossAxisSpacing: 20,
               mainAxisSpacing: 20,
             ),
-            itemCount: listaFiltradaDeEmpregos.length,
+            itemCount: listaFiltradaDeObjetos.length,
             itemBuilder: (BuildContext ctx, index) {
               return InkWell(
                   onTap: () {
@@ -253,29 +206,29 @@ class _EmpregoPageState extends State<EmpregoPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return EmpregoDetalheView(
-                              listaFiltradaDeEmpregos[index]);
+                          return ObjetoDetalheView(
+                              listaFiltradaDeObjetos[index]);
                         },
                       ),
                     );
                   },
                   child: GridTile(
-                    key: ValueKey(listaFiltradaDeEmpregos[index].idArtefato),
+                    key: ValueKey(listaFiltradaDeObjetos[index].idArtefato),
                     footer: GridTileBar(
                       backgroundColor: const Color.fromARGB(137, 107, 98, 98),
                       title: Text(
-                        listaFiltradaDeEmpregos[index].tituloArtefato,
+                        listaFiltradaDeObjetos[index].tituloArtefato,
                         style: const TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
-                        listaFiltradaDeEmpregos[index].cidadeEmprego ??
-                            "Cidade não disponível",
+                        listaFiltradaDeObjetos[index].localizacaoAchadoObjeto ??
+                            "Local não disponível",
                         style: const TextStyle(
                             fontSize: 13, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    child: _buildImagens(listaDeEmpregos[index].listaImagens),
+                    child: _buildImagens(listaDeObjetos[index].listaImagens),
                   ));
             },
           ),

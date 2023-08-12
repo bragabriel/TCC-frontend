@@ -128,7 +128,7 @@ class HomePageState extends State<HomePage> {
                 title: Text('Alimentos'),
                 subtitle: Text('Ai que fominha! 🍽'),
                 onTap: () {
-                  Navigator.of(context).pushNamed('/comida');
+                  Navigator.of(context).pushNamed('/alimento');
                 }),
             ListTile(
                 leading: Icon(Icons.business_center_outlined),
@@ -142,7 +142,7 @@ class HomePageState extends State<HomePage> {
                 title: Text('Festas'),
                 subtitle: Text('Partiu pra revoada? 🎉'),
                 onTap: () {
-                  Navigator.of(context).pushNamed('/festas');
+                  Navigator.of(context).pushNamed('/festa');
                 }),
             ListTile(
                 leading: Icon(Icons.home_filled),
@@ -156,7 +156,7 @@ class HomePageState extends State<HomePage> {
                 title: Text('Objetos Perdidos'),
                 subtitle: Text('Perdeu seu casaco favorito? 👀'),
                 onTap: () {
-                  Navigator.of(context).pushNamed('/objetos');
+                  Navigator.of(context).pushNamed('/objeto');
                 }),
             ListTile(
                 leading: Icon(Icons.verified_user),
@@ -164,6 +164,13 @@ class HomePageState extends State<HomePage> {
                 subtitle: Text('Deixa eu ver a minha beleza 😍'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/perfil');
+                }),
+            ListTile(
+                leading: Icon(Icons.verified_user),
+                title: Text('Transportes'),
+                subtitle: Text('Vrummm vrummm 😍'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/transporte');
                 }),
             ListTile(
                 leading: Icon(Icons.logout),
