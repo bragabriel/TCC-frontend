@@ -5,7 +5,6 @@ import '../../model/artefato_model.dart';
 import '../../model/objeto_model.dart';
 import 'objeto_view.dart';
 
-
 class ObjetoDetalheView extends StatefulWidget {
   @override
   State<ObjetoDetalheView> createState() => ObjetoDetalheState();
@@ -17,7 +16,7 @@ class ObjetoDetalheView extends StatefulWidget {
 class ObjetoDetalheState extends State<ObjetoDetalheView> {
   @override
   Widget build(BuildContext context) {
-    Objeto objeto = widget.filteredObjetoList; 
+    Objeto objeto = widget.filteredObjetoList;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -34,8 +33,10 @@ class ObjetoDetalheState extends State<ObjetoDetalheView> {
         body: ListView(
           children: [
             _buildImagens(objeto.listaImagens),
-            DetalhesObjeto(objeto: objeto,), 
-            BotaoObjeto(objeto: objeto), 
+            DetalhesObjeto(
+              objeto: objeto,
+            ),
+            BotaoObjeto(objeto: objeto),
           ],
         ),
       ),
@@ -44,9 +45,9 @@ class ObjetoDetalheState extends State<ObjetoDetalheView> {
 }
 
 class BotaoObjeto extends StatelessWidget {
-  final Objeto objeto; 
+  final Objeto objeto;
 
-  BotaoObjeto({required this.objeto}); 
+  BotaoObjeto({required this.objeto});
 
   @override
   Widget build(BuildContext context) {
@@ -54,18 +55,16 @@ class BotaoObjeto extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _newButton(
-            Colors.blue.shade700,
-            Icons.web ,"",
-            objeto.localizacaoAchadoObjeto)
+            Colors.blue.shade700, Icons.web, "", objeto.localizacaoAchadoObjeto)
       ],
     );
   }
 }
 
 class DetalhesObjeto extends StatelessWidget {
-  final Objeto objeto; 
+  final Objeto objeto;
 
-  DetalhesObjeto({required this.objeto}); 
+  DetalhesObjeto({required this.objeto});
 
   @override
   Widget build(BuildContext context) {
@@ -74,13 +73,13 @@ class DetalhesObjeto extends StatelessWidget {
       child: Wrap(
         children: [
           Text(
-            "${objeto.tituloArtefato} - ${objeto.localizacaoAchadoObjeto} \n", 
+            "${objeto.tituloArtefato} - ${objeto.localizacaoAchadoObjeto} \n",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 27,
             ),
           ),
-          _buildText(objeto.descricaoArtefato), 
+          _buildText(objeto.descricaoArtefato),
           _buildText("Encontrado em: ${objeto.localizacaoAchadoObjeto}"),
           _buildText("Agora está em: ${objeto.localizacaoAchadoObjeto}"),
         ],
@@ -113,16 +112,16 @@ Column _newButton(Color color, IconData icon, String? textBase, String? dado) {
 
 Widget _buildImagens(List<Imagem>? listaDeImagens) {
   if (!listaDeImagens!.isEmpty) {
-    final imageAspectRatio = 2 / 3;
-    return Scaffold(
-      body: AspectRatio(
-        aspectRatio: imageAspectRatio,
-        child: Container(
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final screenWidth = 16;
+        final screenHeight = 9;
+        final imageAspectRatio = screenWidth / screenHeight;
+        return Container(
           width: double.infinity,
           child: CarouselSlider(
             options: CarouselOptions(
-              height: double.infinity,
-              enlargeCenterPage: true,
+              aspectRatio: imageAspectRatio,
               autoPlay: true,
               autoPlayInterval: Duration(seconds: 3),
               autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -140,8 +139,8 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
               );
             }).toList(),
           ),
-        ),
-      ),
+        );
+      },
     );
   } else {
     return Center(
@@ -159,4 +158,3 @@ Text _buildText(String? text) {
     ),
   );
 }
-

@@ -332,16 +332,16 @@ class AlimentoPageState extends State<AlimentoPage> {
 
 Widget _buildImagens(List<Imagem>? listaDeImagens) {
   if (!listaDeImagens!.isEmpty) {
-    final imageAspectRatio = 2 / 3;
-    return Scaffold(
-      body: AspectRatio(
-        aspectRatio: imageAspectRatio,
-        child: Container(
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final screenWidth = 16;
+        final screenHeight = 9;
+        final imageAspectRatio = screenWidth / screenHeight;
+        return Container(
           width: double.infinity,
           child: CarouselSlider(
             options: CarouselOptions(
-              height: double.infinity,
-              enlargeCenterPage: true,
+              aspectRatio: imageAspectRatio, 
               autoPlay: true,
               autoPlayInterval: Duration(seconds: 3),
               autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -353,14 +353,14 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
                 builder: (BuildContext context) {
                   return Image.network(
                     imagemPath.url,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.cover, 
                   );
                 },
               );
             }).toList(),
           ),
-        ),
-      ),
+        );
+      },
     );
   } else {
     return Center(
@@ -368,3 +368,4 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
     );
   }
 }
+

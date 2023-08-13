@@ -7,18 +7,17 @@ class Emprego extends Artefato {
   final String? beneficiosEmprego;
   final String? contatoEmprego;
   final String? linkVagaEmprego;
-  final String? empresaEmprego;			
-	final String? cidadeEmprego;		
-	final String? estadoEmprego;			
-	final String? experienciaEmprego;		
-	final String? tipoVagaEmprego;		
-	final String? presencialEmprego;		
+  final String? empresaEmprego;
+  final String? cidadeEmprego;
+  final String? estadoEmprego;
+  final String? experienciaEmprego;
+  final String? tipoVagaEmprego;
+  final String? presencialEmprego;
 
   Emprego({
     required int idArtefato,
     required String tituloArtefato,
     required String descricaoArtefato,
-    required String tipoArtefato,
     required bool ativo,
     required String dataCadastro,
     required String? dataAtualizacao,
@@ -30,17 +29,16 @@ class Emprego extends Artefato {
     required this.beneficiosEmprego,
     required this.contatoEmprego,
     required this.linkVagaEmprego,
-    required this.empresaEmprego,			
-	  required this.cidadeEmprego,	
-	  required this.estadoEmprego,			
-	  required this.experienciaEmprego,		
-	  required this.tipoVagaEmprego,		
-	  required this.presencialEmprego,		
+    required this.empresaEmprego,
+    required this.cidadeEmprego,
+    required this.estadoEmprego,
+    required this.experienciaEmprego,
+    required this.tipoVagaEmprego,
+    required this.presencialEmprego,
   }) : super(
           idArtefato: idArtefato,
           tituloArtefato: tituloArtefato,
           descricaoArtefato: descricaoArtefato,
-          tipoArtefato: tipoArtefato,
           ativo: ativo,
           dataCadastro: dataCadastro,
           dataAtualizacao: dataAtualizacao,
@@ -53,10 +51,11 @@ class Emprego extends Artefato {
       idArtefato: json['idArtefato'],
       tituloArtefato: json['tituloArtefato'],
       descricaoArtefato: json['descricaoArtefato'],
-      tipoArtefato: json['tipoArtefato'],
+
       ativo: json['ativo'],
       dataCadastro: json['dataCadastro'],
-      dataAtualizacao: json['dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?
+      dataAtualizacao: json[
+          'dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?
       idUsuario: json['idUsuario'],
       listaImagens: (json['listaImagens'] as List<dynamic>)
           .map((image) => Imagem.fromJson(image))
@@ -67,12 +66,12 @@ class Emprego extends Artefato {
       beneficiosEmprego: json['beneficiosEmprego'],
       contatoEmprego: json['contatoEmprego'],
       linkVagaEmprego: json['linkVagaEmprego'],
-      empresaEmprego: json['empresaEmprego'],			
-	    cidadeEmprego: json['cidadeEmprego'],		
-	    estadoEmprego: json['estadoEmprego'],			
-	    experienciaEmprego: json['experienciaEmprego'],		
-	    tipoVagaEmprego: json['tipoVagaEmprego'],		
-	    presencialEmprego: json['presencialEmprego'],		
+      empresaEmprego: json['empresaEmprego'],
+      cidadeEmprego: json['cidadeEmprego'],
+      estadoEmprego: json['estadoEmprego'],
+      experienciaEmprego: json['experienciaEmprego'],
+      tipoVagaEmprego: json['tipoVagaEmprego'],
+      presencialEmprego: json['presencialEmprego'],
     );
   }
 }

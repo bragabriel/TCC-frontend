@@ -2,9 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:spotted/app/view/transporte_page/transporte_view.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../model/transporte_model.dart'; 
+import '../../model/transporte_model.dart';
 import '../../model/artefato_model.dart';
-
 
 class TransporteDetalheView extends StatefulWidget {
   @override
@@ -17,7 +16,7 @@ class TransporteDetalheView extends StatefulWidget {
 class TransporteDetalheState extends State<TransporteDetalheView> {
   @override
   Widget build(BuildContext context) {
-    Transporte transporte = widget.filteredTransporteList; 
+    Transporte transporte = widget.filteredTransporteList;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -34,8 +33,8 @@ class TransporteDetalheState extends State<TransporteDetalheView> {
         body: ListView(
           children: [
             _buildImagens(transporte.listaImagens),
-            DetalhesTransporte(transporte: transporte), 
-            BotaoTransporte(transporte: transporte), 
+            DetalhesTransporte(transporte: transporte),
+            BotaoTransporte(transporte: transporte),
           ],
         ),
       ),
@@ -44,28 +43,26 @@ class TransporteDetalheState extends State<TransporteDetalheView> {
 }
 
 class BotaoTransporte extends StatelessWidget {
-  final Transporte transporte; 
+  final Transporte transporte;
 
-  BotaoTransporte({required this.transporte}); 
+  BotaoTransporte({required this.transporte});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _newButton(
-            Colors.blue.shade700,
-            Icons.map_sharp ,"https://www.google.com/maps/place/",
-            transporte.cidadeTransporte)
+        _newButton(Colors.blue.shade700, Icons.map_sharp,
+            "https://www.google.com/maps/place/", transporte.cidadeTransporte)
       ],
     );
   }
 }
 
 class DetalhesTransporte extends StatelessWidget {
-  final Transporte transporte; 
+  final Transporte transporte;
 
-  DetalhesTransporte({required this.transporte}); 
+  DetalhesTransporte({required this.transporte});
 
   @override
   Widget build(BuildContext context) {
@@ -74,18 +71,22 @@ class DetalhesTransporte extends StatelessWidget {
       child: Wrap(
         children: [
           Text(
-            "${transporte.tituloArtefato} - ${transporte.cidadeTransporte} \n", 
+            "${transporte.tituloArtefato} - ${transporte.cidadeTransporte} \n",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 27,
             ),
           ),
-          _buildText(transporte.descricaoArtefato), 
-          _buildText("Informações condutor: ${transporte.informacoesCondutorTransporte}"),
-          _buildText("Informações veículo: ${transporte.informacoesVeiculoTransporte}"), 
-          _buildText("Periodo: ${transporte.periodoTransporte}"), 
-          _buildText("Acentos disponíveis: ${transporte.qtdAssentosPreenchidosTransporte}"), 
-          _buildText("Acentos totais: ${transporte.qtdAssentosTotalTransporte}"), 
+          _buildText(transporte.descricaoArtefato),
+          _buildText(
+              "Informações condutor: ${transporte.informacoesCondutorTransporte}"),
+          _buildText(
+              "Informações veículo: ${transporte.informacoesVeiculoTransporte}"),
+          _buildText("Periodo: ${transporte.periodoTransporte}"),
+          _buildText(
+              "Acentos disponíveis: ${transporte.qtdAssentosPreenchidosTransporte}"),
+          _buildText(
+              "Acentos totais: ${transporte.qtdAssentosTotalTransporte}"),
           // Text(
           //   "R\$ ${transporte.valor?.toStringAsFixed(2) ?? '0.00'}",
           //   style: TextStyle(
@@ -123,16 +124,16 @@ Column _newButton(Color color, IconData icon, String? textBase, String? dado) {
 
 Widget _buildImagens(List<Imagem>? listaDeImagens) {
   if (!listaDeImagens!.isEmpty) {
-    final imageAspectRatio = 2 / 3;
-    return Scaffold(
-      body: AspectRatio(
-        aspectRatio: imageAspectRatio,
-        child: Container(
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final screenWidth = 16;
+        final screenHeight = 9;
+        final imageAspectRatio = screenWidth / screenHeight;
+        return Container(
           width: double.infinity,
           child: CarouselSlider(
             options: CarouselOptions(
-              height: double.infinity,
-              enlargeCenterPage: true,
+              aspectRatio: imageAspectRatio,
               autoPlay: true,
               autoPlayInterval: Duration(seconds: 3),
               autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -150,8 +151,8 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
               );
             }).toList(),
           ),
-        ),
-      ),
+        );
+      },
     );
   } else {
     return Center(
@@ -169,4 +170,3 @@ Text _buildText(String? text) {
     ),
   );
 }
-

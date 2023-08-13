@@ -2,7 +2,7 @@ class Artefato {
   final int idArtefato;
   final String tituloArtefato;
   String descricaoArtefato;
-  final String tipoArtefato;
+
   final bool ativo;
   final String dataCadastro;
   final String? dataAtualizacao;
@@ -13,7 +13,6 @@ class Artefato {
     required this.idArtefato,
     required this.tituloArtefato,
     required this.descricaoArtefato,
-    required this.tipoArtefato,
     required this.ativo,
     required this.dataCadastro,
     required this.idUsuario,
@@ -26,7 +25,6 @@ class Artefato {
       idArtefato: json['idArtefato'],
       tituloArtefato: json['tituloArtefato'],
       descricaoArtefato: json['descricaoArtefato'],
-      tipoArtefato: json['tipoArtefato'],
       ativo: json['ativo'],
       dataCadastro: json['dataCadastro'],
       dataAtualizacao: json['dataAtualizacao'],

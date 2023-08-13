@@ -15,32 +15,32 @@ class MoradiaDetalheView extends StatefulWidget {
 
 class MoradiaDetalheState extends State<MoradiaDetalheView> {
   @override
-    Widget build(BuildContext context) {
-      Moradia moradia = widget.filteredMoradiaList;
-      return MaterialApp(
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Detalhes'),
-            leading: BackButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MoradiaPage()),
-                );
-              },
-            ),
-          ),
-          body: ListView(
-            children: [
-              _buildImagens(moradia.listaImagens),
-              DetalhesMoradia(moradia: moradia),
-              BotaoMoradia(moradia: moradia),
-            ],
+  Widget build(BuildContext context) {
+    Moradia moradia = widget.filteredMoradiaList;
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Detalhes'),
+          leading: BackButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MoradiaPage()),
+              );
+            },
           ),
         ),
-      );
-    }
+        body: ListView(
+          children: [
+            _buildImagens(moradia.listaImagens),
+            DetalhesMoradia(moradia: moradia),
+            BotaoMoradia(moradia: moradia),
+          ],
+        ),
+      ),
+    );
   }
+}
 
 class BotaoMoradia extends StatelessWidget {
   final Moradia moradia;
@@ -114,24 +114,25 @@ Column _newButton(Color color, IconData icon, String textBase, String dado) {
         icon: Icon(icon, color: color, size: 50),
         onPressed: () => _openURL(textBase + dado),
       ),
-      SizedBox(height: 20), // Espaço adicionado abaixo do botão (pode ajustar o valor conforme necessário)
+      SizedBox(
+          height:
+              20), // Espaço adicionado abaixo do botão (pode ajustar o valor conforme necessário)
     ],
   );
 }
 
-
 Widget _buildImagens(List<Imagem>? listaDeImagens) {
   if (!listaDeImagens!.isEmpty) {
-    final imageAspectRatio = 2 / 3;
-    return Scaffold(
-      body: AspectRatio(
-        aspectRatio: imageAspectRatio,
-        child: Container(
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final screenWidth = 16;
+        final screenHeight = 9;
+        final imageAspectRatio = screenWidth / screenHeight;
+        return Container(
           width: double.infinity,
           child: CarouselSlider(
             options: CarouselOptions(
-              height: double.infinity,
-              enlargeCenterPage: true,
+              aspectRatio: imageAspectRatio,
               autoPlay: true,
               autoPlayInterval: Duration(seconds: 3),
               autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -149,8 +150,8 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
               );
             }).toList(),
           ),
-        ),
-      ),
+        );
+      },
     );
   } else {
     return Center(

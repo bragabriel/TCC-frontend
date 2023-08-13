@@ -1,10 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'emprego_view.dart'; 
+import 'emprego_view.dart';
 import '../../model/artefato_model.dart';
 import '../../model/emprego_model.dart';
-
 
 class EmpregoDetalheView extends StatefulWidget {
   @override
@@ -17,7 +16,7 @@ class EmpregoDetalheView extends StatefulWidget {
 class EmpregoDetalheState extends State<EmpregoDetalheView> {
   @override
   Widget build(BuildContext context) {
-    Emprego emprego = widget.filteredEmpregoList; 
+    Emprego emprego = widget.filteredEmpregoList;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -34,8 +33,8 @@ class EmpregoDetalheState extends State<EmpregoDetalheView> {
         body: ListView(
           children: [
             _buildImagens(emprego.listaImagens),
-            DetalhesEmprego(emprego: emprego), 
-            BotaoEmprego(emprego: emprego), 
+            DetalhesEmprego(emprego: emprego),
+            BotaoEmprego(emprego: emprego),
           ],
         ),
       ),
@@ -44,28 +43,25 @@ class EmpregoDetalheState extends State<EmpregoDetalheView> {
 }
 
 class BotaoEmprego extends StatelessWidget {
-  final Emprego emprego; 
+  final Emprego emprego;
 
-  BotaoEmprego({required this.emprego}); 
+  BotaoEmprego({required this.emprego});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _newButton(
-            Colors.blue.shade700,
-            Icons.web ,"",
-            emprego.linkVagaEmprego)
+        _newButton(Colors.blue.shade700, Icons.web, "", emprego.linkVagaEmprego)
       ],
     );
   }
 }
 
 class DetalhesEmprego extends StatelessWidget {
-  final Emprego emprego; 
+  final Emprego emprego;
 
-  DetalhesEmprego({required this.emprego}); 
+  DetalhesEmprego({required this.emprego});
 
   @override
   Widget build(BuildContext context) {
@@ -74,17 +70,17 @@ class DetalhesEmprego extends StatelessWidget {
       child: Wrap(
         children: [
           Text(
-            "${emprego.tituloArtefato} - ${emprego.localizacaoEmprego} \n", 
+            "${emprego.tituloArtefato} - ${emprego.localizacaoEmprego} \n",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 27,
             ),
           ),
-          _buildText(emprego.descricaoArtefato), 
+          _buildText(emprego.descricaoArtefato),
           _buildText("Nível: ${emprego.experienciaEmprego}"),
-          _buildText("Requisitos: ${emprego.requisitosEmprego}"), 
-          _buildText("Modalidade: ${emprego.presencialEmprego}"), 
-          _buildText("Tipo: ${emprego.tipoVagaEmprego}"), 
+          _buildText("Requisitos: ${emprego.requisitosEmprego}"),
+          _buildText("Modalidade: ${emprego.presencialEmprego}"),
+          _buildText("Tipo: ${emprego.tipoVagaEmprego}"),
           Text(
             "R\$ ${emprego.salarioEmprego?.toStringAsFixed(2) ?? '0.00'}",
             style: TextStyle(
@@ -122,16 +118,16 @@ Column _newButton(Color color, IconData icon, String? textBase, String? dado) {
 
 Widget _buildImagens(List<Imagem>? listaDeImagens) {
   if (!listaDeImagens!.isEmpty) {
-    final imageAspectRatio = 2 / 3;
-    return Scaffold(
-      body: AspectRatio(
-        aspectRatio: imageAspectRatio,
-        child: Container(
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final screenWidth = 16;
+        final screenHeight = 9;
+        final imageAspectRatio = screenWidth / screenHeight;
+        return Container(
           width: double.infinity,
           child: CarouselSlider(
             options: CarouselOptions(
-              height: double.infinity,
-              enlargeCenterPage: true,
+              aspectRatio: imageAspectRatio,
               autoPlay: true,
               autoPlayInterval: Duration(seconds: 3),
               autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -149,8 +145,8 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
               );
             }).toList(),
           ),
-        ),
-      ),
+        );
+      },
     );
   } else {
     return Center(
@@ -168,4 +164,3 @@ Text _buildText(String? text) {
     ),
   );
 }
-
