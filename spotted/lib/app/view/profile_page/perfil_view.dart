@@ -2,15 +2,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/model/usuario_model.dart';
+import 'package:spotted/app/repository/usuario_repository.dart';
 import 'package:spotted/app/view/profile_page/edit_email.dart';
 import 'package:spotted/app/view/profile_page/edit_image.dart';
 import 'package:spotted/app/view/profile_page/edit_name.dart';
 import 'package:spotted/app/view/profile_page/edit_phone.dart';
 import 'package:spotted/app/widget/display_image_widget.dart';
 import '../../../service/change_notifier.dart';
-
+import '../../controller/usuario_controller.dart';
 
 class ProfilePage extends StatelessWidget {
+  final controller = UsuarioController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,11 +27,11 @@ class ProfilePage extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(bottom: 20),
               child: Text(
-                'Edit Profile',
+                'Sobre mim',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w700,
-                  color: Color.fromRGBO(64, 105, 225, 1),
+                  color: Colors.lime,
                 ),
               ),
             ),
@@ -38,7 +40,6 @@ class ProfilePage extends StatelessWidget {
             child: Consumer<UserProvider>(
               builder: (context, userProvider, _) {
                 Usuario? user = userProvider.user;
-
                 return Column(
                   children: [
                     InkWell(
@@ -51,14 +52,27 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      width: double.infinity, // Informa o tamanho horizontal máximo
+                      width: double
+                          .infinity, // Informa o tamanho horizontal máximo
                       child: SingleChildScrollView(
                         physics: BouncingScrollPhysics(),
                         child: Column(
                           children: [
-                            buildUserInfoDisplay(context, user?.nomeUsuario ?? '', 'Nome', EditNameFormPage()),
-                            buildUserInfoDisplay(context, user?.telefoneUsuario ?? '', 'Phone', EditPhoneFormPage()),
-                            buildUserInfoDisplay(context, user?.emailUsuario ?? '', 'Email', EditEmailFormPage()),
+                            buildUserInfoDisplay(
+                                context,
+                                user?.nomeUsuario ?? '',
+                                'Nome',
+                                EditNameFormPage()),
+                            buildUserInfoDisplay(
+                                context,
+                                user?.telefoneUsuario ?? '',
+                                'Telefone',
+                                EditPhoneFormPage()),
+                            buildUserInfoDisplay(
+                                context,
+                                user?.emailUsuario ?? '',
+                                'Email',
+                                EditEmailFormPage()),
                           ],
                         ),
                       ),
@@ -68,10 +82,12 @@ class ProfilePage extends StatelessWidget {
               },
             ),
           ),
+          Container()
         ],
       ),
     );
   }
+
 
   // Método para construir o display item com as informações do usuário
   Widget buildUserInfoDisplay(
@@ -125,7 +141,7 @@ class ProfilePage extends StatelessWidget {
         ],
       ),
     );
-  }  
+  }
 
   FutureOr onGoBack(dynamic value, BuildContext context, Usuario newUser) {
     // Rebuild the widget to show the updated user info

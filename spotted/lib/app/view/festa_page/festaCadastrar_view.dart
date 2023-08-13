@@ -11,9 +11,7 @@ class FestaCadastrarView extends StatefulWidget {
 class FestaCadastrarPageState extends State<FestaCadastrarView> {
   final TextEditingController _tituloController = TextEditingController();
   final TextEditingController _descricaoController = TextEditingController();
-  final TextEditingController _tipoController = TextEditingController();
-  final TextEditingController _localizacaoController =
-      TextEditingController(); // Add localizacaoController
+  final TextEditingController _localizacaoController = TextEditingController();
 
   Future<void> _cadastrar() async {
     final body = {
@@ -21,12 +19,12 @@ class FestaCadastrarPageState extends State<FestaCadastrarView> {
         "descricaoArtefato": _descricaoController.text.isNotEmpty
             ? _descricaoController.text
             : null,
+        "tipoArtefato": "ALIMENTO",
         "idUsuario": 1, // PEGAR ID DO USUARIO
-        "tipoArtefato": "FESTA",
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
-      "ofertafesta": _localizacaoController.text.isNotEmpty
+      "localizacaoFesta": _localizacaoController.text.isNotEmpty
           ? _localizacaoController.text
           : null,
     };
@@ -34,7 +32,30 @@ class FestaCadastrarPageState extends State<FestaCadastrarView> {
     try {
       await FestaRepository().cadastrarFesta(body);
       print('Cadastro realizado com sucesso');
+      AlertDialog(
+        title: Text("Oba!"),
+        content:
+            Text("Adicionamos sua festa a nossa base de dados. Boa festa!"),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Ok"))
+        ],
+      );
     } catch (e) {
+      AlertDialog(
+        title: Text("Eita!"),
+        content: Text("Tivemos um erro ao cadastrar sua festa."),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Ok"))
+        ],
+      );
       print('Erro ao cadastrar: $e');
     }
   }
@@ -43,7 +64,6 @@ class FestaCadastrarPageState extends State<FestaCadastrarView> {
   void dispose() {
     _tituloController.dispose();
     _descricaoController.dispose();
-    _tipoController.dispose();
     _localizacaoController.dispose();
     super.dispose();
   }
@@ -70,10 +90,6 @@ class FestaCadastrarPageState extends State<FestaCadastrarView> {
           TextField(
             controller: _descricaoController,
             decoration: InputDecoration(labelText: 'Descrição'),
-          ),
-          TextField(
-            controller: _tipoController,
-            decoration: InputDecoration(labelText: 'Tipo'),
           ),
           TextField(
             controller: _localizacaoController,

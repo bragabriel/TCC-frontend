@@ -115,8 +115,8 @@ class HomePageState extends State<HomePage> {
               builder: (context, userProvider, _) {
                 Usuario? user = userProvider.user;
                 return UserAccountsDrawerHeader(
-                  currentAccountPicture: ClipOval(
-                    child: Image.asset('assets/images/user.png'),
+                  currentAccountPicture: ClipPath(
+                    child: _buildFotoPerfil(user?.url),
                   ),
                   accountName: Text(user?.nomeUsuario ?? 'Usuário não logado'),
                   accountEmail: Text(user?.emailUsuario ?? ''),
@@ -124,21 +124,21 @@ class HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-                leading: Icon(Icons.food_bank_outlined),
+                leading: Icon(Icons.food_bank),
                 title: Text('Alimentos'),
                 subtitle: Text('Ai que fominha! 🍽'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/alimento');
                 }),
             ListTile(
-                leading: Icon(Icons.business_center_outlined),
+                leading: Icon(Icons.business_center),
                 title: Text('Empregos'),
                 subtitle: Text('Bora trabalhar? 💻'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/emprego');
                 }),
             ListTile(
-                leading: Icon(Icons.local_bar_outlined),
+                leading: Icon(Icons.local_bar),
                 title: Text('Festas'),
                 subtitle: Text('Partiu pra revoada? 🎉'),
                 onTap: () {
@@ -159,23 +159,23 @@ class HomePageState extends State<HomePage> {
                   Navigator.of(context).pushNamed('/objeto');
                 }),
             ListTile(
-                leading: Icon(Icons.verified_user),
-                title: Text('Perfil'),
-                subtitle: Text('Deixa eu ver a minha beleza 😍'),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/perfil');
-                }),
-            ListTile(
-                leading: Icon(Icons.verified_user),
+                leading: Icon(Icons.car_crash),
                 title: Text('Transportes'),
-                subtitle: Text('Vrummm vrummm 😍'),
+                subtitle: Text('Naves para ir à faculdade? 🚗'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/transporte');
                 }),
             ListTile(
+                leading: Icon(Icons.verified_user),
+                title: Text('Perfil'),
+                subtitle: Text('Deixa eu ver meus dados 😍'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/perfil');
+                }),
+            ListTile(
                 leading: Icon(Icons.logout),
                 title: Text('Logout'),
-                subtitle: Text('Finalizar sessão'),
+                subtitle: Text('Bye bye queridxs 👋'),
                 onTap: () {
                   Navigator.of(context).pushReplacementNamed('/');
                 }),
@@ -212,5 +212,16 @@ class HomePageState extends State<HomePage> {
             ],
           ),
         ));
+  }
+}
+Widget _buildFotoPerfil(String? perfil) {
+  if (perfil != null ) {
+    return Center(
+      child: Image.network(perfil),
+    );
+  } else {
+    return Center(
+      child: Image.asset('assets/images/perfil.png'),
+    );
   }
 }

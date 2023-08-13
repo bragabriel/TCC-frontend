@@ -13,7 +13,6 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
   final TextEditingController _localizacaoAchado = TextEditingController();
   final TextEditingController _localizacaoAtual = TextEditingController();
 
-
   Future<void> _cadastrar() async {
     final body = {
       "artefato": {
@@ -21,24 +20,45 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
             ? _descricaoController.text
             : null,
         "idUsuario": 1, // PEGAR ID DO USUARIO
-        "tipoArtefato": "Objeto",
+        "tipoArtefato": "ALIMENTO",
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
       "contatoObjeto":
           _contatoController.text.isNotEmpty ? _contatoController.text : null,
-      "linkVagaObjeto":
+      "localizacaoAchadoObjeto":
           _localizacaoAchado.text.isNotEmpty ? _localizacaoAchado.text : null,
-      "localizacaoObjeto": _localizacaoAtual.text.isNotEmpty
-          ? _localizacaoAtual.text
-          : null,
+      "localizacaoAtualObjeto":
+          _localizacaoAtual.text.isNotEmpty ? _localizacaoAtual.text : null,
     };
 
     try {
       await ObjetoRepository().cadastrarObjeto(body);
       print('Cadastro realizado com sucesso');
+      AlertDialog(
+        title: Text("Oba!"),
+        content: Text("Adicionamos o objeto a nossa base de dados. Boa sorte!"),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Ok"))
+        ],
+      );
     } catch (e) {
       print('Erro ao cadastrar: $e');
+      AlertDialog(
+        title: Text("Eita!"),
+        content: Text("Tivemos um erro ao cadastrar o objeto."),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Ok"))
+        ],
+      );
     }
   }
 

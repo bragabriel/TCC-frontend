@@ -29,13 +29,21 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
         "descricaoArtefato": _descricaoController.text.isNotEmpty
             ? _descricaoController.text
             : null,
-        "idUsuario": 1, // PEGAR ID DO USUARIO
+        "idUsuario": 1,
         "tipoArtefato": "TRANSPORTE",
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
       "cidadeTransporte":
           _cidadeTransporte.text.isNotEmpty ? _cidadeTransporte.text : null,
+      "informacoesCondutorTransporte":
+          _informacoesCondutorTransporteController.text.isNotEmpty
+              ? double.parse(_informacoesCondutorTransporteController.text)
+              : null,
+      "informacoesVeiculoTransporte":
+          _informacoesVeiculoTransporteController.text.isNotEmpty
+              ? double.parse(_informacoesVeiculoTransporteController.text)
+              : null,
       "periodoTransporte":
           _periodoTransporte.text.isNotEmpty ? _periodoTransporte.text : null,
       "qtdAssentosPreenchidosTransporte":
@@ -49,20 +57,35 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
       "telefoneUsuario": _telefoneUsuarioController.text.isNotEmpty
           ? double.parse(_telefoneUsuarioController.text)
           : null,
-      "informacoesVeiculoTransporte":
-          _informacoesVeiculoTransporteController.text.isNotEmpty
-              ? double.parse(_informacoesVeiculoTransporteController.text)
-              : null,
-      "informacoesCondutorTransporte":
-          _informacoesCondutorTransporteController.text.isNotEmpty
-              ? double.parse(_informacoesCondutorTransporteController.text)
-              : null,
     };
 
     try {
       await TransporteRepository().cadastrarTransporte(body);
       print('Cadastro realizado com sucesso');
+      AlertDialog(
+        title: Text("Oba!"),
+        content:
+            Text("Adicionamos seu veículo a nossa base de dados. Boa sorte!"),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Ok"))
+        ],
+      );
     } catch (e) {
+      AlertDialog(
+        title: Text("Eita!"),
+        content: Text("Tivemos um erro ao cadastrar seu veículo."),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Ok"))
+        ],
+      );
       print('Erro ao cadastrar: $e');
     }
   }
