@@ -1,96 +1,95 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:spotted/app/model/objeto_model.dart';
-import 'package:spotted/app/repository/objeto_repository.dart';
+import 'package:spotted/app/view/objeto_view/objetoDetalhe_view.dart';
+
+import '../../controller/objeto_controller.dart';
 import '../../model/artefato_model.dart';
+import '../../model/objeto_model.dart';
+import '../../repository/objeto_repository.dart';
 import '../home_page/home_view.dart';
 import 'objetoCadastrar_view.dart';
-import 'objetoDetalhe_view.dart';
+
 
 class ObjetoPage extends StatefulWidget {
   const ObjetoPage({Key? key}) : super(key: key);
 
   @override
-  _ObjetoPageState createState() => _ObjetoPageState();
+  State<ObjetoPage> createState() => ObjetoPageState();
 }
 
-class _ObjetoPageState extends State<ObjetoPage> {
-  List<Objeto> listaDeObjetos = [];
-  List<Objeto> listaFiltradaDeObjetos = [];
-  String localizacaoAtual = 'Selecione localização atual';
-  String localizacaoEncontrada = 'Selecione localização encontrada';
-  String? presencialSelecionado;
-  double? salarioMinimo;
-  double? salarioMaximo;
+class ObjetoPageState extends State<ObjetoPage> {
+  List<Objeto> objetoList = [];
+  List<Objeto> filteredobjetoList = [];
+  double? minPrice;
+  double? maxPrice;
+  bool showOnlyOffers = false;
+  List<String> selectedTypes = [];
+  String _searchTerm = '';
+
+  final _searchController = TextEditingController();
+  final controller = ObjetoController();
+
+  _success() {
+    return _body();
+  }
+
+  _error() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Ops, algo de errado aconteceu',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              controller.start();
+            },
+            child: Text('Tentar novamente'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _loading() {
+    return Center(child: CircularProgressIndicator());
+  }
+
+  _start() {
+    return Container();
+  }
+
+  stateManagement(HomeState state) {
+    switch (state) {
+      case HomeState.start:
+        return _start();
+      case HomeState.loading:
+        return _loading();
+      case HomeState.error:
+        return _error();
+      case HomeState.success:
+        return _success();
+      default:
+        _start();
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    _carregarObjetos();
-  }
-
-  Future<void> _carregarObjetos() async {
-    try {
-      final listaDeObjetos = await ObjetoRepository().getAllObjetos();
-      setState(() {
-        this.listaDeObjetos = listaDeObjetos;
-        listaFiltradaDeObjetos = listaDeObjetos;
-      });
-    } catch (e) {
-      print('Erro ao obter a lista de objetos: $e');
-    }
-  }
-
-  List<String> _obterListaDeLocaisEncontrados() {
-    final objetos = listaDeObjetos
-        .map((objeto) => objeto.localizacaoAchadoObjeto)
-        .where((objeto) => objeto != null)
-        .map((objeto) => objeto!)
-        .toSet()
-        .toList();
-
-    objetos.insert(0, "Selecione local encontrado");
-
-    return objetos;
-  }
-
-  List<String> _obterListaDeLocaisAtual() {
-    final objetos = listaDeObjetos
-        .map((objeto) => objeto.localizacaoAtualObjeto)
-        .where((objeto) => objeto != null)
-        .map((objeto) => objeto!)
-        .toSet()
-        .toList();
-
-    objetos.insert(0, "Selecione localização do objeto encontrado");
-
-    return objetos;
-  }
-
-  void _filtrarlistaDeObjetos() {
-    setState(() {
-      listaFiltradaDeObjetos = listaDeObjetos.where((objeto) {
-        final atendelocalizacaoAtual =
-            localizacaoAtual == "Selecione localização atual" ||
-                objeto.localizacaoAtualObjeto?.toLowerCase() ==
-                    localizacaoAtual.toLowerCase();
-
-        final atendelocalizacaoAchado =
-            localizacaoEncontrada == "Selecione localização encontrada" ||
-                objeto.localizacaoAchadoObjeto?.toLowerCase() ==
-                    localizacaoEncontrada.toLowerCase();
-
-        return atendelocalizacaoAtual && atendelocalizacaoAchado;
-      }).toList();
-    });
+    controller.start();
+    _fetchobjeto();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Objetos"),
+        title: Text("Objetos perdidos"),
         leading: BackButton(
           onPressed: () {
             Navigator.push(
@@ -102,13 +101,19 @@ class _ObjetoPageState extends State<ObjetoPage> {
         actions: [
           IconButton(
             onPressed: () {
-              _carregarObjetos();
+              controller.start();
+              _fetchobjeto();
             },
             icon: const Icon(Icons.refresh_outlined),
           )
         ],
       ),
-      body: _construirFiltrosELista(),
+      body: AnimatedBuilder(
+        animation: controller.state,
+        builder: (context, child) {
+          return stateManagement(controller.state.value);
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -123,117 +128,154 @@ class _ObjetoPageState extends State<ObjetoPage> {
     );
   }
 
-  Widget _construirFiltrosELista() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            onChanged: (valor) {
-              setState(() {});
-            },
-            decoration: InputDecoration(
-              labelText: 'Pesquisar',
-              prefixIcon: Icon(Icons.search),
-              border: OutlineInputBorder(),
-            ),
+  Widget _body() {
+    return _filtros();
+  }
+
+  Future<void> _fetchobjeto() async {
+    try {
+      final objetoList = await ObjetoRepository().getAllObjetos();
+      setState(() {
+        this.objetoList = objetoList;
+        filteredobjetoList = objetoList;
+      });
+    } catch (e) {
+      print('Erro ao obter a lista de objetos: $e');
+    }
+  }
+
+  void _filterobjetoList() {
+    setState(() {
+      filteredobjetoList = objetoList.where((objeto) {
+        final searchTerm = _searchTerm.toLowerCase();
+
+        final achadoCoitainsTerm =
+            objeto.localizacaoAchadoObjeto!.toLowerCase().contains(searchTerm);
+        final localizacaoAtualContainsTerm =
+            objeto.localizacaoAtualObjeto!.toLowerCase().contains(searchTerm);
+        final titleContainsTerm =
+            objeto.tituloArtefato.toLowerCase().contains(searchTerm);
+        final descriptionContainsTerm =
+            objeto.descricaoArtefato.toLowerCase().contains(searchTerm);
+
+        return achadoCoitainsTerm &&
+            localizacaoAtualContainsTerm &&
+            (titleContainsTerm || descriptionContainsTerm);
+      }).toList();
+    });
+  }
+
+  Column _filtros() {
+    return Column(children: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextField(
+          controller: _searchController,
+          onChanged: (value) {
+            setState(() {
+              _searchTerm = value; // Update the _searchTerm variable
+              _filterobjetoList();
+            });
+          },
+          decoration: InputDecoration(
+            labelText: 'Pesquisar',
+            prefixIcon: Icon(Icons.search),
           ),
         ),
-        SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: DropdownButtonFormField<String>(
-            value: localizacaoAtual,
-            onChanged: (novaCidade) {
-              setState(() {
-                localizacaoAtual = novaCidade!;
-                _filtrarlistaDeObjetos();
-              });
-            },
-            items: _obterListaDeLocaisEncontrados()
-                .map<DropdownMenuItem<String>>((cidade) {
-              return DropdownMenuItem<String>(
-                value: cidade,
-                child: Text(cidade),
-              );
-            }).toList(),
-            decoration: InputDecoration(
-              labelText: 'Locais encontrados',
-              border: OutlineInputBorder(),
-            ),
+      ),
+      SizedBox(height: 10),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Column(
+            children: [
+              Text('Preço mínimo'),
+              SizedBox(height: 4),
+              SizedBox(
+                width: 100,
+                child: TextFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      minPrice = value.isEmpty ? null : double.parse(value);
+                      _filterobjetoList();
+                    });
+                  },
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: '0.0',
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
-        SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: DropdownButtonFormField<String>(
-            value: localizacaoEncontrada,
-            onChanged: (novaEmpresa) {
-              setState(() {
-                localizacaoEncontrada = novaEmpresa!;
-                _filtrarlistaDeObjetos();
-              });
-            },
-            items: _obterListaDeLocaisAtual()
-                .map<DropdownMenuItem<String>>((empresa) {
-              return DropdownMenuItem<String>(
-                value: empresa,
-                child: Text(empresa),
-              );
-            }).toList(),
-            decoration: InputDecoration(
-              labelText: 'Localização atual',
-              border: OutlineInputBorder(),
-            ),
+          Column(
+            children: [
+              Text('Preço máximo'),
+              SizedBox(height: 4),
+              SizedBox(
+                width: 100,
+                child: TextFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      maxPrice = value.isEmpty ? null : double.parse(value);
+                      _filterobjetoList();
+                    });
+                  },
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: '0.0',
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
-        SizedBox(height: 10),
-        Expanded(
-          child: GridView.builder(
+        ],
+      ),
+      SizedBox(height: 10),
+      Expanded(
+        child: GridView.builder(
             padding: const EdgeInsets.all(20),
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 2 / 3,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-            ),
-            itemCount: listaFiltradaDeObjetos.length,
+                maxCrossAxisExtent: 200,
+                childAspectRatio: 2 / 3,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20),
+            itemCount: filteredobjetoList.length,
             itemBuilder: (BuildContext ctx, index) {
               return InkWell(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return ObjetoDetalheView(
-                              listaFiltradaDeObjetos[index]);
-                        },
-                      ),
-                    );
-                  },
-                  child: GridTile(
-                    key: ValueKey(listaFiltradaDeObjetos[index].idArtefato),
-                    footer: GridTileBar(
-                      backgroundColor: const Color.fromARGB(137, 107, 98, 98),
-                      title: Text(
-                        listaFiltradaDeObjetos[index].tituloArtefato,
-                        style: const TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        listaFiltradaDeObjetos[index].localizacaoAchadoObjeto ??
-                            "Local não disponível",
-                        style: const TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.bold),
-                      ),
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ObjetoDetalheView(filteredobjetoList[index]);
+                      },
                     ),
-                    child: _buildImagens(listaDeObjetos[index].listaImagens),
-                  ));
-            },
-          ),
-        ),
-      ],
-    );
+                  );
+                },
+                child: GridTile(
+                  key: ValueKey(filteredobjetoList[index].idArtefato),
+                  footer: GridTileBar(
+                    backgroundColor: const Color.fromARGB(137, 107, 98, 98),
+                    title: Text(
+                      filteredobjetoList[index].tituloArtefato,
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      "R\$ ${filteredobjetoList[index].localizacaoAchadoObjeto}",
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  child: _buildImagens(filteredobjetoList[index].listaImagens),
+                ),
+              );
+            }),
+      )
+    ]);
   }
 }
 
