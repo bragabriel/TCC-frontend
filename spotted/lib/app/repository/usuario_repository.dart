@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:spotted/app/model/usuario_model.dart';
 import 'dart:async';
-
 import '../constants/constants.dart';
 import '../view/login_page/dto/login_response.dart';
 
@@ -28,7 +27,7 @@ class UsuarioRepository {
         throw 'Erro na requisição da API';
       }
     } catch (e) {
-      throw 'Erro ao acessar a API: $e';
+      throw 'Erro ao acessar a API em get all usuarios: $e';
     }
   }
 
@@ -45,16 +44,20 @@ class UsuarioRepository {
         throw 'Erro ao cadastrar: ${response.statusCode}';
       }
     } catch (e) {
-      throw 'Erro ao acessar a API: $e';
+      throw 'Erro ao acessar a API em cadastrar usuario: $e';
     }
   }
 
   Future<Usuario> getUsuario(num id) async {
+    print(
+        "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+    print(id);
     try {
       String url = '$usuariosUrl/$id';
       final response = await Dio().get(url);
       if (response.statusCode == 200 && response.statusCode != null) {
         final responseData = response.data;
+        print(responseData);
         if (responseData != null && responseData is Map<String, dynamic>) {
           Usuario usuario = Usuario.fromJson(responseData);
           return usuario;
@@ -65,7 +68,7 @@ class UsuarioRepository {
         throw 'Erro na requisição da API';
       }
     } catch (e) {
-      throw 'Erro ao acessar a API: $e';
+      throw 'Erro ao acessar a API em getUsuario: $e';
     }
   }
 
@@ -102,7 +105,7 @@ class UsuarioRepository {
         throw 'Erro na requisição da API';
       }
     } catch (e) {
-      throw 'Erro ao acessar a API: $e';
+      throw 'Erro ao acessar a API em logar usuario: $e';
     }
   }
 }

@@ -29,7 +29,7 @@ class _EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
             ? _descricaoController.text
             : null,
         "idUsuario": 1, // PEGAR ID DO USUARIO
-        "tipoArtefato": "ALIMENTO",
+
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },

@@ -39,7 +39,7 @@ class _MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
             ? _descricaoController.text
             : null,
         "idUsuario": 1, //PEGAR ID DO USUARIO
-        "tipoArtefato": "ALIMENTO",
+
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
@@ -75,9 +75,8 @@ class _MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
       "animaisEstimacaoMoradia": _animaisEstimacaoController.text.isNotEmpty
           ? _animaisEstimacaoController.text
           : null,
-      "contatoMoradia": _contatoController.text.isNotEmpty
-          ? _contatoController.text
-          : null,
+      "contatoMoradia":
+          _contatoController.text.isNotEmpty ? _contatoController.text : null,
     };
 
     try {

@@ -35,7 +35,7 @@ class HomePageState extends State<HomePage> {
           SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
-              controller.start();
+              controller.start(context);
             },
             child: Text('Tentar novamente'),
           ),
@@ -70,7 +70,7 @@ class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    controller.start();
+    controller.start(context);
     _fetchWeather();
   }
 
@@ -111,6 +111,7 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
         drawer: Drawer(
           child: Column(children: [
+            // aqui pegar usuario
             Consumer<UserProvider>(
               builder: (context, userProvider, _) {
                 Usuario? user = userProvider.user;
@@ -118,6 +119,7 @@ class HomePageState extends State<HomePage> {
                   currentAccountPicture: ClipPath(
                     child: _buildFotoPerfil(user?.url),
                   ),
+                  // utilizando o usuario
                   accountName: Text(user?.nomeUsuario ?? 'Usuário não logado'),
                   accountEmail: Text(user?.emailUsuario ?? ''),
                 );

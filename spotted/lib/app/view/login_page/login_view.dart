@@ -18,163 +18,163 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _body() {
     return SingleChildScrollView(
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Container(
-                width: 300,
-                height: 300,
-                child: Image.asset('assets/images/logo.png')),
-            Container(
-              height: 20,
-            ),
-            Card(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 12, right: 12, top: 20, bottom: 12),
-                  child: Column(
-                    children: [
-                      TextField(
-                        onChanged: (text) {
-                          email = text;
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                            labelText: 'Email', border: OutlineInputBorder()),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        onChanged: (text) {
-                          password = text;
-                        },
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            labelText: 'Password',
-                            border: OutlineInputBorder()),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      ElevatedButton(
-                        onPressed: () async {
-                          final response = await UsuarioRepository()
-                              .logarUsuario(email, password);
-
-                          if (response.statusCode == 200) {
-                            Usuario user = Usuario(
-                              idUsuario: response.usuario!.idUsuario,
-                              nomeUsuario: response.usuario!.nomeUsuario,
-                              sobrenomeUsuario:
-                                  response.usuario!.sobrenomeUsuario,
-                              emailUsuario: email,
-                              senhaUsuario: '',
-                              telefoneUsuario:
-                                  response.usuario!.telefoneUsuario,
-                              dataNascimento: response.usuario!.dataNascimento,
-                            );
-
-                            Provider.of<UserProvider>(context, listen: false)
-                                .setUser(user);
-
-                            Navigator.of(context).pushReplacementNamed('/home');
-
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text("Atenção"),
-                                    content:
-                                        Text("Login realizado com sucesso!"),
-                                    actions: [
-                                      ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text("OK"))
-                                    ],
-                                  );
-                                });
-
-                            setState(() {
-                              this.usuario = usuario;
-                            });
-                          } //fim if
-                          else if (response.statusCode == 400) {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text("Atenção"),
-                                    content:
-                                        Text("Login realizado com sucesso!"),
-                                    actions: [
-                                      ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text("OK"))
-                                    ],
-                                  );
-                                });
-                          } else {
-                            throw ("Ocorreu um erro inesperado");
-                          }
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          child: Text('Entrar', textAlign: TextAlign.center),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            textStyle: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue)),
-                      ),
-                    ],
+        child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: 300,
+                      height: 300,
+                      child: Image.asset('assets/images/logo.png')),
+                  Container(
+                    height: 20,
                   ),
-                )),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed('/cadastro');
-              },
-              child: Text(
-                'Novo aqui? Cadastre-se',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+                  Card(
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 12, right: 12, top: 20, bottom: 12),
+                      child: Column(children: [
+                        TextField(
+                          onChanged: (text) {
+                            email = text;
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                              labelText: 'Email', border: OutlineInputBorder()),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextField(
+                          onChanged: (text) {
+                            password = text;
+                          },
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              labelText: 'Password',
+                              border: OutlineInputBorder()),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            print(email);
+                            print(password);
+                            final response = await UsuarioRepository()
+                                .logarUsuario(email, password);
+
+                            if (response.statusCode == 200) {
+                              Usuario user = Usuario(
+                                  idUsuario: response.usuario!.idUsuario,
+                                  nomeUsuario: response.usuario!.nomeUsuario,
+                                  sobrenomeUsuario:
+                                      response.usuario!.sobrenomeUsuario,
+                                  emailUsuario: email,
+                                  senhaUsuario: password,
+                                  telefoneUsuario:
+                                      response.usuario!.telefoneUsuario,
+                                  dataNascimento:
+                                      response.usuario!.dataNascimento,
+                                  listaArtefatosReponse:
+                                      response.usuario!.listaArtefatosReponse);
+
+                              Provider.of<UserProvider>(context, listen: false)
+                                  .setUser(user);
+
+                              Navigator.of(context)
+                                  .pushReplacementNamed('/home');
+
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text("Atenção"),
+                                      content:
+                                          Text("Login realizado com sucesso!"),
+                                      actions: [
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text("OK"))
+                                      ],
+                                    );
+                                  });
+                            } else if (response.statusCode == 400) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text("Atenção"),
+                                      content: Text("Credenciais inválidas."),
+                                      actions: [
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text("OK"))
+                                      ],
+                                    );
+                                  });
+                            } else {
+                              throw ("Ocorreu um erro inesperado");
+                            }
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            child: Text('Entrar', textAlign: TextAlign.center),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                              textStyle: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/cadastro');
+                          },
+                          child: Text(
+                            'Novo aqui? Cadastre-se',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed('/recuperarSenha');
+                          },
+                          child: Text(
+                            'Problemas com login? Clique aqui.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ]),
+                    ),
+                  )
+                ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushReplacementNamed('/recuperarSenha');
-              },
-              child: Text(
-                'Problemas com login? Clique aqui.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ]),
-        ),
-      ),
-    );
+            )));
   }
 
   @override

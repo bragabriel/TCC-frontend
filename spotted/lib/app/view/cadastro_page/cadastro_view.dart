@@ -37,7 +37,7 @@ class _CadastroPageState extends State<CadastroPage> {
           SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
-              controller.start();
+              controller.start(context);
             },
             child: Text('Tentar novamente'),
           ),
@@ -72,7 +72,7 @@ class _CadastroPageState extends State<CadastroPage> {
   @override
   void initState() {
     super.initState();
-    controller.start();
+    controller.start(context);
   }
 
   Widget _body() {
@@ -207,7 +207,7 @@ class _CadastroPageState extends State<CadastroPage> {
           IconButton(
             icon: Icon(Icons.refresh_outlined),
             onPressed: () {
-              controller.start();
+              controller.start(context);
             },
           )
         ],

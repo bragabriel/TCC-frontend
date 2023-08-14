@@ -22,6 +22,8 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
       TextEditingController();
   final TextEditingController _informacoesCondutorTransporteController =
       TextEditingController();
+  final TextEditingController _valorTransporteController =
+      TextEditingController();
 
   Future<void> _cadastrar() async {
     final body = {
@@ -30,7 +32,6 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
             ? _descricaoController.text
             : null,
         "idUsuario": 1,
-        "tipoArtefato": "TRANSPORTE",
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
@@ -38,11 +39,11 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
           _cidadeTransporte.text.isNotEmpty ? _cidadeTransporte.text : null,
       "informacoesCondutorTransporte":
           _informacoesCondutorTransporteController.text.isNotEmpty
-              ? double.parse(_informacoesCondutorTransporteController.text)
+              ? _informacoesCondutorTransporteController.text
               : null,
       "informacoesVeiculoTransporte":
           _informacoesVeiculoTransporteController.text.isNotEmpty
-              ? double.parse(_informacoesVeiculoTransporteController.text)
+              ? _informacoesVeiculoTransporteController.text
               : null,
       "periodoTransporte":
           _periodoTransporte.text.isNotEmpty ? _periodoTransporte.text : null,
@@ -56,6 +57,9 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
               : null,
       "telefoneUsuario": _telefoneUsuarioController.text.isNotEmpty
           ? double.parse(_telefoneUsuarioController.text)
+          : null,
+      "valorTransporte": _valorTransporteController.text.isNotEmpty
+          ? double.parse(_valorTransporteController.text)
           : null,
     };
 
@@ -97,6 +101,7 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
     _telefoneUsuarioController.dispose();
     _informacoesVeiculoTransporteController.dispose();
     _informacoesCondutorTransporteController.dispose();
+    _valorTransporteController.dispose();
     super.dispose();
   }
 
@@ -145,6 +150,10 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
             TextField(
               controller: _qtdAssentosTotalTransporteController,
               decoration: InputDecoration(labelText: 'Capacidade maxíma'),
+            ),
+            TextField(
+              controller: _valorTransporteController,
+              decoration: InputDecoration(labelText: 'Valor'),
             ),
             ElevatedButton(
               onPressed: _cadastrar,
