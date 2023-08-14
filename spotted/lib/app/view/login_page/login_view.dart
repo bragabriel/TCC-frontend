@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
 import '../../../service/change_notifier.dart';
 import '../../model/usuario_model.dart';
@@ -14,7 +15,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String email = '';
   String password = '';
-  late Usuario usuario;
 
   Widget _body() {
     return SingleChildScrollView(
@@ -79,6 +79,11 @@ class _LoginPageState extends State<LoginPage> {
                               dataNascimento: response.usuario!.dataNascimento,
                             );
 
+                            // Armazenar informações de autenticação nas shared_preferences
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.setBool('isAuthenticated', true);
+
                             Provider.of<UserProvider>(context, listen: false)
                                 .setUser(user);
 
@@ -100,12 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ],
                                   );
                                 });
-
-                            setState(() {
-                              this.usuario = usuario;
-                            });
-                          } //fim if
-                          else if (response.statusCode == 400) {
+                          } else if (response.statusCode == 400) {
                             showDialog(
                                 context: context,
                                 builder: (context) {
