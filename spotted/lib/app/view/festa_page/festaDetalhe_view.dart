@@ -32,7 +32,7 @@ class EmpregoDetalheState extends State<FestaDetalhesView> {
         ),
         body: ListView(
           children: [
-            _buildImagens(festa.listaImagens),
+            _buildCarrousel(festa.listaImagens),
             DetalhesFesta(festa: festa),
             BotaoFesta(festa: festa),
           ],
@@ -106,7 +106,7 @@ Column _newButton(Color color, IconData icon, String? textBase, String? dado) {
   );
 }
 
-Widget _buildImagens(List<Imagem>? listaDeImagens) {
+Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
   if (!listaDeImagens!.isEmpty) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {

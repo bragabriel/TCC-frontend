@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../service/change_notifier.dart';
-import '../../model/usuario_model.dart';
+import '../../helpers/usuario_helper.dart';
 import '../../repository/alimento_repository.dart';
 import 'alimento_view.dart';
 
@@ -90,7 +90,7 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
-          idUsuario = _getUser(context, userProvider);
+          idUsuario = UsuarioHelper.getUser(context, userProvider);
           print("idUsuario: $idUsuario"); // Imprimir o ID do usuário
           return _cadastroAlimento();
         },
@@ -224,10 +224,5 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
         ],
       ),
     );
-  }
-
-  int? _getUser(BuildContext context, UserProvider userProvider) {
-    Usuario? user = userProvider.user;
-    return user?.idUsuario;
   }
 }

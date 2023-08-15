@@ -32,7 +32,7 @@ class TransporteDetalheState extends State<TransporteDetalheView> {
         ),
         body: ListView(
           children: [
-            _buildImagens(transporte.listaImagens),
+            _buildCarrousel(transporte.listaImagens),
             DetalhesTransporte(transporte: transporte),
             BotaoTransporte(transporte: transporte),
           ],
@@ -122,7 +122,7 @@ Column _newButton(Color color, IconData icon, String? textBase, String? dado) {
   );
 }
 
-Widget _buildImagens(List<Imagem>? listaDeImagens) {
+Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
   if (!listaDeImagens!.isEmpty) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {

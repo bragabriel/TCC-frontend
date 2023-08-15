@@ -10,7 +10,6 @@ import '../../repository/objeto_repository.dart';
 import '../home_page/home_view.dart';
 import 'objetoCadastrar_view.dart';
 
-
 class ObjetoPage extends StatefulWidget {
   const ObjetoPage({Key? key}) : super(key: key);
 
@@ -270,7 +269,8 @@ class ObjetoPageState extends State<ObjetoPage> {
                           fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  child: _buildImagens(filteredobjetoList[index].listaImagens),
+                  child:
+                      _buildCarrousel(filteredobjetoList[index].listaImagens),
                 ),
               );
             }),
@@ -279,7 +279,7 @@ class ObjetoPageState extends State<ObjetoPage> {
   }
 }
 
-Widget _buildImagens(List<Imagem>? listaDeImagens) {
+Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
   if (!listaDeImagens!.isEmpty) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {

@@ -214,7 +214,7 @@ class FestaPageState extends State<FestaPage> {
                           fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  child: _buildImagens(filteredFestaList[index].listaImagens),
+                  child: _buildCarrousel(filteredFestaList[index].listaImagens),
                 ),
               );
             }),
@@ -222,7 +222,7 @@ class FestaPageState extends State<FestaPage> {
     ]);
   }
 
-  Widget _buildImagens(List<Imagem>? listaDeImagens) {
+  Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
     if (!listaDeImagens!.isEmpty) {
       final imageAspectRatio = 2 / 3;
       return Scaffold(

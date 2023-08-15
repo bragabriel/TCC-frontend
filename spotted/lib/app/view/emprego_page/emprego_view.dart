@@ -275,7 +275,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
                             fontSize: 13, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    child: _buildImagens(listaDeEmpregos[index].listaImagens),
+                    child: _buildCarrousel(listaDeEmpregos[index].listaImagens),
                   ));
             },
           ),
@@ -285,7 +285,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
   }
 }
 
-Widget _buildImagens(List<Imagem>? listaDeImagens) {
+Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
   if (!listaDeImagens!.isEmpty) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {

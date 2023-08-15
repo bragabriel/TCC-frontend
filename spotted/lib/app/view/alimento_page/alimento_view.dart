@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/alimento_repository.dart';
 import 'package:spotted/app/model/alimento_model.dart';
+import '../../helpers/imageCarrousel_helper.dart';
 import '../home_page/home_view.dart';
 import 'alimentoCadastrar_view.dart';
 import 'alimentoDetalhes_view.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import '../../controller/alimento_controller.dart';
-import '../../model/artefato_model.dart';
 
 class AlimentoPage extends StatefulWidget {
   const AlimentoPage({Key? key}) : super(key: key);
@@ -82,7 +81,7 @@ class AlimentoPageState extends State<AlimentoPage> {
   void initState() {
     super.initState();
     controller.start();
-    _fetchFood();
+    _buscarAlimentos();
   }
 
   @override
@@ -102,7 +101,7 @@ class AlimentoPageState extends State<AlimentoPage> {
           IconButton(
             onPressed: () {
               controller.start();
-              _fetchFood();
+              _buscarAlimentos();
             },
             icon: const Icon(Icons.refresh_outlined),
           )
@@ -132,7 +131,7 @@ class AlimentoPageState extends State<AlimentoPage> {
     return _filtros();
   }
 
-  Future<void> _fetchFood() async {
+  Future<void> _buscarAlimentos() async {
     try {
       final foodList = await AlimentoRepository().getAllAlimentos();
       setState(() {
@@ -144,7 +143,7 @@ class AlimentoPageState extends State<AlimentoPage> {
     }
   }
 
-  void _filterFoodList() {
+  void _alimentosFiltrados() {
     setState(() {
       filteredFoodList = foodList.where((food) {
         final meetsPriceCriteria =
@@ -184,7 +183,7 @@ class AlimentoPageState extends State<AlimentoPage> {
           onChanged: (value) {
             setState(() {
               _searchTerm = value; // Update the _searchTerm variable
-              _filterFoodList();
+              _alimentosFiltrados();
             });
           },
           decoration: InputDecoration(
@@ -207,7 +206,7 @@ class AlimentoPageState extends State<AlimentoPage> {
                   onChanged: (value) {
                     setState(() {
                       minPrice = value.isEmpty ? null : double.parse(value);
-                      _filterFoodList();
+                      _alimentosFiltrados();
                     });
                   },
                   keyboardType: TextInputType.number,
@@ -229,7 +228,7 @@ class AlimentoPageState extends State<AlimentoPage> {
                   onChanged: (value) {
                     setState(() {
                       maxPrice = value.isEmpty ? null : double.parse(value);
-                      _filterFoodList();
+                      _alimentosFiltrados();
                     });
                   },
                   keyboardType: TextInputType.number,
@@ -250,7 +249,7 @@ class AlimentoPageState extends State<AlimentoPage> {
                 onChanged: (value) {
                   setState(() {
                     _showAllItems = !value!;
-                    _filterFoodList();
+                    _alimentosFiltrados();
                   });
                 },
               ),
@@ -268,7 +267,7 @@ class AlimentoPageState extends State<AlimentoPage> {
             onSelected: (selected) {
               setState(() {
                 _isSalgadoSelected = selected;
-                _filterFoodList();
+                _alimentosFiltrados();
               });
             },
           ),
@@ -278,7 +277,7 @@ class AlimentoPageState extends State<AlimentoPage> {
             onSelected: (selected) {
               setState(() {
                 _isDoceSelected = selected;
-                _filterFoodList();
+                _alimentosFiltrados();
               });
             },
           ),
@@ -321,7 +320,8 @@ class AlimentoPageState extends State<AlimentoPage> {
                           fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  child: _buildImagens(filteredFoodList[index].listaImagens),
+                  child: ImageHelper.buildCarrousel(
+                      filteredFoodList[index].listaImagens),
                 ),
               );
             }),
@@ -329,43 +329,3 @@ class AlimentoPageState extends State<AlimentoPage> {
     ]);
   }
 }
-
-Widget _buildImagens(List<Imagem>? listaDeImagens) {
-  if (!listaDeImagens!.isEmpty) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        final screenWidth = 16;
-        final screenHeight = 9;
-        final imageAspectRatio = screenWidth / screenHeight;
-        return Container(
-          width: double.infinity,
-          child: CarouselSlider(
-            options: CarouselOptions(
-              aspectRatio: imageAspectRatio, 
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              autoPlayCurve: Curves.easeInExpo,
-              pauseAutoPlayOnTouch: true,
-            ),
-            items: listaDeImagens.map((imagemPath) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Image.network(
-                    imagemPath.url,
-                    fit: BoxFit.cover, 
-                  );
-                },
-              );
-            }).toList(),
-          ),
-        );
-      },
-    );
-  } else {
-    return Center(
-      child: Image.asset('assets/images/imagem.png'),
-    );
-  }
-}
-
