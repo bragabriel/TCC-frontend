@@ -25,7 +25,6 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
             ? _descricaoController.text
             : null,
         "idUsuario": 1, //PEGAR ID DO USUARIO
-        "tipoArtefato": "ALIMENTO",
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
@@ -47,7 +46,29 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
     try {
       await AlimentoRepository().cadastrarAlimento(body);
       print('Cadastro realizado com sucesso');
+      AlertDialog(
+        title: Text("Oba!"),
+        content: Text("Adicionamos seu alimento a nossa geladeira. Boa sorte!"),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Ok"))
+        ],
+      );
     } catch (e) {
+      AlertDialog(
+        title: Text("Eita!"),
+        content: Text("Tivemos um erro ao cadastrar seu alimento."),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Ok"))
+        ],
+      );
       print('Erro ao cadastrar: $e');
     }
   }
@@ -68,58 +89,56 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Cadastrar alimento'),
-      ),
-      body: _cadastroAlimento()
-    );
+        appBar: AppBar(
+          title: Text('Cadastrar alimento'),
+        ),
+        body: _cadastroAlimento());
   }
 
   SingleChildScrollView _cadastroAlimento() {
     return SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            TextField(
-              controller: _tituloController,
-              decoration: InputDecoration(labelText: 'Titulo'),
-            ),
-            TextField(
-              controller: _descricaoController,
-              decoration: InputDecoration(labelText: 'Descrição'),
-            ),
-            TextField(
-              controller: _tipoController,
-              decoration: InputDecoration(labelText: 'Tipo'),
-            ),
-            TextField(
-              controller: _marcaController,
-              decoration: InputDecoration(labelText: 'Marca'),
-            ),
-            TextField(
-              controller: _saborController,
-              decoration: InputDecoration(labelText: 'Sabor'),
-            ),
-            TextField(
-              controller: _unidadeController,
-              decoration: InputDecoration(labelText: 'Unidade'),
-            ),
-            TextField(
-              controller: _precoController,
-              decoration: InputDecoration(labelText: 'Preço'),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: _ofertaController,
-              decoration: InputDecoration(labelText: 'Oferta'),
-            ),
-            ElevatedButton(
-              onPressed: _cadastrar,
-              child: Text('Cadastrar'),
-            ),
-          ],
-        ),
-      );
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          TextField(
+            controller: _tituloController,
+            decoration: InputDecoration(labelText: 'Titulo'),
+          ),
+          TextField(
+            controller: _descricaoController,
+            decoration: InputDecoration(labelText: 'Descrição'),
+          ),
+          TextField(
+            controller: _tipoController,
+            decoration: InputDecoration(labelText: 'Tipo'),
+          ),
+          TextField(
+            controller: _marcaController,
+            decoration: InputDecoration(labelText: 'Marca'),
+          ),
+          TextField(
+            controller: _saborController,
+            decoration: InputDecoration(labelText: 'Sabor'),
+          ),
+          TextField(
+            controller: _unidadeController,
+            decoration: InputDecoration(labelText: 'Unidade'),
+          ),
+          TextField(
+            controller: _precoController,
+            decoration: InputDecoration(labelText: 'Preço'),
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
+          ),
+          TextField(
+            controller: _ofertaController,
+            decoration: InputDecoration(labelText: 'Oferta'),
+          ),
+          ElevatedButton(
+            onPressed: _cadastrar,
+            child: Text('Cadastrar'),
+          ),
+        ],
+      ),
+    );
   }
 }
-

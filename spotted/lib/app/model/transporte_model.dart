@@ -6,13 +6,12 @@ class Transporte extends Artefato {
   final num? qtdAssentosTotalTransporte;
   final num? qtdAssentosPreenchidosTransporte;
   final String? cidadeTransporte;
-  final String? periodoTransporte;	
+  final String? periodoTransporte;
 
   Transporte({
     required int idArtefato,
     required String tituloArtefato,
     required String descricaoArtefato,
-    required String tipoArtefato,
     required bool ativo,
     required String dataCadastro,
     required String? dataAtualizacao,
@@ -23,12 +22,11 @@ class Transporte extends Artefato {
     required this.qtdAssentosTotalTransporte,
     required this.qtdAssentosPreenchidosTransporte,
     required this.cidadeTransporte,
-    required this.periodoTransporte,	
+    required this.periodoTransporte,
   }) : super(
           idArtefato: idArtefato,
           tituloArtefato: tituloArtefato,
           descricaoArtefato: descricaoArtefato,
-          tipoArtefato: tipoArtefato,
           ativo: ativo,
           dataCadastro: dataCadastro,
           dataAtualizacao: dataAtualizacao,
@@ -41,10 +39,11 @@ class Transporte extends Artefato {
       idArtefato: json['idArtefato'],
       tituloArtefato: json['tituloArtefato'],
       descricaoArtefato: json['descricaoArtefato'],
-      tipoArtefato: json['tipoArtefato'],
+
       ativo: json['ativo'],
       dataCadastro: json['dataCadastro'],
-      dataAtualizacao: json['dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?
+      dataAtualizacao: json[
+          'dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?
       idUsuario: json['idUsuario'],
       listaImagens: (json['listaImagens'] as List<dynamic>)
           .map((image) => Imagem.fromJson(image))
@@ -52,7 +51,8 @@ class Transporte extends Artefato {
       informacoesVeiculoTransporte: json['informacoesVeiculoTransporte'],
       informacoesCondutorTransporte: json['informacoesCondutorTransporte'],
       qtdAssentosTotalTransporte: json['qtdAssentosTotalTransporte'],
-      qtdAssentosPreenchidosTransporte: json['qtdAssentosPreenchidosTransporte'],
+      qtdAssentosPreenchidosTransporte:
+          json['qtdAssentosPreenchidosTransporte'],
       cidadeTransporte: json['cidadeTransporte'],
       periodoTransporte: json['periodoTransporte'],
     );

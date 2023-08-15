@@ -10,13 +10,12 @@ class Moradia extends Artefato {
   final num? precoAluguelTotalMoradia;
   final num? precoAluguelPorPessoaMoradia;
   final String? vagaGaragemMoradia;
-  final String? animaisEstimacaoMoradia;				
+  final String? animaisEstimacaoMoradia;
 
   Moradia({
     required int idArtefato,
     required String tituloArtefato,
     required String descricaoArtefato,
-    required String tipoArtefato,
     required bool ativo,
     required String dataCadastro,
     required String? dataAtualizacao,
@@ -31,12 +30,11 @@ class Moradia extends Artefato {
     required this.precoAluguelTotalMoradia,
     required this.precoAluguelPorPessoaMoradia,
     required this.vagaGaragemMoradia,
-    required this.animaisEstimacaoMoradia,				
+    required this.animaisEstimacaoMoradia,
   }) : super(
           idArtefato: idArtefato,
           tituloArtefato: tituloArtefato,
           descricaoArtefato: descricaoArtefato,
-          tipoArtefato: tipoArtefato,
           ativo: ativo,
           dataCadastro: dataCadastro,
           dataAtualizacao: dataAtualizacao,
@@ -49,10 +47,11 @@ class Moradia extends Artefato {
       idArtefato: json['idArtefato'],
       tituloArtefato: json['tituloArtefato'],
       descricaoArtefato: json['descricaoArtefato'],
-      tipoArtefato: json['tipoArtefato'],
+
       ativo: json['ativo'],
       dataCadastro: json['dataCadastro'],
-      dataAtualizacao: json['dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?
+      dataAtualizacao: json[
+          'dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?
       idUsuario: json['idUsuario'],
       listaImagens: (json['listaImagens'] as List<dynamic>)
           .map((image) => Imagem.fromJson(image))
@@ -66,7 +65,7 @@ class Moradia extends Artefato {
       precoAluguelTotalMoradia: json['precoAluguelTotalMoradia'],
       precoAluguelPorPessoaMoradia: json['precoAluguelPorPessoaMoradia'],
       vagaGaragemMoradia: json['vagaGaragemMoradia'],
-      animaisEstimacaoMoradia: json['animaisEstimacaoMoradia'],					
+      animaisEstimacaoMoradia: json['animaisEstimacaoMoradia'],
     );
   }
 }

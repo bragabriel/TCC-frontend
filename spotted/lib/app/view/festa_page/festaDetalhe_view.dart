@@ -1,22 +1,22 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:spotted/app/model/alimento_model.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../model/festa_model.dart';
 import '../../model/artefato_model.dart';
-import 'alimento_view.dart';
+import 'festa_view.dart';
 
-class AlimentoDetalheView extends StatefulWidget {
+class FestaDetalhesView extends StatefulWidget {
   @override
-  State<AlimentoDetalheView> createState() => AlimentoDetalheState();
+  State<FestaDetalhesView> createState() => EmpregoDetalheState();
 
-  final Alimento filteredFoodList;
-  const AlimentoDetalheView(this.filteredFoodList, {super.key});
+  final Festa filteredFestaList;
+  const FestaDetalhesView(this.filteredFestaList, {super.key});
 }
 
-class AlimentoDetalheState extends State<AlimentoDetalheView> {
+class EmpregoDetalheState extends State<FestaDetalhesView> {
   @override
   Widget build(BuildContext context) {
-    Alimento alimento = widget.filteredFoodList;
+    Festa festa = widget.filteredFestaList;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -25,16 +25,16 @@ class AlimentoDetalheState extends State<AlimentoDetalheView> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AlimentoPage()),
+                MaterialPageRoute(builder: (context) => FestaPage()),
               );
             },
           ),
         ),
         body: ListView(
           children: [
-            _buildImagens(alimento.listaImagens),
-            DetalhesAlimento(alimento: alimento),
-            BotaoAlimento(alimento: alimento),
+            _buildImagens(festa.listaImagens),
+            DetalhesFesta(festa: festa),
+            BotaoFesta(festa: festa),
           ],
         ),
       ),
@@ -42,30 +42,26 @@ class AlimentoDetalheState extends State<AlimentoDetalheView> {
   }
 }
 
-class BotaoAlimento extends StatelessWidget {
-  final Alimento alimento;
+class BotaoFesta extends StatelessWidget {
+  final Festa festa;
 
-  BotaoAlimento({required this.alimento});
+  BotaoFesta({required this.festa});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _newButton(
-            Colors.blue,
-            Icons.message,
-            'https://api.whatsapp.com/send/?phone=55',
-            "19999138267") //alimento.contato)
+        _newButton(Colors.blue.shade700, Icons.map, "", festa.localizacaoFesta)
       ],
     );
   }
 }
 
-class DetalhesAlimento extends StatelessWidget {
-  final Alimento alimento;
+class DetalhesFesta extends StatelessWidget {
+  final Festa festa;
 
-  DetalhesAlimento({required this.alimento});
+  DetalhesFesta({required this.festa});
 
   @override
   Widget build(BuildContext context) {
@@ -74,45 +70,36 @@ class DetalhesAlimento extends StatelessWidget {
       child: Wrap(
         children: [
           Text(
-            "${alimento.tituloArtefato} - ${alimento.saborAlimento} \n",
+            "${festa.tituloArtefato} - ${festa.localizacaoFesta} \n",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 27,
             ),
           ),
-          _buildText(alimento.descricaoArtefato),
-          _buildText(alimento.saborAlimento),
-          _buildText(alimento.unidadeAlimento),
-          _buildText(alimento.descricaoArtefato),
-          Text(
-            "R\$ ${alimento.precoAlimento?.toStringAsFixed(2) ?? '0.00'}",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-            ),
-          ),
+          _buildText(festa.descricaoArtefato),
+          // Add more details here
         ],
       ),
     );
   }
 }
 
-void _openURL(String url) async {
-  if (await canLaunchUrl(Uri.parse(url))) {
-    await launchUrl(Uri.parse(url));
+void _openURL(String? url) async {
+  if (await canLaunch(url!)) {
+    await launch(url);
   } else {
     throw 'Não foi possível abrir $url';
   }
 }
 
-Column _newButton(Color color, IconData icon, String textBase, String dado) {
+Column _newButton(Color color, IconData icon, String? textBase, String? dado) {
   return Column(
     mainAxisSize: MainAxisSize.min,
     mainAxisAlignment: MainAxisAlignment.end,
     children: <Widget>[
       IconButton(
         icon: Icon(icon, color: color, size: 50),
-        onPressed: () => _openURL(textBase + dado),
+        onPressed: () => _openURL(textBase! + dado!),
       ),
       SizedBox(height: 20),
     ],
@@ -130,7 +117,7 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
           width: double.infinity,
           child: CarouselSlider(
             options: CarouselOptions(
-              aspectRatio: imageAspectRatio, 
+              aspectRatio: imageAspectRatio,
               autoPlay: true,
               autoPlayInterval: Duration(seconds: 3),
               autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -157,7 +144,6 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
     );
   }
 }
-
 
 Text _buildText(String? text) {
   return Text(

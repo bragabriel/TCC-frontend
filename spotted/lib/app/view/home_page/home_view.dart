@@ -36,7 +36,7 @@ class HomePageState extends State<HomePage> {
           SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
-              controller.start();
+              controller.start(context);
             },
             child: Text('Tentar novamente'),
           ),
@@ -71,7 +71,7 @@ class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    controller.start();
+    controller.start(context);
     _fetchWeather();
   }
 
@@ -112,38 +112,40 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
         drawer: Drawer(
           child: Column(children: [
+            // aqui pegar usuario
             Consumer<UserProvider>(
               builder: (context, userProvider, _) {
                 Usuario? user = userProvider.user;
                 return UserAccountsDrawerHeader(
-                  currentAccountPicture: ClipOval(
-                    child: Image.asset('assets/images/user.png'),
+                  currentAccountPicture: ClipPath(
+                    child: _buildFotoPerfil(user?.url),
                   ),
+                  // utilizando o usuario
                   accountName: Text(user?.nomeUsuario ?? 'Usuário não logado'),
                   accountEmail: Text(user?.emailUsuario ?? ''),
                 );
               },
             ),
             ListTile(
-                leading: Icon(Icons.food_bank_outlined),
+                leading: Icon(Icons.food_bank),
                 title: Text('Alimentos'),
                 subtitle: Text('Ai que fominha! 🍽'),
                 onTap: () {
-                  Navigator.of(context).pushNamed('/comida');
+                  Navigator.of(context).pushNamed('/alimento');
                 }),
             ListTile(
-                leading: Icon(Icons.business_center_outlined),
+                leading: Icon(Icons.business_center),
                 title: Text('Empregos'),
                 subtitle: Text('Bora trabalhar? 💻'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/emprego');
                 }),
             ListTile(
-                leading: Icon(Icons.local_bar_outlined),
+                leading: Icon(Icons.local_bar),
                 title: Text('Festas'),
                 subtitle: Text('Partiu pra revoada? 🎉'),
                 onTap: () {
-                  Navigator.of(context).pushNamed('/festas');
+                  Navigator.of(context).pushNamed('/festa');
                 }),
             ListTile(
                 leading: Icon(Icons.home_filled),
@@ -157,12 +159,19 @@ class HomePageState extends State<HomePage> {
                 title: Text('Objetos Perdidos'),
                 subtitle: Text('Perdeu seu casaco favorito? 👀'),
                 onTap: () {
-                  Navigator.of(context).pushNamed('/objetos');
+                  Navigator.of(context).pushNamed('/objeto');
+                }),
+            ListTile(
+                leading: Icon(Icons.car_crash),
+                title: Text('Transportes'),
+                subtitle: Text('Naves para ir à faculdade? 🚗'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/transporte');
                 }),
             ListTile(
                 leading: Icon(Icons.verified_user),
                 title: Text('Perfil'),
-                subtitle: Text('Deixa eu ver a minha beleza 😍'),
+                subtitle: Text('Deixa eu ver meus dados 😍'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/perfil');
                 }),
@@ -213,5 +222,16 @@ class HomePageState extends State<HomePage> {
             ],
           ),
         ));
+  }
+}
+Widget _buildFotoPerfil(String? perfil) {
+  if (perfil != null ) {
+    return Center(
+      child: Image.network(perfil),
+    );
+  } else {
+    return Center(
+      child: Image.asset('assets/images/perfil.png'),
+    );
   }
 }

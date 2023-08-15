@@ -80,6 +80,7 @@ flutter:
     - assets/images/user.png
     - assets/images/imagem.png
     - assets/images/jobs.jpg
+    - assets/images/perfil.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

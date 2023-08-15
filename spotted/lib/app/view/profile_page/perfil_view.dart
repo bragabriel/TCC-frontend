@@ -8,11 +8,14 @@ import 'package:spotted/app/view/profile_page/edit_name.dart';
 import 'package:spotted/app/view/profile_page/edit_phone.dart';
 import 'package:spotted/app/widget/display_image_widget.dart';
 import '../../../service/change_notifier.dart';
-
+import '../../controller/usuario_controller.dart';
+import 'my_products.dart';
 
 class ProfilePage extends StatelessWidget {
+  final controller = UsuarioController();
   @override
   Widget build(BuildContext context) {
+    Usuario? user = Usuario.empty();
     return Scaffold(
       body: Column(
         children: [
@@ -25,11 +28,11 @@ class ProfilePage extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(bottom: 20),
               child: Text(
-                'Edit Profile',
+                'Sobre mim',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w700,
-                  color: Color.fromRGBO(64, 105, 225, 1),
+                  color: Colors.lime,
                 ),
               ),
             ),
@@ -37,8 +40,7 @@ class ProfilePage extends StatelessWidget {
           Expanded(
             child: Consumer<UserProvider>(
               builder: (context, userProvider, _) {
-                Usuario? user = userProvider.user;
-
+                user = userProvider.user;
                 return Column(
                   children: [
                     InkWell(
@@ -46,19 +48,32 @@ class ProfilePage extends StatelessWidget {
                         navigateSecondPage(context, EditImagePage());
                       },
                       child: DisplayImage(
-                        imagePath: user?.url ?? '',
+                        imagePath: user?.url ?? 'https://miro.medium.com/v2/resize:fit:1400/1*g09N-jl7JtVjVZGcd-vL2g.jpeg',
                         onPressed: () {},
                       ),
                     ),
                     SizedBox(
-                      width: double.infinity, // Informa o tamanho horizontal máximo
+                      width: double
+                          .infinity, // Informa o tamanho horizontal máximo
                       child: SingleChildScrollView(
                         physics: BouncingScrollPhysics(),
                         child: Column(
                           children: [
-                            buildUserInfoDisplay(context, user?.nomeUsuario ?? '', 'Nome', EditNameFormPage()),
-                            buildUserInfoDisplay(context, user?.telefoneUsuario ?? '', 'Phone', EditPhoneFormPage()),
-                            buildUserInfoDisplay(context, user?.emailUsuario ?? '', 'Email', EditEmailFormPage()),
+                            buildUserInfoDisplay(
+                                context,
+                                user?.nomeUsuario ?? '',
+                                'Nome',
+                                EditNameFormPage()),
+                            buildUserInfoDisplay(
+                                context,
+                                user?.telefoneUsuario ?? '',
+                                'Telefone',
+                                EditPhoneFormPage()),
+                            buildUserInfoDisplay(
+                                context,
+                                user?.emailUsuario ?? '',
+                                'Email',
+                                EditEmailFormPage()),
                           ],
                         ),
                       ),
@@ -68,8 +83,8 @@ class ProfilePage extends StatelessWidget {
               },
             ),
           ),
-        ],
-      ),
+         _newButton(Colors.black, Icons.list, user),],
+      ),  
     );
   }
 
@@ -125,7 +140,7 @@ class ProfilePage extends StatelessWidget {
         ],
       ),
     );
-  }  
+  }
 
   FutureOr onGoBack(dynamic value, BuildContext context, Usuario newUser) {
     // Rebuild the widget to show the updated user info
@@ -139,4 +154,18 @@ class ProfilePage extends StatelessWidget {
       onGoBack(newValue, context, newValue);
     });
   }
+}
+
+Column _newButton(Color color, IconData icon, Usuario? usuario) {
+  return Column(
+    mainAxisSize: MainAxisSize.min,
+    mainAxisAlignment: MainAxisAlignment.end,
+    children: <Widget>[
+      IconButton(
+        icon: Icon(icon, color: color, size: 50),
+        onPressed: () => MyProductsPage(usuario!),
+      ),
+      SizedBox(height: 20),
+    ],
+  );
 }

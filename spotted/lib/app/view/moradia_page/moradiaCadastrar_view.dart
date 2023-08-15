@@ -12,8 +12,13 @@ class MoradiaCadastrarView extends StatefulWidget {
 class _MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
   final TextEditingController _tituloController = TextEditingController();
   final TextEditingController _descricaoController = TextEditingController();
-  final TextEditingController _tipoController = TextEditingController();
-  final TextEditingController _localizacaoController = TextEditingController();
+  final TextEditingController _bairroMoradiaController =
+      TextEditingController();
+  final TextEditingController _cepMoradiaController = TextEditingController();
+  final TextEditingController _cidadeMoradiaController =
+      TextEditingController();
+  final TextEditingController _estadoMoradiaController =
+      TextEditingController();
   final TextEditingController _qtdMoradoresPermitidoController =
       TextEditingController();
   final TextEditingController _qtdMoradoresAtuaisController =
@@ -25,46 +30,84 @@ class _MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
   final TextEditingController _vagaGaragemController = TextEditingController();
   final TextEditingController _animaisEstimacaoController =
       TextEditingController();
+  final TextEditingController _contatoController = TextEditingController();
 
   Future<void> _cadastrar() async {
     final body = {
       "artefato": {
-        "descricaoArtefato":
-            _descricaoController.text.isNotEmpty ? _descricaoController.text : null,
+        "descricaoArtefato": _descricaoController.text.isNotEmpty
+            ? _descricaoController.text
+            : null,
         "idUsuario": 1, //PEGAR ID DO USUARIO
-        "tipoArtefato": "Moradia",
+
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
-      "localizacaoMoradia": _localizacaoController.text.isNotEmpty
-          ? _localizacaoController.text
+      "bairroMoradia": _bairroMoradiaController.text.isNotEmpty
+          ? _bairroMoradiaController.text
           : null,
-      "qtdMoradoresPermitidoMoradia":
-          _qtdMoradoresPermitidoController.text.isNotEmpty
-              ? num.parse(_qtdMoradoresPermitidoController.text)
-              : null,
-      "qtdMoradoresAtuaisMoradia": _qtdMoradoresAtuaisController.text.isNotEmpty
-          ? num.parse(_qtdMoradoresAtuaisController.text)
+      "cepMoradia": _cepMoradiaController.text.isNotEmpty
+          ? _cepMoradiaController.text
           : null,
-      "precoAluguelTotalMoradia": _precoAluguelTotalController.text.isNotEmpty
-          ? num.parse(_precoAluguelTotalController.text)
+      "cidadeMoradia": _cidadeMoradiaController.text.isNotEmpty
+          ? _cidadeMoradiaController.text
+          : null,
+      "estadoMoradia": _estadoMoradiaController.text.isNotEmpty
+          ? _estadoMoradiaController.text
           : null,
       "precoAluguelPorPessoaMoradia":
           _precoAluguelPorPessoaController.text.isNotEmpty
               ? num.parse(_precoAluguelPorPessoaController.text)
               : null,
-      "vagaGaragemMoradia":
-          _vagaGaragemController.text.isNotEmpty ? _vagaGaragemController.text : null,
+      "precoAluguelTotalMoradia": _precoAluguelTotalController.text.isNotEmpty
+          ? num.parse(_precoAluguelTotalController.text)
+          : null,
+      "qtdMoradoresAtuaisMoradia": _qtdMoradoresAtuaisController.text.isNotEmpty
+          ? num.parse(_qtdMoradoresAtuaisController.text)
+          : null,
+      "qtdMoradoresPermitidoMoradia":
+          _qtdMoradoresPermitidoController.text.isNotEmpty
+              ? num.parse(_qtdMoradoresPermitidoController.text)
+              : null,
+      "vagaGaragemMoradia": _vagaGaragemController.text.isNotEmpty
+          ? _vagaGaragemController.text
+          : null,
       "animaisEstimacaoMoradia": _animaisEstimacaoController.text.isNotEmpty
           ? _animaisEstimacaoController.text
           : null,
+      "contatoMoradia":
+          _contatoController.text.isNotEmpty ? _contatoController.text : null,
     };
 
     try {
-      await MoradiaRepository().cadastrarMoradia(Moradia.fromJson(body) as Map<String, dynamic>);
+      await MoradiaRepository()
+          .cadastrarMoradia(Moradia.fromJson(body) as Map<String, dynamic>);
       print('Cadastro realizado com sucesso');
+      AlertDialog(
+        title: Text("Oba!"),
+        content:
+            Text("Adicionamos sua moradia a nossa base de dados. Boa sorte!"),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Ok"))
+        ],
+      );
     } catch (e) {
       print('Erro ao cadastrar: $e');
+      AlertDialog(
+        title: Text("Eita!"),
+        content: Text("Tivemos um erro ao cadastrar sua moradia."),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Ok"))
+        ],
+      );
     }
   }
 
@@ -76,6 +119,24 @@ class _MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
       ),
       body: _cadastroMoradia(),
     );
+  }
+
+  @override
+  void dispose() {
+    _tituloController.dispose();
+    _descricaoController.dispose();
+    _animaisEstimacaoController.dispose();
+    _vagaGaragemController.dispose();
+    _precoAluguelPorPessoaController.dispose();
+    _precoAluguelTotalController.dispose();
+    _qtdMoradoresAtuaisController.dispose();
+    _qtdMoradoresPermitidoController.dispose();
+    _estadoMoradiaController.dispose();
+    _cidadeMoradiaController.dispose();
+    _cepMoradiaController.dispose();
+    _bairroMoradiaController.dispose();
+    _contatoController.dispose();
+    super.dispose();
   }
 
   SingleChildScrollView _cadastroMoradia() {
@@ -92,12 +153,20 @@ class _MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
             decoration: InputDecoration(labelText: 'Descrição'),
           ),
           TextField(
-            controller: _tipoController,
-            decoration: InputDecoration(labelText: 'Tipo'),
+            controller: _estadoMoradiaController,
+            decoration: InputDecoration(labelText: 'Estado'),
           ),
           TextField(
-            controller: _localizacaoController,
-            decoration: InputDecoration(labelText: 'Localização'),
+            controller: _cidadeMoradiaController,
+            decoration: InputDecoration(labelText: 'Cidade'),
+          ),
+          TextField(
+            controller: _bairroMoradiaController,
+            decoration: InputDecoration(labelText: 'Bairro'),
+          ),
+          TextField(
+            controller: _cepMoradiaController,
+            decoration: InputDecoration(labelText: 'CEP'),
           ),
           TextField(
             controller: _qtdMoradoresPermitidoController,

@@ -1,19 +1,37 @@
 import 'package:flutter/cupertino.dart';
-import 'package:spotted/app/model/usuario_model.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
+import '../../service/change_notifier.dart';
+import '../model/usuario_model.dart';
 
-class UsuarioController{
-  List<Usuario> listResponse = [];
-
+class UsuarioController {
   final _repository = UsuarioRepository();
+
+  Widget build(BuildContext context) {
+    return Consumer<UserProvider>(
+      builder: (context, userProvider, _) {
+        Usuario? user = userProvider.user;
+        return UserAccountsDrawerHeader(
+          // utilizando o usuario
+          accountName: Text(user?.nomeUsuario ?? 'Usuário não logado'),
+          accountEmail: Text(user?.emailUsuario ?? ''),
+        );
+      },
+    );
+  }
 
   //Setando estado inicial
   final state = ValueNotifier<HomeState>(HomeState.start);
 
-  start() async {
+  Future<void> start(BuildContext context) async {
     state.value = HomeState.loading;
+    
     try {
-      listResponse = await _repository.getAllUsuarios();
+      // Obtenha o usuário do UserProvider
+      Usuario? user = Provider.of<UserProvider>(context, listen: false).user;
+      
+      await _repository.getUsuario(user?.idUsuario ?? 1);
       state.value = HomeState.success;
     } catch (e) {
       print(e);
@@ -22,6 +40,4 @@ class UsuarioController{
   }
 }
 
-enum HomeState {
-  start, loading, success, error
-}
+enum HomeState { start, loading, success, error }

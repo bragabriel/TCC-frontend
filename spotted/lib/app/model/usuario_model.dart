@@ -1,15 +1,29 @@
 class Usuario {
-  final int idUsuario;
+  final int? idUsuario;
   String nomeUsuario;
   String sobrenomeUsuario;
   String emailUsuario;
   String? senhaUsuario;
   String telefoneUsuario;
   DateTime dataNascimento;
-  String? url; 
+  String? url;
   String? fileName;
+  List<dynamic>? listaArtefatosReponse;
 
   // Constructor
+
+  Usuario.empty()
+      : idUsuario = 0,
+        nomeUsuario = '',
+        sobrenomeUsuario = '',
+        emailUsuario = '',
+        senhaUsuario = '',
+        telefoneUsuario = '',
+        dataNascimento = DateTime.now(),
+        url = '',
+        fileName = '',
+        listaArtefatosReponse = List.empty();
+
   Usuario({
     required this.idUsuario,
     required this.nomeUsuario,
@@ -20,6 +34,7 @@ class Usuario {
     required this.dataNascimento,
     this.url,
     this.fileName,
+    this.listaArtefatosReponse
   });
 
   Usuario copy({
@@ -32,6 +47,7 @@ class Usuario {
     String? descricaoUsuario,
     String? url,
     String? fileName,
+    List<dynamic>? listaArtefatosReponse,
   }) =>
       Usuario(
         idUsuario: idUsuario ?? this.idUsuario,
@@ -43,6 +59,7 @@ class Usuario {
         dataNascimento: dataNascimento,
         url: url ?? this.url,
         fileName: fileName ?? this.fileName,
+        listaArtefatosReponse: listaArtefatosReponse ?? this.listaArtefatosReponse
       );
 
   static Usuario fromJson(Map<String, dynamic> json) => Usuario(
@@ -53,8 +70,9 @@ class Usuario {
         senhaUsuario: json['senhaUsuario'] as String? ?? "",
         telefoneUsuario: json['telefoneUsuario'],
         dataNascimento: DateTime.parse(json['dataNascimento']),
-        fileName: json['fileName'] as String? ?? "", 
-        url: json['url'] as String? ?? "", 
+        fileName: json['fileName'] as String? ?? "",
+        url: json['url'] as String? ?? "",
+        listaArtefatosReponse: json['listaArtefatosReponse'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -67,5 +85,6 @@ class Usuario {
         'dataNascimento': dataNascimento.toIso8601String(),
         'url': url,
         'fileName': fileName,
+        'listaArtefatosReponse': listaArtefatosReponse
       };
 }

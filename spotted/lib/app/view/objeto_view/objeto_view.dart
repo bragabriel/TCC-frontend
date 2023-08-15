@@ -1,34 +1,34 @@
-import 'package:flutter/material.dart';
-import 'package:spotted/app/repository/alimento_repository.dart';
-import 'package:spotted/app/model/alimento_model.dart';
-import '../home_page/home_view.dart';
-import 'alimentoCadastrar_view.dart';
-import 'alimentoDetalhes_view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import '../../controller/alimento_controller.dart';
-import '../../model/artefato_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:spotted/app/view/objeto_view/objetoDetalhe_view.dart';
 
-class AlimentoPage extends StatefulWidget {
-  const AlimentoPage({Key? key}) : super(key: key);
+import '../../controller/objeto_controller.dart';
+import '../../model/artefato_model.dart';
+import '../../model/objeto_model.dart';
+import '../../repository/objeto_repository.dart';
+import '../home_page/home_view.dart';
+import 'objetoCadastrar_view.dart';
+
+
+class ObjetoPage extends StatefulWidget {
+  const ObjetoPage({Key? key}) : super(key: key);
 
   @override
-  State<AlimentoPage> createState() => AlimentoPageState();
+  State<ObjetoPage> createState() => ObjetoPageState();
 }
 
-class AlimentoPageState extends State<AlimentoPage> {
-  List<Alimento> foodList = [];
-  List<Alimento> filteredFoodList = [];
+class ObjetoPageState extends State<ObjetoPage> {
+  List<Objeto> objetoList = [];
+  List<Objeto> filteredobjetoList = [];
   double? minPrice;
   double? maxPrice;
   bool showOnlyOffers = false;
   List<String> selectedTypes = [];
-  bool _isSalgadoSelected = false;
-  bool _isDoceSelected = false;
-  bool _showAllItems = true;
   String _searchTerm = '';
 
   final _searchController = TextEditingController();
-  final controller = AlimentoController();
+  final controller = ObjetoController();
 
   _success() {
     return _body();
@@ -82,14 +82,14 @@ class AlimentoPageState extends State<AlimentoPage> {
   void initState() {
     super.initState();
     controller.start();
-    _fetchFood();
+    _fetchobjeto();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Alimentação"),
+        title: Text("Objetos perdidos"),
         leading: BackButton(
           onPressed: () {
             Navigator.push(
@@ -102,7 +102,7 @@ class AlimentoPageState extends State<AlimentoPage> {
           IconButton(
             onPressed: () {
               controller.start();
-              _fetchFood();
+              _fetchobjeto();
             },
             icon: const Icon(Icons.refresh_outlined),
           )
@@ -120,7 +120,7 @@ class AlimentoPageState extends State<AlimentoPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AlimentoCadastrarView(),
+              builder: (context) => ObjetoCadastrarView(),
             ),
           );
         },
@@ -132,44 +132,34 @@ class AlimentoPageState extends State<AlimentoPage> {
     return _filtros();
   }
 
-  Future<void> _fetchFood() async {
+  Future<void> _fetchobjeto() async {
     try {
-      final foodList = await AlimentoRepository().getAllAlimentos();
+      final objetoList = await ObjetoRepository().getAllObjetos();
       setState(() {
-        this.foodList = foodList;
-        filteredFoodList = foodList;
+        this.objetoList = objetoList;
+        filteredobjetoList = objetoList;
       });
     } catch (e) {
-      print('Erro ao obter a lista de alimentos: $e');
+      print('Erro ao obter a lista de objetos: $e');
     }
   }
 
-  void _filterFoodList() {
+  void _filterobjetoList() {
     setState(() {
-      filteredFoodList = foodList.where((food) {
-        final meetsPriceCriteria =
-            (minPrice == null || food.precoAlimento! >= minPrice!) &&
-                (maxPrice == null || food.precoAlimento! <= maxPrice!);
-
-        final meetsOfferCriteria = _showAllItems
-            ? true // Sem filtro de oferta, mostrar todos os itens
-            : food.ofertaAlimento?.isNotEmpty ??
-                false; // Exibir apenas os itens em oferta
-
-        final meetsTypeCriteria =
-            (_isSalgadoSelected && food.tipoAlimento == 'SALGADO') ||
-                (_isDoceSelected && food.tipoAlimento == 'DOCE') ||
-                (!_isSalgadoSelected && !_isDoceSelected);
-
+      filteredobjetoList = objetoList.where((objeto) {
         final searchTerm = _searchTerm.toLowerCase();
-        final titleContainsTerm =
-            food.tituloArtefato.toLowerCase().contains(searchTerm);
-        final descriptionContainsTerm =
-            food.descricaoArtefato.toLowerCase().contains(searchTerm);
 
-        return meetsPriceCriteria &&
-            meetsOfferCriteria &&
-            meetsTypeCriteria &&
+        final achadoCoitainsTerm =
+            objeto.localizacaoAchadoObjeto!.toLowerCase().contains(searchTerm);
+        final localizacaoAtualContainsTerm =
+            objeto.localizacaoAtualObjeto!.toLowerCase().contains(searchTerm);
+        final titleContainsTerm =
+            objeto.tituloArtefato.toLowerCase().contains(searchTerm);
+        final descriptionContainsTerm =
+            objeto.descricaoArtefato.toLowerCase().contains(searchTerm);
+
+        return achadoCoitainsTerm &&
+            localizacaoAtualContainsTerm &&
             (titleContainsTerm || descriptionContainsTerm);
       }).toList();
     });
@@ -184,7 +174,7 @@ class AlimentoPageState extends State<AlimentoPage> {
           onChanged: (value) {
             setState(() {
               _searchTerm = value; // Update the _searchTerm variable
-              _filterFoodList();
+              _filterobjetoList();
             });
           },
           decoration: InputDecoration(
@@ -207,7 +197,7 @@ class AlimentoPageState extends State<AlimentoPage> {
                   onChanged: (value) {
                     setState(() {
                       minPrice = value.isEmpty ? null : double.parse(value);
-                      _filterFoodList();
+                      _filterobjetoList();
                     });
                   },
                   keyboardType: TextInputType.number,
@@ -229,7 +219,7 @@ class AlimentoPageState extends State<AlimentoPage> {
                   onChanged: (value) {
                     setState(() {
                       maxPrice = value.isEmpty ? null : double.parse(value);
-                      _filterFoodList();
+                      _filterobjetoList();
                     });
                   },
                   keyboardType: TextInputType.number,
@@ -240,47 +230,6 @@ class AlimentoPageState extends State<AlimentoPage> {
                 ),
               ),
             ],
-          ),
-          Column(
-            children: [
-              Text('Oferta'),
-              SizedBox(height: 4),
-              Checkbox(
-                value: !_showAllItems,
-                onChanged: (value) {
-                  setState(() {
-                    _showAllItems = !value!;
-                    _filterFoodList();
-                  });
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
-      SizedBox(height: 10),
-      Wrap(
-        spacing: 8,
-        children: [
-          FilterChip(
-            label: Text('Salgado'),
-            selected: _isSalgadoSelected,
-            onSelected: (selected) {
-              setState(() {
-                _isSalgadoSelected = selected;
-                _filterFoodList();
-              });
-            },
-          ),
-          FilterChip(
-            label: Text('Doce'),
-            selected: _isDoceSelected,
-            onSelected: (selected) {
-              setState(() {
-                _isDoceSelected = selected;
-                _filterFoodList();
-              });
-            },
           ),
         ],
       ),
@@ -293,7 +242,7 @@ class AlimentoPageState extends State<AlimentoPage> {
                 childAspectRatio: 2 / 3,
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20),
-            itemCount: filteredFoodList.length,
+            itemCount: filteredobjetoList.length,
             itemBuilder: (BuildContext ctx, index) {
               return InkWell(
                 onTap: () {
@@ -301,27 +250,27 @@ class AlimentoPageState extends State<AlimentoPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return AlimentoDetalheView(filteredFoodList[index]);
+                        return ObjetoDetalheView(filteredobjetoList[index]);
                       },
                     ),
                   );
                 },
                 child: GridTile(
-                  key: ValueKey(filteredFoodList[index].idArtefato),
+                  key: ValueKey(filteredobjetoList[index].idArtefato),
                   footer: GridTileBar(
                     backgroundColor: const Color.fromARGB(137, 107, 98, 98),
                     title: Text(
-                      filteredFoodList[index].tituloArtefato,
+                      filteredobjetoList[index].tituloArtefato,
                       style: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(
-                      "R\$ ${filteredFoodList[index].precoAlimento}",
+                      "R\$ ${filteredobjetoList[index].localizacaoAchadoObjeto}",
                       style: const TextStyle(
                           fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  child: _buildImagens(filteredFoodList[index].listaImagens),
+                  child: _buildImagens(filteredobjetoList[index].listaImagens),
                 ),
               );
             }),
@@ -341,7 +290,7 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
           width: double.infinity,
           child: CarouselSlider(
             options: CarouselOptions(
-              aspectRatio: imageAspectRatio, 
+              aspectRatio: imageAspectRatio,
               autoPlay: true,
               autoPlayInterval: Duration(seconds: 3),
               autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -353,7 +302,7 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
                 builder: (BuildContext context) {
                   return Image.network(
                     imagemPath.url,
-                    fit: BoxFit.cover, 
+                    fit: BoxFit.cover,
                   );
                 },
               );
@@ -368,4 +317,3 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
     );
   }
 }
-

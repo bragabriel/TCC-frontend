@@ -1,50 +1,47 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:spotted/app/repository/emprego_repository.dart';
-import 'package:spotted/app/model/emprego_model.dart';
-import 'package:spotted/app/view/emprego_page/empregoDetalhe_view.dart';
+import 'package:spotted/app/view/transporte_page/transporteCadastrar_view.dart';
 import '../../model/artefato_model.dart';
+import '../../model/transporte_model.dart';
+import '../../repository/transporte_repository.dart';
 import '../home_page/home_view.dart';
-import 'empregoCadastrar_view.dart';
+import 'TransporteDetalhe_view.dart';
 
-class EmpregoPage extends StatefulWidget {
-  const EmpregoPage({Key? key}) : super(key: key);
+class TransportePage extends StatefulWidget {
+  const TransportePage({Key? key}) : super(key: key);
 
   @override
-  _EmpregoPageState createState() => _EmpregoPageState();
+  _TransportePageState createState() => _TransportePageState();
 }
 
-class _EmpregoPageState extends State<EmpregoPage> {
-  List<Emprego> listaDeEmpregos = [];
-  List<Emprego> listaFiltradaDeEmpregos = [];
+class _TransportePageState extends State<TransportePage> {
+  List<Transporte> listaDeTransportes = [];
+  List<Transporte> listaFiltradaDeTransportes = [];
   String cidadeSelecionada = 'Selecione uma cidade';
-  String empresaSelecionada = 'Selecione uma empresa';
-  String? presencialSelecionado;
-  double? salarioMinimo;
-  double? salarioMaximo;
 
   @override
   void initState() {
     super.initState();
-    _carregarEmpregos();
+    _carregarTransportes();
   }
 
-  Future<void> _carregarEmpregos() async {
+  Future<void> _carregarTransportes() async {
     try {
-      final listaDeEmpregos = await EmpregoRepository().getAllEmpregos();
+      final listaDeTransportes =
+          await TransporteRepository().getAllTransportes();
       setState(() {
-        this.listaDeEmpregos = listaDeEmpregos;
-        listaFiltradaDeEmpregos = listaDeEmpregos;
+        this.listaDeTransportes = listaDeTransportes;
+        listaFiltradaDeTransportes = listaDeTransportes;
       });
     } catch (e) {
-      print('Erro ao obter a lista de empregos: $e');
+      print('Erro ao obter a lista de Transportes: $e');
     }
   }
 
   List<String> _obterListaDeCidades() {
-    final cidades = listaDeEmpregos
-        .map((emprego) => emprego.cidadeEmprego)
+    final cidades = listaDeTransportes
+        .map((Transporte) => Transporte.cidadeTransporte)
         .where((cidade) => cidade != null)
         .map((cidade) => cidade!)
         .toSet()
@@ -55,46 +52,15 @@ class _EmpregoPageState extends State<EmpregoPage> {
     return cidades;
   }
 
-  List<String> _obterListaDeEmpresas() {
-    final empresas = listaDeEmpregos
-        .map((emprego) => emprego.empresaEmprego)
-        .where((empresa) => empresa != null)
-        .map((empresa) => empresa!)
-        .toSet()
-        .toList();
-
-    empresas.insert(0, "Selecione uma empresa");
-
-    return empresas;
-  }
-
-  void _filtrarListaDeEmpregos() {
+  void _filtrarListaDeTransportes() {
     setState(() {
-      listaFiltradaDeEmpregos = listaDeEmpregos.where((emprego) {
+      listaFiltradaDeTransportes = listaDeTransportes.where((Transporte) {
         final atendeCriterioCidade =
             cidadeSelecionada == "Selecione uma cidade" ||
-                emprego.cidadeEmprego?.toLowerCase() ==
+                Transporte.cidadeTransporte?.toLowerCase() ==
                     cidadeSelecionada.toLowerCase();
 
-        final atendeCriterioEmpresa =
-            empresaSelecionada == "Selecione uma empresa" ||
-                emprego.empresaEmprego?.toLowerCase() ==
-                    empresaSelecionada.toLowerCase();
-
-        final atendeCriterioPresencial = presencialSelecionado == null ||
-            presencialSelecionado == "Todos" ||
-            emprego.presencialEmprego?.toLowerCase() ==
-                presencialSelecionado?.toLowerCase();
-
-        final atendeCriterioSalario = (salarioMinimo == null ||
-                emprego.salarioEmprego! >= salarioMinimo!) &&
-            (salarioMaximo == null ||
-                emprego.salarioEmprego! <= salarioMaximo!);
-
-        return atendeCriterioCidade &&
-            atendeCriterioEmpresa &&
-            atendeCriterioPresencial &&
-            atendeCriterioSalario;
+        return atendeCriterioCidade;
       }).toList();
     });
   }
@@ -103,7 +69,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Empregos"),
+        title: Text("Transportes"),
         leading: BackButton(
           onPressed: () {
             Navigator.push(
@@ -115,7 +81,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
         actions: [
           IconButton(
             onPressed: () {
-              _carregarEmpregos();
+              _carregarTransportes();
             },
             icon: const Icon(Icons.refresh_outlined),
           )
@@ -128,7 +94,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => EmpregoCadastrarView(),
+              builder: (context) => TransporteCadastrarView(),
             ),
           );
         },
@@ -160,7 +126,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
             onChanged: (novaCidade) {
               setState(() {
                 cidadeSelecionada = novaCidade!;
-                _filtrarListaDeEmpregos();
+                _filtrarListaDeTransportes();
               });
             },
             items:
@@ -177,65 +143,6 @@ class _EmpregoPageState extends State<EmpregoPage> {
           ),
         ),
         SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: DropdownButtonFormField<String>(
-            value: empresaSelecionada,
-            onChanged: (novaEmpresa) {
-              setState(() {
-                empresaSelecionada = novaEmpresa!;
-                _filtrarListaDeEmpregos();
-              });
-            },
-            items: _obterListaDeEmpresas()
-                .map<DropdownMenuItem<String>>((empresa) {
-              return DropdownMenuItem<String>(
-                value: empresa,
-                child: Text(empresa),
-              );
-            }).toList(),
-            decoration: InputDecoration(
-              labelText: 'Empresa',
-              border: OutlineInputBorder(),
-            ),
-          ),
-        ),
-        SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: DropdownButtonFormField<String>(
-            value: presencialSelecionado,
-            onChanged: (novaSelecao) {
-              setState(() {
-                presencialSelecionado = novaSelecao!;
-                _filtrarListaDeEmpregos();
-              });
-            },
-            items: [
-              DropdownMenuItem<String>(
-                value: "Todos",
-                child: Text("Todos"),
-              ),
-              DropdownMenuItem<String>(
-                value: "Presencial",
-                child: Text("Presencial"),
-              ),
-              DropdownMenuItem<String>(
-                value: "Remoto",
-                child: Text("Remoto"),
-              ),
-              DropdownMenuItem<String>(
-                value: "Híbrido",
-                child: Text("Híbrido"),
-              ),
-            ],
-            decoration: InputDecoration(
-              labelText: 'Presencial/Remoto',
-              border: OutlineInputBorder(),
-            ),
-          ),
-        ),
-        SizedBox(height: 10),
         Expanded(
           child: GridView.builder(
             padding: const EdgeInsets.all(20),
@@ -245,7 +152,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
               crossAxisSpacing: 20,
               mainAxisSpacing: 20,
             ),
-            itemCount: listaFiltradaDeEmpregos.length,
+            itemCount: listaFiltradaDeTransportes.length,
             itemBuilder: (BuildContext ctx, index) {
               return InkWell(
                   onTap: () {
@@ -253,29 +160,30 @@ class _EmpregoPageState extends State<EmpregoPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return EmpregoDetalheView(
-                              listaFiltradaDeEmpregos[index]);
+                          return TransporteDetalheView(
+                              listaFiltradaDeTransportes[index]);
                         },
                       ),
                     );
                   },
                   child: GridTile(
-                    key: ValueKey(listaFiltradaDeEmpregos[index].idArtefato),
+                    key: ValueKey(listaFiltradaDeTransportes[index].idArtefato),
                     footer: GridTileBar(
                       backgroundColor: const Color.fromARGB(137, 107, 98, 98),
                       title: Text(
-                        listaFiltradaDeEmpregos[index].tituloArtefato,
+                        listaFiltradaDeTransportes[index].tituloArtefato,
                         style: const TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
-                        listaFiltradaDeEmpregos[index].cidadeEmprego ??
+                        listaFiltradaDeTransportes[index].cidadeTransporte ??
                             "Cidade não disponível",
                         style: const TextStyle(
                             fontSize: 13, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    child: _buildImagens(listaDeEmpregos[index].listaImagens),
+                    child:
+                        _buildImagens(listaDeTransportes[index].listaImagens),
                   ));
             },
           ),
