@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:spotted/app/model/usuario_model.dart';
+import 'package:spotted/service/prefs_service.dart';
 import 'dart:async';
 import '../constants/constants.dart';
 import '../view/login_page/dto/login_response.dart';
@@ -49,9 +50,6 @@ class UsuarioRepository {
   }
 
   Future<Usuario> getUsuario(num id) async {
-    print(
-        "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-    print(id);
     try {
       String url = '$usuariosUrl/$id';
       final response = await Dio().get(url);
@@ -88,6 +86,10 @@ class UsuarioRepository {
         final responseData = response.data;
         if (responseData != null && responseData is Map<String, dynamic>) {
           Usuario usuario = Usuario.fromJson(responseData);
+
+          //salvando infos prefs
+          PrefsService.save(usuario.nomeUsuario);
+
           return LoginResponse(usuario: usuario, statusCode: 200);
         } else {
           throw 'Resposta inválida da API - conteúdo ausente ou inválido';

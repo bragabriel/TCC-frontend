@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spotted/service/prefs_service.dart';
 import '../../../service/change_notifier.dart';
 import '../../controller/usuario_controller.dart';
 import '../../model/usuario_model.dart';
@@ -183,10 +184,11 @@ class HomePageState extends State<HomePage> {
                 // Limpar as informações do usuário no UserProvider
                 Provider.of<UserProvider>(context, listen: false).logout();
                 
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                  prefs.setBool('isAuthenticated', false);
+                //Deslogando usuário
+                PrefsService.logout();
+
                 // Redirecionar o usuário para a tela de login
-                Navigator.of(context).pushReplacementNamed('/');
+                Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => true);
               },
             )
           ]),
