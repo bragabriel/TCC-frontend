@@ -78,6 +78,7 @@ class HomePageState extends State<HomePage> {
 
   String _weatherDescription = '';
   double _temperature = 0.0;
+  
 
   Future<void> _fetchWeather() async {
     LocationData? locationData;
@@ -131,15 +132,7 @@ class HomePageState extends State<HomePage> {
             // aqui pegar usuario
             Consumer<UserProvider>(
               builder: (context, userProvider, _) {
-                Usuario? user = userProvider.user;
-                return UserAccountsDrawerHeader(
-                  currentAccountPicture: ClipPath(
-                    child: _buildFotoPerfil(user?.url),
-                  ),
-                  // utilizando o usuario
-                  accountName: Text(user?.nomeUsuario ?? 'Usuário não logado'),
-                  accountEmail: Text(user?.emailUsuario ?? ''),
-                );
+                return buildUserDrawerHeader(context, userProvider);
               },
             ),
             ListTile(
@@ -242,6 +235,7 @@ class HomePageState extends State<HomePage> {
   }
 }
 
+
 Widget _buildFotoPerfil(String? perfil) {
   if (perfil != null) {
     return Center(
@@ -253,3 +247,16 @@ Widget _buildFotoPerfil(String? perfil) {
     );
   }
 }
+
+Widget buildUserDrawerHeader(BuildContext context, UserProvider userProvider) {
+  Usuario? user = userProvider.user;
+
+  return UserAccountsDrawerHeader(
+    currentAccountPicture: ClipPath(
+      child: _buildFotoPerfil(user?.url),
+    ),
+    accountName: Text(user?.nomeUsuario ?? 'Usuário não logado'),
+    accountEmail: Text(user?.emailUsuario ?? ''),
+  );
+}
+
