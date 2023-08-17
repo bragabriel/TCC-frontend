@@ -104,12 +104,27 @@ class HomePageState extends State<HomePage> {
     }
   }
 
+  Future<void> getUserPreferences() async {
+    PrefsService sharedPref = PrefsService();
+
+    // Acessar a instância do UserProvider
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+
+    var userData = await sharedPref.getUser();
+    if (userData != null) {
+      userProvider.updateUserInfo(userData);
+    }
+  }
+
   _body() {
-    build(context);
+    return build(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    getUserPreferences();
+
     return Scaffold(
         drawer: Drawer(
           child: Column(children: [
@@ -183,12 +198,12 @@ class HomePageState extends State<HomePage> {
               onTap: () async {
                 // Limpar as informações do usuário no UserProvider
                 Provider.of<UserProvider>(context, listen: false).logout();
-                
-                //Deslogando usuário
+
                 PrefsService.logout();
 
                 // Redirecionar o usuário para a tela de login
-                Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => true);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/', (route) => true);
               },
             )
           ]),
@@ -226,8 +241,9 @@ class HomePageState extends State<HomePage> {
         ));
   }
 }
+
 Widget _buildFotoPerfil(String? perfil) {
-  if (perfil != null ) {
+  if (perfil != null) {
     return Center(
       child: Image.network(perfil),
     );

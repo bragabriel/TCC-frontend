@@ -16,6 +16,7 @@ class UserProvider with ChangeNotifier {
 
   void updateUserInfo(Usuario newUser) {
     _user = newUser;
+    _isAuthenticated = true;
     notifyListeners();
   }
 

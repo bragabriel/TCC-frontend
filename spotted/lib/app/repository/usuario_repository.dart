@@ -88,7 +88,8 @@ class UsuarioRepository {
           Usuario usuario = Usuario.fromJson(responseData);
 
           //salvando infos prefs
-          PrefsService.save(usuario.nomeUsuario);
+          PrefsService.save(usuario.emailUsuario);
+          PrefsService.saveUser(usuario);
 
           return LoginResponse(usuario: usuario, statusCode: 200);
         } else {

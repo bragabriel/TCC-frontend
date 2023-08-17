@@ -149,12 +149,6 @@ class _LoginPageState extends State<LoginPage> {
           dataNascimento: response.usuario!.dataNascimento,
           listaArtefatosReponse: response.usuario!.listaArtefatosReponse);
 
-      // Armazenar informações de autenticação nas shared_preferences
-      /* 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool('isAuthenticated', true);
-      */
-      
       Provider.of<UserProvider>(context, listen: false).setUser(user);
 
       showDialog(

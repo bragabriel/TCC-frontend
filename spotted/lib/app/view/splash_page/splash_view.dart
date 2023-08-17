@@ -1,35 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:spotted/service/prefs_service.dart';
 
-class SplashPage extends StatefulWidget{
+import '../../../service/change_notifier.dart';
+
+class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
 
-  @override createState() => _SplashPageState();
+  @override
+  createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage>{
+class _SplashPageState extends State<SplashPage> {
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
     Future.wait([
       PrefsService.isAuth(),
       Future.delayed(Duration(seconds: 2)),
-      ]).then((value) => value[0]
-      ? Navigator.of(context).pushReplacementNamed('/home')
-      : Navigator.of(context).pushReplacementNamed('/'));
+    ]).then((value) {
+      if (value[0]) {
+        // Acessar o UserProvider
+        UserProvider userProvider =
+            Provider.of<UserProvider>(context, listen: false);
+
+        // Navegar para a tela home
+        Navigator.of(context).pushReplacementNamed('/home');
+      } else {
+        // Navegar para outra tela
+        Navigator.of(context).pushReplacementNamed('/');
+      }
+    });
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Container(
-      color: Colors.green.shade900,
-
-      child: Center(
-        child: CircularProgressIndicator(
+        color: Colors.green.shade900,
+        child: Center(
+            child: CircularProgressIndicator(
           color: Colors.white60,
-        ))
-    );
+        )));
   }
 }
