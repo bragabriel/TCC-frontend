@@ -34,7 +34,6 @@ class UsuarioController {
       await _repository.getUsuario(user?.idUsuario ?? 1);
       state.value = HomeState.success;
     } catch (e) {
-      print(e);
       state.value = HomeState.error;
     }
   }

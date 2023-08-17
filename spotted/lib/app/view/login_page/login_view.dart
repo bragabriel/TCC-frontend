@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
 import '../../../service/change_notifier.dart';
 import '../../model/usuario_model.dart';
@@ -64,67 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            print(email);
-                            print(password);
-                            final response = await UsuarioRepository()
-                                .logarUsuario(email, password);
-
-                            if (response.statusCode == 200) {
-                              Usuario user = Usuario(
-                                  idUsuario: response.usuario!.idUsuario,
-                                  nomeUsuario: response.usuario!.nomeUsuario,
-                                  sobrenomeUsuario:
-                                      response.usuario!.sobrenomeUsuario,
-                                  emailUsuario: email,
-                                  senhaUsuario: password,
-                                  telefoneUsuario:
-                                      response.usuario!.telefoneUsuario,
-                                  dataNascimento:
-                                      response.usuario!.dataNascimento,
-                                  listaArtefatosReponse:
-                                      response.usuario!.listaArtefatosReponse);
-
-                              Provider.of<UserProvider>(context, listen: false)
-                                  .setUser(user);
-
-                              Navigator.of(context)
-                                  .pushReplacementNamed('/home');
-
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text("Atenção"),
-                                      content:
-                                          Text("Login realizado com sucesso!"),
-                                      actions: [
-                                        ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text("OK"))
-                                      ],
-                                    );
-                                  });
-                            } else if (response.statusCode == 400) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text("Atenção"),
-                                      content: Text("Credenciais inválidas."),
-                                      actions: [
-                                        ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text("OK"))
-                                      ],
-                                    );
-                                  });
-                            } else {
-                              throw ("Ocorreu um erro inesperado");
-                            }
+                            _logar();
                           },
                           child: Container(
                             width: double.infinity,
@@ -192,5 +133,61 @@ class _LoginPageState extends State<LoginPage> {
         _body(),
       ],
     ));
+  }
+
+  Future<void> _logar() async {
+    final response = await UsuarioRepository().logarUsuario(email, password);
+
+    if (response.statusCode == 200) {
+      Usuario user = Usuario(
+          idUsuario: response.usuario!.idUsuario,
+          nomeUsuario: response.usuario!.nomeUsuario,
+          sobrenomeUsuario: response.usuario!.sobrenomeUsuario,
+          emailUsuario: email,
+          senhaUsuario: password,
+          telefoneUsuario: response.usuario!.telefoneUsuario,
+          dataNascimento: response.usuario!.dataNascimento,
+          listaArtefatosReponse: response.usuario!.listaArtefatosReponse);
+
+      Provider.of<UserProvider>(context, listen: false).setUser(user);
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Atenção"),
+            content: Text("Login realizado com sucesso!"),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Fechar o AlertDialog
+                  Navigator.pushReplacementNamed(
+                      context, '/home'); // Navegar para a tela home
+                },
+                child: Text("OK"),
+              )
+            ],
+          );
+        },
+      );
+    } else if (response.statusCode == 400) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Atenção"),
+              content: Text("Credenciais inválidas."),
+              actions: [
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text("OK"))
+              ],
+            );
+          });
+    } else {
+      throw ("Ocorreu um erro inesperado");
+    }
   }
 }

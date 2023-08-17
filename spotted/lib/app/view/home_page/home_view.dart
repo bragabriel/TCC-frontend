@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spotted/service/prefs_service.dart';
 import '../../../service/change_notifier.dart';
 import '../../controller/usuario_controller.dart';
 import '../../model/usuario_model.dart';
@@ -103,12 +105,27 @@ class HomePageState extends State<HomePage> {
     }
   }
 
+  Future<void> getUserPreferences() async {
+    PrefsService sharedPref = PrefsService();
+
+    // Acessar a instância do UserProvider
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+
+    var userData = await sharedPref.getUser();
+    if (userData != null) {
+      userProvider.updateUserInfo(userData);
+    }
+  }
+
   _body() {
-    build(context);
+    return build(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    getUserPreferences();
+
     return Scaffold(
         drawer: Drawer(
           child: Column(children: [
@@ -168,12 +185,20 @@ class HomePageState extends State<HomePage> {
                   Navigator.of(context).pushNamed('/perfil');
                 }),
             ListTile(
-                leading: Icon(Icons.logout),
-                title: Text('Logout'),
-                subtitle: Text('Bye bye queridxs 👋'),
-                onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/');
-                }),
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
+              subtitle: Text('Finalizar sessão'),
+              onTap: () async {
+                // Limpar as informações do usuário no UserProvider
+                Provider.of<UserProvider>(context, listen: false).logout();
+
+                PrefsService.logout();
+
+                // Redirecionar o usuário para a tela de login
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/', (route) => true);
+              },
+            )
           ]),
         ),
         appBar: AppBar(
@@ -210,6 +235,7 @@ class HomePageState extends State<HomePage> {
   }
 }
 
+
 Widget _buildFotoPerfil(String? perfil) {
   if (perfil != null) {
     return Center(
@@ -233,3 +259,4 @@ Widget buildUserDrawerHeader(BuildContext context, UserProvider userProvider) {
     accountEmail: Text(user?.emailUsuario ?? ''),
   );
 }
+
