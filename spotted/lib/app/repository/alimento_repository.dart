@@ -31,7 +31,7 @@ class AlimentoRepository {
     }
   }
 
-  Future<void> cadastrarAlimento(Map<String, dynamic> body) async {
+  Future<Response<dynamic>> cadastrarAlimento(Map<String, dynamic> body) async {
     const String alimentosUrl = "$onlineApi/alimento";
 
     try {
@@ -40,6 +40,7 @@ class AlimentoRepository {
 
       if (response.statusCode == 201) {
         print('Cadastro realizado com sucesso');
+        return response;
       } else {
         print('Erro ao cadastrar: ${response.statusCode}');
         print('Mensagem de erro da API: ${response.data}');
