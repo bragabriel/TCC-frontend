@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/alimento_repository.dart';
 import 'package:spotted/app/model/alimento_model.dart';
-import '../../helpers/imageCarrousel_helper.dart';
-import '../home_page/home_view.dart';
 import 'alimentoCadastrar_view.dart';
 import 'alimentoDetalhes_view.dart';
+import '../home_page/home_view.dart';
 import '../../controller/alimento_controller.dart';
+import '../../helpers/imageCarrousel_helper.dart';
 
 class AlimentoPage extends StatefulWidget {
   const AlimentoPage({Key? key}) : super(key: key);
@@ -23,9 +23,9 @@ class AlimentoPageState extends State<AlimentoPage> {
   List<String> selectedTypes = [];
   bool _isSalgadoSelected = false;
   bool _isDoceSelected = false;
+  bool _isOutroSelected = false;
   bool _showAllItems = true;
   String _searchTerm = '';
-
   final _searchController = TextEditingController();
   final controller = AlimentoController();
 
@@ -134,12 +134,13 @@ class AlimentoPageState extends State<AlimentoPage> {
   Future<void> _buscarAlimentos() async {
     try {
       final foodList = await AlimentoRepository().getAllAlimentos();
+      print("GetAllAlimentos com sucesso em AlimentoPage");
       setState(() {
         this.foodList = foodList;
         filteredFoodList = foodList;
       });
     } catch (e) {
-      print('Erro ao obter a lista de alimentos: $e');
+      print('Erro ao obter a lista de alimentos em AlimentoPage: $e');
     }
   }
 
@@ -158,7 +159,8 @@ class AlimentoPageState extends State<AlimentoPage> {
         final meetsTypeCriteria =
             (_isSalgadoSelected && food.tipoAlimento == 'SALGADO') ||
                 (_isDoceSelected && food.tipoAlimento == 'DOCE') ||
-                (!_isSalgadoSelected && !_isDoceSelected);
+                (_isOutroSelected && food.tipoAlimento == 'OUTRO') ||
+                (!_isSalgadoSelected && !_isDoceSelected && !_isOutroSelected);
 
         final searchTerm = _searchTerm.toLowerCase();
         final titleContainsTerm =
@@ -182,7 +184,7 @@ class AlimentoPageState extends State<AlimentoPage> {
           controller: _searchController,
           onChanged: (value) {
             setState(() {
-              _searchTerm = value; // Update the _searchTerm variable
+              _searchTerm = value;
               _alimentosFiltrados();
             });
           },
@@ -281,6 +283,16 @@ class AlimentoPageState extends State<AlimentoPage> {
               });
             },
           ),
+          FilterChip(
+            label: Text('Outro'),
+            selected: _isOutroSelected,
+            onSelected: (selected) {
+              setState(() {
+                _isOutroSelected = selected;
+                _alimentosFiltrados();
+              });
+            },
+          )
         ],
       ),
       SizedBox(height: 10),

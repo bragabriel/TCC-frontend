@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,12 +25,11 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
   final TextEditingController _unidadeController = TextEditingController();
   final TextEditingController _precoController = TextEditingController();
   final TextEditingController _ofertaController = TextEditingController();
-  // _usuario.listaArtefatosReponse
-
+  Response<dynamic>? response;
+  late File? imagem;
   Usuario? _usuario;
-  String _selectedTipo = 'OUTRO'; // Valor selecionado para o tipo de alimento
-  String _selectedUnidade =
-      'OUTRO'; // Valor selecionado para a unidade de alimento
+  String _selectedTipo = 'OUTRO';
+  String _selectedUnidade = 'OUTRO';
 
   Future<void> _cadastrar() async {
     final body = {
@@ -57,8 +57,8 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
     };
 
     try {
-      var response = await AlimentoRepository().cadastrarAlimento(body);
-      print('Cadastro realizado com sucesso');
+      response = await AlimentoRepository().cadastrarAlimento(body);
+      print('Cadastro realizado com sucesso\n\n\n');
       print(response);
     } catch (e) {
       print('Erro ao cadastrar: $e');
@@ -78,12 +78,13 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
     super.dispose();
   }
 
-  Future<void> _fetchFood() async {
+  Future<void> _buscarAlimentos() async {
     try {
       await AlimentoRepository().getAllAlimentos();
+      print("GetAllAlimentos com sucesso em AlimentoCadastrarView");
       setState(() {});
     } catch (e) {
-      print('Erro ao obter a lista de alimentos: $e');
+      print('Erro ao obter a lista de alimentos em AlimentoCadastrarView: $e');
     }
   }
 
@@ -196,7 +197,7 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
             Container(
               child: ElevatedButton(
                 //erro devido o id artefato nao estar disponivel ainda. precisa cadastrar o produto primeiro
-                onPressed: () => upload(1),
+                onPressed: () async => imagem = await selecionarImagem(),
                 child: Text('Inserir imagem'),
               ),
             ),
@@ -213,7 +214,8 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                         TextButton(
                           onPressed: () async {
                             await _cadastrar();
-                            await _fetchFood();
+                            await uploadImagem(response!, imagem!);
+                            await _buscarAlimentos();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
