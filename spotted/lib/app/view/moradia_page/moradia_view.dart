@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/moradia_repository.dart';
 import 'package:spotted/app/model/moradia_model.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import '../home_page/home_view.dart';
 import 'moradiaCadastrar_view.dart';
 import 'moradiaDetalhe_view.dart';
+import '../../helpers/image_helper.dart';
+import '../home_page/home_view.dart';
 import '../../controller/moradia_controller.dart';
-import '../../model/artefato_model.dart';
 
 class MoradiaPage extends StatefulWidget {
   const MoradiaPage({Key? key}) : super(key: key);
@@ -34,10 +33,10 @@ class MoradiaPageState extends State<MoradiaPage> {
   void initState() {
     super.initState();
     controller.start();
-    _fetchMoradia();
+    _buscarMoradia();
   }
 
-  Future<void> _fetchMoradia() async {
+  Future<void> _buscarMoradia() async {
     try {
       final moradiaList = await MoradiaRepository().getAllMoradias();
       setState(() {
@@ -102,7 +101,7 @@ class MoradiaPageState extends State<MoradiaPage> {
           IconButton(
             onPressed: () {
               controller.start();
-              _fetchMoradia();
+              _buscarMoradia();
             },
             icon: const Icon(Icons.refresh_outlined),
           )
@@ -185,7 +184,7 @@ class MoradiaPageState extends State<MoradiaPage> {
             controller: _searchController,
             onChanged: (value) {
               setState(() {
-                _searchTerm = value; // Update the _searchTerm variable
+                _searchTerm = value;
                 _filterMoradiaList();
               });
             },
@@ -199,9 +198,9 @@ class MoradiaPageState extends State<MoradiaPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _newButton(minPrice, "Min preço", (value) => minPrice = value),
-            _newButton(maxPrice, "Max preço", (value) => maxPrice = value),
-            _newButton(qtdMoradoresFilter, "Max moradores",
+             _newButton(minPrice, "Min preço", (value) => minPrice = value),
+             _newButton(maxPrice, "Max preço", (value) => maxPrice = value),
+             _newButton(qtdMoradoresFilter, "Max moradores",
                 (value) => qtdMoradoresFilter = value),
           ],
         ),
@@ -270,8 +269,8 @@ class MoradiaPageState extends State<MoradiaPage> {
                       ),
                     ),
                   ),
-                  child:
-                      _buildCarrousel(filteredMoradiaList[index].listaImagens),
+                  child: ImageHelper.buildCarrousel(
+                      filteredMoradiaList[index].listaImagens),
                 ),
               );
             },
@@ -330,44 +329,6 @@ class MoradiaPageState extends State<MoradiaPage> {
     );
   }
 
-  Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
-    if (!listaDeImagens!.isEmpty) {
-      final imageAspectRatio = 2 / 3;
-      return Scaffold(
-        body: AspectRatio(
-          aspectRatio: imageAspectRatio,
-          child: Container(
-            width: double.infinity,
-            child: CarouselSlider(
-              options: CarouselOptions(
-                height: double.infinity,
-                enlargeCenterPage: true,
-                autoPlay: true,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                autoPlayCurve: Curves.easeInExpo,
-                pauseAutoPlayOnTouch: true,
-              ),
-              items: listaDeImagens.map((imagemPath) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Image.network(
-                      imagemPath.url,
-                      fit: BoxFit.cover,
-                    );
-                  },
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-      );
-    } else {
-      return Center(
-        child: Image.asset('assets/images/imagem.png'),
-      );
-    }
-  }
 
   List<String> _obterListaDeCidades() {
     final cidades = moradiaList

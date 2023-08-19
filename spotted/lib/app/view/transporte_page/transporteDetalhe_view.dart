@@ -1,9 +1,9 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:spotted/app/view/transporte_page/transporte_view.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../../builders/text_builder.dart';
+import '../../helpers/button_helper.dart';
+import '../../helpers/image_helper.dart';
 import '../../model/transporte_model.dart';
-import '../../model/artefato_model.dart';
 
 class TransporteDetalheView extends StatefulWidget {
   @override
@@ -32,7 +32,7 @@ class TransporteDetalheState extends State<TransporteDetalheView> {
         ),
         body: ListView(
           children: [
-            _buildCarrousel(transporte.listaImagens),
+            ImageHelper.buildCarrousel(transporte.listaImagens),
             DetalhesTransporte(transporte: transporte),
             BotaoTransporte(transporte: transporte),
           ],
@@ -52,7 +52,7 @@ class BotaoTransporte extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _newButton(Colors.blue.shade700, Icons.map_sharp,
+        ButtonHelper.newButton(Colors.blue.shade700, Icons.map_sharp,
             "https://www.google.com/maps/place/", transporte.cidadeTransporte)
       ],
     );
@@ -77,96 +77,18 @@ class DetalhesTransporte extends StatelessWidget {
               fontSize: 27,
             ),
           ),
-          _buildText(transporte.descricaoArtefato),
-          _buildText(
+          TextBuilder.buildText(transporte.descricaoArtefato),
+          TextBuilder.buildText(
               "Informações condutor: ${transporte.informacoesCondutorTransporte}"),
-          _buildText(
+          TextBuilder.buildText(
               "Informações veículo: ${transporte.informacoesVeiculoTransporte}"),
-          _buildText("Periodo: ${transporte.periodoTransporte}"),
-          _buildText(
+          TextBuilder.buildText("Periodo: ${transporte.periodoTransporte}"),
+          TextBuilder.buildText(
               "Acentos disponíveis: ${transporte.qtdAssentosPreenchidosTransporte}"),
-          _buildText(
+          TextBuilder.buildText(
               "Acentos totais: ${transporte.qtdAssentosTotalTransporte}"),
-          // Text(
-          //   "R\$ ${transporte.valor?.toStringAsFixed(2) ?? '0.00'}",
-          //   style: TextStyle(
-          //     color: Colors.black,
-          //     fontSize: 18,
-          //   ),
-          // ),
         ],
       ),
     );
   }
-}
-
-void _openURL(String? url) async {
-  if (await canLaunch(url!)) {
-    await launch(url);
-  } else {
-    throw 'Não foi possível abrir $url';
-  }
-}
-
-Column _newButton(Color color, IconData icon, String? textBase, String? dado) {
-  return Column(
-    mainAxisSize: MainAxisSize.min,
-    mainAxisAlignment: MainAxisAlignment.end,
-    children: <Widget>[
-      IconButton(
-        icon: Icon(icon, color: color, size: 50),
-        onPressed: () => _openURL(textBase! + dado!),
-      ),
-      SizedBox(height: 20),
-    ],
-  );
-}
-
-Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
-  if (!listaDeImagens!.isEmpty) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        final screenWidth = 16;
-        final screenHeight = 9;
-        final imageAspectRatio = screenWidth / screenHeight;
-        return Container(
-          width: double.infinity,
-          child: CarouselSlider(
-            options: CarouselOptions(
-              aspectRatio: imageAspectRatio,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              autoPlayCurve: Curves.easeInExpo,
-              pauseAutoPlayOnTouch: true,
-            ),
-            items: listaDeImagens.map((imagemPath) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Image.network(
-                    imagemPath.url,
-                    fit: BoxFit.cover,
-                  );
-                },
-              );
-            }).toList(),
-          ),
-        );
-      },
-    );
-  } else {
-    return Center(
-      child: Image.asset('assets/images/imagem.png'),
-    );
-  }
-}
-
-Text _buildText(String? text) {
-  return Text(
-    "$text \n",
-    style: TextStyle(
-      color: Colors.black,
-      fontSize: 18,
-    ),
-  );
 }

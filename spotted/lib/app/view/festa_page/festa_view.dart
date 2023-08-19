@@ -1,17 +1,14 @@
-import 'package:carousel_slider/carousel_options.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/festa_repository.dart';
-import '../../controller/alimento_controller.dart';
-import '../../model/artefato_model.dart';
-import '../../model/festa_model.dart';
-import '../home_page/home_view.dart';
 import 'festaCadastrar_view.dart';
 import 'festaDetalhe_view.dart';
+import '../home_page/home_view.dart';
+import '../../controller/alimento_controller.dart';
+import '../../helpers/image_helper.dart';
+import '../../model/festa_model.dart';
 
 class FestaPage extends StatefulWidget {
   const FestaPage({Key? key}) : super(key: key);
-
   @override
   State<FestaPage> createState() => FestaPageState();
 }
@@ -84,7 +81,7 @@ class FestaPageState extends State<FestaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Festas"), // Update the title
+        title: Text("Festas"),
         leading: BackButton(
           onPressed: () {
             Navigator.push(
@@ -167,7 +164,7 @@ class FestaPageState extends State<FestaPage> {
           controller: _searchController,
           onChanged: (value) {
             setState(() {
-              _searchTerm = value; // Update the _searchTerm variable
+              _searchTerm = value;
               _filterFestaList();
             });
           },
@@ -214,50 +211,12 @@ class FestaPageState extends State<FestaPage> {
                           fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  child: _buildCarrousel(filteredFestaList[index].listaImagens),
+                  child: ImageHelper.buildCarrousel(
+                      filteredFestaList[index].listaImagens),
                 ),
               );
             }),
       )
     ]);
-  }
-
-  Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
-    if (!listaDeImagens!.isEmpty) {
-      final imageAspectRatio = 2 / 3;
-      return Scaffold(
-        body: AspectRatio(
-          aspectRatio: imageAspectRatio,
-          child: Container(
-            width: double.infinity,
-            child: CarouselSlider(
-              options: CarouselOptions(
-                height: double.infinity,
-                enlargeCenterPage: true,
-                autoPlay: true,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                autoPlayCurve: Curves.easeInExpo,
-                pauseAutoPlayOnTouch: true,
-              ),
-              items: listaDeImagens.map((imagemPath) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Image.network(
-                      imagemPath.url,
-                      fit: BoxFit.cover,
-                    );
-                  },
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-      );
-    } else {
-      return Center(
-        child: Image.asset('assets/images/imagem.png'),
-      );
-    }
   }
 }

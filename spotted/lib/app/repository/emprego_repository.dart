@@ -31,7 +31,7 @@ class EmpregoRepository {
     }
   }
 
-  Future<void> cadastrarEmprego(Map<String, dynamic> body) async {
+  Future<Response<dynamic>> cadastrarEmprego(Map<String, dynamic> body) async {
     const String empregosUrl = "$onlineApi/emprego";
 
     try {
@@ -40,6 +40,7 @@ class EmpregoRepository {
 
       if (response.statusCode == 201) {
         print('Cadastro realizado com sucesso');
+        return response;
       } else {
         print('Erro ao cadastrar: ${response.statusCode}');
         print('Mensagem de erro da API: ${response.data}');

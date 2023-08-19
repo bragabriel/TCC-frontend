@@ -1,21 +1,20 @@
-import 'package:carousel_slider/carousel_options.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:spotted/app/view/transporte_page/transporteCadastrar_view.dart';
-import '../../model/artefato_model.dart';
+import 'options_products.dart';
+import '../../helpers/image_helper.dart';
 import '../../model/usuario_model.dart';
 import '../home_page/home_view.dart';
-import 'options_products.dart';
+
 
 class MyProductsPage extends StatefulWidget {
   @override
-  _MyProductsPageState createState() => _MyProductsPageState();
+  MyProductsPageState createState() => MyProductsPageState();
 
   final Usuario? usuario;
   const MyProductsPage(this.usuario, {super.key});
 }
 
-class _MyProductsPageState extends State<MyProductsPage> {
+class MyProductsPageState extends State<MyProductsPage> {
   @override
   void initState() {
     super.initState();
@@ -86,49 +85,11 @@ class _MyProductsPageState extends State<MyProductsPage> {
                         fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                 ),
-                child: _buildCarrousel(listaProdutos![index].listaImagens),
+                child: ImageHelper.buildCarrousel(
+                    listaProdutos![index].listaImagens),
               ));
         },
       ),
-    );
-  }
-}
-
-Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
-  if (!listaDeImagens!.isEmpty) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        final screenWidth = 16;
-        final screenHeight = 9;
-        final imageAspectRatio = screenWidth / screenHeight;
-        return Container(
-          width: double.infinity,
-          child: CarouselSlider(
-            options: CarouselOptions(
-              aspectRatio: imageAspectRatio,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              autoPlayCurve: Curves.easeInExpo,
-              pauseAutoPlayOnTouch: true,
-            ),
-            items: listaDeImagens.map((imagemPath) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Image.network(
-                    '',
-                    fit: BoxFit.cover,
-                  );
-                },
-              );
-            }).toList(),
-          ),
-        );
-      },
-    );
-  } else {
-    return Center(
-      child: Image.asset('assets/images/imagem.png'),
     );
   }
 }

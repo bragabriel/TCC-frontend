@@ -5,7 +5,7 @@ import 'alimentoCadastrar_view.dart';
 import 'alimentoDetalhes_view.dart';
 import '../home_page/home_view.dart';
 import '../../controller/alimento_controller.dart';
-import '../../helpers/imageCarrousel_helper.dart';
+import '../../helpers/image_helper.dart';
 
 class AlimentoPage extends StatefulWidget {
   const AlimentoPage({Key? key}) : super(key: key);

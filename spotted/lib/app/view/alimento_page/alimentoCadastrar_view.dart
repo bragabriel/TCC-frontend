@@ -2,12 +2,13 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'alimento_view.dart';
 import '../../../service/change_notifier.dart';
-import '../../helpers/uploadImage_helper.dart';
+import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
 import '../../repository/alimento_repository.dart';
-import 'alimento_view.dart';
+
 
 class AlimentoCadastrarView extends StatefulWidget {
   const AlimentoCadastrarView({super.key});
@@ -58,10 +59,10 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
 
     try {
       response = await AlimentoRepository().cadastrarAlimento(body);
-      print('Cadastro realizado com sucesso\n\n\n');
+      print('Cadastro realizado com sucesso em AlimentoCadastrarView');
       print(response);
     } catch (e) {
-      print('Erro ao cadastrar: $e');
+      print('Erro ao cadastrar em AlimentoCadastrarView: $e');
     }
   }
 
@@ -97,7 +98,6 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           _usuario = UsuarioHelper.getUser(context, userProvider);
-          print("_usuario: $_usuario"); // Imprimir o ID do usuário
           return _cadastroAlimento();
         },
       ),
@@ -133,7 +133,7 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                 'DOCE',
                 'SALGADO',
                 'OUTRO'
-              ] // Substitua pelas opções reais
+              ] 
                   .map<DropdownMenuItem<String>>((String value) {
                 _tipoController.text = value;
                 return DropdownMenuItem<String>(
@@ -169,7 +169,7 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                 'UNIDADE',
                 'PACK',
                 'OUTRO'
-              ] // Substitua pelas opções reais
+              ] 
                   .map<DropdownMenuItem<String>>((String value) {
                 _unidadeController.text = value;
                 return DropdownMenuItem<String>(
@@ -196,8 +196,7 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
             SizedBox(height: 16),
             Container(
               child: ElevatedButton(
-                //erro devido o id artefato nao estar disponivel ainda. precisa cadastrar o produto primeiro
-                onPressed: () async => imagem = await selecionarImagem(),
+                onPressed: () async => imagem = await ImageHelper.selecionarImagem(),
                 child: Text('Inserir imagem'),
               ),
             ),
@@ -214,7 +213,7 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                         TextButton(
                           onPressed: () async {
                             await _cadastrar();
-                            await uploadImagem(response!, imagem!);
+                            await ImageHelper.uploadImagem(response!, imagem!);
                             await _buscarAlimentos();
                             Navigator.push(
                                 context,

@@ -3,7 +3,7 @@ import 'package:spotted/app/model/alimento_model.dart';
 import 'alimento_view.dart';
 import '../../builders/text_builder.dart';
 import '../../helpers/button_helper.dart';
-import '../../helpers/imageCarrousel_helper.dart';
+import '../../helpers/image_helper.dart';
 
 class AlimentoDetalheView extends StatefulWidget {
   @override

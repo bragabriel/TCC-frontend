@@ -1,8 +1,6 @@
-import 'package:carousel_slider/carousel_options.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:spotted/app/view/transporte_page/transporteCadastrar_view.dart';
-import '../../model/artefato_model.dart';
+import '../../helpers/image_helper.dart';
 import '../../model/transporte_model.dart';
 import '../../repository/transporte_repository.dart';
 import '../home_page/home_view.dart';
@@ -10,12 +8,11 @@ import 'TransporteDetalhe_view.dart';
 
 class TransportePage extends StatefulWidget {
   const TransportePage({Key? key}) : super(key: key);
-
   @override
-  _TransportePageState createState() => _TransportePageState();
+  TransportePageState createState() => TransportePageState();
 }
 
-class _TransportePageState extends State<TransportePage> {
+class TransportePageState extends State<TransportePage> {
   List<Transporte> listaDeTransportes = [];
   List<Transporte> listaFiltradaDeTransportes = [];
   String cidadeSelecionada = 'Selecione uma cidade';
@@ -23,10 +20,10 @@ class _TransportePageState extends State<TransportePage> {
   @override
   void initState() {
     super.initState();
-    _carregarTransportes();
+    _buscarTransportes();
   }
 
-  Future<void> _carregarTransportes() async {
+  Future<void> _buscarTransportes() async {
     try {
       final listaDeTransportes =
           await TransporteRepository().getAllTransportes();
@@ -81,7 +78,7 @@ class _TransportePageState extends State<TransportePage> {
         actions: [
           IconButton(
             onPressed: () {
-              _carregarTransportes();
+              _buscarTransportes();
             },
             icon: const Icon(Icons.refresh_outlined),
           )
@@ -182,52 +179,13 @@ class _TransportePageState extends State<TransportePage> {
                             fontSize: 13, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    child:
-                        _buildCarrousel(listaDeTransportes[index].listaImagens),
+                    child: ImageHelper.buildCarrousel(
+                        listaDeTransportes[index].listaImagens),
                   ));
             },
           ),
         ),
       ],
-    );
-  }
-}
-
-Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
-  if (!listaDeImagens!.isEmpty) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        final screenWidth = 16;
-        final screenHeight = 9;
-        final imageAspectRatio = screenWidth / screenHeight;
-        return Container(
-          width: double.infinity,
-          child: CarouselSlider(
-            options: CarouselOptions(
-              aspectRatio: imageAspectRatio,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              autoPlayCurve: Curves.easeInExpo,
-              pauseAutoPlayOnTouch: true,
-            ),
-            items: listaDeImagens.map((imagemPath) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Image.network(
-                    imagemPath.url,
-                    fit: BoxFit.cover,
-                  );
-                },
-              );
-            }).toList(),
-          ),
-        );
-      },
-    );
-  } else {
-    return Center(
-      child: Image.asset('assets/images/imagem.png'),
     );
   }
 }
