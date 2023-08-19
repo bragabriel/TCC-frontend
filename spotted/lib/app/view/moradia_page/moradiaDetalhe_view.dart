@@ -32,7 +32,7 @@ class MoradiaDetalheState extends State<MoradiaDetalheView> {
         ),
         body: ListView(
           children: [
-            _buildImagens(moradia.listaImagens),
+            _buildCarrousel(moradia.listaImagens),
             DetalhesMoradia(moradia: moradia),
             BotaoMoradia(moradia: moradia),
           ],
@@ -121,7 +121,7 @@ Column _newButton(Color color, IconData icon, String textBase, String dado) {
   );
 }
 
-Widget _buildImagens(List<Imagem>? listaDeImagens) {
+Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
   if (!listaDeImagens!.isEmpty) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {

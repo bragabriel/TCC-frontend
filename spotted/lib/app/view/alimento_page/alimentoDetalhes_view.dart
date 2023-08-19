@@ -1,9 +1,9 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:spotted/app/model/alimento_model.dart';
-import 'package:url_launcher/url_launcher.dart';
-import '../../model/artefato_model.dart';
 import 'alimento_view.dart';
+import '../../builders/text_builder.dart';
+import '../../helpers/button_helper.dart';
+import '../../helpers/imageCarrousel_helper.dart';
 
 class AlimentoDetalheView extends StatefulWidget {
   @override
@@ -32,7 +32,7 @@ class AlimentoDetalheState extends State<AlimentoDetalheView> {
         ),
         body: ListView(
           children: [
-            _buildImagens(alimento.listaImagens),
+            ImageHelper.buildCarrousel(alimento.listaImagens),
             DetalhesAlimento(alimento: alimento),
             BotaoAlimento(alimento: alimento),
           ],
@@ -52,11 +52,8 @@ class BotaoAlimento extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _newButton(
-            Colors.blue,
-            Icons.message,
-            'https://api.whatsapp.com/send/?phone=55',
-            "19999138267") //alimento.contato)
+        ButtonHelper.newButton(Colors.blue, Icons.message,
+            'https://api.whatsapp.com/send/?phone=55', alimento.telefoneUsuario)
       ],
     );
   }
@@ -80,10 +77,10 @@ class DetalhesAlimento extends StatelessWidget {
               fontSize: 27,
             ),
           ),
-          _buildText(alimento.descricaoArtefato),
-          _buildText(alimento.saborAlimento),
-          _buildText(alimento.unidadeAlimento),
-          _buildText(alimento.descricaoArtefato),
+          TextHelper.buildText(alimento.descricaoArtefato),
+          TextHelper.buildText(alimento.saborAlimento),
+          TextHelper.buildText(alimento.unidadeAlimento),
+          TextHelper.buildText(alimento.descricaoArtefato),
           Text(
             "R\$ ${alimento.precoAlimento?.toStringAsFixed(2) ?? '0.00'}",
             style: TextStyle(
@@ -95,76 +92,4 @@ class DetalhesAlimento extends StatelessWidget {
       ),
     );
   }
-}
-
-void _openURL(String url) async {
-  if (await canLaunchUrl(Uri.parse(url))) {
-    await launchUrl(Uri.parse(url));
-  } else {
-    throw 'Não foi possível abrir $url';
-  }
-}
-
-Column _newButton(Color color, IconData icon, String textBase, String dado) {
-  return Column(
-    mainAxisSize: MainAxisSize.min,
-    mainAxisAlignment: MainAxisAlignment.end,
-    children: <Widget>[
-      IconButton(
-        icon: Icon(icon, color: color, size: 50),
-        onPressed: () => _openURL(textBase + dado),
-      ),
-      SizedBox(height: 20),
-    ],
-  );
-}
-
-Widget _buildImagens(List<Imagem>? listaDeImagens) {
-  if (!listaDeImagens!.isEmpty) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        final screenWidth = 16;
-        final screenHeight = 9;
-        final imageAspectRatio = screenWidth / screenHeight;
-        return Container(
-          width: double.infinity,
-          child: CarouselSlider(
-            options: CarouselOptions(
-              aspectRatio: imageAspectRatio, 
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              autoPlayCurve: Curves.easeInExpo,
-              pauseAutoPlayOnTouch: true,
-            ),
-            items: listaDeImagens.map((imagemPath) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Image.network(
-                    imagemPath.url,
-                    fit: BoxFit.cover,
-                  );
-                },
-              );
-            }).toList(),
-          ),
-        );
-      },
-    );
-  } else {
-    return Center(
-      child: Image.asset('assets/images/imagem.png'),
-    );
-  }
-}
-
-
-Text _buildText(String? text) {
-  return Text(
-    "$text \n",
-    style: TextStyle(
-      color: Colors.black,
-      fontSize: 18,
-    ),
-  );
 }

@@ -86,7 +86,7 @@ class _MyProductsPageState extends State<MyProductsPage> {
                         fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                 ),
-                child: _buildImagens(listaProdutos![index].listaImagens),
+                child: _buildCarrousel(listaProdutos![index].listaImagens),
               ));
         },
       ),
@@ -94,7 +94,7 @@ class _MyProductsPageState extends State<MyProductsPage> {
   }
 }
 
-Widget _buildImagens(List<Imagem>? listaDeImagens) {
+Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
   if (!listaDeImagens!.isEmpty) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
@@ -115,7 +115,8 @@ Widget _buildImagens(List<Imagem>? listaDeImagens) {
             items: listaDeImagens.map((imagemPath) {
               return Builder(
                 builder: (BuildContext context) {
-                  return Image.network('',
+                  return Image.network(
+                    '',
                     fit: BoxFit.cover,
                   );
                 },

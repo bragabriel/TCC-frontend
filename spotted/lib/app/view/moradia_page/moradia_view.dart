@@ -90,14 +90,14 @@ class MoradiaPageState extends State<MoradiaPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Moradia"),
-         leading: BackButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()),
-              );
-            },
-          ),
+        leading: BackButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -270,7 +270,8 @@ class MoradiaPageState extends State<MoradiaPage> {
                       ),
                     ),
                   ),
-                  child: _buildImagens(filteredMoradiaList[index].listaImagens),
+                  child:
+                      _buildCarrousel(filteredMoradiaList[index].listaImagens),
                 ),
               );
             },
@@ -329,7 +330,7 @@ class MoradiaPageState extends State<MoradiaPage> {
     );
   }
 
-  Widget _buildImagens(List<Imagem>? listaDeImagens) {
+  Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
     if (!listaDeImagens!.isEmpty) {
       final imageAspectRatio = 2 / 3;
       return Scaffold(
@@ -371,9 +372,9 @@ class MoradiaPageState extends State<MoradiaPage> {
   List<String> _obterListaDeCidades() {
     final cidades = moradiaList
         .map((moradia) => moradia.cidadeMoradia)
-        .where((cidade) => cidade != null) 
-        .map((cidade) => cidade!) 
-        .toSet() 
+        .where((cidade) => cidade != null)
+        .map((cidade) => cidade!)
+        .toSet()
         .toList();
 
     cidades.insert(0, "Selecione uma cidade");
@@ -383,8 +384,8 @@ class MoradiaPageState extends State<MoradiaPage> {
   List<String> _obterListaDeEstados() {
     final estados = moradiaList
         .map((moradia) => moradia.estadoMoradia)
-        .where((estado) => estado != null) 
-        .map((estado) => estado!) 
+        .where((estado) => estado != null)
+        .map((estado) => estado!)
         .toSet()
         .toList();
 

@@ -7,6 +7,7 @@ class Alimento extends Artefato {
   final String? unidadeAlimento;
   final double? precoAlimento;
   final String? ofertaAlimento;
+  final String? telefoneUsuario;
 
   Alimento({
     required int idArtefato,
@@ -17,6 +18,7 @@ class Alimento extends Artefato {
     required String? dataAtualizacao,
     required int idUsuario,
     required List<Imagem>? listaImagens,
+    this.telefoneUsuario,
     this.tipoAlimento,
     this.marcaAlimento,
     this.saborAlimento,
@@ -52,6 +54,7 @@ class Alimento extends Artefato {
       unidadeAlimento: json['unidadeAlimento'],
       precoAlimento: json['precoAlimento']?.toDouble(),
       ofertaAlimento: json['ofertaAlimento'],
+      telefoneUsuario: json['telefoneUsuario'],
     );
   }
 }

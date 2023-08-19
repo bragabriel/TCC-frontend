@@ -183,7 +183,7 @@ class _TransportePageState extends State<TransportePage> {
                       ),
                     ),
                     child:
-                        _buildImagens(listaDeTransportes[index].listaImagens),
+                        _buildCarrousel(listaDeTransportes[index].listaImagens),
                   ));
             },
           ),
@@ -193,7 +193,7 @@ class _TransportePageState extends State<TransportePage> {
   }
 }
 
-Widget _buildImagens(List<Imagem>? listaDeImagens) {
+Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
   if (!listaDeImagens!.isEmpty) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {

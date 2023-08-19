@@ -32,7 +32,7 @@ class ObjetoDetalheState extends State<ObjetoDetalheView> {
         ),
         body: ListView(
           children: [
-            _buildImagens(objeto.listaImagens),
+            _buildCarrousel(objeto.listaImagens),
             DetalhesObjeto(
               objeto: objeto,
             ),
@@ -110,7 +110,7 @@ Column _newButton(Color color, IconData icon, String? textBase, String? dado) {
   );
 }
 
-Widget _buildImagens(List<Imagem>? listaDeImagens) {
+Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
   if (!listaDeImagens!.isEmpty) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
