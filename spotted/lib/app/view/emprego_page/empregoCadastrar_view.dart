@@ -1,12 +1,22 @@
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:spotted/app/view/emprego_page/emprego_view.dart';
+import '../../../service/change_notifier.dart';
+import '../../helpers/imageCarrousel_helper.dart';
+import '../../helpers/usuario_helper.dart';
+import '../../model/usuario_model.dart';
 import '../../repository/emprego_repository.dart';
 
 class EmpregoCadastrarView extends StatefulWidget {
+  const EmpregoCadastrarView({super.key});
+
   @override
-  _EmpregoCadastrarViewState createState() => _EmpregoCadastrarViewState();
+  EmpregoCadastrarViewState createState() => EmpregoCadastrarViewState();
 }
 
-class _EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
+class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
   final TextEditingController _tituloController = TextEditingController();
   final TextEditingController _descricaoController = TextEditingController();
   final TextEditingController _beneficiosController = TextEditingController();
@@ -21,6 +31,10 @@ class _EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
   final TextEditingController _localizacaoController = TextEditingController();
   final TextEditingController _presencialController = TextEditingController();
   final TextEditingController _tipoVagaController = TextEditingController();
+  Response<dynamic>? response;
+  late File? imagem;
+  Usuario? _usuario;
+  String _selectedModalidade = 'HIBRIDO';
 
   Future<void> _cadastrar() async {
     final body = {
@@ -28,8 +42,7 @@ class _EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
         "descricaoArtefato": _descricaoController.text.isNotEmpty
             ? _descricaoController.text
             : null,
-        "idUsuario": 1, // PEGAR ID DO USUARIO
-
+        "idUsuario": _usuario?.idUsuario,
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
@@ -66,32 +79,10 @@ class _EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
     };
 
     try {
-      await EmpregoRepository().cadastrarEmprego(body);
-      print('Cadastro realizado com sucesso');
-      AlertDialog(
-        title: Text("Oba!"),
-        content: Text("Adicionamos sua vaga a nossa base de dados. Boa sorte!"),
-        actions: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("Ok"))
-        ],
-      );
+      response = await EmpregoRepository().cadastrarEmprego(body);
+      print('Cadastro realizado com sucesso em EmpregoCadastrar');
     } catch (e) {
-      AlertDialog(
-        title: Text("Eita!"),
-        content: Text("Tivemos um erro ao cadastrar sua vaga."),
-        actions: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("Ok"))
-        ],
-      );
-      print('Erro ao cadastrar: $e');
+      print('Erro ao cadastrar em EmpregoCadastraer: $e');
     }
   }
 
@@ -114,79 +105,163 @@ class _EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
     super.dispose();
   }
 
+  Future<void> _buscarEmpregos() async {
+    try {
+      await EmpregoRepository().getAllEmpregos();
+      print("GetAllEmpregos com suceso em EmpregoCadastrarView");
+      setState(() {});
+    } catch (e) {
+      print('Erro ao obter a lista de empregos em EmpregoCadastrarView: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Cadastrar emprego'),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            TextField(
-              controller: _tituloController,
-              decoration: InputDecoration(labelText: 'Título'),
+      body: Consumer<UserProvider>(
+        builder: (context, userProvider, _) {
+          _usuario = UsuarioHelper.getUser(context, userProvider);
+          return _cadastrarEmprego();
+        },
+      ),
+    );
+  }
+
+  Widget _cadastrarEmprego() {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          TextField(
+            controller: _tituloController,
+            decoration: InputDecoration(labelText: 'Título'),
+          ),
+          TextField(
+            controller: _descricaoController,
+            decoration: InputDecoration(labelText: 'Descrição'),
+          ),
+          TextField(
+            controller: _beneficiosController,
+            decoration: InputDecoration(labelText: 'Benefícios'),
+          ),
+          TextField(
+            controller: _cidadeController,
+            decoration: InputDecoration(labelText: 'Cidade'),
+          ),
+          TextField(
+            controller: _contatoController,
+            decoration: InputDecoration(labelText: 'Contato'),
+          ),
+          TextField(
+            controller: _empresaController,
+            decoration: InputDecoration(labelText: 'Empresa'),
+          ),
+          TextField(
+            controller: _estadoController,
+            decoration: InputDecoration(labelText: 'Estado'),
+          ),
+          TextField(
+            controller: _experienciaController,
+            decoration: InputDecoration(labelText: 'Experiencia'),
+          ),
+          TextField(
+            controller: _linkVagaController,
+            decoration: InputDecoration(labelText: 'Link da vaga'),
+          ),
+          TextField(
+            controller: _cidadeController,
+            decoration: InputDecoration(labelText: 'Localização'),
+          ),
+          TextField(
+            controller: _presencialController,
+            decoration: InputDecoration(labelText: 'Presencial'),
+          ),
+          TextField(
+            controller: _requisitosController,
+            decoration: InputDecoration(labelText: 'Requisitos'),
+          ),
+          TextField(
+            controller: _salarioController,
+            decoration: InputDecoration(labelText: 'Salário'),
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
+          ),
+          SizedBox(height: 16),
+          DropdownButtonFormField<String>(
+            value: _selectedModalidade,
+            onChanged: (String? newValue) {
+              setState(() {
+                _selectedModalidade = newValue ?? '';
+              });
+            },
+            items: <String>[
+              'PRESENCIAL',
+              'HIBRIDO',
+              'REMOTO',
+            ].map<DropdownMenuItem<String>>((String value) {
+              _tipoVagaController.text = value;
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            decoration: InputDecoration(
+              labelText: 'Modalidade',
+              border: OutlineInputBorder(),
             ),
-            TextField(
-              controller: _descricaoController,
-              decoration: InputDecoration(labelText: 'Descrição'),
+          ),
+          SizedBox(height: 10),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 40,
+            child: ElevatedButton(
+              onPressed: () async {
+                imagem = await ImageHelper.selecionarImagem();
+              },
+              child: Text('Inserir imagem'),
             ),
-            TextField(
-              controller: _beneficiosController,
-              decoration: InputDecoration(labelText: 'Benefícios'),
-            ),
-            TextField(
-              controller: _cidadeController,
-              decoration: InputDecoration(labelText: 'Cidade'),
-            ),
-            TextField(
-              controller: _contatoController,
-              decoration: InputDecoration(labelText: 'Contato'),
-            ),
-            TextField(
-              controller: _empresaController,
-              decoration: InputDecoration(labelText: 'Empresa'),
-            ),
-            TextField(
-              controller: _estadoController,
-              decoration: InputDecoration(labelText: 'Estado'),
-            ),
-            TextField(
-              controller: _experienciaController,
-              decoration: InputDecoration(labelText: 'Experiencia'),
-            ),
-            TextField(
-              controller: _linkVagaController,
-              decoration: InputDecoration(labelText: 'Link da vaga'),
-            ),
-            TextField(
-              controller: _cidadeController,
-              decoration: InputDecoration(labelText: 'Localização'),
-            ),
-            TextField(
-              controller: _presencialController,
-              decoration: InputDecoration(labelText: 'Presencial'),
-            ),
-            TextField(
-              controller: _requisitosController,
-              decoration: InputDecoration(labelText: 'Requisitos'),
-            ),
-            TextField(
-              controller: _salarioController,
-              decoration: InputDecoration(labelText: 'Salário'),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: _tipoVagaController,
-              decoration: InputDecoration(labelText: 'Modalidade'),
-            ),
-            ElevatedButton(
-              onPressed: _cadastrar,
+          ),
+          SizedBox(height: 10),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 40,
+            child: ElevatedButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Confirmação de cadastro"),
+                        content: Text("Deseja cadastrar o emprego?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () async {
+                              await _cadastrar();
+                              await ImageHelper.uploadImagem(response!, imagem);
+                              await _buscarEmpregos();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EmpregoPage()));
+                            },
+                            child: Text('Sim'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("Cancelar"),
+                          ),
+                        ],
+                      );
+                    });
+              },
               child: Text('Cadastrar'),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

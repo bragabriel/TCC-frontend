@@ -2,12 +2,12 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'alimento_view.dart';
 import '../../../service/change_notifier.dart';
-import '../../helpers/uploadImage_helper.dart';
+import '../../helpers/imageCarrousel_helper.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
 import '../../repository/alimento_repository.dart';
-import 'alimento_view.dart';
 
 class AlimentoCadastrarView extends StatefulWidget {
   const AlimentoCadastrarView({super.key});
@@ -58,10 +58,9 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
 
     try {
       response = await AlimentoRepository().cadastrarAlimento(body);
-      print('Cadastro realizado com sucesso\n\n\n');
-      print(response);
+      print('Cadastro realizado com sucesso em AlimentoCadastrar');
     } catch (e) {
-      print('Erro ao cadastrar: $e');
+      print('Erro ao cadastrar em AlimentoCadastrar: $e');
     }
   }
 
@@ -97,7 +96,6 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           _usuario = UsuarioHelper.getUser(context, userProvider);
-          print("_usuario: $_usuario"); // Imprimir o ID do usuário
           return _cadastroAlimento();
         },
       ),
@@ -122,31 +120,6 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
               decoration: InputDecoration(labelText: 'Descrição'),
             ),
             SizedBox(height: 16),
-            DropdownButtonFormField<String>(
-              value: _selectedTipo,
-              onChanged: (String? newValue) {
-                setState(() {
-                  _selectedTipo = newValue ?? '';
-                });
-              },
-              items: <String>[
-                'DOCE',
-                'SALGADO',
-                'OUTRO'
-              ] // Substitua pelas opções reais
-                  .map<DropdownMenuItem<String>>((String value) {
-                _tipoController.text = value;
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              decoration: InputDecoration(
-                labelText: 'Tipo',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 16),
             TextField(
               controller: _marcaController,
               decoration: InputDecoration(labelText: 'Marca'),
@@ -155,32 +128,6 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
             TextField(
               controller: _saborController,
               decoration: InputDecoration(labelText: 'Sabor'),
-            ),
-            SizedBox(height: 16),
-            DropdownButtonFormField<String>(
-              value: _selectedUnidade,
-              onChanged: (String? newValue) {
-                setState(() {
-                  _selectedUnidade = newValue ?? '';
-                });
-              },
-              items: <String>[
-                'PEDAÇO',
-                'UNIDADE',
-                'PACK',
-                'OUTRO'
-              ] // Substitua pelas opções reais
-                  .map<DropdownMenuItem<String>>((String value) {
-                _unidadeController.text = value;
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              decoration: InputDecoration(
-                labelText: 'Unidade',
-                border: OutlineInputBorder(),
-              ),
             ),
             SizedBox(height: 16),
             TextField(
@@ -194,14 +141,59 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
               decoration: InputDecoration(labelText: 'Oferta'),
             ),
             SizedBox(height: 16),
+            DropdownButtonFormField<String>(
+              value: _selectedUnidade,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedUnidade = newValue ?? '';
+                });
+              },
+              items: <String>['PEDAÇO', 'UNIDADE', 'PACK', 'OUTRO']
+                  .map<DropdownMenuItem<String>>((String value) {
+                _unidadeController.text = value;
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              decoration: InputDecoration(
+                labelText: 'Unidade',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 16),
+            DropdownButtonFormField<String>(
+              value: _selectedTipo,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedTipo = newValue ?? '';
+                });
+              },
+              items: <String>[
+                'DOCE',
+                'SALGADO',
+                'OUTRO'
+              ] 
+                  .map<DropdownMenuItem<String>>((String value) {
+                _tipoController.text = value;
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              decoration: InputDecoration(
+                labelText: 'Tipo',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 16),
             Container(
               child: ElevatedButton(
-                //erro devido o id artefato nao estar disponivel ainda. precisa cadastrar o produto primeiro
-                onPressed: () async => imagem = await selecionarImagem(),
+                onPressed: () async =>
+                    imagem = await ImageHelper.selecionarImagem(),
                 child: Text('Inserir imagem'),
               ),
             ),
-            SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
                 showDialog(
@@ -214,7 +206,7 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                         TextButton(
                           onPressed: () async {
                             await _cadastrar();
-                            await uploadImagem(response!, imagem!);
+                            await ImageHelper.uploadImagem(response!, imagem!);
                             await _buscarAlimentos();
                             Navigator.push(
                                 context,
