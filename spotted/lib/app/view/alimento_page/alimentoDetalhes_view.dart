@@ -77,10 +77,10 @@ class DetalhesAlimento extends StatelessWidget {
               fontSize: 27,
             ),
           ),
-          TextHelper.buildText(alimento.descricaoArtefato),
-          TextHelper.buildText(alimento.saborAlimento),
-          TextHelper.buildText(alimento.unidadeAlimento),
-          TextHelper.buildText(alimento.descricaoArtefato),
+          TextBuilder.buildText(alimento.descricaoArtefato),
+          TextBuilder.buildText(alimento.saborAlimento),
+          TextBuilder.buildText(alimento.unidadeAlimento),
+          TextBuilder.buildText(alimento.descricaoArtefato),
           Text(
             "R\$ ${alimento.precoAlimento?.toStringAsFixed(2) ?? '0.00'}",
             style: TextStyle(

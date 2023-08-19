@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TextHelper{
+class TextBuilder{
   static Text buildText(String? text) {
   return Text(
     "$text \n",
