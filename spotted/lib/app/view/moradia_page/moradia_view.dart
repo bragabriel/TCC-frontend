@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/moradia_repository.dart';
 import 'package:spotted/app/model/moradia_model.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import '../home_page/home_view.dart';
 import 'moradiaCadastrar_view.dart';
 import 'moradiaDetalhe_view.dart';
+import '../../helpers/imageCarrousel_helper.dart';
 import '../../controller/moradia_controller.dart';
-import '../../model/artefato_model.dart';
+import '../home_page/home_view.dart';
 
 class MoradiaPage extends StatefulWidget {
   const MoradiaPage({Key? key}) : super(key: key);
-
   @override
   State<MoradiaPage> createState() => MoradiaPageState();
 }
@@ -34,10 +32,10 @@ class MoradiaPageState extends State<MoradiaPage> {
   void initState() {
     super.initState();
     controller.start();
-    _fetchMoradia();
+    _buscarMoradia();
   }
 
-  Future<void> _fetchMoradia() async {
+  Future<void> _buscarMoradia() async {
     try {
       final moradiaList = await MoradiaRepository().getAllMoradias();
       setState(() {
@@ -49,7 +47,7 @@ class MoradiaPageState extends State<MoradiaPage> {
     }
   }
 
-  void _filterMoradiaList() {
+  void _filtrareListarMoradia() {
     setState(() {
       filteredMoradiaList = moradiaList.where((moradia) {
         final meetsPriceCriteria = (minPrice == null ||
@@ -102,7 +100,7 @@ class MoradiaPageState extends State<MoradiaPage> {
           IconButton(
             onPressed: () {
               controller.start();
-              _fetchMoradia();
+              _buscarMoradia();
             },
             icon: const Icon(Icons.refresh_outlined),
           )
@@ -185,8 +183,8 @@ class MoradiaPageState extends State<MoradiaPage> {
             controller: _searchController,
             onChanged: (value) {
               setState(() {
-                _searchTerm = value; // Update the _searchTerm variable
-                _filterMoradiaList();
+                _searchTerm = value;
+                _filtrareListarMoradia();
               });
             },
             decoration: InputDecoration(
@@ -213,7 +211,7 @@ class MoradiaPageState extends State<MoradiaPage> {
           (novaCidade) {
             setState(() {
               cidadeSelecionada = novaCidade!;
-              _filterMoradiaList();
+              _filtrareListarMoradia();
             });
           },
         ),
@@ -224,7 +222,7 @@ class MoradiaPageState extends State<MoradiaPage> {
           (novoEstado) {
             setState(() {
               estadoSelecionado = novoEstado!;
-              _filterMoradiaList();
+              _filtrareListarMoradia();
             });
           },
         ),
@@ -270,8 +268,8 @@ class MoradiaPageState extends State<MoradiaPage> {
                       ),
                     ),
                   ),
-                  child:
-                      _buildCarrousel(filteredMoradiaList[index].listaImagens),
+                  child: ImageHelper.buildCarrousel(
+                      filteredMoradiaList[index].listaImagens),
                 ),
               );
             },
@@ -316,7 +314,7 @@ class MoradiaPageState extends State<MoradiaPage> {
             onChanged: (value) {
               setState(() {
                 filter = value.isEmpty ? null : int.parse(value);
-                _filterMoradiaList();
+                _filtrareListarMoradia();
               });
             },
             keyboardType: TextInputType.number,
@@ -328,45 +326,6 @@ class MoradiaPageState extends State<MoradiaPage> {
         ),
       ],
     );
-  }
-
-  Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
-    if (!listaDeImagens!.isEmpty) {
-      final imageAspectRatio = 2 / 3;
-      return Scaffold(
-        body: AspectRatio(
-          aspectRatio: imageAspectRatio,
-          child: Container(
-            width: double.infinity,
-            child: CarouselSlider(
-              options: CarouselOptions(
-                height: double.infinity,
-                enlargeCenterPage: true,
-                autoPlay: true,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                autoPlayCurve: Curves.easeInExpo,
-                pauseAutoPlayOnTouch: true,
-              ),
-              items: listaDeImagens.map((imagemPath) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Image.network(
-                      imagemPath.url,
-                      fit: BoxFit.cover,
-                    );
-                  },
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-      );
-    } else {
-      return Center(
-        child: Image.asset('assets/images/imagem.png'),
-      );
-    }
   }
 
   List<String> _obterListaDeCidades() {

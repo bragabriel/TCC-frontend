@@ -31,7 +31,8 @@ class TransporteRepository {
     }
   }
 
-  Future<void> cadastrarTransporte(Map<String, dynamic> body) async {
+  Future<Response<dynamic>> cadastrarTransporte(
+      Map<String, dynamic> body) async {
     const String transportesUrl = "$onlineApi/transporte";
 
     try {
@@ -40,6 +41,7 @@ class TransporteRepository {
 
       if (response.statusCode == 201) {
         print('Cadastro realizado com sucesso');
+        return response;
       } else {
         print('Erro ao cadastrar: ${response.statusCode}');
         print('Mensagem de erro da API: ${response.data}');

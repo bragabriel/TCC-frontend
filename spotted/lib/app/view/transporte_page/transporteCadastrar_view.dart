@@ -1,5 +1,15 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:spotted/app/repository/transporte_repository.dart';
+import 'package:spotted/app/view/transporte_page/transporte_view.dart';
+
+import '../../../service/change_notifier.dart';
+import '../../helpers/imageCarrousel_helper.dart';
+import '../../helpers/usuario_helper.dart';
+import '../../model/usuario_model.dart';
 
 class TransporteCadastrarView extends StatefulWidget {
   @override
@@ -24,6 +34,9 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
       TextEditingController();
   final TextEditingController _valorTransporteController =
       TextEditingController();
+        Response<dynamic>? response;
+  late File? imagem;
+  Usuario? _usuario;
 
   Future<void> _cadastrar() async {
     final body = {
@@ -31,7 +44,7 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
         "descricaoArtefato": _descricaoController.text.isNotEmpty
             ? _descricaoController.text
             : null,
-        "idUsuario": 1,
+        "idUsuario": _usuario?.idUsuario,
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
@@ -49,48 +62,27 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
           _periodoTransporte.text.isNotEmpty ? _periodoTransporte.text : null,
       "qtdAssentosPreenchidosTransporte":
           _qtdAssentosPreenchidosTransporteController.text.isNotEmpty
-              ? double.parse(_qtdAssentosPreenchidosTransporteController.text)
+              ? int.parse(_qtdAssentosPreenchidosTransporteController.text)
               : null,
       "qtdAssentosTotalTransporte":
           _qtdAssentosTotalTransporteController.text.isNotEmpty
-              ? double.parse(_qtdAssentosTotalTransporteController.text)
+              ? int.parse(_qtdAssentosTotalTransporteController.text)
               : null,
-      "telefoneUsuario": _telefoneUsuarioController.text.isNotEmpty
-          ? double.parse(_telefoneUsuarioController.text)
-          : null,
+      // "telefoneUsuario": _telefoneUsuarioController.text.isNotEmpty
+      //     ? int.parse(_telefoneUsuarioController.text)
+      //     : null,
       "valorTransporte": _valorTransporteController.text.isNotEmpty
           ? double.parse(_valorTransporteController.text)
           : null,
     };
 
     try {
-      await TransporteRepository().cadastrarTransporte(body);
-      print('Cadastro realizado com sucesso');
-      AlertDialog(
-        title: Text("Oba!"),
-        content:
-            Text("Adicionamos seu veículo a nossa base de dados. Boa sorte!"),
-        actions: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("Ok"))
-        ],
-      );
+      response = await TransporteRepository().cadastrarTransporte(body);
+      print('Cadastro realizado com sucesso em TransporteCadastrarView');
+
+
     } catch (e) {
-      AlertDialog(
-        title: Text("Eita!"),
-        content: Text("Tivemos um erro ao cadastrar seu veículo."),
-        actions: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("Ok"))
-        ],
-      );
-      print('Erro ao cadastrar: $e');
+      print('Erro ao cadastrar em TransporteCadastrarView: $e');
     }
   }
 
@@ -105,13 +97,33 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
     super.dispose();
   }
 
+    Future<void> _buscarTransportes() async {
+    try {
+await TransporteRepository().getAllTransportes();
+      setState(() {
+});
+    } catch (e) {
+      print('Erro ao obter a lista de Transportes: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Cadastrar trasnporte'),
       ),
-      body: SingleChildScrollView(
+      body: Consumer<UserProvider>(
+        builder: (context, userProvider, _) {
+          _usuario = UsuarioHelper.getUser(context, userProvider);
+          return _cadastrarTransporte();
+        },
+      ),
+    );
+  }
+
+  Widget _cadastrarTransporte(){
+    return  SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
@@ -131,10 +143,10 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
               controller: _periodoTransporte,
               decoration: InputDecoration(labelText: 'Turno'),
             ),
-            TextField(
-              controller: _telefoneUsuarioController,
-              decoration: InputDecoration(labelText: 'Contato'),
-            ),
+            // TextField(
+            //   controller: _telefoneUsuarioController,
+            //   decoration: InputDecoration(labelText: 'Contato'),
+            // ),
             TextField(
               controller: _informacoesVeiculoTransporteController,
               decoration: InputDecoration(labelText: 'Informações do veículo'),
@@ -155,13 +167,57 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
               controller: _valorTransporteController,
               decoration: InputDecoration(labelText: 'Valor'),
             ),
-            ElevatedButton(
-              onPressed: _cadastrar,
+          SizedBox(height: 10),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 40,
+            child: ElevatedButton(
+              onPressed: () async {
+                imagem = await ImageHelper.selecionarImagem();
+              },
+              child: Text('Inserir imagem'),
+            ),
+          ),
+          SizedBox(height: 10),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 40,
+            child: ElevatedButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Confirmação de cadastro"),
+                        content: Text("Deseja cadastrar o emprego?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () async {
+                              await _cadastrar();
+                              await ImageHelper.uploadImagem(response!, imagem);
+                              await _buscarTransportes();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => TransportePage()));
+                            },
+                            child: Text('Sim'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("Cancelar"),
+                          ),
+                        ],
+                      );
+                    });
+              },
               child: Text('Cadastrar'),
             ),
+          ),
           ],
         ),
-      ),
-    );
+      );
   }
 }

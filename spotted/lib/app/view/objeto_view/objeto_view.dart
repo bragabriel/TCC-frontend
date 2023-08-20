@@ -1,18 +1,14 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:spotted/app/view/objeto_view/objetoDetalhe_view.dart';
-
+import 'package:flutter/material.dart';
+import 'objetoCadastrar_view.dart';
 import '../../controller/objeto_controller.dart';
-import '../../model/artefato_model.dart';
+import '../../helpers/imageCarrousel_helper.dart';
 import '../../model/objeto_model.dart';
 import '../../repository/objeto_repository.dart';
 import '../home_page/home_view.dart';
-import 'objetoCadastrar_view.dart';
 
 class ObjetoPage extends StatefulWidget {
   const ObjetoPage({Key? key}) : super(key: key);
-
   @override
   State<ObjetoPage> createState() => ObjetoPageState();
 }
@@ -81,7 +77,7 @@ class ObjetoPageState extends State<ObjetoPage> {
   void initState() {
     super.initState();
     controller.start();
-    _fetchobjeto();
+    _buscarObjeto();
   }
 
   @override
@@ -101,7 +97,7 @@ class ObjetoPageState extends State<ObjetoPage> {
           IconButton(
             onPressed: () {
               controller.start();
-              _fetchobjeto();
+              _buscarObjeto();
             },
             icon: const Icon(Icons.refresh_outlined),
           )
@@ -131,7 +127,7 @@ class ObjetoPageState extends State<ObjetoPage> {
     return _filtros();
   }
 
-  Future<void> _fetchobjeto() async {
+  Future<void> _buscarObjeto() async {
     try {
       final objetoList = await ObjetoRepository().getAllObjetos();
       setState(() {
@@ -269,51 +265,12 @@ class ObjetoPageState extends State<ObjetoPage> {
                           fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  child:
-                      _buildCarrousel(filteredobjetoList[index].listaImagens),
+                  child: ImageHelper.buildCarrousel(
+                      filteredobjetoList[index].listaImagens),
                 ),
               );
             }),
       )
     ]);
-  }
-}
-
-Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
-  if (!listaDeImagens!.isEmpty) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        final screenWidth = 16;
-        final screenHeight = 9;
-        final imageAspectRatio = screenWidth / screenHeight;
-        return Container(
-          width: double.infinity,
-          child: CarouselSlider(
-            options: CarouselOptions(
-              aspectRatio: imageAspectRatio,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              autoPlayCurve: Curves.easeInExpo,
-              pauseAutoPlayOnTouch: true,
-            ),
-            items: listaDeImagens.map((imagemPath) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Image.network(
-                    imagemPath.url,
-                    fit: BoxFit.cover,
-                  );
-                },
-              );
-            }).toList(),
-          ),
-        );
-      },
-    );
-  } else {
-    return Center(
-      child: Image.asset('assets/images/imagem.png'),
-    );
   }
 }

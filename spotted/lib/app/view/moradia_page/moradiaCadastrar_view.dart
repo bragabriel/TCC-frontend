@@ -1,4 +1,12 @@
+import 'dart:io';
+import 'moradia_view.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:provider/provider.dart';
+import '../../../service/change_notifier.dart';
+import '../../helpers/usuario_helper.dart';
+import '../../helpers/imageCarrousel_helper.dart';
+import '../../model/usuario_model.dart';
 import '../../repository/moradia_repository.dart';
 import '../../model/moradia_model.dart';
 
@@ -6,10 +14,10 @@ class MoradiaCadastrarView extends StatefulWidget {
   const MoradiaCadastrarView({Key? key}) : super(key: key);
 
   @override
-  _MoradiaCadastrarPageState createState() => _MoradiaCadastrarPageState();
+  MoradiaCadastrarPageState createState() => MoradiaCadastrarPageState();
 }
 
-class _MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
+class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
   final TextEditingController _tituloController = TextEditingController();
   final TextEditingController _descricaoController = TextEditingController();
   final TextEditingController _bairroMoradiaController =
@@ -31,6 +39,9 @@ class _MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
   final TextEditingController _animaisEstimacaoController =
       TextEditingController();
   final TextEditingController _contatoController = TextEditingController();
+  Response<dynamic>? response;
+  late File? imagem;
+  Usuario? _usuario;
 
   Future<void> _cadastrar() async {
     final body = {
@@ -38,8 +49,7 @@ class _MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
         "descricaoArtefato": _descricaoController.text.isNotEmpty
             ? _descricaoController.text
             : null,
-        "idUsuario": 1, //PEGAR ID DO USUARIO
-
+        "idUsuario": _usuario?.idUsuario,
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
@@ -80,34 +90,12 @@ class _MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
     };
 
     try {
-      await MoradiaRepository()
-          .cadastrarMoradia(Moradia.fromJson(body) as Map<String, dynamic>);
-      print('Cadastro realizado com sucesso');
-      AlertDialog(
-        title: Text("Oba!"),
-        content:
-            Text("Adicionamos sua moradia a nossa base de dados. Boa sorte!"),
-        actions: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("Ok"))
-        ],
-      );
+      response = await MoradiaRepository()
+          .cadastrarMoradia(body);
+      print('Cadastro realizado com sucesso em MoradiaCadastrarView');
+      print(response);
     } catch (e) {
-      print('Erro ao cadastrar: $e');
-      AlertDialog(
-        title: Text("Eita!"),
-        content: Text("Tivemos um erro ao cadastrar sua moradia."),
-        actions: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("Ok"))
-        ],
-      );
+      print('Erro ao cadastrar em MoradiaCadastrarView: $e');
     }
   }
 
@@ -117,7 +105,12 @@ class _MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
       appBar: AppBar(
         title: Text('Cadastrar moradia'),
       ),
-      body: _cadastroMoradia(),
+      body: Consumer<UserProvider>(
+        builder: (context, userProvider, _) {
+          _usuario = UsuarioHelper.getUser(context, userProvider);
+          return _cadastrarMoradia();
+        },
+      ),
     );
   }
 
@@ -139,7 +132,16 @@ class _MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
     super.dispose();
   }
 
-  SingleChildScrollView _cadastroMoradia() {
+  Future<void> _buscarMoradia() async {
+    try {
+      await MoradiaRepository().getAllMoradias();
+      setState(() {});
+    } catch (e) {
+      print('Erro ao obter a lista de moradias: $e');
+    }
+  }
+
+  SingleChildScrollView _cadastrarMoradia() {
     return SingleChildScrollView(
       padding: EdgeInsets.all(16),
       child: Column(
@@ -196,9 +198,55 @@ class _MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
             controller: _animaisEstimacaoController,
             decoration: InputDecoration(labelText: 'Animais Estimação'),
           ),
-          ElevatedButton(
-            onPressed: _cadastrar,
-            child: Text('Cadastrar'),
+          SizedBox(height: 10),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 40,
+            child: ElevatedButton(
+              onPressed: () async {
+                imagem = await ImageHelper.selecionarImagem();
+              },
+              child: Text('Inserir imagem'),
+            ),
+          ),
+          SizedBox(height: 10),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 40,
+            child: ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("Confirmação de cadastro"),
+                      content: Text("Deseja cadastrar o alimento?"),
+                      actions: [
+                        TextButton(
+                          onPressed: () async {
+                            await _cadastrar();
+                            await ImageHelper.uploadImagem(response!, imagem!);
+                            await _buscarMoradia();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MoradiaPage()));
+                          },
+                          child: Text("Sim"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text("Cancelar"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: Text('Cadastrar'),
+            ),
           ),
         ],
       ),

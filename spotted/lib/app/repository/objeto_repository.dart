@@ -31,7 +31,7 @@ class ObjetoRepository {
     }
   }
 
-  Future<void> cadastrarObjeto(Map<String, dynamic> body) async {
+   Future<Response<dynamic>> cadastrarObjeto(Map<String, dynamic> body) async {
     const String objetosUrl = "$onlineApi/objeto";
 
     try {
@@ -40,6 +40,7 @@ class ObjetoRepository {
 
       if (response.statusCode == 201) {
         print('Cadastro realizado com sucesso');
+        return response;
       } else {
         print('Erro ao cadastrar: ${response.statusCode}');
         print('Mensagem de erro da API: ${response.data}');
