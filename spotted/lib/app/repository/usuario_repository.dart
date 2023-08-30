@@ -111,4 +111,30 @@ class UsuarioRepository {
       throw 'Erro ao acessar a API em logar usuario: $e';
     }
   }
+
+  Future<void> updateUserName(int idUsuario, String nomeUsuario, String sobrenomeUsuario) async {
+    
+    final String apiUrl = '$onlineApi/usuarioAtualizar/$idUsuario';
+    
+    final Map<String, dynamic> body = {
+      'nomeUsuario': nomeUsuario,
+      'sobrenomeUsuario': sobrenomeUsuario,
+    };
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+     try {
+      final response = await Dio().put(apiUrl, data: body);
+
+      if (response.statusCode == 200) {
+        print('Usuário atualizado com sucesso!');
+      } else {
+        print('Erro ao atualizar o usuário - Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Erro ao atualizar o usuário: $error');
+    }
+  }
 }

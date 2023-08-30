@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:spotted/app/model/usuario_model.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
+
+import '../../../service/change_notifier.dart';
 
 class UpdateProfilePage extends StatefulWidget {
   final Usuario user;
@@ -15,6 +18,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   final UsuarioRepository usuarioRepository = UsuarioRepository();
 
   final TextEditingController nomeController = TextEditingController();
+  final TextEditingController sobrenomeController = TextEditingController();
   final TextEditingController telefoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
@@ -22,6 +26,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   void initState() {
     super.initState();
     nomeController.text = widget.user.nomeUsuario;
+    sobrenomeController.text = widget.user.sobrenomeUsuario;
     telefoneController.text = widget.user.telefoneUsuario;
     emailController.text = widget.user.emailUsuario;
   }
@@ -42,12 +47,8 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
               decoration: InputDecoration(labelText: 'Nome'),
             ),
             TextFormField(
-              controller: telefoneController,
-              decoration: InputDecoration(labelText: 'Telefone'),
-            ),
-            TextFormField(
-              controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              controller: sobrenomeController,
+              decoration: InputDecoration(labelText: 'Sobrenome'),
             ),
             SizedBox(height: 20),
             ElevatedButton(
@@ -55,15 +56,20 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                 Usuario updatedUser = Usuario(
                   idUsuario: widget.user.idUsuario,
                   nomeUsuario: nomeController.text,
-                  sobrenomeUsuario: widget.user.sobrenomeUsuario,
+                  sobrenomeUsuario: sobrenomeController.text,
                   dataNascimento: widget.user.dataNascimento,
-                  telefoneUsuario: telefoneController.text,
-                  emailUsuario: emailController.text,
+                  telefoneUsuario: widget.user.telefoneUsuario,
+                  emailUsuario: widget.user.emailUsuario,
                 );
+                
+                try{
+                  await usuarioRepository.updateUserName(updatedUser.idUsuario!, updatedUser.nomeUsuario, updatedUser.sobrenomeUsuario);
 
-                print(updatedUser.nomeUsuario);
-                //bater na api atualizando
-                //await usuarioRepository.updateUser(updatedUser);
+                  final userProvider = Provider.of<UserProvider>(context, listen: false);
+                  userProvider.updateUserInfo(updatedUser);
+                }catch(e){
+                  print(e);
+                }
 
                 Navigator.pop(context);
               },

@@ -19,6 +19,8 @@ class ProfilePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Nome: ${userProvider.user?.nomeUsuario}'),
+                Text('Sobrenome: ${userProvider.user?.sobrenomeUsuario}'),
+                Text('Aniversário: ${userProvider.user?.dataNascimento}'),
                 Text('Telefone: ${userProvider.user?.telefoneUsuario}'),
                 Text('Email: ${userProvider.user?.emailUsuario}'),
                 //Image.network(userProvider.user?.url),
