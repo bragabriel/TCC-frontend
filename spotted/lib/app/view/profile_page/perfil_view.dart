@@ -1,8 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/view/profile_page/updatePerfil_view.dart';
 import '../../../service/change_notifier.dart';
-import '../../controller/usuario_controller.dart';
+import '../../model/usuario_model.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
