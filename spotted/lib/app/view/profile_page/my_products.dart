@@ -1,8 +1,8 @@
-import 'package:carousel_slider/carousel_options.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:spotted/app/view/transporte_page/transporteCadastrar_view.dart';
-import '../../model/artefato_model.dart';
+import 'package:provider/provider.dart';
+import 'package:spotted/app/repository/usuario_repository.dart';
+import '../../../service/change_notifier.dart';
+import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
 import '../home_page/home_view.dart';
 import 'options_products.dart';
@@ -10,9 +10,6 @@ import 'options_products.dart';
 class MyProductsPage extends StatefulWidget {
   @override
   _MyProductsPageState createState() => _MyProductsPageState();
-
-  final Usuario? usuario;
-  const MyProductsPage(this.usuario, {super.key});
 }
 
 class _MyProductsPageState extends State<MyProductsPage> {
@@ -21,11 +18,22 @@ class _MyProductsPageState extends State<MyProductsPage> {
     super.initState();
   }
 
-  List<dynamic>? listaProdutos;
+  Usuario? _usuario;
+
+  //   Future<void> _buscarMeusProdutos() async {
+  //   try {
+  //     await UsuarioRepository().getUsuario(_usuario?.idUsuario as num);
+  //     print("GetUsuario com sucesso em MyProductsPage");
+  //     setState(() {
+  //     });
+  //   } catch (e) {
+  //     print('Erro ao obter usuario em MyProductsPage: $e');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    listaProdutos = widget.usuario!.listaArtefatosReponse;
+    print("entrou aqui na my products");
     return Scaffold(
       appBar: AppBar(
         title: Text("Meus cadastros no app"),
@@ -38,97 +46,78 @@ class _MyProductsPageState extends State<MyProductsPage> {
           },
         ),
       ),
-      body: _construirFiltrosELista(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TransporteCadastrarView(),
-            ),
-          );
+      body: Consumer<UserProvider>(
+        builder: (context, userProvider, _) {
+          _usuario = UsuarioHelper.getUser(context, userProvider);
+          print("\n\n\n\n\n");
+          print(_usuario);
+          return _listarMeusProdutos();
         },
       ),
     );
   }
 
-  Widget _construirFiltrosELista() {
-    return Expanded(
-      child: GridView.builder(
-        padding: const EdgeInsets.all(20),
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          childAspectRatio: 2 / 3,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
-        ),
-        itemCount: listaProdutos?.length,
-        itemBuilder: (BuildContext ctx, index) {
-          return InkWell(
-              onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return OptionsProductsPage(listaProdutos![index]);
-                    },
-                  ),
-                );
-              },
-              child: GridTile(
-                key: ValueKey(listaProdutos![index].idArtefato),
-                footer: GridTileBar(
-                  backgroundColor: const Color.fromARGB(137, 107, 98, 98),
-                  title: Text(
-                    listaProdutos![index].tituloArtefato,
-                    style: const TextStyle(
-                        fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                child: _buildCarrousel(listaProdutos![index].listaImagens),
-              ));
-        },
-      ),
-    );
-  }
-}
+  GridView _listarMeusProdutos() {
+    print("entrou no listar");
+    var listaProdutos = _usuario?.listaArtefatosReponse;
 
-Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
-  if (!listaDeImagens!.isEmpty) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        final screenWidth = 16;
-        final screenHeight = 9;
-        final imageAspectRatio = screenWidth / screenHeight;
-        return Container(
-          width: double.infinity,
-          child: CarouselSlider(
-            options: CarouselOptions(
-              aspectRatio: imageAspectRatio,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              autoPlayCurve: Curves.easeInExpo,
-              pauseAutoPlayOnTouch: true,
-            ),
-            items: listaDeImagens.map((imagemPath) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Image.network(
-                    '',
-                    fit: BoxFit.cover,
-                  );
+    return GridView.builder(
+      padding: const EdgeInsets.all(20),
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 200,
+        childAspectRatio: 2 / 3,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
+      ),
+      itemCount: listaProdutos?.length ?? 0,
+      itemBuilder: (BuildContext ctx, index) {
+        var produto = listaProdutos![index];
+        var titulo = produto["tituloArtefato"];
+        var descricaoArtefato = produto["descricaoArtefato"];
+
+        return InkWell(
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return OptionsProductsPage(produto[index]);
                 },
-              );
-            }).toList(),
+              ),
+            );
+          },
+          child: GridTile(
+            key: ValueKey(produto),
+            footer: GridTileBar(
+              backgroundColor: const Color.fromARGB(137, 107, 98, 98),
+              title: Text(
+                titulo,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text(
+                "$descricaoArtefato ",
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+                       child: Column(
+            children: [
+              Expanded(
+                child: Image.network(
+                   produto["listaImagens"][0]["url"],
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
+          ),
           ),
         );
       },
-    );
-  } else {
-    return Center(
-      child: Image.asset('assets/images/imagem.png'),
     );
   }
 }

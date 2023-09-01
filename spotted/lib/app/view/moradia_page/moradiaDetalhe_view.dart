@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'moradia_view.dart';
 import '../../builders/text_builder.dart';
 import '../../helpers/button_helper.dart';
-import '../../helpers/imageCarrousel_helper.dart';
+import '../../helpers/image_helper.dart';
 import '../../model/moradia_model.dart';
 
 class MoradiaDetalheView extends StatefulWidget {

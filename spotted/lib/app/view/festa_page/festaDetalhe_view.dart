@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'festa_view.dart';
 import '../../builders/text_builder.dart';
 import '../../helpers/button_helper.dart';
-import '../../helpers/imageCarrousel_helper.dart';
+import '../../helpers/image_helper.dart';
 import '../../model/festa_model.dart';
 
 class FestaDetalhesView extends StatefulWidget {

@@ -13,8 +13,20 @@ import 'my_products.dart';
 
 class ProfilePage extends StatelessWidget {
   final controller = UsuarioController();
+
+  
   @override
   Widget build(BuildContext context) {
+
+    
+IconButton _newButton(Color color, IconData icon, Usuario? usuario) {
+  print("entrou no new button");
+  return IconButton(
+    icon: Icon(icon, color: color, size: 50),
+    onPressed: () =>Navigator.of(context).pushNamed('/meusprodutos'),
+  );
+}
+
     Usuario? user = Usuario.empty();
     return Scaffold(
       body: Column(
@@ -48,7 +60,8 @@ class ProfilePage extends StatelessWidget {
                         navigateSecondPage(context, EditImagePage());
                       },
                       child: DisplayImage(
-                        imagePath: user?.url ?? 'https://miro.medium.com/v2/resize:fit:1400/1*g09N-jl7JtVjVZGcd-vL2g.jpeg',
+                        imagePath: user?.url ??
+                            'https://miro.medium.com/v2/resize:fit:1400/1*g09N-jl7JtVjVZGcd-vL2g.jpeg',
                         onPressed: () {},
                       ),
                     ),
@@ -83,8 +96,9 @@ class ProfilePage extends StatelessWidget {
               },
             ),
           ),
-         _newButton(Colors.black, Icons.list, user),],
-      ),  
+          _newButton(Colors.black, Icons.list, user),
+        ],
+      ),
     );
   }
 
@@ -156,16 +170,3 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-Column _newButton(Color color, IconData icon, Usuario? usuario) {
-  return Column(
-    mainAxisSize: MainAxisSize.min,
-    mainAxisAlignment: MainAxisAlignment.end,
-    children: <Widget>[
-      IconButton(
-        icon: Icon(icon, color: color, size: 50),
-        onPressed: () => MyProductsPage(usuario!),
-      ),
-      SizedBox(height: 20),
-    ],
-  );
-}

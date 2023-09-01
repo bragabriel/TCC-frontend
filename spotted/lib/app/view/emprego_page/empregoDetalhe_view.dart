@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'emprego_view.dart';
 import '../../builders/text_builder.dart';
-import '../../helpers/imageCarrousel_helper.dart';
+import '../../helpers/image_helper.dart';
 import '../../helpers/button_helper.dart';
 import '../../model/emprego_model.dart';
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/festa_repository.dart';
+import '../../helpers/image_helper.dart';
 import 'festaCadastrar_view.dart';
 import 'festaDetalhe_view.dart';
 import '../../controller/alimento_controller.dart';
-import '../../helpers/imageCarrousel_helper.dart';
 import '../../model/festa_model.dart';
 import '../home_page/home_view.dart';
 

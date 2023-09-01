@@ -3,7 +3,7 @@ import 'package:spotted/app/repository/emprego_repository.dart';
 import 'package:spotted/app/model/emprego_model.dart';
 import 'package:spotted/app/view/emprego_page/empregoDetalhe_view.dart';
 import 'empregoCadastrar_view.dart';
-import '../../helpers/imageCarrousel_helper.dart';
+import '../../helpers/image_helper.dart';
 import '../home_page/home_view.dart';
 
 class EmpregoPage extends StatefulWidget {

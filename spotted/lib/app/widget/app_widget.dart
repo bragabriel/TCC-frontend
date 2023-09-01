@@ -10,6 +10,7 @@ import '../view/home_page/home_view.dart';
 import '../view/login_page/login_view.dart';
 import '../view/moradia_page/moradia_view.dart';
 import '../view/objeto_view/objeto_view.dart';
+import '../view/profile_page/my_products.dart';
 import '../view/transporte_page/transporte_view.dart';
 
 class AppWidget extends StatelessWidget {
@@ -36,6 +37,7 @@ class AppWidget extends StatelessWidget {
             '/festa': (context) => FestaPage(),
             '/moradia': (context) => MoradiaPage(),
             '/objeto': (context) => ObjetoPage(),
+            '/meusprodutos': (context) => MyProductsPage(),
             '/home': (context) => HomePage(),
             '/': (context) => LoginPage(),
           },
