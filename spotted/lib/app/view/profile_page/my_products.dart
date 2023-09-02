@@ -3,9 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:spotted/app/view/alimento_page/alimentoCadastrar_view.dart';
 import '../../../service/change_notifier.dart';
 import '../../helpers/usuario_helper.dart';
+import '../../model/alimento_model.dart';
 import '../../model/usuario_model.dart';
 import '../home_page/home_view.dart';
-import 'AlimentoEditarView.dart';
+import 'updateAlimento.dart';
 import 'options_products.dart';
 import 'package:flutter/src/widgets/basic.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -111,20 +112,35 @@ class _MyProductsPageState extends State<MyProductsPage> {
                     child: OutlinedButton(
                       child: Text('Editar'),
                       onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    AlimentoEditarView(produto)));
+                        print("meu deusssssssssssssssssss");
                         print(produto);
-                        switch (produto) {
-                          case 1:
-                            AlimentoEditarView(produto);
-                            break;
-                          // case 2:
-                          //   message = 'Option 2 selected';
-                          //   break;
-                          // case 3:
-                          //   message = 'Option 3 selected';
-                          //   break;
-                          // default:
-                          //   message = 'Invalid option';
-                        }
+                        print(produto['tituloArtefato']);
+                        print(produto['tipoAlimento']);
+                        print(produto['unidadeAlimento']);
+                        print(produto['ofertaAlimento']);
+                        print(produto['precoAlimento'].toString());
+                        print(produto['saborAlimento']);
+                        print(produto['marcaAlimento']);
+                        print(produto['descricaoArtefato']);
+                        // print(produto);
+                        // switch (produto) {
+                        //   case 1:
+                        //     AlimentoEditarView(produto);
+                        //     break;
+                        // case 2:
+                        //   message = 'Option 2 selected';
+                        //   break;
+                        // case 3:
+                        //   message = 'Option 3 selected';
+                        //   break;
+                        // default:
+                        //   message = 'Invalid option';
+                        // }
                       },
                     ),
                   ),

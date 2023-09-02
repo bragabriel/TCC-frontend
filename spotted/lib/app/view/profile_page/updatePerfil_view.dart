@@ -15,8 +15,8 @@ class UpdateProfilePage extends StatefulWidget {
 }
 
 class _UpdateProfilePageState extends State<UpdateProfilePage> {
+  
   final UsuarioRepository usuarioRepository = UsuarioRepository();
-
   final TextEditingController nomeController = TextEditingController();
   final TextEditingController sobrenomeController = TextEditingController();
   final TextEditingController telefoneController = TextEditingController();
@@ -43,7 +43,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Atualizar Perfil'),
+        title: Text('Atualizar perfil'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
