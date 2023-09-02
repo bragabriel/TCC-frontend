@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spotted/app/view/alimento_page/alimentoCadastrar_view.dart';
 import '../../../service/change_notifier.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
 import '../home_page/home_view.dart';
+import 'AlimentoEditarView.dart';
 import 'options_products.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
 class MyProductsPage extends StatefulWidget {
   @override
@@ -101,17 +105,52 @@ class _MyProductsPageState extends State<MyProductsPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-                       child: Column(
-            children: [
-              Expanded(
-                child: Image.network(
-                   produto["listaImagens"][0]["url"],
-                  fit: BoxFit.cover,
-                ),
+              trailing: PopupMenuButton(
+                itemBuilder: (BuildContext context) => [
+                  PopupMenuItem(
+                    child: OutlinedButton(
+                      child: Text('Editar'),
+                      onPressed: () {
+                        print(produto);
+                        switch (produto) {
+                          case 1:
+                            AlimentoEditarView(produto);
+                            break;
+                          // case 2:
+                          //   message = 'Option 2 selected';
+                          //   break;
+                          // case 3:
+                          //   message = 'Option 3 selected';
+                          //   break;
+                          // default:
+                          //   message = 'Invalid option';
+                        }
+                      },
+                    ),
+                  ),
+                  PopupMenuItem(
+                    child: OutlinedButton(
+                      child: Text('Deletar'),
+                      onPressed: () {
+                        setState(() {
+                          produto!.removeAt(index);
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Image.network(
+                    produto["listaImagens"][0]["url"],
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
