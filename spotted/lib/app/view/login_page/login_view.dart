@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 20,
                   ),
                   Card(
-                    color: Colors.white,
+                    color: Colors.white70,
                     child: Padding(
                       padding: const EdgeInsets.only(
                           left: 12, right: 12, top: 20, bottom: 12),
@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                           ),
                         ),
@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                           ),
                         ),
