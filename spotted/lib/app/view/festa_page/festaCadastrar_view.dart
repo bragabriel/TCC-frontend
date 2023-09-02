@@ -31,6 +31,7 @@ class FestaCadastrarPageState extends State<FestaCadastrarView> {
             ? _descricaoController.text
             : null,
         "idUsuario": _usuario?.idUsuario,
+        "tipoArtefato": "FESTA",
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },

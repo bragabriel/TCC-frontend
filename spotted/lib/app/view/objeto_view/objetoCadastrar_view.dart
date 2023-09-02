@@ -32,6 +32,7 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
             ? _descricaoController.text
             : null,
         "idUsuario": _usuario?.idUsuario,
+        "tipoArtefato": "OBJETO",
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },

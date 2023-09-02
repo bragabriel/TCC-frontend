@@ -50,6 +50,7 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
             ? _descricaoController.text
             : null,
         "idUsuario": _usuario?.idUsuario,
+        "tipoArtefato": "MORADIA",
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },

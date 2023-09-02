@@ -43,6 +43,7 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
             ? _descricaoController.text
             : null,
         "idUsuario": _usuario?.idUsuario,
+        "tipoArtefato": "TRANSPORTE",
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
@@ -106,7 +107,7 @@ await TransporteRepository().getAllTransportes();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastrar trasnporte'),
+        title: Text('Cadastrar transporte'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
@@ -186,13 +187,12 @@ await TransporteRepository().getAllTransportes();
                             onPressed: () async {
                               await _cadastrar();
                               await ImageHelper.uploadImagem(response!, imagem);
-                              await _buscarTransportes();
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => TransportePage()));
+                                                            await _buscarTransportes();
+
                             },
                             child: Text('Sim'),
+                            
+                            
                           ),
                           TextButton(
                             onPressed: () {

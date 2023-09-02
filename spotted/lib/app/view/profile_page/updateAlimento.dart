@@ -72,24 +72,24 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
     super.initState();
     // Preencha os controladores de texto com os valores existentes do alimento
 
-    print("eai caralho");
-    print(widget.alimento['tituloArtefato']);
-    print(widget.alimento['tipoAlimento']);
-    print(widget.alimento['unidadeAlimento']);
-    print(widget.alimento['ofertaAlimento']);
-    print(widget.alimento['precoAlimento'].toString());
-    print(widget.alimento['saborAlimento']);
-    print(widget.alimento['marcaAlimento']);
-    print(widget.alimento['descricaoArtefato']);
+    // print("eai caralho");
+    // print(widget.alimento['tituloArtefato']);
+    // print(widget.alimento['tipoAlimento']);
+    // print(widget.alimento['unidadeAlimento']);
+    // print(widget.alimento['ofertaAlimento']);
+    // print(widget.alimento['precoAlimento'].toString());
+    // print(widget.alimento['saborAlimento']);
+    // print(widget.alimento['marcaAlimento']);
+    // print(widget.alimento['descricaoArtefato']);
 
-    _tituloController.text = widget.alimento['tituloArtefato'];
-    _descricaoController.text = widget.alimento['descricaoArtefato'];
-    _marcaController.text = widget.alimento['marcaAlimento'];
-    _saborController.text = widget.alimento['saborAlimento'];
-    _precoController.text = widget.alimento['precoAlimento'].toString();
-    _ofertaController.text = widget.alimento['ofertaAlimento'];
-    _selectedUnidade = widget.alimento['unidadeAlimento'];
-    _selectedTipo = widget.alimento['tipoAlimento'];
+    // _tituloController.text = widget.alimento['tituloArtefato'];
+    // _descricaoController.text = widget.alimento['descricaoArtefato'];
+    // _marcaController.text = widget.alimento['marcaAlimento'];
+    // _saborController.text = widget.alimento['saborAlimento'];
+    // _precoController.text = widget.alimento['precoAlimento'].toString();
+    // _ofertaController.text = widget.alimento['ofertaAlimento'];
+    // _selectedUnidade = widget.alimento['unidadeAlimento'];
+    // _selectedTipo = widget.alimento['tipoAlimento'];
   }
 
   @override

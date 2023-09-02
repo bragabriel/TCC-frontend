@@ -74,6 +74,9 @@ class _MyProductsPageState extends State<MyProductsPage> {
       itemCount: listaProdutos?.length ?? 0,
       itemBuilder: (BuildContext ctx, index) {
         var produto = listaProdutos![index];
+        print("elaiaaaaaaaaaaa");
+        // print(listaProdutos![index]["unidadeAlimento"]);
+        print(produto);
         var titulo = produto["tituloArtefato"];
         var descricaoArtefato = produto["descricaoArtefato"];
 

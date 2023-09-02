@@ -43,6 +43,7 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
             ? _descricaoController.text
             : null,
         "idUsuario": _usuario?.idUsuario,
+        "tipoArtefato": "EMPREGO",
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
