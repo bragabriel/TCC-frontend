@@ -48,8 +48,6 @@ class _MyProductsPageState extends State<MyProductsPage> {
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           _usuario = UsuarioHelper.getUser(context, userProvider);
-          print("\n\n\n\n\n");
-          print(_usuario);
           return _listarMeusProdutos();
         },
       ),

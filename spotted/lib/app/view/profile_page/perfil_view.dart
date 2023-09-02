@@ -8,15 +8,13 @@ import '../../model/usuario_model.dart';
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-    
-IconButton _newButton(Color color, IconData icon, Usuario? usuario) {
-  print("entrou no new button");
-  return IconButton(
-    icon: Icon(icon, color: color, size: 50),
-    onPressed: () =>Navigator.of(context).pushNamed('/meusprodutos'),
-  );
-}
+    IconButton _newButton(Color color, IconData icon, Usuario? usuario) {
+      print("entrou no new button");
+      return IconButton(
+        icon: Icon(icon, color: color, size: 50),
+        onPressed: () => Navigator.of(context).pushNamed('/meusprodutos'),
+      );
+    }
 
     Usuario? user = Usuario.empty();
     return Scaffold(
@@ -41,11 +39,14 @@ IconButton _newButton(Color color, IconData icon, Usuario? usuario) {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => UpdateProfilePage(userProvider.user!)),
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              UpdateProfilePage(userProvider.user!)),
                     );
                   },
                   child: Text('Alterar Informações'),
                 ),
+                _newButton(Colors.black, Icons.list, user),
               ],
             );
           },
@@ -67,4 +68,3 @@ IconButton _newButton(Color color, IconData icon, Usuario? usuario) {
     });
   }
 }
-
