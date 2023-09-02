@@ -15,29 +15,53 @@ class ProfilePage extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         child: Consumer<UserProvider>(
           builder: (context, userProvider, _) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Nome: ${userProvider.user?.nomeUsuario}'),
-                Text('Sobrenome: ${userProvider.user?.sobrenomeUsuario}'),
-                Text('Aniversário: ${userProvider.user?.dataNascimento}'),
-                Text('Telefone: ${userProvider.user?.telefoneUsuario}'),
-                Text('Email: ${userProvider.user?.emailUsuario}'),
-                //Image.network(userProvider.user?.url),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => UpdateProfilePage(userProvider.user!)),
-                    );
-                  },
-                  child: Text('Alterar Informações'),
+            return Center(
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black), // Defina a cor da borda desejada
                 ),
-              ],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start, // Alinhe os textos à esquerda horizontalmente
+                  children: [
+                    _buildText('Nome: ${userProvider.user?.nomeUsuario}'),
+                    _buildText('Sobrenome: ${userProvider.user?.sobrenomeUsuario}'),
+                    _buildText('Aniversário: ${userProvider.user?.dataNascimento}'),
+                    _buildText('Telefone: ${userProvider.user?.telefoneUsuario}'),
+                    _buildText('Email: ${userProvider.user?.emailUsuario}'),
+                    SizedBox(height: 30),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => UpdateProfilePage(userProvider.user!)),
+                          );
+                        },
+                        child: Text('Alterar Informações'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             );
           },
         ),
+      ),
+    );
+  }
+
+  Widget _buildText(String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          ), 
+        textAlign: TextAlign.left, 
       ),
     );
   }
