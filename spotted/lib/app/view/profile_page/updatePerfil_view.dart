@@ -31,6 +31,14 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     emailController.text = widget.user.emailUsuario;
   }
 
+  void _showSuccessMessage(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text('Informações atualizadas com sucesso!'),
+      backgroundColor: Colors.green,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,29 +59,33 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
               decoration: InputDecoration(labelText: 'Sobrenome'),
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                Usuario updatedUser = Usuario(
-                  idUsuario: widget.user.idUsuario,
-                  nomeUsuario: nomeController.text,
-                  sobrenomeUsuario: sobrenomeController.text,
-                  dataNascimento: widget.user.dataNascimento,
-                  telefoneUsuario: widget.user.telefoneUsuario,
-                  emailUsuario: widget.user.emailUsuario,
-                );
-                
-                try{
-                  await usuarioRepository.updateUserName(updatedUser.idUsuario!, updatedUser.nomeUsuario, updatedUser.sobrenomeUsuario);
+            Center(
+              child: ElevatedButton(
+                onPressed: () async {
+                  Usuario updatedUser = Usuario(
+                    idUsuario: widget.user.idUsuario,
+                    nomeUsuario: nomeController.text,
+                    sobrenomeUsuario: sobrenomeController.text,
+                    dataNascimento: widget.user.dataNascimento,
+                    telefoneUsuario: widget.user.telefoneUsuario,
+                    emailUsuario: widget.user.emailUsuario,
+                  );
 
-                  final userProvider = Provider.of<UserProvider>(context, listen: false);
-                  userProvider.updateUserInfo(updatedUser);
-                }catch(e){
-                  print(e);
-                }
+                  try {
+                    await usuarioRepository.updateUserName(updatedUser.idUsuario!, updatedUser.nomeUsuario, updatedUser.sobrenomeUsuario);
 
-                Navigator.pop(context);
-              },
-              child: Text('Atualizar'),
+                    final userProvider = Provider.of<UserProvider>(context, listen: false);
+                    userProvider.updateUserInfo(updatedUser);
+
+                    _showSuccessMessage(context);
+                  } catch (e) {
+                    print(e);
+                  }
+
+                  Navigator.pop(context);
+                },
+                child: Text('Atualizar'),
+              ),
             ),
           ],
         ),
