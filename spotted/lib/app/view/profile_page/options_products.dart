@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:spotted/app/model/artefato_model.dart';
 
 class OptionsProductsPage extends StatefulWidget {
-  const OptionsProductsPage(Artefato listaProduto, {Key? key}) : super(key: key);
+  const OptionsProductsPage(dynamic produto, {Key? key}) : super(key: key);
 
   @override
   OptionsProductsPageState createState() => OptionsProductsPageState();
@@ -14,4 +13,6 @@ class OptionsProductsPageState extends State<OptionsProductsPage> {
     // TODO: implement build
     throw UnimplementedError();
   }
+
+  
 }

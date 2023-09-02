@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
 import '../../../service/change_notifier.dart';
 import '../../helpers/usuario_helper.dart';
-import '../../helpers/imageCarrousel_helper.dart';
+import '../../helpers/image_helper.dart';
 import '../../model/usuario_model.dart';
 import '../../repository/moradia_repository.dart';
 import '../../model/moradia_model.dart';

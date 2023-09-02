@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'alimento_view.dart';
 import '../../../service/change_notifier.dart';
-import '../../helpers/imageCarrousel_helper.dart';
+import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
 import '../../repository/alimento_repository.dart';

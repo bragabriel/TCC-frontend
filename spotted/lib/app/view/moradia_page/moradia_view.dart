@@ -3,7 +3,7 @@ import 'package:spotted/app/repository/moradia_repository.dart';
 import 'package:spotted/app/model/moradia_model.dart';
 import 'moradiaCadastrar_view.dart';
 import 'moradiaDetalhe_view.dart';
-import '../../helpers/imageCarrousel_helper.dart';
+import '../../helpers/image_helper.dart';
 import '../../controller/moradia_controller.dart';
 import '../home_page/home_view.dart';
 

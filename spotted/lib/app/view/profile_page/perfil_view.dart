@@ -1,12 +1,22 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/view/profile_page/updatePerfil_view.dart';
 import '../../../service/change_notifier.dart';
-import '../../controller/usuario_controller.dart';
+import '../../model/usuario_model.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    IconButton _newButton(Color color, IconData icon, Usuario? usuario) {
+      print("entrou no new button");
+      return IconButton(
+        icon: Icon(icon, color: color, size: 50),
+        onPressed: () => Navigator.of(context).pushNamed('/meusprodutos'),
+      );
+    }
+
+    Usuario? user = Usuario.empty();
     return Scaffold(
       appBar: AppBar(
         title: Text('Perfil'),
@@ -15,6 +25,7 @@ class ProfilePage extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         child: Consumer<UserProvider>(
           builder: (context, userProvider, _) {
+            print('URL da imagem: ${userProvider.user?.url}');
             return Center(
               child: Container(
                 padding: EdgeInsets.all(16.0),
@@ -25,6 +36,10 @@ class ProfilePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start, // Alinhe os textos à esquerda horizontalmente
                   children: [
+                    userProvider.user?.url != null
+                        ? Image.network(userProvider.user!.url!)
+                        : SizedBox(), 
+                        
                     _buildText('Nome: ${userProvider.user?.nomeUsuario}'),
                     _buildText('Sobrenome: ${userProvider.user?.sobrenomeUsuario}'),
                     _buildText('Aniversário: ${userProvider.user?.dataNascimento}'),
@@ -42,6 +57,7 @@ class ProfilePage extends StatelessWidget {
                         child: Text('Alterar Informações'),
                       ),
                     ),
+                     _newButton(Colors.black, Icons.list, user),
                   ],
                 ),
               ),
@@ -50,6 +66,19 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  FutureOr onGoBack(dynamic value, BuildContext context, Usuario newUser) {
+    // Rebuild the widget to show the updated user info
+    Provider.of<UserProvider>(context, listen: false).updateUserInfo(newUser);
+  }
+
+  void navigateSecondPage(BuildContext context, Widget editForm) {
+    Route route = MaterialPageRoute(builder: (context) => editForm);
+    Navigator.push(context, route).then((newValue) {
+      // O valor retornado aqui é o novo objeto Usuario com as informações atualizadas
+      onGoBack(newValue, context, newValue);
+    });
   }
 
   Widget _buildText(String text) {

@@ -1,13 +1,11 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/repository/transporte_repository.dart';
 import 'package:spotted/app/view/transporte_page/transporte_view.dart';
-
 import '../../../service/change_notifier.dart';
-import '../../helpers/imageCarrousel_helper.dart';
+import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
 
@@ -68,9 +66,6 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
           _qtdAssentosTotalTransporteController.text.isNotEmpty
               ? int.parse(_qtdAssentosTotalTransporteController.text)
               : null,
-      // "telefoneUsuario": _telefoneUsuarioController.text.isNotEmpty
-      //     ? int.parse(_telefoneUsuarioController.text)
-      //     : null,
       "valorTransporte": _valorTransporteController.text.isNotEmpty
           ? double.parse(_valorTransporteController.text)
           : null,
@@ -143,10 +138,6 @@ await TransporteRepository().getAllTransportes();
               controller: _periodoTransporte,
               decoration: InputDecoration(labelText: 'Turno'),
             ),
-            // TextField(
-            //   controller: _telefoneUsuarioController,
-            //   decoration: InputDecoration(labelText: 'Contato'),
-            // ),
             TextField(
               controller: _informacoesVeiculoTransporteController,
               decoration: InputDecoration(labelText: 'Informações do veículo'),
