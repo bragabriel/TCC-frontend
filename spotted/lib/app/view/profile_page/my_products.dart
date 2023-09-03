@@ -94,7 +94,7 @@ class _MyProductsPageState extends State<MyProductsPage> {
                     onPressed: () {
                       switch (tipoArtefato) {
                         case "ALIMENTO":
-                          AlimentoEditarView(produto as Alimento);
+                          AlimentoEditarView(produto);
                           break;
                         case "EMPPREGO":
                           EmpregoEditarView(produto);

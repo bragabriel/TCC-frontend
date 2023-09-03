@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../service/change_notifier.dart';
 import '../../helpers/usuario_helper.dart';
+import '../../model/alimento_model.dart';
 import '../../model/usuario_model.dart';
 import '../../repository/alimento_repository.dart';
 
@@ -53,48 +54,23 @@ class AlimentoEditarPageState extends State<EmpregoEditarView> {
     super.dispose();
   }
 
-  //   @override
-  // void initState() {
-  //   super.initState();
-  //   // Preencha os controladores de texto com os valores existentes do alimento
-  //   _tituloController.text = widget.alimento.tituloArtefato;
-  //   _descricaoController.text = widget.alimento.descricaoArtefato;
-  //   _marcaController.text = widget.alimento.marcaAlimento!;
-  //   _saborController.text = widget.alimento.saborAlimento!;
-  //   _precoController.text = widget.alimento.precoAlimento as String;
-  //   _ofertaController.text = widget.alimento.ofertaAlimento!;
-  //   _selectedUnidade = widget.alimento.unidadeAlimento!;
-  //   _selectedTipo = widget.alimento.tituloArtefato;
-  // }
-
   @override
   void initState() {
     super.initState();
-    // Preencha os controladores de texto com os valores existentes do alimento
-
-    // print("eai caralho");
-    // print(widget.alimento['tituloArtefato']);
-    // print(widget.alimento['tipoAlimento']);
-    // print(widget.alimento['unidadeAlimento']);
-    // print(widget.alimento['ofertaAlimento']);
-    // print(widget.alimento['precoAlimento'].toString());
-    // print(widget.alimento['saborAlimento']);
-    // print(widget.alimento['marcaAlimento']);
-    // print(widget.alimento['descricaoArtefato']);
-
-    // _tituloController.text = widget.alimento['tituloArtefato'];
-    // _descricaoController.text = widget.alimento['descricaoArtefato'];
-    // _marcaController.text = widget.alimento['marcaAlimento'];
-    // _saborController.text = widget.alimento['saborAlimento'];
-    // _precoController.text = widget.alimento['precoAlimento'].toString();
-    // _ofertaController.text = widget.alimento['ofertaAlimento'];
-    // _selectedUnidade = widget.alimento['unidadeAlimento'];
-    // _selectedTipo = widget.alimento['tipoAlimento'];
+    _tituloController.text = widget.alimento['tituloArtefato'];
+    _descricaoController.text = widget.alimento['descricaoArtefato'];
+    _marcaController.text = widget.alimento['alimento']['marcaAlimento'];
+    _saborController.text = widget.alimento['alimento']['saborAlimento'];
+    _precoController.text =
+        widget.alimento['alimento']['precoAlimento'].toString();
+    _ofertaController.text = widget.alimento['alimento']['ofertaAlimento'];
+    _selectedUnidade = widget.alimento['alimento']['unidadeAlimento'];
+    _selectedTipo = widget.alimento['alimento']['tipoAlimento'];
   }
 
   @override
   Widget build(BuildContext context) {
-    print("entrou no update emprego");
+    print("entrou no update alimento");
     return Scaffold(
       appBar: AppBar(
         title: Text('Atualizar alimento'),

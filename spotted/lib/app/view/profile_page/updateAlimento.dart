@@ -9,7 +9,7 @@ import '../../model/usuario_model.dart';
 import '../../repository/alimento_repository.dart';
 
 class AlimentoEditarView extends StatefulWidget {
-  final Alimento alimento;
+  final dynamic alimento;
 
   AlimentoEditarView(this.alimento);
 
@@ -54,20 +54,19 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
     super.dispose();
   }
 
-    @override
+  @override
   void initState() {
     super.initState();
-    // Preencha os controladores de texto com os valores existentes do alimento
-    _tituloController.text = widget.alimento.tituloArtefato;
-    _descricaoController.text = widget.alimento.descricaoArtefato;
-    _marcaController.text = widget.alimento.marcaAlimento!;
-    _saborController.text = widget.alimento.saborAlimento!;
-    _precoController.text = widget.alimento.precoAlimento as String;
-    _ofertaController.text = widget.alimento.ofertaAlimento!;
-    _selectedUnidade = widget.alimento.unidadeAlimento!;
-    _selectedTipo = widget.alimento.tituloArtefato;
+    _tituloController.text = widget.alimento['tituloArtefato'];
+    _descricaoController.text = widget.alimento['descricaoArtefato'];
+    _marcaController.text = widget.alimento['alimento']['marcaAlimento'];
+    _saborController.text = widget.alimento['alimento']['saborAlimento'];
+    _precoController.text =
+        widget.alimento['alimento']['precoAlimento'].toString();
+    _ofertaController.text = widget.alimento['alimento']['ofertaAlimento'];
+    _selectedUnidade = widget.alimento['alimento']['unidadeAlimento'];
+    _selectedTipo = widget.alimento['alimento']['tipoAlimento'];
   }
-
 
   @override
   Widget build(BuildContext context) {
