@@ -21,7 +21,7 @@ class FestaCadastrarPageState extends State<FestaCadastrarView> {
   final TextEditingController _descricaoController = TextEditingController();
   final TextEditingController _localizacaoController = TextEditingController();
   Response<dynamic>? response;
-  late File? imagem;
+  File? imagem;
   Usuario? _usuario;
 
   Future<void> _cadastrar() async {
@@ -125,12 +125,15 @@ class FestaCadastrarPageState extends State<FestaCadastrarView> {
                         TextButton(
                           onPressed: () async {
                             await _cadastrar();
-                            await ImageHelper.uploadImagem(response!, imagem!);
+                            imagem ??= File('assets/images/imagem.png');
+                            ImageHelper.uploadImagem(response!, imagem);
                             await _buscarFestas();
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => FestaPage()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FestaPage(),
+                              ),
+                            );
                           },
                           child: Text("Sim"),
                         ),

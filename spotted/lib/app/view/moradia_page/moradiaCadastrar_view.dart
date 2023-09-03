@@ -40,7 +40,7 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
       TextEditingController();
   final TextEditingController _contatoController = TextEditingController();
   Response<dynamic>? response;
-  late File? imagem;
+  File? imagem;
   Usuario? _usuario;
 
   Future<void> _cadastrar() async {
@@ -91,8 +91,7 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
     };
 
     try {
-      response = await MoradiaRepository()
-          .cadastrarMoradia(body);
+      response = await MoradiaRepository().cadastrarMoradia(body);
       print('Cadastro realizado com sucesso em MoradiaCadastrarView');
       print(response);
     } catch (e) {
@@ -226,12 +225,15 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
                         TextButton(
                           onPressed: () async {
                             await _cadastrar();
-                            await ImageHelper.uploadImagem(response!, imagem!);
+                            imagem ??= File('assets/images/imagem.png');
+                            ImageHelper.uploadImagem(response!, imagem);
                             await _buscarMoradia();
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MoradiaPage()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MoradiaPage(),
+                              ),
+                            );
                           },
                           child: Text("Sim"),
                         ),
