@@ -53,7 +53,7 @@ class AlimentoRepository {
   }
 
   Future<void> updateAlimento(
-      int? idUsuario,
+      int? idArtefato,
       String unidade,
       String descricaoArtefato,
       String tituloArtefato,
@@ -62,7 +62,7 @@ class AlimentoRepository {
       String preco,
       String sabor,
       String tipo) async {
-    final String apiUrl = '$onlineApi/usuarioAtualizar/$idUsuario';
+    final String apiUrl = '$onlineApi/alimentoAtualizar/$idArtefato';
 
     final Map<String, dynamic> body = {
       "descricaoArtefato": descricaoArtefato,
