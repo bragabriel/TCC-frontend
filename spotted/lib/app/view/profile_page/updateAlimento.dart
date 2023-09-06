@@ -57,15 +57,16 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
   @override
   void initState() {
     super.initState();
-    _tituloController.text = widget.alimento['tituloArtefato'];
+
     _descricaoController.text = widget.alimento['descricaoArtefato'];
     _marcaController.text = widget.alimento['alimento']['marcaAlimento'];
+    _ofertaController.text = widget.alimento['alimento']['ofertaAlimento'];
     _saborController.text = widget.alimento['alimento']['saborAlimento'];
     _precoController.text =
         widget.alimento['alimento']['precoAlimento'].toString();
-    _ofertaController.text = widget.alimento['alimento']['ofertaAlimento'];
-    _selectedUnidade = widget.alimento['alimento']['unidadeAlimento'];
     _selectedTipo = widget.alimento['alimento']['tipoAlimento'];
+    _tituloController.text = widget.alimento['tituloArtefato'];
+    _selectedUnidade = widget.alimento['alimento']['unidadeAlimento'];
   }
 
   @override
@@ -78,6 +79,7 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           _usuario = UsuarioHelper.getUser(context, userProvider);
+          print( widget.alimento['idArtefato']);
           return _atualizaAlimento();
         },
       ),
@@ -85,115 +87,127 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
   }
 
   Widget _atualizaAlimento() {
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        SizedBox(height: 16),
-        TextFormField(
-          controller: _tituloController,
-          decoration: InputDecoration(labelText: 'Título'),
-        ),
-        SizedBox(height: 16),
-        TextFormField(
-          controller: _descricaoController,
-          decoration: InputDecoration(labelText: 'Descrição'),
-        ),
-        SizedBox(height: 16),
-        TextFormField(
-          controller: _marcaController,
-          decoration: InputDecoration(labelText: 'Marca'),
-        ),
-        SizedBox(height: 16),
-        TextFormField(
-          controller: _saborController,
-          decoration: InputDecoration(labelText: 'Sabor'),
-        ),
-        SizedBox(height: 16),
-        TextFormField(
-          controller: _precoController,
-          decoration: InputDecoration(labelText: 'Preço'),
-          keyboardType: TextInputType.numberWithOptions(decimal: true),
-        ),
-        SizedBox(height: 16),
-        TextFormField(
-          controller: _ofertaController,
-          decoration: InputDecoration(labelText: 'Oferta'),
-        ),
-        SizedBox(height: 16),
-        DropdownButtonFormField<String>(
-          value: _selectedUnidade,
-          onChanged: (String? newValue) {
-            setState(() {
-              _selectedUnidade = newValue ?? '';
-            });
-          },
-          items: <String>['PEDAÇO', 'UNIDADE', 'PACK', 'OUTRO']
-              .map<DropdownMenuItem<String>>((String value) {
-            _unidadeController.text = value;
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          decoration: InputDecoration(
-            labelText: 'Unidade',
-            border: OutlineInputBorder(),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          SizedBox(height: 16),
+          TextFormField(
+            controller: _tituloController,
+            decoration: InputDecoration(labelText: 'Título'),
           ),
-        ),
-        SizedBox(height: 16),
-        DropdownButtonFormField<String>(
-          value: _selectedTipo,
-          onChanged: (String? newValue) {
-            setState(() {
-              _selectedTipo = newValue ?? '';
-            });
-          },
-          items: <String>['DOCE', 'SALGADO', 'OUTRO']
-              .map<DropdownMenuItem<String>>((String value) {
-            _tipoController.text = value;
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          decoration: InputDecoration(
-            labelText: 'Tipo',
-            border: OutlineInputBorder(),
+          SizedBox(height: 16),
+          TextFormField(
+            controller: _descricaoController,
+            decoration: InputDecoration(labelText: 'Descrição'),
           ),
-        ),
-        ElevatedButton(
-          onPressed: () async {
-            var unidade = _unidadeController.text;
-            var descricaoArtefato = _descricaoController.text;
-            var tituloArtefato = _tituloController.text;
-            var marca = _marcaController.text;
-            var oferta = _ofertaController.text;
-            var preco = _precoController.text;
-            var sabor = _saborController.text;
-            var tipo = _tipoController.text;
+          SizedBox(height: 16),
+          TextFormField(
+            controller: _marcaController,
+            decoration: InputDecoration(labelText: 'Marca'),
+          ),
+          SizedBox(height: 16),
+          TextFormField(
+            controller: _saborController,
+            decoration: InputDecoration(labelText: 'Sabor'),
+          ),
+          SizedBox(height: 16),
+          TextFormField(
+            controller: _precoController,
+            decoration: InputDecoration(labelText: 'Preço'),
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
+          ),
+          SizedBox(height: 16),
+          TextFormField(
+            controller: _ofertaController,
+            decoration: InputDecoration(labelText: 'Oferta'),
+          ),
+          SizedBox(height: 16),
+          DropdownButtonFormField<String>(
+            value: _selectedUnidade,
+            onChanged: (String? newValue) {
+              setState(() {
+                _selectedUnidade = newValue ?? '';
+              });
+            },
+            items: <String>['PEDAÇO', 'UNIDADE', 'PACK', 'OUTRO']
+                .map<DropdownMenuItem<String>>((String value) {
+              _unidadeController.text = value;
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            decoration: InputDecoration(
+              labelText: 'Unidade',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          SizedBox(height: 16),
+          DropdownButtonFormField<String>(
+            value: _selectedTipo,
+            onChanged: (String? newValue) {
+              setState(() {
+                _selectedTipo = newValue ?? '';
+              });
+            },
+            items: <String>['DOCE', 'SALGADO', 'OUTRO']
+                .map<DropdownMenuItem<String>>((String value) {
+              _tipoController.text = value;
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            decoration: InputDecoration(
+              labelText: 'Tipo',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              var unidade = _unidadeController.text;
+              var descricaoArtefato = _descricaoController.text;
+              var tituloArtefato = _tituloController.text;
+              var marca = _marcaController.text;
+              var oferta = _ofertaController.text;
+              var preco = _precoController.text;
+              var sabor = _saborController.text;
+              var tipo = _tipoController.text;
 
-            try {
-              await _alimentoRepository.updateAlimento(
-                  _usuario?.idUsuario,
-                  unidade,
-                  descricaoArtefato,
-                  tituloArtefato,
-                  marca,
-                  oferta,
-                  preco,
-                  sabor,
-                  tipo);
-
-              _showSuccessMessage(context);
-            } catch (e) {
-              print(e);
-            }
-
-            Navigator.pop(context);
-          },
-          child: Text('Atualizar'),
-        )
-      ]),
+              try {
+                await _alimentoRepository.updateAlimento(
+                    widget.alimento['idArtefato'],
+                    unidade,
+                    descricaoArtefato,
+                    tituloArtefato,
+                    marca,
+                    oferta,
+                    preco as double,
+                    sabor,
+                    tipo);
+                _showSuccessMessage(context);
+              } catch (e) {
+                print(e);
+              }
+              await _buscarAlimentos();
+              Navigator.pop(context);
+            },
+            child: Text('Atualizar'),
+          )
+        ]),
+      ),
     );
+  }
+
+  Future<void> _buscarAlimentos() async {
+    try {
+      await AlimentoRepository().getAllAlimentos();
+      print("GetAllAlimentos com sucesso em AlimentoCadastrarView");
+      setState(() {});
+    } catch (e) {
+      print('Erro ao obter a lista de alimentos em AlimentoCadastrarView: $e');
+    }
   }
 }

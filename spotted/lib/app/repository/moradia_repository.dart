@@ -51,4 +51,47 @@ class MoradiaRepository {
       throw 'Erro ao acessar a API: $e';
     }
   }
+
+  Future<void> updateMoradia(
+      int idArtefato,
+      String descricaoArtefato,
+      String tituloArtefato,
+      String bairroMoradia,
+      String cepMoradia,
+      String cidadeMoradia,
+      String estadoMoradia,
+      String precoAluguelPorPessoa,
+      String precoAluguelTotal,
+      String qtdMoradoresAtuais,
+      String vagaGaragem,
+      String animaisEstimacao) async {
+    final String apiUrl = '$onlineApi/moradiaAtualizar/$idArtefato';
+
+    final Map<String, dynamic> body = {
+      "descricaoArtefato": descricaoArtefato,
+      "tituloArtefato": tituloArtefato,
+      "bairroMoradia": bairroMoradia,
+      "cepMoradia": cepMoradia,
+      "cidadeMoradia": cidadeMoradia,
+      "estadoMoradia": estadoMoradia,
+      "precoAluguelPorPessoaMoradia": precoAluguelPorPessoa,
+      "precoAluguelTotalMoradia": precoAluguelTotal,
+      "qtdMoradoresAtuaisMoradia": qtdMoradoresAtuais,
+      "vagaGaragemMoradia": vagaGaragem,
+      "animaisEstimacaoMoradia": animaisEstimacao,
+    };
+
+    try {
+      final response = await Dio().put(apiUrl, data: body);
+
+      if (response.statusCode == 200) {
+        print('Alimento atualizado com sucesso!');
+      } else {
+        print(
+            'Erro ao atualizar o Alimento - Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Erro ao atualizar o Alimento: $error');
+    }
+  }
 }

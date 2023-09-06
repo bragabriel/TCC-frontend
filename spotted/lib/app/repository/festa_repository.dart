@@ -51,4 +51,32 @@ class FestaRepository {
       throw 'Erro ao acessar a API: $e';
     }
   }
+
+    Future<void> updatefesta(
+      int? idArtefato,
+      String localizacao,
+      String descricaoArtefato,
+      String tituloArtefato,
+ ) async {
+    final String apiUrl = '$onlineApi/festaAtualizar/$idArtefato';
+
+    final Map<String, dynamic> body = {
+      "descricaoArtefato": descricaoArtefato,
+      "tituloArtefato": tituloArtefato,
+      "localizacaoFesta": localizacao
+    };
+
+    try {
+      final response = await Dio().put(apiUrl, data: body);
+
+      if (response.statusCode == 200) {
+        print('festa atualizado com sucesso!');
+      } else {
+        print(
+            'Erro ao atualizar o festa - Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Erro ao atualizar o festa: $error');
+    }
+  }
 }

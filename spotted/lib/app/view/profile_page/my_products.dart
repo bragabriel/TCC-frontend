@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spotted/app/view/alimento_page/alimentoCadastrar_view.dart';
 import 'package:spotted/app/view/profile_page/updateEmprego.dart';
+import 'package:spotted/app/view/profile_page/updateFesta.dart';
+import 'package:spotted/app/view/profile_page/updateMoradia.dart';
+import 'package:spotted/app/view/profile_page/updateObjeto.dart';
+import 'package:spotted/app/view/profile_page/updateTransporte.dart';
 import '../../../service/change_notifier.dart';
 import '../../helpers/usuario_helper.dart';
-import '../../model/alimento_model.dart';
 import '../../model/usuario_model.dart';
-import '../../repository/usuario_repository.dart';
 import '../home_page/home_view.dart';
 import 'updateAlimento.dart';
-import 'package:flutter/src/widgets/basic.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 
 class MyProductsPage extends StatefulWidget {
   @override
@@ -66,8 +66,6 @@ class _MyProductsPageState extends State<MyProductsPage> {
         var produto = _usuario?.listaArtefatosReponse?[index];
         String tipoArtefato =
             _usuario?.listaArtefatosReponse?[index]["tipoArtefato"];
-        var idArtefato = _usuario?.listaArtefatosReponse?[index]["idArtefato"];
-
         return GridTile(
           key: ValueKey(produto),
           footer: GridTileBar(
@@ -99,9 +97,18 @@ class _MyProductsPageState extends State<MyProductsPage> {
                         case "EMPPREGO":
                           EmpregoEditarView(produto);
                           break;
-                        // case 3:
-                        //   message = 'Option 3 selected';
-                        //   break;
+                        case "FESTA":
+                          FestaEditarView(produto);
+                          break;
+                        case "OBJETO":
+                          ObjetoEditarView(produto);
+                          break;
+                        case "MORADIA":
+                          MoradiaEditarView(produto);
+                          break;
+                        case "TRANSPORTE":
+                          TransporteEditarView(produto);
+                          break;
                         default:
                           print("deu problema");
                       }

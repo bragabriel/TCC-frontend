@@ -59,7 +59,7 @@ class AlimentoRepository {
       String tituloArtefato,
       String marca,
       String oferta,
-      String preco,
+      double preco,
       String sabor,
       String tipo) async {
     final String apiUrl = '$onlineApi/alimentoAtualizar/$idArtefato';

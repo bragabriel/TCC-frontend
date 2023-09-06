@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:spotted/app/model/objeto_model.dart';
 import 'dart:async';
-
 import '../constants/constants.dart';
 
 class ObjetoRepository {
@@ -31,7 +30,7 @@ class ObjetoRepository {
     }
   }
 
-   Future<Response<dynamic>> cadastrarObjeto(Map<String, dynamic> body) async {
+  Future<Response<dynamic>> cadastrarObjeto(Map<String, dynamic> body) async {
     const String objetosUrl = "$onlineApi/objeto";
 
     try {
@@ -49,6 +48,35 @@ class ObjetoRepository {
     } catch (e) {
       print('Erro ao acessar a API: $e');
       throw 'Erro ao acessar a API: $e';
+    }
+  }
+
+  Future<void> updateObjeto(
+      int? idArtefato,
+      String descricaoArtefato,
+      String tituloArtefato,
+      String localizacaoAchado,
+      String localizacaoAtual) async {
+    final String apiUrl = '$onlineApi/objetoAtualizar/$idArtefato';
+
+    final Map<String, dynamic> body = {
+      "descricaoArtefato": descricaoArtefato,
+      "tituloArtefato": tituloArtefato,
+      "localizacaoAchadoObjeto": localizacaoAchado,
+      "localizacaoAtualObjeto": localizacaoAtual,
+    };
+
+    try {
+      final response = await Dio().put(apiUrl, data: body);
+
+      if (response.statusCode == 200) {
+        print('objeto atualizado com sucesso!');
+      } else {
+        print(
+            'Erro ao atualizar o objeto - Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Erro ao atualizar o objeto: $error');
     }
   }
 }
