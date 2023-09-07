@@ -1,25 +1,25 @@
 import 'package:dio/dio.dart';
-import 'package:spotted/app/model/festa_model.dart';
+import 'package:spotted/app/model/Evento_model.dart';
 import 'dart:async';
 
 import '../constants/constants.dart';
 
-class FestaRepository {
-  final String festasUrl = "$onlineApi/festa";
+class EventoRepository {
+  final String eventosUrl = "$onlineApi/evento";
 
-  Future<List<Festa>> getAllFestas() async {
+  Future<List<Evento>> getAllEventos() async {
     try {
-      final response = await Dio().get(festasUrl);
+      final response = await Dio().get(eventosUrl);
       print(response.data);
       if (response.statusCode == 200) {
         final responseData = response.data;
         if (responseData != null &&
             responseData['objetoRetorno'] is List<dynamic>) {
-          List<Festa> festaList =
+          List<Evento> eventoList =
               (responseData['objetoRetorno'] as List<dynamic>)
-                  .map<Festa>((item) => Festa.fromJson(item))
+                  .map<Evento>((item) => Evento.fromJson(item))
                   .toList();
-          return festaList;
+          return eventoList;
         } else {
           throw 'Resposta inválida da API - conteúdo ausente';
         }
@@ -31,11 +31,11 @@ class FestaRepository {
     }
   }
 
-  Future<Response<dynamic>> cadastrarFesta(Map<String, dynamic> body) async {
-    const String festasUrl = "$onlineApi/festa";
+  Future<Response<dynamic>> cadastrarEvento(Map<String, dynamic> body) async {
+    const String eventosUrl = "$onlineApi/evento";
 
     try {
-      final response = await Dio().post(festasUrl,
+      final response = await Dio().post(eventosUrl,
           data: body, options: Options(contentType: 'application/json'));
 
       if (response.statusCode == 201) {
@@ -52,31 +52,31 @@ class FestaRepository {
     }
   }
 
-    Future<void> updatefesta(
+    Future<void> updateevento(
       int? idArtefato,
       String localizacao,
       String descricaoArtefato,
       String tituloArtefato,
  ) async {
-    final String apiUrl = '$onlineApi/festaAtualizar/$idArtefato';
+    final String apiUrl = '$onlineApi/eventoAtualizar/$idArtefato';
 
     final Map<String, dynamic> body = {
       "descricaoArtefato": descricaoArtefato,
       "tituloArtefato": tituloArtefato,
-      "localizacaoFesta": localizacao
+      "localizacaoEvento": localizacao
     };
 
     try {
       final response = await Dio().put(apiUrl, data: body);
 
       if (response.statusCode == 200) {
-        print('festa atualizado com sucesso!');
+        print('evento atualizado com sucesso!');
       } else {
         print(
-            'Erro ao atualizar o festa - Status code: ${response.statusCode}');
+            'Erro ao atualizar o evento - Status code: ${response.statusCode}');
       }
     } catch (error) {
-      print('Erro ao atualizar o festa: $error');
+      print('Erro ao atualizar o evento: $error');
     }
   }
 }

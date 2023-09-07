@@ -32,10 +32,10 @@ class MoradiaRepository {
   }
 
   Future<Response<dynamic>> cadastrarMoradia(Map<String, dynamic> body) async {
-    const String festasUrl = "$onlineApi/moradia";
+    const String eventosUrl = "$onlineApi/moradia";
 
     try {
-      final response = await Dio().post(festasUrl,
+      final response = await Dio().post(eventosUrl,
           data: body, options: Options(contentType: 'application/json'));
 
       if (response.statusCode == 201) {

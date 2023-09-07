@@ -151,10 +151,10 @@ class HomePageState extends State<HomePage> {
                 }),
             ListTile(
                 leading: Icon(Icons.local_bar),
-                title: Text('Festas'),
+                title: Text('Eventos'),
                 subtitle: Text('Partiu pra revoada? 🎉'),
                 onTap: () {
-                  Navigator.of(context).pushNamed('/festa');
+                  Navigator.of(context).pushNamed('/evento');
                 }),
             ListTile(
                 leading: Icon(Icons.home_filled),

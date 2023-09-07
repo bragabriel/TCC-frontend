@@ -1,25 +1,25 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spotted/app/repository/festa_repository.dart';
+import 'package:spotted/app/repository/evento_repository.dart';
 import '../../../service/change_notifier.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
 
-class FestaEditarView extends StatefulWidget {
-  final dynamic festa;
+class EventoEditarView extends StatefulWidget {
+  final dynamic evento;
 
-  FestaEditarView(this.festa);
+  EventoEditarView(this.evento);
 
   @override
-  FestaEditarPageState createState() => FestaEditarPageState();
+  EventoEditarPageState createState() => EventoEditarPageState();
 }
 
-class FestaEditarPageState extends State<FestaEditarView> {
+class EventoEditarPageState extends State<EventoEditarView> {
   final TextEditingController _tituloController = TextEditingController();
   final TextEditingController _descricaoController = TextEditingController();
   final TextEditingController _localizacaoController = TextEditingController();
-  final FestaRepository _festaRepository = FestaRepository();
+  final EventoRepository _eventoRepository = EventoRepository();
   Response<dynamic>? response;
   Usuario? _usuario;
 
@@ -43,29 +43,29 @@ class FestaEditarPageState extends State<FestaEditarView> {
   void initState() {
     super.initState();
 
-    _descricaoController.text = widget.festa['descricaoArtefato'];
-    _tituloController.text = widget.festa['tituloArtefato'];
-    // _localizacaoController = widget.festa['festa']['localizacaoFesta'];
+    _descricaoController.text = widget.evento['descricaoArtefato'];
+    _tituloController.text = widget.evento['tituloArtefato'];
+    // _localizacaoController = widget.evento['evento']['localizacaoEvento'];
   }
 
   @override
   Widget build(BuildContext context) {
-    print("entrou no update festa");
+    print("entrou no update evento");
     return Scaffold(
       appBar: AppBar(
-        title: Text('Atualizar festa'),
+        title: Text('Atualizar evento'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           _usuario = UsuarioHelper.getUser(context, userProvider);
-          print(widget.festa['idArtefato']);
-          return _atualizaFesta();
+          print(widget.evento['idArtefato']);
+          return _atualizaEvento();
         },
       ),
     );
   }
 
-  Widget _atualizaFesta() {
+  Widget _atualizaEvento() {
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(16),
@@ -91,13 +91,13 @@ class FestaEditarPageState extends State<FestaEditarView> {
               var tituloArtefato = _tituloController.text;
 
               try {
-                await _festaRepository.updatefesta(widget.festa['idArtefato'],
+                await _eventoRepository.updateevento(widget.evento['idArtefato'],
                     localizacao, descricaoArtefato, tituloArtefato);
                 _showSuccessMessage(context);
               } catch (e) {
                 print(e);
               }
-              await _buscarfestas();
+              await _buscareventos();
               Navigator.pop(context);
             },
             child: Text('Atualizar'),
@@ -107,13 +107,13 @@ class FestaEditarPageState extends State<FestaEditarView> {
     );
   }
 
-  Future<void> _buscarfestas() async {
+  Future<void> _buscareventos() async {
     try {
-      await _festaRepository.getAllFestas();
-      print("GetAllfestas com sucesso em festaCadastrarView");
+      await _eventoRepository.getAllEventos();
+      print("GetAlleventos com sucesso em eventoCadastrarView");
       setState(() {});
     } catch (e) {
-      print('Erro ao obter a lista de festas em festaCadastrarView: $e');
+      print('Erro ao obter a lista de eventos em eventoCadastrarView: $e');
     }
   }
 }
