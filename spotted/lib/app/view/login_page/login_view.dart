@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
                   Container(
                       width: 300,
                       height: 300,
-                      child: Image.asset('assets/images/logo.png')),
+                      child: Image.asset('assets/images/LogoTcc.png')),
                   Container(
                     height: 20,
                   ),
@@ -121,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
+    /*     body: Stack(
       children: [
         SizedBox(
             height: MediaQuery.of(context).size.height,
@@ -132,7 +132,12 @@ class _LoginPageState extends State<LoginPage> {
         Container(color: Colors.black.withOpacity(0.3)),
         _body(),
       ],
-    ));
+    ) */
+     body: Container(
+      color: Color.fromARGB(255, 7, 78, 59).withOpacity(0.8), // Defina a cor desejada aqui
+      child: _body(),
+    ),
+    );
   }
 
   Future<void> _logar() async {

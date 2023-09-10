@@ -28,10 +28,19 @@ class UsuarioController {
     state.value = HomeState.loading;
     
     try {
-      // Obtenha o usuário do UserProvider
       Usuario? user = Provider.of<UserProvider>(context, listen: false).user;
-      
-      await _repository.getUsuario(user?.idUsuario ?? 1);
+
+      await _repository.getUsuario(user!.idUsuario as num);
+      state.value = HomeState.success;
+    } catch (e) {
+      state.value = HomeState.error;
+    }
+  }
+
+   Future<void> startCadastro() async {
+    state.value = HomeState.loading;
+    try {
+      await _repository.getAllUsuarios();
       state.value = HomeState.success;
     } catch (e) {
       state.value = HomeState.error;

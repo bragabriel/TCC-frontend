@@ -39,10 +39,8 @@ class ProfilePage extends StatelessWidget {
                     userProvider.user?.url != null
                         ? Image.network(userProvider.user!.url!)
                         : SizedBox(), 
-                        
                     _buildText('Nome: ${userProvider.user?.nomeUsuario}'),
                     _buildText('Sobrenome: ${userProvider.user?.sobrenomeUsuario}'),
-                    _buildText('Aniversário: ${userProvider.user?.dataNascimento}'),
                     _buildText('Telefone: ${userProvider.user?.telefoneUsuario}'),
                     _buildText('Email: ${userProvider.user?.emailUsuario}'),
                     SizedBox(height: 30),
