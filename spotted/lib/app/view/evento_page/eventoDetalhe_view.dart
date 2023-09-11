@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../model/evento_model.dart';
 import 'evento_view.dart';
 import '../../builders/text_builder.dart';
 import '../../helpers/button_helper.dart';
 import '../../helpers/image_helper.dart';
-import '../../model/evento_model.dart';
 
 class EventoDetalhesView extends StatefulWidget {
   @override
@@ -16,7 +16,7 @@ class EventoDetalhesView extends StatefulWidget {
 class EmpregoDetalheState extends State<EventoDetalhesView> {
   @override
   Widget build(BuildContext context) {
-    Evento Evento = widget.filteredEventoList;
+    Evento evento = widget.filteredEventoList;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -43,7 +43,7 @@ class EmpregoDetalheState extends State<EventoDetalhesView> {
 }
 
 class BotaoEvento extends StatelessWidget {
-  final evento evento;
+  final Evento evento;
 
   BotaoEvento({required this.evento});
 
@@ -60,7 +60,7 @@ class BotaoEvento extends StatelessWidget {
 }
 
 class DetalhesEvento extends StatelessWidget {
-  final Evento Evento;
+  final Evento evento;
 
   DetalhesEvento({required this.evento});
 

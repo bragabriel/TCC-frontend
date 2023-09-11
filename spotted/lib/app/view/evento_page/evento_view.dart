@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:spotted/app/repository/evento_repository.dart';
+import 'package:spotted/app/view/evento_page/eventoDetalhe_view.dart';
 import '../../helpers/image_helper.dart';
-import 'eventoCadastrar_view.dart';
-import 'eventoDetalhe_view.dart';
 import '../../controller/alimento_controller.dart';
 import '../../model/evento_model.dart';
+import '../../repository/evento_repository.dart';
 import '../home_page/home_view.dart';
+import 'eventoCadastrar_view.dart';
 
 class EventoPage extends StatefulWidget {
   const EventoPage({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/view/profile_page/updateEmprego.dart';
-import 'package:spotted/app/view/profile_page/updateEvento.dart';
+import 'package:spotted/app/view/profile_page/updateFesta.dart';
 import 'package:spotted/app/view/profile_page/updateMoradia.dart';
 import 'package:spotted/app/view/profile_page/updateObjeto.dart';
 import 'package:spotted/app/view/profile_page/updateTransporte.dart';

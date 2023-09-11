@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:spotted/app/model/Evento_model.dart';
 import 'dart:async';
 
 import '../constants/constants.dart';
+import '../model/evento_model.dart';
 
 class EventoRepository {
   final String eventosUrl = "$onlineApi/evento";
