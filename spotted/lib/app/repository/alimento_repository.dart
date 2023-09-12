@@ -51,4 +51,41 @@ class AlimentoRepository {
       throw 'Erro ao acessar a API: $e';
     }
   }
+
+  Future<void> updateAlimento(
+      int? idUsuario,
+      String unidade,
+      String descricaoArtefato,
+      String tituloArtefato,
+      String marca,
+      String oferta,
+      String preco,
+      String sabor,
+      String tipo) async {
+    final String apiUrl = '$onlineApi/usuarioAtualizar/$idUsuario';
+
+    final Map<String, dynamic> body = {
+      "descricaoArtefato": descricaoArtefato,
+      "marcaAlimento": marca,
+      "ofertaAlimento": oferta,
+      "precoAlimento": preco,
+      "saborAlimento": sabor,
+      "tipoAlimento": tipo,
+      "tituloArtefato": tipo,
+      "unidadeAlimento": unidade
+    };
+
+    try {
+      final response = await Dio().put(apiUrl, data: body);
+
+      if (response.statusCode == 200) {
+        print('Alimento atualizado com sucesso!');
+      } else {
+        print(
+            'Erro ao atualizar o Alimento - Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Erro ao atualizar o Alimento: $error');
+    }
+  }
 }

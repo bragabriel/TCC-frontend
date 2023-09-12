@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../app/model/alimento_model.dart';
 import '../app/model/usuario_model.dart';
 
 class UserProvider with ChangeNotifier {
@@ -19,6 +20,7 @@ class UserProvider with ChangeNotifier {
     _isAuthenticated = true;
     notifyListeners();
   }
+
 
   void logout() {
     _user = null;

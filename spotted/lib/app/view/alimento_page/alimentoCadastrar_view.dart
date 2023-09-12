@@ -26,7 +26,7 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
   final TextEditingController _precoController = TextEditingController();
   final TextEditingController _ofertaController = TextEditingController();
   Response<dynamic>? response;
-  late File? imagem;
+  File? imagem;
   Usuario? _usuario;
   String _selectedTipo = 'OUTRO';
   String _selectedUnidade = 'OUTRO';
@@ -38,6 +38,7 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
             ? _descricaoController.text
             : null,
         "idUsuario": _usuario?.idUsuario,
+        "tipoArtefato": "ALIMENTO",
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
@@ -169,11 +170,7 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                   _selectedTipo = newValue ?? '';
                 });
               },
-              items: <String>[
-                'DOCE',
-                'SALGADO',
-                'OUTRO'
-              ] 
+              items: <String>['DOCE', 'SALGADO', 'OUTRO']
                   .map<DropdownMenuItem<String>>((String value) {
                 _tipoController.text = value;
                 return DropdownMenuItem<String>(
@@ -206,12 +203,15 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                         TextButton(
                           onPressed: () async {
                             await _cadastrar();
-                            await ImageHelper.uploadImagem(response!, imagem!);
+                            imagem ??= File('assets/images/imagem.png');
+                            ImageHelper.uploadImagem(response!, imagem);
                             await _buscarAlimentos();
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AlimentoPage()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AlimentoPage(),
+                              ),
+                            );
                           },
                           child: Text("Sim"),
                         ),

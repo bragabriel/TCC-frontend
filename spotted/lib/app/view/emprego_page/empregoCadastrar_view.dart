@@ -32,7 +32,7 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
   final TextEditingController _presencialController = TextEditingController();
   final TextEditingController _tipoVagaController = TextEditingController();
   Response<dynamic>? response;
-  late File? imagem;
+  File? imagem;
   Usuario? _usuario;
   String _selectedModalidade = 'HIBRIDO';
 
@@ -43,6 +43,7 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
             ? _descricaoController.text
             : null,
         "idUsuario": _usuario?.idUsuario,
+        "tipoArtefato": "EMPREGO",
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
@@ -239,14 +240,17 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
                           TextButton(
                             onPressed: () async {
                               await _cadastrar();
-                              await ImageHelper.uploadImagem(response!, imagem);
+                              imagem ??= File('assets/images/imagem.png');
+                              ImageHelper.uploadImagem(response!, imagem);
                               await _buscarEmpregos();
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => EmpregoPage()));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EmpregoPage(),
+                                ),
+                              );
                             },
-                            child: Text('Sim'),
+                            child: Text("Sim"),
                           ),
                           TextButton(
                             onPressed: () {

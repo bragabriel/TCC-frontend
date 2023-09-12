@@ -22,7 +22,7 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
   final TextEditingController _localizacaoAchado = TextEditingController();
   final TextEditingController _localizacaoAtual = TextEditingController();
   Response<dynamic>? response;
-  late File? imagem;
+  File? imagem;
   Usuario? _usuario;
 
   Future<void> _cadastrar() async {
@@ -32,6 +32,7 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
             ? _descricaoController.text
             : null,
         "idUsuario": _usuario?.idUsuario,
+        "tipoArtefato": "OBJETO",
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
@@ -137,14 +138,17 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
                           TextButton(
                             onPressed: () async {
                               await _cadastrar();
-                              await ImageHelper.uploadImagem(response!, imagem);
+                              imagem ??= File('assets/images/imagem.png');
+                              ImageHelper.uploadImagem(response!, imagem);
                               await _buscarObjetos();
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ObjetoPage()));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ObjetoPage(),
+                                ),
+                              );
                             },
-                            child: Text('Sim'),
+                            child: Text("Sim"),
                           ),
                           TextButton(
                             onPressed: () {

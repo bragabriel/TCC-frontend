@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spotted/app/view/alimento_page/alimentoCadastrar_view.dart';
 import '../../../service/change_notifier.dart';
 import '../../helpers/usuario_helper.dart';
+import '../../model/alimento_model.dart';
 import '../../model/usuario_model.dart';
 import '../home_page/home_view.dart';
+import 'updateAlimento.dart';
 import 'options_products.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
 class MyProductsPage extends StatefulWidget {
   @override
@@ -69,6 +74,9 @@ class _MyProductsPageState extends State<MyProductsPage> {
       itemCount: listaProdutos?.length ?? 0,
       itemBuilder: (BuildContext ctx, index) {
         var produto = listaProdutos![index];
+        print("elaiaaaaaaaaaaa");
+        // print(listaProdutos![index]["unidadeAlimento"]);
+        print(produto);
         var titulo = produto["tituloArtefato"];
         var descricaoArtefato = produto["descricaoArtefato"];
 
@@ -101,17 +109,67 @@ class _MyProductsPageState extends State<MyProductsPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-                       child: Column(
-            children: [
-              Expanded(
-                child: Image.network(
-                   produto["listaImagens"][0]["url"],
-                  fit: BoxFit.cover,
-                ),
+              trailing: PopupMenuButton(
+                itemBuilder: (BuildContext context) => [
+                  PopupMenuItem(
+                    child: OutlinedButton(
+                      child: Text('Editar'),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    AlimentoEditarView(produto)));
+                        print("meu deusssssssssssssssssss");
+                        print(produto);
+                        print(produto['tituloArtefato']);
+                        print(produto['tipoAlimento']);
+                        print(produto['unidadeAlimento']);
+                        print(produto['ofertaAlimento']);
+                        print(produto['precoAlimento'].toString());
+                        print(produto['saborAlimento']);
+                        print(produto['marcaAlimento']);
+                        print(produto['descricaoArtefato']);
+                        // print(produto);
+                        // switch (produto) {
+                        //   case 1:
+                        //     AlimentoEditarView(produto);
+                        //     break;
+                        // case 2:
+                        //   message = 'Option 2 selected';
+                        //   break;
+                        // case 3:
+                        //   message = 'Option 3 selected';
+                        //   break;
+                        // default:
+                        //   message = 'Invalid option';
+                        // }
+                      },
+                    ),
+                  ),
+                  PopupMenuItem(
+                    child: OutlinedButton(
+                      child: Text('Deletar'),
+                      onPressed: () {
+                        setState(() {
+                          produto!.removeAt(index);
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Image.network(
+                    produto["listaImagens"][0]["url"],
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
