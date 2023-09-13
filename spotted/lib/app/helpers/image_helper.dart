@@ -9,12 +9,17 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../constants/constants.dart';
 import '../model/artefato_model.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class ImageHelper {
-
   static Widget buildCarrousel(List<Imagem>? listaDeImagens) {
-    if (!listaDeImagens!.isEmpty) {
+    if (listaDeImagens?.length == 1) {
+      // Se houver apenas uma imagem, exibe-a diretamente
+      return Image.network(
+        listaDeImagens![0].url,
+        fit: BoxFit.cover,
+      );
+    }
+    else if (!listaDeImagens!.isEmpty) {
       return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           final screenWidth = 16;

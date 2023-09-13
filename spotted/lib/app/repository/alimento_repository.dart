@@ -63,6 +63,7 @@ class AlimentoRepository {
       String sabor,
       String tipo) async {
     final String apiUrl = '$onlineApi/alimentoAtualizar/$idArtefato';
+    print('link da do put alimento:' + apiUrl);
 
     final Map<String, dynamic> body = {
       "descricaoArtefato": descricaoArtefato,

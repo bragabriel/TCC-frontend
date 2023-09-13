@@ -51,9 +51,9 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
 
     _descricaoController.text = widget.objeto['descricaoArtefato'];
     _tituloController.text = widget.objeto['tituloArtefato'];
-    _contatoController.text = widget.objeto['objeto']['contatoObjeto'];
-    _localizacaoAchado.text = widget.objeto['objeto']['localizacaoObjeto'];
-    _localizacaoAtual.text = widget.objeto['objeto']['localizacaoObjeto'];
+    // _contatoController.text = widget.objeto['objeto']['contatoObjeto'];
+    _localizacaoAchado.text = widget.objeto['objeto']['localizacaoAchadoObjeto'];
+    _localizacaoAtual.text = widget.objeto['objeto']['localizacaoAtualObjeto'];
   }
 
   @override
@@ -87,10 +87,10 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
             controller: _descricaoController,
             decoration: InputDecoration(labelText: 'Descrição'),
           ),
-          TextFormField(
-            controller: _contatoController,
-            decoration: InputDecoration(labelText: 'Contato'),
-          ),
+          // TextFormField(
+          //   controller: _contatoController,
+          //   decoration: InputDecoration(labelText: 'Contato'),
+          // ),
           TextFormField(
             controller: _localizacaoAchado,
             decoration: InputDecoration(labelText: 'Localização encontrado'),

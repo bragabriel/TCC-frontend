@@ -60,9 +60,10 @@ class MoradiaRepository {
       String cepMoradia,
       String cidadeMoradia,
       String estadoMoradia,
-      String precoAluguelPorPessoa,
-      String precoAluguelTotal,
-      String qtdMoradoresAtuais,
+      num precoAluguelPorPessoa,
+      num precoAluguelTotal,
+      num qtdMoradoresAtuais,
+      num qtdMoradoresPermitidos,
       String vagaGaragem,
       String animaisEstimacao) async {
     final String apiUrl = '$onlineApi/moradiaAtualizar/$idArtefato';
@@ -77,6 +78,7 @@ class MoradiaRepository {
       "precoAluguelPorPessoaMoradia": precoAluguelPorPessoa,
       "precoAluguelTotalMoradia": precoAluguelTotal,
       "qtdMoradoresAtuaisMoradia": qtdMoradoresAtuais,
+      "qtdMoradoresPermitidoMoradia": qtdMoradoresPermitidos,
       "vagaGaragemMoradia": vagaGaragem,
       "animaisEstimacaoMoradia": animaisEstimacao,
     };

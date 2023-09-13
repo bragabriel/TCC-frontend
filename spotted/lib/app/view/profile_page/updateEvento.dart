@@ -39,14 +39,13 @@ class EventoEditarPageState extends State<EventoEditarView> {
     super.dispose();
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    _descricaoController.text = widget.evento['descricaoArtefato'];
-    _tituloController.text = widget.evento['tituloArtefato'];
-    // _localizacaoController = widget.evento['evento']['localizacaoEvento'];
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _descricaoController.text = widget.evento['descricaoArtefato'];
+  //   _tituloController.text = widget.evento['tituloArtefato'];
+  //   _localizacaoController.text = widget.evento['evento']['localizacaoFesta'];
+  // }
 
   @override
   Widget build(BuildContext context) {

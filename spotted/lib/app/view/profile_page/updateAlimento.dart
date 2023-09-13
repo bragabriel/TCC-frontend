@@ -54,20 +54,20 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
     super.dispose();
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    _descricaoController.text = widget.alimento['descricaoArtefato'];
-    _marcaController.text = widget.alimento['alimento']['marcaAlimento'];
-    _ofertaController.text = widget.alimento['alimento']['ofertaAlimento'];
-    _saborController.text = widget.alimento['alimento']['saborAlimento'];
-    _precoController.text =
-        widget.alimento['alimento']['precoAlimento'].toString();
-    _selectedTipo = widget.alimento['alimento']['tipoAlimento'];
-    _tituloController.text = widget.alimento['tituloArtefato'];
-    _selectedUnidade = widget.alimento['alimento']['unidadeAlimento'];
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _descricaoController.text = widget.alimento['descricaoArtefato'];
+  //   _tituloController.text = widget.alimento['tituloArtefato'];
+  //   _descricaoController.text = widget.alimento['descricaoArtefato'];
+  //   _marcaController.text = widget.alimento['alimento']['marcaAlimento'];
+  //   _ofertaController.text = widget.alimento['alimento']['ofertaAlimento'];
+  //   _saborController.text = widget.alimento['alimento']['saborAlimento'];
+  //   _precoController.text = widget.alimento['alimento']['precoAlimento'].toString();
+  //   _selectedTipo = widget.alimento['alimento']['tipoAlimento'];
+  //   _tituloController.text = widget.alimento['tituloArtefato'];
+  //   _selectedUnidade = widget.alimento['alimento']['unidadeAlimento'];
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +79,7 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           _usuario = UsuarioHelper.getUser(context, userProvider);
-          print( widget.alimento['idArtefato']);
+          print(widget.alimento['idArtefato']);
           return _atualizaAlimento();
         },
       ),
@@ -188,7 +188,9 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
                     sabor,
                     tipo);
                 _showSuccessMessage(context);
+                print("deu bom atualizar essa porra");
               } catch (e) {
+                print("deu algum erro ao atualizar a porra do alimento");
                 print(e);
               }
               await _buscarAlimentos();

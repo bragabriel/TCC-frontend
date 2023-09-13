@@ -8,9 +8,9 @@ import '../../model/usuario_model.dart';
 import '../../repository/moradia_repository.dart';
 
 class MoradiaEditarView extends StatefulWidget {
-  final dynamic Moradia;
+  final dynamic moradia;
 
-  MoradiaEditarView(this.Moradia);
+  MoradiaEditarView(this.moradia);
 
   @override
   MoradiaEditarPageState createState() => MoradiaEditarPageState();
@@ -74,23 +74,25 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
   @override
   void initState() {
     super.initState();
-
-    _descricaoController.text = widget.Moradia['descricaoArtefato'];
-    _bairroMoradiaController.text = widget.Moradia['moradia']['bairroMoradia'];
-    _cepMoradiaController.text = widget.Moradia['moradia']['cepMoradia'];
-    _cidadeMoradiaController.text = widget.Moradia['moradia']['cidadeMoradia'];
-    _estadoMoradiaController.text = widget.Moradia['moradia']['estadoMoradia'];
+    _tituloController.text = widget.moradia['tituloArtefato'];
+    _descricaoController.text = widget.moradia['descricaoArtefato'];
+    _bairroMoradiaController.text = widget.moradia['moradia']['bairroMoradia'];
+    _cepMoradiaController.text = widget.moradia['moradia']['cepMoradia'];
+    _cidadeMoradiaController.text = widget.moradia['moradia']['cidadeMoradia'];
+    _estadoMoradiaController.text = widget.moradia['moradia']['estadoMoradia'];
     _precoAluguelPorPessoaController.text =
-        widget.Moradia['moradia']['precoAluguelPorPessoaMoradia'];
+        widget.moradia['moradia']['precoAluguelPorPessoaMoradia'].toString();
     _precoAluguelTotalController.text =
-        widget.Moradia['precoAluguelTotalMoradia'];
+        widget.moradia['precoAluguelTotalMoradia'].toString();
     _qtdMoradoresAtuaisController.text =
-        widget.Moradia['moradia']['qtdMoradoresAtuaisMoradia'];
+        widget.moradia['moradia']['qtdMoradoresAtuaisMoradia'].toString();
     _vagaGaragemController.text =
-        widget.Moradia['moradia']['vagaGaragemMoradia'];
+        widget.moradia['moradia']['vagaGaragemMoradia'];
     _animaisEstimacaoController.text =
-        widget.Moradia['moradia']['animaisEstimacaoMoradia'];
-    _contatoController.text = widget.Moradia['moradia']['contatoMoradia'];
+        widget.moradia['moradia']['animaisEstimacaoMoradia'];
+    // _contatoController.text = widget.moradia['moradia']['contatoMoradia'];
+    _qtdMoradoresPermitidoController.text =
+        widget.moradia['moradia']['qtdMoradoresPermitidoMoradia'].toString();
   }
 
   @override
@@ -103,7 +105,7 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           _usuario = UsuarioHelper.getUser(context, userProvider);
-          print(widget.Moradia['idArtefato']);
+          print(widget.moradia['idArtefato']);
           return _atualizaMoradia();
         },
       ),
@@ -181,23 +183,26 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
               var qtdMoradoresAtuais = _qtdMoradoresAtuaisController.text;
               var vagaGaragem = _vagaGaragemController.text;
               var animaisEstimacao = _animaisEstimacaoController.text;
+              var qtdMoradoresPermitidos =
+                  _qtdMoradoresPermitidoController.text;
               // var contato = _contatoController.text;
 
               try {
                 await _moradiaRepository.updateMoradia(
-                    widget.Moradia['idArtefato'],
-                    descricaoArtefato,
-                    tituloArtefato,
-                    bairroMoradia,
-                    cepMoradia,
-                    cidadeMoradia,
-                    estadoMoradia,
-                    precoAluguelPorPessoa,
-                    precoAluguelTotal,
-                    qtdMoradoresAtuais,
-                    vagaGaragem,
-                    animaisEstimacao,
-                    );
+                  widget.moradia['idArtefato'],
+                  descricaoArtefato,
+                  tituloArtefato,
+                  bairroMoradia,
+                  cepMoradia,
+                  cidadeMoradia,
+                  estadoMoradia,
+                  precoAluguelPorPessoa as num,
+                  precoAluguelTotal as num,
+                  qtdMoradoresAtuais as num,
+                  qtdMoradoresPermitidos as num,
+                  vagaGaragem,
+                  animaisEstimacao,
+                );
                 _showSuccessMessage(context);
               } catch (e) {
                 print(e);

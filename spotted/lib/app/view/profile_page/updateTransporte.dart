@@ -66,29 +66,29 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
     super.dispose();
   }
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    _descricaoController.text = widget.Transporte['descricaoArtefato'];
-    _tituloController.text = widget.Transporte['tituloArtefato'];
-    _cidadeTransporteController.text =
-        widget.Transporte['transporte']['cidadeTransporte'];
-    _periodoTransporteController.text =
-        widget.Transporte['transporte']['periodoTransporte'];
-    _qtdAssentosPreenchidosTransporteController.text =
-        widget.Transporte['transporte']['qtdAssentosPreenchidosTransporte'];
-    _qtdAssentosTotalTransporteController.text =
-        widget.Transporte['transporte']['qtdAssentosTotalTransporte'];
-    _telefoneUsuarioController.text =
-        widget.Transporte['transporte']['telefoneUsuarioTransporte'];
-    _informacoesVeiculoTransporteController.text =
-        widget.Transporte['transporte']['informacoesVeiculoTransporte'];
-    _informacoesCondutorTransporteController.text =
-        widget.Transporte['transporte']['informacoesCondutorTransporte'];
-    _valorTransporteController.text =
-        widget.Transporte['transporte']['valorTransporte'];
-  }
+  //   _descricaoController.text = widget.Transporte['descricaoArtefato'];
+  //   _tituloController.text = widget.Transporte['tituloArtefato'];
+  //   _cidadeTransporteController.text =
+  //       widget.Transporte['transporte']['cidadeTransporte'];
+  //   _periodoTransporteController.text =
+  //       widget.Transporte['transporte']['periodoTransporte'];
+  //   _qtdAssentosPreenchidosTransporteController.text =
+  //       widget.Transporte['transporte']['qtdAssentosPreenchidosTransporte'];
+  //   _qtdAssentosTotalTransporteController.text =
+  //       widget.Transporte['transporte']['qtdAssentosTotalTransporte'];
+  //   _telefoneUsuarioController.text =
+  //       widget.Transporte['transporte']['telefoneUsuarioTransporte'];
+  //   _informacoesVeiculoTransporteController.text =
+  //       widget.Transporte['transporte']['informacoesVeiculoTransporte'];
+  //   _informacoesCondutorTransporteController.text =
+  //       widget.Transporte['transporte']['informacoesCondutorTransporte'];
+  //   _valorTransporteController.text =
+  //       widget.Transporte['transporte']['valorTransporte'];
+  // }
 
   @override
   Widget build(BuildContext context) {
