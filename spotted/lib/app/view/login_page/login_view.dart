@@ -93,23 +93,6 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushReplacementNamed('/recuperarSenha');
-                          },
-                          child: Text(
-                            'Problemas com login? Clique aqui.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
                       ]),
                     ),
                   )
