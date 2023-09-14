@@ -52,48 +52,23 @@ class MoradiaRepository {
     }
   }
 
-  Future<void> updateMoradia(
-      int idArtefato,
-      String descricaoArtefato,
-      String tituloArtefato,
-      String bairroMoradia,
-      String cepMoradia,
-      String cidadeMoradia,
-      String estadoMoradia,
-      num precoAluguelPorPessoa,
-      num precoAluguelTotal,
-      num qtdMoradoresAtuais,
-      num qtdMoradoresPermitidos,
-      String vagaGaragem,
-      String animaisEstimacao) async {
+  Future<void> updateMoradia(Map<String, dynamic> body, int idArtefato) async {
     final String apiUrl = '$onlineApi/moradiaAtualizar/$idArtefato';
 
-    final Map<String, dynamic> body = {
-      "descricaoArtefato": descricaoArtefato,
-      "tituloArtefato": tituloArtefato,
-      "bairroMoradia": bairroMoradia,
-      "cepMoradia": cepMoradia,
-      "cidadeMoradia": cidadeMoradia,
-      "estadoMoradia": estadoMoradia,
-      "precoAluguelPorPessoaMoradia": precoAluguelPorPessoa,
-      "precoAluguelTotalMoradia": precoAluguelTotal,
-      "qtdMoradoresAtuaisMoradia": qtdMoradoresAtuais,
-      "qtdMoradoresPermitidoMoradia": qtdMoradoresPermitidos,
-      "vagaGaragemMoradia": vagaGaragem,
-      "animaisEstimacaoMoradia": animaisEstimacao,
-    };
+    print("entrou no repository");
 
     try {
-      final response = await Dio().put(apiUrl, data: body);
+      final response = await Dio().put(apiUrl,
+          data: body, options: Options(contentType: 'application/json'));
 
       if (response.statusCode == 200) {
-        print('Alimento atualizado com sucesso!');
+        print('Moradia atualizado com sucesso!');
       } else {
         print(
-            'Erro ao atualizar o Alimento - Status code: ${response.statusCode}');
+            'Erro ao atualizar o Moradia - Status code: ${response.statusCode}');
       }
     } catch (error) {
-      print('Erro ao atualizar o Alimento: $error');
+      print('Erro ao atualizar Moradia: $error');
     }
   }
 }

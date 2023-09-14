@@ -41,33 +41,29 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  @override
-  void dispose() {
-    _tituloController.dispose();
-    _descricaoController.dispose();
-    _tipoController.dispose();
-    _marcaController.dispose();
-    _saborController.dispose();
-    _unidadeController.dispose();
-    _precoController.dispose();
-    _ofertaController.dispose();
-    super.dispose();
-  }
-
   // @override
-  // void initState() {
-  //   super.initState();
-  //   _descricaoController.text = widget.alimento['descricaoArtefato'];
-  //   _tituloController.text = widget.alimento['tituloArtefato'];
-  //   _descricaoController.text = widget.alimento['descricaoArtefato'];
-  //   _marcaController.text = widget.alimento['alimento']['marcaAlimento'];
-  //   _ofertaController.text = widget.alimento['alimento']['ofertaAlimento'];
-  //   _saborController.text = widget.alimento['alimento']['saborAlimento'];
-  //   _precoController.text = widget.alimento['alimento']['precoAlimento'].toString();
-  //   _selectedTipo = widget.alimento['alimento']['tipoAlimento'];
-  //   _tituloController.text = widget.alimento['tituloArtefato'];
-  //   _selectedUnidade = widget.alimento['alimento']['unidadeAlimento'];
+  // void dispose() {
+  //   _tituloController.dispose();
+  //   _descricaoController.dispose();
+  //   _tipoController.dispose();
+  //   _marcaController.dispose();
+  //   _saborController.dispose();
+  //   _unidadeController.dispose();
+  //   _precoController.dispose();
+  //   _ofertaController.dispose();
+  //   super.dispose();
   // }
+
+  @override
+  void initState() {
+    super.initState();
+    _descricaoController.text = widget.alimento['descricaoArtefato'];
+    _marcaController.text = widget.alimento['marcaAlimento'];
+    // _ofertaController.text = widget.alimento['alimento']['ofertaAlimento'];
+    // _saborController.text = widget.alimento['alimento']['saborAlimento'];
+    // _precoController.text = widget.alimento['alimento']['precoAlimento'].toString();
+    _tituloController.text = widget.alimento['tituloArtefato'];
+  }
 
   @override
   Widget build(BuildContext context) {

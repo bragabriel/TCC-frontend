@@ -62,25 +62,25 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
     super.dispose();
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
+  @override
+  void initState() {
+    super.initState();
+    _beneficiosController.text = widget.emprego['emprego']['beneficioEmprego'];
+    _cidadeController.text = widget.emprego['emprego']['cidadeEmprego'];
+    _contatoController.text = widget.emprego['emprego']['contatoEmprego'];
+    _empresaController.text = widget.emprego['emprego']['empresaEmprego'];
+    _estadoController.text = widget.emprego['emprego']['estadoEmprego'];
+    _experienciaController.text = widget.emprego['emprego']['experienciaEmprego'];
+    _linkVagaController.text = widget.emprego['emprego']['linkEmprego'];
+    _localizacaoController.text = widget.emprego['emprego']['localizacaoEmprego'];
+    _presencialController.text = widget.emprego['emprego']['presencialEmprego'];
+    _requisitosController.text = widget.emprego['emprego']['requisitosEmprego'];
+    _salarioController.text = widget.emprego['emprego']['salarioEmprego'];
+    _tipoVagaController.text = widget.emprego['emprego']['tipoVagaEmprego'];
+    _tituloController.text = widget.emprego['tituloArtefato'];
+    _descricaoController.text = widget.emprego['descricaoArtefato'];
 
-  //   _beneficiosController.text = widget.emprego['emprego']['beneficioEmprego'];
-  //   _cidadeController.text = widget.emprego['emprego']['cidadeEmprego'];
-  //   _contatoController.text = widget.emprego['emprego']['contatoEmprego'];
-  //   _descricaoController.text = widget.emprego['descricaoArtefato'];
-  //   _empresaController.text = widget.emprego['emprego']['empresaEmprego'];
-  //   _estadoController.text = widget.emprego['emprego']['estadoEmprego'];
-  //   _experienciaController.text = widget.emprego['emprego']['experienciaEmprego'];
-  //   _linkVagaController.text = widget.emprego['emprego']['linkEmprego'];
-  //   _localizacaoController.text = widget.emprego['emprego']['localizacaoEmprego'];
-  //   _presencialController.text = widget.emprego['emprego']['presencialEmprego'];
-  //   _requisitosController.text = widget.emprego['emprego']['requisitosEmprego'];
-  //   _salarioController.text = widget.emprego['emprego']['salarioEmprego'];
-  //   _tipoVagaController.text = widget.emprego['emprego']['tipoVagaEmprego'];
-  //   _tituloController.text = widget.emprego['tituloArtefato'];
-  // }
+  }
 
   @override
   Widget build(BuildContext context) {

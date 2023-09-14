@@ -53,42 +53,19 @@ class TransporteRepository {
     }
   }
 
-  Future<void> updateTransporte(
-      int idArtefato,
-      String descricaoArtefato,
-      String tituloArtefato,
-      String cidadeTransporte,
-      String informacoesCondutorTransporte,
-      String informacoesVeiculoTransporte,
-      String periodoTransporte,
-      int qtdAssentosPreenchidosTransporte,
-      int qtdAssentosTotalTransporte,
-      String valorTransporte) async {
+  Future<void> updateTransporte(Map<String, dynamic> body, int idArtefato) async {
     final String apiUrl = '$onlineApi/transporteAtualizar/$idArtefato';
 
-    final Map<String, dynamic> body = {
-      "descricaoArtefato": descricaoArtefato,
-      "tituloArtefato": tituloArtefato,
-      "cidadeTransporte": cidadeTransporte,
-      "informacoesCondutorTransporte": informacoesCondutorTransporte,
-      "informacoesVeiculoTransporte": informacoesVeiculoTransporte,
-      "periodoTransporte": periodoTransporte,
-      "qtdAssentosPreenchidosTransporte": qtdAssentosPreenchidosTransporte,
-      "qtdAssentosTotalTransporte": qtdAssentosTotalTransporte,
-      "valorTransporte": valorTransporte
-    };
-
     try {
-      final response = await Dio().put(apiUrl, data: body);
-
+      final response = await Dio().post(apiUrl, data: body);
       if (response.statusCode == 200) {
-        print('Alimento atualizado com sucesso!');
+        print('Transporte atualizado com sucesso!');
       } else {
         print(
-            'Erro ao atualizar o Alimento - Status code: ${response.statusCode}');
+            'Erro ao atualizar o Transporte - Status code: ${response.statusCode}');
       }
     } catch (error) {
-      print('Erro ao atualizar o Alimento: $error');
+      print('Erro ao atualizar o Transporte: $error');
     }
   }
 }

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../service/change_notifier.dart';
+import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
 import '../../repository/moradia_repository.dart';
@@ -37,12 +38,10 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
   final TextEditingController _vagaGaragemController = TextEditingController();
   final TextEditingController _animaisEstimacaoController =
       TextEditingController();
-  final TextEditingController _contatoController = TextEditingController();
 
   final MoradiaRepository _moradiaRepository = MoradiaRepository();
   Response<dynamic>? response;
   late File? imagem;
-
   Usuario? _usuario;
 
   void _showSuccessMessage(BuildContext context) {
@@ -67,7 +66,6 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
     _cidadeMoradiaController.dispose();
     _cepMoradiaController.dispose();
     _bairroMoradiaController.dispose();
-    _contatoController.dispose();
     super.dispose();
   }
 
@@ -83,14 +81,13 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
     _precoAluguelPorPessoaController.text =
         widget.moradia['moradia']['precoAluguelPorPessoaMoradia'].toString();
     _precoAluguelTotalController.text =
-        widget.moradia['precoAluguelTotalMoradia'].toString();
+        widget.moradia['moradia']['precoAluguelTotalMoradia'].toString();
     _qtdMoradoresAtuaisController.text =
         widget.moradia['moradia']['qtdMoradoresAtuaisMoradia'].toString();
     _vagaGaragemController.text =
         widget.moradia['moradia']['vagaGaragemMoradia'];
     _animaisEstimacaoController.text =
         widget.moradia['moradia']['animaisEstimacaoMoradia'];
-    // _contatoController.text = widget.moradia['moradia']['contatoMoradia'];
     _qtdMoradoresPermitidoController.text =
         widget.moradia['moradia']['qtdMoradoresPermitidoMoradia'].toString();
   }
@@ -113,6 +110,21 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
   }
 
   Widget _atualizaMoradia() {
+    final body = {
+      "descricaoArtefato": _descricaoController.text,
+      "tituloArtefato": _tituloController.text,
+      "bairroMoradia": _bairroMoradiaController.text,
+      "cepMoradia": _cepMoradiaController.text,
+      "cidadeMoradia": _cidadeMoradiaController.text,
+      "estadoMoradia": _estadoMoradiaController.text,
+      "precoAluguelPorPessoaMoradia": _precoAluguelPorPessoaController.text,
+      "precoAluguelTotalMoradia": _precoAluguelTotalController.text,
+      "qtdMoradoresAtuaisMoradia": _qtdMoradoresAtuaisController.text,
+      "qtdMoradoresPermitidoMoradia": _qtdMoradoresPermitidoController.text,
+      "vagaGaragemMoradia": _vagaGaragemController.text,
+      "animaisEstimacaoMoradia": _animaisEstimacaoController.text,
+    };
+
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(16),
@@ -170,39 +182,24 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
             controller: _animaisEstimacaoController,
             decoration: InputDecoration(labelText: 'Animais Estimação'),
           ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 40,
+            child: ElevatedButton(
+              onPressed: () async {
+                imagem = await ImageHelper.selecionarImagem();
+              },
+              child: Text('Atualizar imagem'),
+            ),
+          ),
           ElevatedButton(
             onPressed: () async {
-              var descricaoArtefato = _descricaoController.text;
-              var tituloArtefato = _tituloController.text;
-              var bairroMoradia = _bairroMoradiaController.text;
-              var cepMoradia = _cepMoradiaController.text;
-              var cidadeMoradia = _cidadeMoradiaController.text;
-              var estadoMoradia = _estadoMoradiaController.text;
-              var precoAluguelPorPessoa = _precoAluguelPorPessoaController.text;
-              var precoAluguelTotal = _precoAluguelTotalController.text;
-              var qtdMoradoresAtuais = _qtdMoradoresAtuaisController.text;
-              var vagaGaragem = _vagaGaragemController.text;
-              var animaisEstimacao = _animaisEstimacaoController.text;
-              var qtdMoradoresPermitidos =
-                  _qtdMoradoresPermitidoController.text;
-              // var contato = _contatoController.text;
-
               try {
+                // imagem ??= File('assets/images/imagem.png');
+                ImageHelper.uploadImagem(response!, imagem);
                 await _moradiaRepository.updateMoradia(
-                  widget.moradia['idArtefato'],
-                  descricaoArtefato,
-                  tituloArtefato,
-                  bairroMoradia,
-                  cepMoradia,
-                  cidadeMoradia,
-                  estadoMoradia,
-                  precoAluguelPorPessoa as num,
-                  precoAluguelTotal as num,
-                  qtdMoradoresAtuais as num,
-                  qtdMoradoresPermitidos as num,
-                  vagaGaragem,
-                  animaisEstimacao,
-                );
+                    body, widget.moradia['idArtefato']);
+                print('finalizou');
                 _showSuccessMessage(context);
               } catch (e) {
                 print(e);
