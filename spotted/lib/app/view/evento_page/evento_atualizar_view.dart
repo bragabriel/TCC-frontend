@@ -65,6 +65,12 @@ class EventoEditarPageState extends State<EventoEditarView> {
   }
 
   Widget _atualizaEvento() {
+    final body = {
+      "descricaoArtefato": _descricaoController.text,
+      "tituloArtefato": _tituloController.text,
+      "localizacaoEvento": _localizacaoController.text,
+    };
+
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(16),
@@ -85,13 +91,9 @@ class EventoEditarPageState extends State<EventoEditarView> {
           ),
           ElevatedButton(
             onPressed: () async {
-              var localizacao = _localizacaoController.text;
-              var descricaoArtefato = _descricaoController.text;
-              var tituloArtefato = _tituloController.text;
-
               try {
-                await _eventoRepository.updateevento(widget.evento['idArtefato'],
-                    localizacao, descricaoArtefato, tituloArtefato);
+                await _eventoRepository.updateEvento(body,
+                    widget.evento['idArtefato']);
                 _showSuccessMessage(context);
               } catch (e) {
                 print(e);

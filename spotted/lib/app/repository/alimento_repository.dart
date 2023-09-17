@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:spotted/app/model/alimento_model.dart';
 import 'dart:async';
-
 import '../constants/constants.dart';
 
 class AlimentoRepository {
@@ -52,29 +51,11 @@ class AlimentoRepository {
     }
   }
 
-  Future<void> updateAlimento(
-      int? idArtefato,
-      String unidade,
-      String descricaoArtefato,
-      String tituloArtefato,
-      String marca,
-      String oferta,
-      double preco,
-      String sabor,
-      String tipo) async {
-    final String apiUrl = '$onlineApi/alimentoAtualizar/$idArtefato';
-    print('link da do put alimento:' + apiUrl);
+  Future<void> updateAlimento(Map<String, dynamic> body,
+      int? idArtefato) async{
 
-    final Map<String, dynamic> body = {
-      "descricaoArtefato": descricaoArtefato,
-      "marcaAlimento": marca,
-      "ofertaAlimento": oferta,
-      "precoAlimento": preco,
-      "saborAlimento": sabor,
-      "tipoAlimento": tipo,
-      "tituloArtefato": tipo,
-      "unidadeAlimento": unidade
-    };
+    final String apiUrl = '$onlineApi/alimentoAtualizar/$idArtefato';
+
 
     try {
       final response = await Dio().put(apiUrl, data: body);

@@ -1,7 +1,10 @@
+import 'dart:html';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../service/change_notifier.dart';
+import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
 import '../../repository/emprego_repository.dart';
@@ -33,6 +36,7 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
   final EmpregoRepository _empregoRepository = EmpregoRepository();
   Response<dynamic>? response;
   Usuario? _usuario;
+  late File? imagem;
   String _selectedModalidade = 'HIBRIDO';
 
   void _showSuccessMessage(BuildContext context) {
@@ -70,16 +74,17 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
     _contatoController.text = widget.emprego['emprego']['contatoEmprego'];
     _empresaController.text = widget.emprego['emprego']['empresaEmprego'];
     _estadoController.text = widget.emprego['emprego']['estadoEmprego'];
-    _experienciaController.text = widget.emprego['emprego']['experienciaEmprego'];
+    _experienciaController.text =
+        widget.emprego['emprego']['experienciaEmprego'];
     _linkVagaController.text = widget.emprego['emprego']['linkEmprego'];
-    _localizacaoController.text = widget.emprego['emprego']['localizacaoEmprego'];
+    _localizacaoController.text =
+        widget.emprego['emprego']['localizacaoEmprego'];
     _presencialController.text = widget.emprego['emprego']['presencialEmprego'];
     _requisitosController.text = widget.emprego['emprego']['requisitosEmprego'];
     _salarioController.text = widget.emprego['emprego']['salarioEmprego'];
     _tipoVagaController.text = widget.emprego['emprego']['tipoVagaEmprego'];
     _tituloController.text = widget.emprego['tituloArtefato'];
     _descricaoController.text = widget.emprego['descricaoArtefato'];
-
   }
 
   @override
@@ -99,6 +104,23 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
   }
 
   Widget _atualizaEmprego() {
+    final body = {
+      "descricaoArtefato": _descricaoController.text,
+      "tituloArtefato": _tituloController.text,
+      "beneficiosEmprego": _beneficiosController.text,
+      "cidadeEmprego": _cidadeController.text,
+      "contatoEmprego": _contatoController.text,
+      "empresaEmprego": _empresaController.text,
+      "estadoEmprego": _estadoController.text,
+      "experienciaEmprego": _experienciaController.text,
+      "linkVagaEmprego": _linkVagaController.text,
+      "localizacaoEmprego": _localizacaoController.text,
+      "presencialEmprego": _presencialController.text,
+      "requisitosEmprego": _requisitosController.text,
+      "tipovagaEmprego": _tipoVagaController.text,
+      "salarioEmprego": _salarioController.text,
+    };
+
     print("entrou no atualizar emprego");
     return SingleChildScrollView(
       child: Padding(
@@ -183,46 +205,27 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
               border: OutlineInputBorder(),
             ),
           ),
+          // SizedBox(
+          //   width: MediaQuery.of(context).size.width,
+          //   height: 40,
+          //   child: ElevatedButton(
+          //     onPressed: () async {
+          //       imagem = await ImageHelper.selecionarImagem();
+          //     },
+          //     child: Text('Atualizar imagem'),
+          //   ),
+          // ),
           ElevatedButton(
             onPressed: () async {
-              var titulo = _tituloController.text;
-              var descricao = _descricaoController.text;
-              var beneficio = _beneficiosController.text;
-              var contato = _contatoController.text;
-              var link = _linkVagaController.text;
-              var cidade = _cidadeController.text;
-              var requisitos = _requisitosController.text;
-              var salario = _salarioController.text;
-              var tipo = _tipoVagaController.text;
-              var localizacao = _localizacaoController.text;
-              var experiencia = _experienciaController.text;
-              var estado = _estadoController.text;
-              var empresa = _empresaController.text;
-              var presencial = _presencialController.text;
-
               try {
+                // imagem ??= File('assets/images/imagem.png');
+                // ImageHelper.uploadImagem(response!, imagem);
                 await _empregoRepository.updateEmprego(
-                    widget.emprego['idArtefato'],
-                    titulo,
-                    descricao,
-                    localizacao,
-                    requisitos,
-                    salario as num,
-                    beneficio,
-                    contato,
-                    link,
-                    empresa,
-                    cidade,
-                    estado,
-                    experiencia,
-                    tipo,
-                    presencial);
-
+                    body, widget.emprego['idArtefato']);
                 _showSuccessMessage(context);
               } catch (e) {
                 print(e);
               }
-
               Navigator.pop(context);
             },
             child: Text('Atualizar'),

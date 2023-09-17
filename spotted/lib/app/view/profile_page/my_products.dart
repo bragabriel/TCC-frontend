@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spotted/app/view/profile_page/updateEmprego.dart';
-import 'package:spotted/app/view/profile_page/updateEvento.dart';
-import 'package:spotted/app/view/profile_page/updateMoradia.dart';
-import 'package:spotted/app/view/profile_page/updateObjeto.dart';
-import 'package:spotted/app/view/profile_page/updateTransporte.dart';
+import 'package:spotted/app/view/emprego_page/empreto_atualizar_view.dart';
+import 'package:spotted/app/view/evento_page/evento_atualizar_view.dart';
+import 'package:spotted/app/view/moradia_page/moradia_atualizar_view.dart';
+import 'package:spotted/app/view/objeto_view/objeto_atualizar_view.dart';
+import 'package:spotted/app/view/transporte_page/updateTransporte.dart';
 import '../../../service/change_notifier.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
+import '../alimento_page/alimento_atualizar_view.dart';
 import '../home_page/home_view.dart';
-import 'updateAlimento.dart';
 
 class MyProductsPage extends StatefulWidget {
   @override

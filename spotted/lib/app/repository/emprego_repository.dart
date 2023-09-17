@@ -52,43 +52,12 @@ class EmpregoRepository {
     }
   }
 
-  Future<void> updateEmprego(
-      int? idArtefato,
-      String tituloArtefato,
-      String descricaoArtefato,
-      String? localizacaoEmprego,
-      String? requisitosEmprego,
-      num? salarioEmprego,
-      String? beneficiosEmprego,
-      String? contatoEmprego,
-      String? linkVagaEmprego,
-      String? empresaEmprego,
-      String? cidadeEmprego,
-      String? estadoEmprego,
-      String? experienciaEmprego,
-      String? tipoVagaEmprego,
-      String? presencialEmprego) async {
+  Future<void> updateEmprego(Map<String, dynamic> body,
+      int? idArtefato) async {
     final String apiUrl = '$onlineApi/empregoAtualizar/$idArtefato';
 
-    final Map<String, dynamic> body = {
-      "descricaoArtefato": descricaoArtefato,
-      "tituloArtefato": tituloArtefato,
-      "localizacaoEmprego": localizacaoEmprego,
-      "requisitosEmprego": requisitosEmprego,
-      "salarioEmprego": salarioEmprego,
-      "beneficiosEmprego": beneficiosEmprego,
-      "contatoEmprego": contatoEmprego,
-      "linkVagaEmprego": linkVagaEmprego,
-      "empresaEmprego": empresaEmprego,
-      "cidadeEmprego": cidadeEmprego,
-      "estadoEmprego": estadoEmprego,
-      "experienciaEmprego": experienciaEmprego,
-      "tipoVagaEmprego": tipoVagaEmprego,
-      "presencialEmprego": presencialEmprego,
-    };
-
     try {
-      final response = await Dio().put(apiUrl, data: body);
+      final response = await Dio().post(apiUrl, data: body);
 
       if (response.statusCode == 200) {
         print('Emprego atualizado com sucesso!');

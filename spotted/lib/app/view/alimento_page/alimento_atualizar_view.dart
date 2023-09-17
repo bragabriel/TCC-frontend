@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../service/change_notifier.dart';
+import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/alimento_model.dart';
 import '../../model/usuario_model.dart';
@@ -41,27 +42,31 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  // @override
-  // void dispose() {
-  //   _tituloController.dispose();
-  //   _descricaoController.dispose();
-  //   _tipoController.dispose();
-  //   _marcaController.dispose();
-  //   _saborController.dispose();
-  //   _unidadeController.dispose();
-  //   _precoController.dispose();
-  //   _ofertaController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _tituloController.dispose();
+    _descricaoController.dispose();
+    _tipoController.dispose();
+    _marcaController.dispose();
+    _saborController.dispose();
+    _unidadeController.dispose();
+    _precoController.dispose();
+    _ofertaController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
     _descricaoController.text = widget.alimento['descricaoArtefato'];
-    _marcaController.text = widget.alimento['marcaAlimento'];
-    // _ofertaController.text = widget.alimento['alimento']['ofertaAlimento'];
-    // _saborController.text = widget.alimento['alimento']['saborAlimento'];
-    // _precoController.text = widget.alimento['alimento']['precoAlimento'].toString();
+    _marcaController.text =
+        widget.alimento['alimento']['marcaAlimento'].toString();
+    _ofertaController.text =
+        widget.alimento['alimento']['ofertaAlimento'].toString();
+    _saborController.text =
+        widget.alimento['alimento']['saborAlimento'].toString();
+    _precoController.text =
+        widget.alimento['alimento']['precoAlimento'].toString();
     _tituloController.text = widget.alimento['tituloArtefato'];
   }
 
@@ -83,6 +88,17 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
   }
 
   Widget _atualizaAlimento() {
+    final body = {
+      "descricaoArtefato": _descricaoController.text,
+      "tituloArtefato": _tituloController.text,
+      "marcaAlimento": _marcaController.text,
+      "ofertaAlimento": _ofertaController.text,
+      "precoAlimento": _precoController.text,
+      "saborAlimento": _saborController.text,
+      "tipoAlimento": _tipoController.text,
+      "unidadeAlimento": _unidadeController.text
+    };
+
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(16),
@@ -161,28 +177,23 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
               border: OutlineInputBorder(),
             ),
           ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 40,
+            child: ElevatedButton(
+              onPressed: () async {
+                imagem = await ImageHelper.selecionarImagem();
+              },
+              child: Text('Atualizar imagem'),
+            ),
+          ),
           ElevatedButton(
             onPressed: () async {
-              var unidade = _unidadeController.text;
-              var descricaoArtefato = _descricaoController.text;
-              var tituloArtefato = _tituloController.text;
-              var marca = _marcaController.text;
-              var oferta = _ofertaController.text;
-              var preco = _precoController.text;
-              var sabor = _saborController.text;
-              var tipo = _tipoController.text;
-
               try {
+                imagem ??= File('assets/images/imagem.png');
+                ImageHelper.uploadImagem(response!, imagem);
                 await _alimentoRepository.updateAlimento(
-                    widget.alimento['idArtefato'],
-                    unidade,
-                    descricaoArtefato,
-                    tituloArtefato,
-                    marca,
-                    oferta,
-                    preco as double,
-                    sabor,
-                    tipo);
+                    body, widget.alimento['idArtefato']);
                 _showSuccessMessage(context);
                 print("deu bom atualizar essa porra");
               } catch (e) {

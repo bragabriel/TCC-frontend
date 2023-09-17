@@ -51,8 +51,8 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
 
     _descricaoController.text = widget.objeto['descricaoArtefato'];
     _tituloController.text = widget.objeto['tituloArtefato'];
-    // _contatoController.text = widget.objeto['objeto']['contatoObjeto'];
-    _localizacaoAchado.text = widget.objeto['objeto']['localizacaoAchadoObjeto'];
+    _localizacaoAchado.text =
+        widget.objeto['objeto']['localizacaoAchadoObjeto'];
     _localizacaoAtual.text = widget.objeto['objeto']['localizacaoAtualObjeto'];
   }
 
@@ -74,6 +74,14 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
   }
 
   Widget _atualizaObjeto() {
+    final body = {
+      "descricaoArtefato": _descricaoController.text,
+      "tituloArtefato": _tituloController.text,
+      "contatoObjeto": _contatoController.text,
+      "localizacaoAchadoObjeto": _localizacaoAchado.text,
+      "localizacaoAtualObjeto": _localizacaoAtual.text,
+    };
+
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(16),
@@ -87,10 +95,6 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
             controller: _descricaoController,
             decoration: InputDecoration(labelText: 'Descrição'),
           ),
-          // TextFormField(
-          //   controller: _contatoController,
-          //   decoration: InputDecoration(labelText: 'Contato'),
-          // ),
           TextFormField(
             controller: _localizacaoAchado,
             decoration: InputDecoration(labelText: 'Localização encontrado'),
@@ -101,20 +105,9 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
           ),
           ElevatedButton(
             onPressed: () async {
-              var descricaoArtefato = _descricaoController.text;
-              var tituloArtefato = _tituloController.text;
-              // var contato = _contatoController.text;
-              var localizacaoAchado = _localizacaoAchado.text;
-              var localizacaoAtual = _localizacaoAtual.text;
-
               try {
                 await _objetoRepository.updateObjeto(
-                    widget.objeto['idArtefato'],
-                    descricaoArtefato,
-                    tituloArtefato,
-                    // contato,
-                    localizacaoAchado,
-                    localizacaoAtual);
+                    body, widget.objeto['idArtefato']);
 
                 _showSuccessMessage(context);
               } catch (e) {
