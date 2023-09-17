@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spotted/app/view/emprego_page/empreto_atualizar_view.dart';
+import 'package:spotted/app/view/emprego_page/emprego_atualizar_view.dart';
 import 'package:spotted/app/view/evento_page/evento_atualizar_view.dart';
 import 'package:spotted/app/view/moradia_page/moradia_atualizar_view.dart';
 import 'package:spotted/app/view/objeto_view/objeto_atualizar_view.dart';
-import 'package:spotted/app/view/transporte_page/updateTransporte.dart';
+import 'package:spotted/app/view/transporte_page/transporte_atualizar.view.dart';
 import '../../../service/change_notifier.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';

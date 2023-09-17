@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../service/change_notifier.dart';
+import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
 import '../../repository/objeto_repository.dart';
@@ -103,9 +104,21 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
             controller: _localizacaoAtual,
             decoration: InputDecoration(labelText: 'Localização atual'),
           ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 40,
+            child: ElevatedButton(
+              onPressed: () async {
+                imagem = await ImageHelper.selecionarImagem();
+              },
+              child: Text('Atualizar imagem'),
+            ),
+          ),
           ElevatedButton(
             onPressed: () async {
               try {
+                imagem ??= File('assets/images/imagem.png');
+                ImageHelper.uploadImagem(response, imagem);
                 await _objetoRepository.updateObjeto(
                     body, widget.objeto['idArtefato']);
 

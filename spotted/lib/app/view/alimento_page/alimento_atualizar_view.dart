@@ -65,8 +65,9 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
         widget.alimento['alimento']['ofertaAlimento'].toString();
     _saborController.text =
         widget.alimento['alimento']['saborAlimento'].toString();
-    _precoController.text =
-        widget.alimento['alimento']['precoAlimento'].toString();
+    _precoController.text = widget.alimento['alimento']['precoAlimento'].toString();
+    _marcaController.text = widget.alimento['alimento']['marcaAlimento'].toString();
+    _ofertaController.text = widget.alimento['alimento']['ofertaAlimento'].toString();
     _tituloController.text = widget.alimento['tituloArtefato'];
   }
 
@@ -191,7 +192,7 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
             onPressed: () async {
               try {
                 imagem ??= File('assets/images/imagem.png');
-                ImageHelper.uploadImagem(response!, imagem);
+                ImageHelper.uploadImagem(response, imagem);
                 await _alimentoRepository.updateAlimento(
                     body, widget.alimento['idArtefato']);
                 _showSuccessMessage(context);

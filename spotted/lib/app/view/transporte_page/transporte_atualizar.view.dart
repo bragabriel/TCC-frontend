@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spotted/app/controller/transporte_controller.dart';
 import '../../../service/change_notifier.dart';
 import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
@@ -80,8 +79,6 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
     _qtdAssentosTotalTransporteController.text = widget.transporte['transporte']
             ['qtdAssentosTotalTransporte']
         .toString();
-    // _telefoneUsuarioController.text =
-    //     widget.Transporte['transporte']['telefoneUsuarioTransporte'];
     _informacoesVeiculoTransporteController.text =
         widget.transporte['transporte']['informacoesVeiculoTransporte'];
     _informacoesCondutorTransporteController.text =
@@ -177,7 +174,7 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
             onPressed: () async {
               try {
                 imagem ??= File('assets/images/imagem.png');
-                ImageHelper.uploadImagem(response!, imagem);
+                ImageHelper.uploadImagem(response, imagem);
                 await _transporteRepository.updateTransporte(
                     body, widget.transporte['idArtefato']);
                 _showSuccessMessage(context);

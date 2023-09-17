@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/repository/evento_repository.dart';
 import '../../../service/change_notifier.dart';
+import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
 
@@ -22,6 +25,8 @@ class EventoEditarPageState extends State<EventoEditarView> {
   final EventoRepository _eventoRepository = EventoRepository();
   Response<dynamic>? response;
   Usuario? _usuario;
+  late File? imagem;
+
 
   void _showSuccessMessage(BuildContext context) {
     final snackBar = SnackBar(
@@ -89,9 +94,21 @@ class EventoEditarPageState extends State<EventoEditarView> {
             controller: _localizacaoController,
             decoration: InputDecoration(labelText: 'Localização'),
           ),
+                    SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 40,
+            child: ElevatedButton(
+              onPressed: () async {
+                imagem = await ImageHelper.selecionarImagem();
+              },
+              child: Text('Atualizar imagem'),
+            ),
+          ),
           ElevatedButton(
             onPressed: () async {
               try {
+                               imagem ??= File('assets/images/imagem.png');
+                ImageHelper.uploadImagem(response, imagem);
                 await _eventoRepository.updateEvento(body,
                     widget.evento['idArtefato']);
                 _showSuccessMessage(context);

@@ -1,4 +1,4 @@
-import 'dart:html';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -205,21 +205,21 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
               border: OutlineInputBorder(),
             ),
           ),
-          // SizedBox(
-          //   width: MediaQuery.of(context).size.width,
-          //   height: 40,
-          //   child: ElevatedButton(
-          //     onPressed: () async {
-          //       imagem = await ImageHelper.selecionarImagem();
-          //     },
-          //     child: Text('Atualizar imagem'),
-          //   ),
-          // ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 40,
+            child: ElevatedButton(
+              onPressed: () async {
+                imagem = await ImageHelper.selecionarImagem();
+              },
+              child: Text('Atualizar imagem'),
+            ),
+          ),
           ElevatedButton(
             onPressed: () async {
               try {
-                // imagem ??= File('assets/images/imagem.png');
-                // ImageHelper.uploadImagem(response!, imagem);
+                imagem ??= File('assets/images/imagem.png');
+                ImageHelper.uploadImagem(response, imagem);
                 await _empregoRepository.updateEmprego(
                     body, widget.emprego['idArtefato']);
                 _showSuccessMessage(context);
