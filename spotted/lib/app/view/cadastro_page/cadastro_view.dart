@@ -37,7 +37,7 @@ class _CadastroPageState extends State<CadastroPage> {
           SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
-              controller.start(context);
+              controller.startCadastro();
             },
             child: Text('Tentar novamente'),
           ),
@@ -72,7 +72,7 @@ class _CadastroPageState extends State<CadastroPage> {
   @override
   void initState() {
     super.initState();
-    controller.start(context);
+    controller.startCadastro();
   }
 
   Widget _body() {
@@ -191,9 +191,7 @@ class _CadastroPageState extends State<CadastroPage> {
 
     try {
       await UsuarioRepository().cadastrarUsuario(body);
-      // Caso a API retorne sucesso, mostrar uma mensagem de sucesso ou redirecionar para outra página.
     } catch (e) {
-      // Tratar erros aqui, campos faltantes, blabla
       print('Erro ao cadastrar: $e');
     }
   }
@@ -207,7 +205,7 @@ class _CadastroPageState extends State<CadastroPage> {
           IconButton(
             icon: Icon(Icons.refresh_outlined),
             onPressed: () {
-              controller.start(context);
+              controller.startCadastro();
             },
           )
         ],
@@ -227,6 +225,8 @@ class _CadastroPageState extends State<CadastroPage> {
           AnimatedBuilder(
             animation: controller.state,
             builder: (context, child) {
+              print('uaghy');
+              print(controller.state.value);
               return stateManagement(controller.state.value);
             },
           )
