@@ -18,8 +18,7 @@ class ImageHelper {
         listaDeImagens![0].url,
         fit: BoxFit.cover,
       );
-    }
-    else if (!listaDeImagens!.isEmpty) {
+    } else if (!listaDeImagens!.isEmpty) {
       return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           final screenWidth = 16;
@@ -58,6 +57,7 @@ class ImageHelper {
   }
 
   static uploadImagem(Response<dynamic>? idArtefato, imageFile) async {
+    print(idArtefato);
     var client = http.Client();
     var uri = Uri.parse('$onlineApi/uploadImage/$idArtefato');
     var request = http.MultipartRequest("POST", uri);
@@ -67,6 +67,11 @@ class ImageHelper {
         filename: basename(imageFile.path));
 
     request.files.add(multipartFile);
+
+    print("ta no upload de imagens");
+    print(multipartFile);
+    print(request.files.first);
+    print(request);
 
     var response = await client.send(request);
     client.close();
