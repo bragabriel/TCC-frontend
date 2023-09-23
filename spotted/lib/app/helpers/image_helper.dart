@@ -56,8 +56,9 @@ class ImageHelper {
     }
   }
 
-  static uploadImagem(Response<dynamic>? idArtefato, imageFile) async {
-    print(idArtefato);
+  static uploadImagem(Response<dynamic>? response, imageFile, {idArtefato} ) async {
+
+
     var client = http.Client();
     var uri = Uri.parse('$onlineApi/uploadImage/$idArtefato');
     var request = http.MultipartRequest("POST", uri);

@@ -28,7 +28,6 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
   final TextEditingController _precoController = TextEditingController();
   final TextEditingController _ofertaController = TextEditingController();
   final AlimentoRepository _alimentoRepository = AlimentoRepository();
-  Response<dynamic>? response;
   late File? imagem;
   String _selectedTipo = 'OUTRO';
   String _selectedUnidade = 'OUTRO';
@@ -195,8 +194,8 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
             onPressed: () async {
               try {
                 imagem ??= File('assets/images/imagem.png');
-                print(response);
-                await ImageHelper.uploadImagem(response, imagem);
+
+                await ImageHelper.uploadImagem(null, widget.alimento['idArtefato'] );
                 print("terminou de subir a imagem em alimentos");
                 await _alimentoRepository.updateAlimento(
                     body, widget.alimento['idArtefato']);

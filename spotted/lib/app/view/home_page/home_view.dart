@@ -9,7 +9,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 
-const String apiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
+const String apiKey = '3dbbf29cb72728e380272e98fe760b41';
 
 class HomePage extends StatefulWidget {
   @override
