@@ -21,7 +21,7 @@ class AppWidget extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           theme: ThemeData(
-            primarySwatch: Colors.lightGreen,
+            primarySwatch: Colors.deepPurple,
             brightness: AppController.instance.isDartTheme
                 ? Brightness.dark
                 : Brightness.light,

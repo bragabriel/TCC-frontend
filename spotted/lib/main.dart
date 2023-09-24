@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/view/alimento_page/alimento_view.dart';
 import 'package:spotted/app/widget/app_widget.dart';
@@ -15,6 +16,12 @@ main(){
 }
 
 Widget build(BuildContext context) {
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      //color set to transperent or set your own color
+      statusBarIconBrightness: Brightness.dark,
+      //set brightness for icons, like dark background light icons
+    ));
  return MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'Alimentação',

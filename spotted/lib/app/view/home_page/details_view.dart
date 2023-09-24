@@ -1,0 +1,93 @@
+import 'package:flutter/material.dart';
+import '../../constants/constants.dart';
+import '../../model/descriptions_model.dart';
+
+class DetailsView extends StatefulWidget {
+  final ArtefatoInfo? artefatoInfo;
+  const DetailsView({super.key, this.artefatoInfo});
+
+  @override
+  State<DetailsView> createState() => _DetailsViewState();
+}
+
+class _DetailsViewState extends State<DetailsView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+          child: Stack(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 20, top: 32),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 300,
+                  ),
+                  Text(
+                    widget.artefatoInfo!.name.toString(),
+                    style: TextStyle(
+                        fontSize: 55,
+                        fontFamily: 'Avenir',
+                        color: primaryTextColor,
+                        fontWeight: FontWeight.w900),
+                    textAlign: TextAlign.left,
+                  ),
+                  const Divider(
+                    color: Colors.black38,
+                  ),
+                  SizedBox(
+                    height: 350,
+                    width: MediaQuery.of(context).size.width,
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      child: Text(
+                        widget.artefatoInfo!.description.toString(),
+                        style: TextStyle(
+                            fontSize: 20,
+                            overflow: TextOverflow.ellipsis,
+                            fontFamily: 'Avenir',
+                            color: contentTextColor,
+                            fontWeight: FontWeight.w400),
+                        textAlign: TextAlign.left,
+                        maxLines: 600,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+              right: -70,
+              child: Hero(
+                  tag: widget.artefatoInfo!.position,
+                  child: Image.asset(widget.artefatoInfo!.iconImage.toString()))),
+          Positioned(
+              top: 60,
+              left: 32,
+              child: Text(
+                widget.artefatoInfo!.position.toString(),
+                style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 247,
+                    color: Colors.grey.withOpacity(0.2)),
+              )),
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.arrow_back_ios_new))
+        ],
+      )),
+    );
+  }
+}
