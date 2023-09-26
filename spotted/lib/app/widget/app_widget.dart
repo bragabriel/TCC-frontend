@@ -5,7 +5,7 @@ import 'package:spotted/app/view/profile_page/perfil_view.dart';
 import 'package:spotted/app/view/splash_page/splash_view.dart';
 import '../controller/app_controller.dart';
 import '../view/emprego_page/emprego_view.dart';
-import '../view/festa_page/festa_view.dart';
+import '../view/evento_page/evento_view.dart';
 import '../view/home_page/home_view.dart';
 import '../view/login_page/login_view.dart';
 import '../view/moradia_page/moradia_view.dart';
@@ -21,7 +21,7 @@ class AppWidget extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           theme: ThemeData(
-            primarySwatch: Colors.lightGreen,
+            primarySwatch: Colors.deepPurple,
             brightness: AppController.instance.isDartTheme
                 ? Brightness.dark
                 : Brightness.light,
@@ -34,7 +34,7 @@ class AppWidget extends StatelessWidget {
             '/transporte': (context) => TransportePage(),
             '/alimento': (context) => AlimentoPage(),
             '/emprego': (context) => EmpregoPage(),
-            '/festa': (context) => FestaPage(),
+            '/evento': (context) => EventoPage(),
             '/moradia': (context) => MoradiaPage(),
             '/objeto': (context) => ObjetoPage(),
             '/meusprodutos': (context) => MyProductsPage(),

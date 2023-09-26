@@ -9,12 +9,16 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../constants/constants.dart';
 import '../model/artefato_model.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class ImageHelper {
-
   static Widget buildCarrousel(List<Imagem>? listaDeImagens) {
-    if (!listaDeImagens!.isEmpty) {
+    if (listaDeImagens?.length == 1) {
+      // Se houver apenas uma imagem, exibe-a diretamente
+      return Image.network(
+        listaDeImagens![0].url,
+        fit: BoxFit.cover,
+      );
+    } else if (!listaDeImagens!.isEmpty) {
       return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           final screenWidth = 16;
@@ -52,7 +56,9 @@ class ImageHelper {
     }
   }
 
-  static uploadImagem(Response<dynamic> idArtefato, imageFile) async {
+  static uploadImagem(Response<dynamic>? response, imageFile, {idArtefato} ) async {
+
+
     var client = http.Client();
     var uri = Uri.parse('$onlineApi/uploadImage/$idArtefato');
     var request = http.MultipartRequest("POST", uri);
@@ -62,6 +68,11 @@ class ImageHelper {
         filename: basename(imageFile.path));
 
     request.files.add(multipartFile);
+
+    print("ta no upload de imagens");
+    print(multipartFile);
+    print(request.files.first);
+    print(request);
 
     var response = await client.send(request);
     client.close();
@@ -79,7 +90,6 @@ class ImageHelper {
     if (pickedFile != null) {
       return File(pickedFile.path);
     }
-
     return null;
   }
 }

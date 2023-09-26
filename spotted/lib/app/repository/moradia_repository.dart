@@ -32,10 +32,10 @@ class MoradiaRepository {
   }
 
   Future<Response<dynamic>> cadastrarMoradia(Map<String, dynamic> body) async {
-    const String festasUrl = "$onlineApi/moradia";
+    const String eventosUrl = "$onlineApi/moradia";
 
     try {
-      final response = await Dio().post(festasUrl,
+      final response = await Dio().post(eventosUrl,
           data: body, options: Options(contentType: 'application/json'));
 
       if (response.statusCode == 201) {
@@ -49,6 +49,26 @@ class MoradiaRepository {
     } catch (e) {
       print('Erro ao acessar a API: $e');
       throw 'Erro ao acessar a API: $e';
+    }
+  }
+
+  Future<void> updateMoradia(Map<String, dynamic> body, int idArtefato) async {
+    final String apiUrl = '$onlineApi/moradiaAtualizar/$idArtefato';
+
+    print("entrou no repository");
+
+    try {
+      final response = await Dio().put(apiUrl,
+          data: body, options: Options(contentType: 'application/json'));
+
+      if (response.statusCode == 200) {
+        print('Moradia atualizado com sucesso!');
+      } else {
+        print(
+            'Erro ao atualizar o Moradia - Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Erro ao atualizar Moradia: $error');
     }
   }
 }

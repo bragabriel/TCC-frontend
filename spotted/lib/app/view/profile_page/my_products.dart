@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spotted/app/view/alimento_page/alimentoCadastrar_view.dart';
+import 'package:spotted/app/view/emprego_page/emprego_atualizar_view.dart';
+import 'package:spotted/app/view/evento_page/evento_atualizar_view.dart';
+import 'package:spotted/app/view/moradia_page/moradia_atualizar_view.dart';
+import 'package:spotted/app/view/objeto_view/objeto_atualizar_view.dart';
+import 'package:spotted/app/view/transporte_page/transporte_atualizar.view.dart';
 import '../../../service/change_notifier.dart';
 import '../../helpers/usuario_helper.dart';
-import '../../model/alimento_model.dart';
 import '../../model/usuario_model.dart';
+import '../alimento_page/alimento_atualizar_view.dart';
 import '../home_page/home_view.dart';
-import 'updateAlimento.dart';
-import 'options_products.dart';
-import 'package:flutter/src/widgets/basic.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class MyProductsPage extends StatefulWidget {
   @override
@@ -23,17 +23,6 @@ class _MyProductsPageState extends State<MyProductsPage> {
   }
 
   Usuario? _usuario;
-
-  //   Future<void> _buscarMeusProdutos() async {
-  //   try {
-  //     await UsuarioRepository().getUsuario(_usuario?.idUsuario as num);
-  //     print("GetUsuario com sucesso em MyProductsPage");
-  //     setState(() {
-  //     });
-  //   } catch (e) {
-  //     print('Erro ao obter usuario em MyProductsPage: $e');
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +52,25 @@ class _MyProductsPageState extends State<MyProductsPage> {
     print("entrou no listar");
     var listaProdutos = _usuario?.listaArtefatosReponse;
 
+    if (listaProdutos == null || listaProdutos.isEmpty) {
+      // Handle the case where the list is null or empty.
+      return GridView.builder(
+        padding: const EdgeInsets.all(20),
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 200,
+          childAspectRatio: 2 / 3,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
+        ),
+        itemCount: 0, // No items to display.
+        itemBuilder: (BuildContext ctx, index) {
+          return GridTile(
+            child: Container(),
+          );
+        },
+      );
+    }
+
     return GridView.builder(
       padding: const EdgeInsets.all(20),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -71,105 +79,114 @@ class _MyProductsPageState extends State<MyProductsPage> {
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
       ),
-      itemCount: listaProdutos?.length ?? 0,
+      itemCount: listaProdutos.length,
       itemBuilder: (BuildContext ctx, index) {
-        var produto = listaProdutos![index];
-        print("elaiaaaaaaaaaaa");
-        // print(listaProdutos![index]["unidadeAlimento"]);
-        print(produto);
-        var titulo = produto["tituloArtefato"];
-        var descricaoArtefato = produto["descricaoArtefato"];
-
-        return InkWell(
-          onTap: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return OptionsProductsPage(produto[index]);
-                },
-              ),
-            );
-          },
-          child: GridTile(
-            key: ValueKey(produto),
-            footer: GridTileBar(
-              backgroundColor: const Color.fromARGB(137, 107, 98, 98),
-              title: Text(
-                titulo,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Text(
-                "$descricaoArtefato ",
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              trailing: PopupMenuButton(
-                itemBuilder: (BuildContext context) => [
-                  PopupMenuItem(
-                    child: OutlinedButton(
-                      child: Text('Editar'),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    AlimentoEditarView(produto)));
-                        print("meu deusssssssssssssssssss");
-                        print(produto);
-                        print(produto['tituloArtefato']);
-                        print(produto['tipoAlimento']);
-                        print(produto['unidadeAlimento']);
-                        print(produto['ofertaAlimento']);
-                        print(produto['precoAlimento'].toString());
-                        print(produto['saborAlimento']);
-                        print(produto['marcaAlimento']);
-                        print(produto['descricaoArtefato']);
-                        // print(produto);
-                        // switch (produto) {
-                        //   case 1:
-                        //     AlimentoEditarView(produto);
-                        //     break;
-                        // case 2:
-                        //   message = 'Option 2 selected';
-                        //   break;
-                        // case 3:
-                        //   message = 'Option 3 selected';
-                        //   break;
-                        // default:
-                        //   message = 'Invalid option';
-                        // }
-                      },
-                    ),
-                  ),
-                  PopupMenuItem(
-                    child: OutlinedButton(
-                      child: Text('Deletar'),
-                      onPressed: () {
-                        setState(() {
-                          produto!.removeAt(index);
-                        });
-                      },
-                    ),
-                  ),
-                ],
+        var produto = _usuario?.listaArtefatosReponse?[index];
+        String tipoArtefato =
+            _usuario?.listaArtefatosReponse?[index]["tipoArtefato"];
+        print(tipoArtefato);
+        return GridTile(
+          key: ValueKey(produto),
+          footer: GridTileBar(
+            backgroundColor: const Color.fromARGB(137, 107, 98, 98),
+            title: Text(
+              _usuario?.listaArtefatosReponse?[index]["tituloArtefato"],
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: Image.network(
-                    produto["listaImagens"][0]["url"],
-                    fit: BoxFit.cover,
+            subtitle: Text(
+              _usuario?.listaArtefatosReponse?[index]["descricaoArtefato"],
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            trailing: PopupMenuButton(
+              itemBuilder: (BuildContext context) => [
+                PopupMenuItem(
+                  child: OutlinedButton(
+                    child: Text('Editar'),
+                    onPressed: () {
+                      switch (tipoArtefato) {
+                        case "EMPREGO":
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EmpregoEditarView(produto),
+                            ),
+                          );
+                          break;
+                        case "ALIMENTO":
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AlimentoEditarView(produto),
+                            ),
+                          );
+                          break;
+                        case "EVENTO":
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EventoEditarView(produto),
+                            ),
+                          );
+                          break;
+                        case "OBJETO":
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ObjetoEditarView(produto),
+                            ),
+                          );
+                          break;
+                        case "MORADIA":
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MoradiaEditarView(produto),
+                            ),
+                          );
+                          break;
+                        case "TRANSPORTE":
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TransporteEditarView(produto),
+                            ),
+                          );
+                          break;
+                        default:
+                          print("deu problema");
+                          print(tipoArtefato);
+                      }
+                    },
+                  ),
+                ),
+                PopupMenuItem(
+                  child: OutlinedButton(
+                    child: Text('Deletar'),
+                    onPressed: () {
+                      setState(() {
+                        produto!.removeAt(index);
+                      });
+                    },
                   ),
                 ),
               ],
             ),
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                child: Image.network(
+                  produto["listaImagens"][0]["url"],
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
           ),
         );
       },

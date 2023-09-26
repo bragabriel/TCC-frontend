@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'festa_view.dart';
+import '../../model/evento_model.dart';
+import 'evento_view.dart';
 import '../../builders/text_builder.dart';
 import '../../helpers/button_helper.dart';
 import '../../helpers/image_helper.dart';
-import '../../model/festa_model.dart';
 
-class FestaDetalhesView extends StatefulWidget {
+class EventoDetalhesView extends StatefulWidget {
   @override
-  State<FestaDetalhesView> createState() => EmpregoDetalheState();
+  State<EventoDetalhesView> createState() => EmpregoDetalheState();
 
-  final Festa filteredFestaList;
-  const FestaDetalhesView(this.filteredFestaList, {super.key});
+  final Evento filteredEventoList;
+  const EventoDetalhesView(this.filteredEventoList, {super.key});
 }
 
-class EmpregoDetalheState extends State<FestaDetalhesView> {
+class EmpregoDetalheState extends State<EventoDetalhesView> {
   @override
   Widget build(BuildContext context) {
-    Festa festa = widget.filteredFestaList;
+    Evento evento = widget.filteredEventoList;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -25,16 +25,16 @@ class EmpregoDetalheState extends State<FestaDetalhesView> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FestaPage()),
+                MaterialPageRoute(builder: (context) => EventoPage()),
               );
             },
           ),
         ),
         body: ListView(
           children: [
-            ImageHelper.buildCarrousel(festa.listaImagens),
-            DetalhesFesta(festa: festa),
-            BotaoFesta(festa: festa),
+            ImageHelper.buildCarrousel(evento.listaImagens),
+            DetalhesEvento(evento: evento),
+            BotaoEvento(evento: evento),
           ],
         ),
       ),
@@ -42,10 +42,10 @@ class EmpregoDetalheState extends State<FestaDetalhesView> {
   }
 }
 
-class BotaoFesta extends StatelessWidget {
-  final Festa festa;
+class BotaoEvento extends StatelessWidget {
+  final Evento evento;
 
-  BotaoFesta({required this.festa});
+  BotaoEvento({required this.evento});
 
   @override
   Widget build(BuildContext context) {
@@ -53,16 +53,16 @@ class BotaoFesta extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         ButtonHelper.newButton(
-            Colors.blue.shade700, Icons.map, "", festa.localizacaoFesta)
+            Colors.blue.shade700, Icons.map, "", evento.localizacaoEvento)
       ],
     );
   }
 }
 
-class DetalhesFesta extends StatelessWidget {
-  final Festa festa;
+class DetalhesEvento extends StatelessWidget {
+  final Evento evento;
 
-  DetalhesFesta({required this.festa});
+  DetalhesEvento({required this.evento});
 
   @override
   Widget build(BuildContext context) {
@@ -71,13 +71,13 @@ class DetalhesFesta extends StatelessWidget {
       child: Wrap(
         children: [
           Text(
-            "${festa.tituloArtefato} - ${festa.localizacaoFesta} \n",
+            "${evento.tituloArtefato} - ${evento.localizacaoEvento} \n",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 27,
             ),
           ),
-          TextBuilder.buildText(festa.descricaoArtefato),
+          TextBuilder.buildText(evento.descricaoArtefato),
         ],
       ),
     );
