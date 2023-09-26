@@ -326,10 +326,15 @@ class HomePageState extends State<HomePage> {
                                   )
                                 ],
                               ),
-                              Hero(
-                                tag: planets[index].position,
-                                child: Image.asset(
-                                  planets[index].iconImage.toString(),
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: Hero(
+                                  tag: planets[index].position,
+                                  child: Image.asset(
+                                    planets[index].iconImage.toString(),
+                                    width: 200,
+                                    height: 200,
+                                  ),
                                 ),
                               ),
                             ],

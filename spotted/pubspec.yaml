@@ -88,14 +88,12 @@ flutter:
     - assets/images/emprego.png
     - assets/images/evento.png
     - assets/images/moradia.png
-    - assets/images/objeto.jpg
     - assets/images/transporte.png
-
-    - assets/images/mercury.png
-    - assets/images/venus.png
-    - assets/images/neptune.png
-    - assets/images/uranus.png
-    - assets/images/saturn.png
+    - assets/images/alimento.png
+    - assets/images/emprego.png
+    - assets/images/transporte.png
+    - assets/images/objetos_perdidos.png
+    - assets/images/evento.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
