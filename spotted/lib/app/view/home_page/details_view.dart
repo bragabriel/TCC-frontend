@@ -70,7 +70,7 @@ class _DetailsViewState extends State<DetailsView> {
               right: -70,
               child: Hero(
                   tag: widget.artefatoInfo!.position,
-                  child: Image.asset(widget.artefatoInfo!.iconImage.toString()))),
+                  child: Image.asset(widget.artefatoInfo!.iconImage.toString(), width: 340, height: 340,))),
           Positioned(
               top: 60,
               left: 32,
@@ -79,7 +79,7 @@ class _DetailsViewState extends State<DetailsView> {
                 style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 247,
-                    color: Colors.grey.withOpacity(0.2)),
+                    color: Colors.grey.withOpacity(0.0)),
               )),
           IconButton(
               onPressed: () {

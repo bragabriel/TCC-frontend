@@ -39,7 +39,7 @@ class AppWidget extends StatelessWidget {
             '/objeto': (context) => ObjetoPage(),
             '/meusprodutos': (context) => MyProductsPage(),
             '/home': (context) => HomePage(),
-            '/': (context) => HomePage(),
+            '/': (context) => LoginPage(),
           },
         );
       },
