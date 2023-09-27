@@ -1,4 +1,5 @@
 import 'dart:io';
+import '../../repository/usuario_repository.dart';
 import 'evento_view.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,8 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
   final TextEditingController _tituloController = TextEditingController();
   final TextEditingController _descricaoController = TextEditingController();
   final TextEditingController _localizacaoController = TextEditingController();
+  final UsuarioRepository usuarioRepository = UsuarioRepository();
+
   Response<dynamic>? response;
   File? imagem;
   Usuario? _usuario;
@@ -42,6 +45,12 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
 
     try {
       response = await EventoRepository().cadastrarEvento(body);
+      var responseUser =
+          await usuarioRepository.getUsuario(_usuario!.idUsuario);
+      print("\n\n\n RESPONSE USERRRR: ");
+      print(responseUser.idUsuario);
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      userProvider.updateUserInfo(responseUser);
       print('Cadastro realizado com sucesso em EventoCadastrarView');
     } catch (e) {
       print('Erro ao cadastrar em EventoCadastrarView: $e');
@@ -75,6 +84,9 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           _usuario = UsuarioHelper.getUser(context, userProvider);
+          print("to no build");
+          print(_usuario!.idUsuario);
+          print(_usuario);
           return _cadastroevento();
         },
       ),

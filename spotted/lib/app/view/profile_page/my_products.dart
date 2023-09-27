@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spotted/app/repository/usuario_repository.dart';
 import 'package:spotted/app/view/emprego_page/emprego_atualizar_view.dart';
 import 'package:spotted/app/view/evento_page/evento_atualizar_view.dart';
 import 'package:spotted/app/view/moradia_page/moradia_atualizar_view.dart';
@@ -50,6 +51,7 @@ class _MyProductsPageState extends State<MyProductsPage> {
 
   GridView _listarMeusProdutos() {
     print("entrou no listar");
+
     var listaProdutos = _usuario?.listaArtefatosReponse;
 
     if (listaProdutos == null || listaProdutos.isEmpty) {
@@ -84,7 +86,7 @@ class _MyProductsPageState extends State<MyProductsPage> {
         var produto = _usuario?.listaArtefatosReponse?[index];
         String tipoArtefato =
             _usuario?.listaArtefatosReponse?[index]["tipoArtefato"];
-        print(tipoArtefato);
+        print("tipo artefato" + tipoArtefato);
         return GridTile(
           key: ValueKey(produto),
           footer: GridTileBar(
@@ -154,7 +156,8 @@ class _MyProductsPageState extends State<MyProductsPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => TransporteEditarView(produto),
+                              builder: (context) =>
+                                  TransporteEditarView(produto),
                             ),
                           );
                           break;

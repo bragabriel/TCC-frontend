@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:spotted/app/view/alimento_page/alimento_view.dart';
 import 'package:spotted/app/widget/app_widget.dart';
 import 'package:spotted/service/change_notifier.dart';
+
+import 'app/view/alimento_page/alimento_view.dart';
 
 main(){
   runApp(
