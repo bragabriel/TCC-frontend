@@ -49,11 +49,12 @@ dependencies:
   mime: ^1.0.1
   path: ^1.8.0
   cached_network_image: ^3.2.3
+  flutter_swiper_plus: ^2.0.4
   
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  location: ^4.3.0
+  location: ^4.4.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -83,6 +84,16 @@ flutter:
     - assets/images/jobs.jpg
     - assets/images/perfil.png
     - assets/images/LogoTcc.png
+    - assets/images/alimento.png
+    - assets/images/emprego.png
+    - assets/images/evento.png
+    - assets/images/moradia.png
+    - assets/images/transporte.png
+    - assets/images/alimento.png
+    - assets/images/emprego.png
+    - assets/images/transporte.png
+    - assets/images/objetos_perdidos.png
+    - assets/images/evento.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

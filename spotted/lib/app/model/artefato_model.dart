@@ -8,12 +8,14 @@ class Artefato {
   final String? dataAtualizacao;
   final int idUsuario;
   final List<Imagem>? listaImagens;
+  final String tipoArtefato;
 
   Artefato({
     required this.idArtefato,
     required this.tituloArtefato,
     required this.descricaoArtefato,
     required this.ativo,
+    required this.tipoArtefato,
     required this.dataCadastro,
     required this.idUsuario,
     required this.listaImagens,
@@ -26,6 +28,7 @@ class Artefato {
       tituloArtefato: json['tituloArtefato'],
       descricaoArtefato: json['descricaoArtefato'],
       ativo: json['ativo'],
+      tipoArtefato: json['tipoArtefato'],
       dataCadastro: json['dataCadastro'],
       dataAtualizacao: json['dataAtualizacao'],
       idUsuario: json['idUsuario'],

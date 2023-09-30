@@ -1,25 +1,28 @@
 import 'dart:io';
-import 'festa_view.dart';
+import '../../repository/usuario_repository.dart';
+import 'evento_view.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spotted/app/repository/festa_repository.dart';
+import 'package:spotted/app/repository/evento_repository.dart';
 import '../../../service/change_notifier.dart';
 import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
 
-class FestaCadastrarView extends StatefulWidget {
-  const FestaCadastrarView({super.key});
+class EventoCadastrarView extends StatefulWidget {
+  const EventoCadastrarView({super.key});
 
   @override
-  FestaCadastrarPageState createState() => FestaCadastrarPageState();
+  EventoCadastrarPageState createState() => EventoCadastrarPageState();
 }
 
-class FestaCadastrarPageState extends State<FestaCadastrarView> {
+class EventoCadastrarPageState extends State<EventoCadastrarView> {
   final TextEditingController _tituloController = TextEditingController();
   final TextEditingController _descricaoController = TextEditingController();
   final TextEditingController _localizacaoController = TextEditingController();
+  final UsuarioRepository usuarioRepository = UsuarioRepository();
+
   Response<dynamic>? response;
   File? imagem;
   Usuario? _usuario;
@@ -31,30 +34,36 @@ class FestaCadastrarPageState extends State<FestaCadastrarView> {
             ? _descricaoController.text
             : null,
         "idUsuario": _usuario?.idUsuario,
-        "tipoArtefato": "FESTA",
+        "tipoArtefato": "EVENTO",
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
-      "localizacaoFesta": _localizacaoController.text.isNotEmpty
+      "localizacaoEvento": _localizacaoController.text.isNotEmpty
           ? _localizacaoController.text
           : null,
     };
 
     try {
-      response = await FestaRepository().cadastrarFesta(body);
-      print('Cadastro realizado com sucesso em FestaCadastrarView');
+      response = await EventoRepository().cadastrarEvento(body);
+      var responseUser =
+          await usuarioRepository.getUsuario(_usuario!.idUsuario);
+      print("\n\n\n RESPONSE USERRRR: ");
+      print(responseUser.idUsuario);
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      userProvider.updateUserInfo(responseUser);
+      print('Cadastro realizado com sucesso em EventoCadastrarView');
     } catch (e) {
-      print('Erro ao cadastrar em FestaCadastrarView: $e');
+      print('Erro ao cadastrar em EventoCadastrarView: $e');
     }
   }
 
-  Future<void> _buscarFestas() async {
+  Future<void> _buscarEventos() async {
     try {
-      await FestaRepository().getAllFestas();
-      print("GetAllFestas concluído com sucesso em FestaCadastrarView");
+      await EventoRepository().getAllEventos();
+      print("GetAllEventos concluído com sucesso em EventoCadastrarView");
       setState(() {});
     } catch (e) {
-      print('Erro ao obter a lista de festas em FestaCadastrarView: $e');
+      print('Erro ao obter a lista de eventos em eventoCadastrarView: $e');
     }
   }
 
@@ -70,18 +79,21 @@ class FestaCadastrarPageState extends State<FestaCadastrarView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastrar festa'),
+        title: Text('Cadastrar evento'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           _usuario = UsuarioHelper.getUser(context, userProvider);
-          return _cadastrofesta();
+          print("to no build");
+          print(_usuario!.idUsuario);
+          print(_usuario);
+          return _cadastroevento();
         },
       ),
     );
   }
 
-  SingleChildScrollView _cadastrofesta() {
+  SingleChildScrollView _cadastroevento() {
     return SingleChildScrollView(
       padding: EdgeInsets.all(16),
       child: Column(
@@ -127,11 +139,11 @@ class FestaCadastrarPageState extends State<FestaCadastrarView> {
                             await _cadastrar();
                             imagem ??= File('assets/images/imagem.png');
                             ImageHelper.uploadImagem(response!, imagem);
-                            await _buscarFestas();
+                            await _buscarEventos();
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => FestaPage(),
+                                builder: (context) => EventoPage(),
                               ),
                             );
                           },

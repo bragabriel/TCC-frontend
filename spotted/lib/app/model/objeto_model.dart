@@ -9,6 +9,7 @@ class Objeto extends Artefato {
     required String tituloArtefato,
     required String descricaoArtefato,
     required bool ativo,
+    required String tipoArtefato,
     required String dataCadastro,
     required String? dataAtualizacao,
     required int idUsuario,
@@ -20,6 +21,7 @@ class Objeto extends Artefato {
           tituloArtefato: tituloArtefato,
           descricaoArtefato: descricaoArtefato,
           ativo: ativo,
+          tipoArtefato: tipoArtefato,
           dataCadastro: dataCadastro,
           dataAtualizacao: dataAtualizacao,
           idUsuario: idUsuario,
@@ -33,6 +35,7 @@ class Objeto extends Artefato {
       descricaoArtefato: json['descricaoArtefato'],
 
       ativo: json['ativo'],
+      tipoArtefato: json['tipoArtefato'],
       dataCadastro: json['dataCadastro'],
       dataAtualizacao: json[
           'dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?

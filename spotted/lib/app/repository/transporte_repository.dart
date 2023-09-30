@@ -52,4 +52,20 @@ class TransporteRepository {
       throw 'Erro ao acessar a API: $e';
     }
   }
+
+  Future<void> updateTransporte(Map<String, dynamic> body, int idArtefato) async {
+    final String apiUrl = '$onlineApi/transporteAtualizar/$idArtefato';
+
+    try {
+      final response = await Dio().post(apiUrl, data: body);
+      if (response.statusCode == 200) {
+        print('Transporte atualizado com sucesso!');
+      } else {
+        print(
+            'Erro ao atualizar o Transporte - Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Erro ao atualizar o Transporte: $error');
+    }
+  }
 }
