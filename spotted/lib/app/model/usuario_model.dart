@@ -34,6 +34,7 @@ class Usuario {
     this.listaArtefatosReponse
   });
 
+
   Usuario copy({
     int? idUsuario,
     String? nomeUsuario,

@@ -17,10 +17,11 @@ class UserProvider with ChangeNotifier {
 
   void updateUserInfo(Usuario newUser) {
     _user = newUser;
+    print("chegou aqui");
+    print(newUser);
     _isAuthenticated = true;
     notifyListeners();
   }
-
 
   void logout() {
     _user = null;

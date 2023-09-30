@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/alimento_repository.dart';
 import 'package:spotted/app/model/alimento_model.dart';
+import 'package:spotted/app/view/alimento_page/alimentoDetalhes_view.dart.dart';
 import 'alimentoCadastrar_view.dart';
-import 'alimentoDetalhes_view.dart';
 import '../home_page/home_view.dart';
 import '../../controller/alimento_controller.dart';
 import '../../helpers/image_helper.dart';
@@ -311,7 +311,7 @@ class AlimentoPageState extends State<AlimentoPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return AlimentoDetalheView(filteredFoodList[index]);
+                        return AlimentoDetails(filteredFoodList[index]);
                       },
                     ),
                   );

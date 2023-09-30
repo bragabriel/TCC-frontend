@@ -51,4 +51,22 @@ class EmpregoRepository {
       throw 'Erro ao acessar a API: $e';
     }
   }
+
+  Future<void> updateEmprego(Map<String, dynamic> body,
+      int? idArtefato) async {
+    final String apiUrl = '$onlineApi/empregoAtualizar/$idArtefato';
+
+    try {
+      final response = await Dio().post(apiUrl, data: body);
+
+      if (response.statusCode == 200) {
+        print('Emprego atualizado com sucesso!');
+      } else {
+        print(
+            'Erro ao atualizar o Emprego - Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Erro ao atualizar o Emprego: $error');
+    }
+  }
 }

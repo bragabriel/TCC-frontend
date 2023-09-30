@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:spotted/app/repository/festa_repository.dart';
+import 'package:spotted/app/view/evento_page/eventoDetalhe_view.dart';
 import '../../helpers/image_helper.dart';
-import 'festaCadastrar_view.dart';
-import 'festaDetalhe_view.dart';
 import '../../controller/alimento_controller.dart';
-import '../../model/festa_model.dart';
+import '../../model/evento_model.dart';
+import '../../repository/evento_repository.dart';
 import '../home_page/home_view.dart';
+import 'eventoCadastrar_view.dart';
 
-class FestaPage extends StatefulWidget {
-  const FestaPage({Key? key}) : super(key: key);
+class EventoPage extends StatefulWidget {
+  const EventoPage({Key? key}) : super(key: key);
 
   @override
-  State<FestaPage> createState() => FestaPageState();
+  State<EventoPage> createState() => EventoPageState();
 }
 
-class FestaPageState extends State<FestaPage> {
-  List<Festa> festaList = [];
-  List<Festa> filteredFestaList = [];
+class EventoPageState extends State<EventoPage> {
+  List<Evento> eventoList = [];
+  List<Evento> filteredEventoList = [];
   String _searchTerm = '';
   String cidadeSelecionada = 'Selecione uma cidade';
 
@@ -75,14 +75,14 @@ class FestaPageState extends State<FestaPage> {
   void initState() {
     super.initState();
     controller.start();
-    _buscarFestas();
+    _buscarEventos();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Festas"),
+        title: Text("Eventos"),
         leading: BackButton(
           onPressed: () {
             Navigator.push(
@@ -95,7 +95,7 @@ class FestaPageState extends State<FestaPage> {
           IconButton(
             onPressed: () {
               controller.start();
-              _buscarFestas();
+              _buscarEventos();
             },
             icon: const Icon(Icons.refresh_outlined),
           )
@@ -113,7 +113,7 @@ class FestaPageState extends State<FestaPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => FestaCadastrarView(),
+              builder: (context) => EventoCadastrarView(),
             ),
           );
         },
@@ -125,32 +125,32 @@ class FestaPageState extends State<FestaPage> {
     return _filtros();
   }
 
-  Future<void> _buscarFestas() async {
+  Future<void> _buscarEventos() async {
     try {
-      final festaList = await FestaRepository().getAllFestas();
-      print("GetAllFestas concluído com sucesso em FestaPage");
+      final eventoList = await EventoRepository().getAllEventos();
+      print("GetAllEventos concluído com sucesso em EventoPage");
       setState(() {
-        this.festaList = festaList;
-        filteredFestaList = festaList;
+        this.eventoList = eventoList;
+        filteredEventoList = eventoList;
       });
     } catch (e) {
-      print('Erro ao obter a lista de festas em FestaPage: $e');
+      print('Erro ao obter a lista de eventos em EventoPage: $e');
     }
   }
 
-  void _filterFestaList() {
+  void _filterEventoList() {
     setState(() {
-      filteredFestaList = filteredFestaList.where((festa) {
+      filteredEventoList = filteredEventoList.where((evento) {
         final atendeCriterioCidade =
             cidadeSelecionada == "Selecione uma cidade" ||
-                festa.localizacaoFesta?.toLowerCase() ==
+                evento.localizacaoEvento?.toLowerCase() ==
                     cidadeSelecionada.toLowerCase();
 
         final searchTerm = _searchTerm.toLowerCase();
         final titleContainsTerm =
-            festa.tituloArtefato.toLowerCase().contains(searchTerm);
+            evento.tituloArtefato.toLowerCase().contains(searchTerm);
         final descriptionContainsTerm =
-            festa.descricaoArtefato.toLowerCase().contains(searchTerm);
+            evento.descricaoArtefato.toLowerCase().contains(searchTerm);
 
         return atendeCriterioCidade &&
             (titleContainsTerm || descriptionContainsTerm);
@@ -167,7 +167,7 @@ class FestaPageState extends State<FestaPage> {
           onChanged: (value) {
             setState(() {
               _searchTerm = value;
-              _filterFestaList();
+              _filterEventoList();
             });
           },
           decoration: InputDecoration(
@@ -185,7 +185,7 @@ class FestaPageState extends State<FestaPage> {
                 childAspectRatio: 2 / 3,
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20),
-            itemCount: filteredFestaList.length,
+            itemCount: filteredEventoList.length,
             itemBuilder: (BuildContext ctx, index) {
               return InkWell(
                 onTap: () {
@@ -193,28 +193,28 @@ class FestaPageState extends State<FestaPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return FestaDetalhesView(filteredFestaList[index]);
+                        return EventoDetalhesView(filteredEventoList[index]);
                       },
                     ),
                   );
                 },
                 child: GridTile(
-                  key: ValueKey(filteredFestaList[index].idArtefato),
+                  key: ValueKey(filteredEventoList[index].idArtefato),
                   footer: GridTileBar(
                     backgroundColor: const Color.fromARGB(137, 107, 98, 98),
                     title: Text(
-                      filteredFestaList[index].tituloArtefato,
+                      filteredEventoList[index].tituloArtefato,
                       style: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(
-                      "R\$ ${filteredFestaList[index].localizacaoFesta}",
+                      "R\$ ${filteredEventoList[index].localizacaoEvento}",
                       style: const TextStyle(
                           fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ),
                   child: ImageHelper.buildCarrousel(
-                      filteredFestaList[index].listaImagens),
+                      filteredEventoList[index].listaImagens),
                 ),
               );
             }),

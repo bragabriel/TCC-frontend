@@ -20,18 +20,12 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
   final TextEditingController _descricaoController = TextEditingController();
   final TextEditingController _cidadeTransporte = TextEditingController();
   final TextEditingController _periodoTransporte = TextEditingController();
-  final TextEditingController _qtdAssentosPreenchidosTransporteController =
-      TextEditingController();
-  final TextEditingController _qtdAssentosTotalTransporteController =
-      TextEditingController();
-  final TextEditingController _telefoneUsuarioController =
-      TextEditingController();
-  final TextEditingController _informacoesVeiculoTransporteController =
-      TextEditingController();
-  final TextEditingController _informacoesCondutorTransporteController =
-      TextEditingController();
-  final TextEditingController _valorTransporteController =
-      TextEditingController();
+  final TextEditingController _qtdAssentosPreenchidosTransporteController = TextEditingController();
+  final TextEditingController _qtdAssentosTotalTransporteController = TextEditingController();
+  final TextEditingController _telefoneUsuarioController = TextEditingController();
+  final TextEditingController _informacoesVeiculoTransporteController = TextEditingController();
+  final TextEditingController _informacoesCondutorTransporteController = TextEditingController();
+  final TextEditingController _valorTransporteController = TextEditingController();
   Response<dynamic>? response;
   File? imagem;
   Usuario? _usuario;

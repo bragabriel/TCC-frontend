@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/model/usuario_model.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
-
 import '../../../service/change_notifier.dart';
 
 class UpdateProfilePage extends StatefulWidget {
@@ -71,7 +70,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                   );
 
                   try {
-                    await usuarioRepository.updateUserName(updatedUser.idUsuario!, updatedUser.nomeUsuario, updatedUser.sobrenomeUsuario);
+                    await usuarioRepository.updateUserName(updatedUser.idUsuario, updatedUser.nomeUsuario, updatedUser.sobrenomeUsuario);
 
                     final userProvider = Provider.of<UserProvider>(context, listen: false);
                     userProvider.updateUserInfo(updatedUser);
