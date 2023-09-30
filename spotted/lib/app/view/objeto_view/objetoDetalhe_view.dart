@@ -81,7 +81,7 @@ class DetalhesObjeto extends StatelessWidget {
           ),
           _buildText(objeto.descricaoArtefato),
           _buildText("Encontrado em: ${objeto.localizacaoAchadoObjeto}"),
-          _buildText("Agora está em: ${objeto.localizacaoAchadoObjeto}"),
+          _buildText("Agora está em: ${objeto.localizacaoAtualObjeto}"),
         ],
       ),
     );

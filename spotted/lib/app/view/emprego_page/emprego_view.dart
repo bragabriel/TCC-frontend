@@ -21,6 +21,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
   String? presencialSelecionado;
   double? salarioMinimo;
   double? salarioMaximo;
+  String _searchTerm = '';
 
   @override
   void initState() {
@@ -28,10 +29,47 @@ class _EmpregoPageState extends State<EmpregoPage> {
     _carregarEmpregos();
   }
 
+@override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Empregos"),
+        leading: BackButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _carregarEmpregos();
+            },
+            icon: const Icon(Icons.refresh_outlined),
+          )
+        ],
+      ),
+      body: _construirFiltrosELista(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EmpregoCadastrarView(),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   Future<void> _carregarEmpregos() async {
     try {
       final listaDeEmpregos = await EmpregoRepository().getAllEmpregos();
-      print("GetAllEmpregos com suceso em EmpregoPage");
+      print("GetAllEmpregos com sucesso em EmpregoPage");
       setState(() {
         this.listaDeEmpregos = listaDeEmpregos;
         listaFiltradaDeEmpregos = listaDeEmpregos;
@@ -90,50 +128,22 @@ class _EmpregoPageState extends State<EmpregoPage> {
             (salarioMaximo == null ||
                 emprego.salarioEmprego! <= salarioMaximo!);
 
+        final searchTerm = _searchTerm.toLowerCase();
+        final titleContainsTerm =
+            emprego.tituloArtefato.toLowerCase().contains(searchTerm);
+        final descriptionContainsTerm =
+            emprego.descricaoArtefato.toLowerCase().contains(searchTerm);        
+
         return atendeCriterioCidade &&
             atendeCriterioEmpresa &&
             atendeCriterioPresencial &&
-            atendeCriterioSalario;
+            atendeCriterioSalario  &&
+            (titleContainsTerm || descriptionContainsTerm);
       }).toList();
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Empregos"),
-        leading: BackButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
-          },
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              _carregarEmpregos();
-            },
-            icon: const Icon(Icons.refresh_outlined),
-          )
-        ],
-      ),
-      body: _construirFiltrosELista(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => EmpregoCadastrarView(),
-            ),
-          );
-        },
-      ),
-    );
-  }
+  
 
   Widget _construirFiltrosELista() {
     return Column(
@@ -141,8 +151,11 @@ class _EmpregoPageState extends State<EmpregoPage> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
-            onChanged: (valor) {
-              setState(() {});
+            onChanged: (value) {
+              setState(() {
+                 _searchTerm = value;
+                 _filtrarListaDeEmpregos();
+              });
             },
             decoration: InputDecoration(
               labelText: 'Pesquisar',

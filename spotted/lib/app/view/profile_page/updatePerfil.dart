@@ -65,7 +65,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                     idUsuario: widget.user.idUsuario,
                     nomeUsuario: nomeController.text,
                     sobrenomeUsuario: sobrenomeController.text,
-                    dataNascimento: widget.user.dataNascimento,
                     telefoneUsuario: widget.user.telefoneUsuario,
                     emailUsuario: widget.user.emailUsuario,
                   );

@@ -1,3 +1,7 @@
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:spotted/app/view/login_page/login_view.dart';
+import '../../helpers/image_helper.dart';
 import 'package:flutter/material.dart';
 import '../../controller/usuario_controller.dart';
 import '../../repository/usuario_repository.dart';
@@ -14,10 +18,11 @@ class _CadastroPageState extends State<CadastroPage> {
   String password = '';
   String confirmPassword = '';
   String user = '';
-  String dataNascimento = '';
   String nome = '';
   String sobrenome = '';
   String telefone = '';
+  File? imagem;
+  Response<dynamic>? response;
 
   final controller = UsuarioController();
 
@@ -98,18 +103,25 @@ class _CadastroPageState extends State<CadastroPage> {
                 child: Expanded(
                   child: Column(
                     children: [
-                      _buildTextFormField('User', (text) => user = text),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 40,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            imagem = await ImageHelper.selecionarImagem();
+                          },
+                          child: Text('Inserir imagem'),
+                        ),
+                      ),
+                      _buildTextFormField('Usuário', (text) => user = text),
                       SizedBox(height: 8),
                       _buildTextFormField('Email', (text) => email = text),
                       SizedBox(height: 8),
+                      _buildTextFormField('Senha', (text) => password = text),
+                      SizedBox(height: 8),
                       _buildTextFormField(
-                          'Password', (text) => password = text),
+                          'Confirme a senha', (text) => confirmPassword = text),
                       SizedBox(height: 8),
-                      _buildTextFormField('Confirm your Password',
-                          (text) => confirmPassword = text),
-                      SizedBox(height: 8),
-                      _buildTextFormField('Data de Nascimento',
-                          (text) => dataNascimento = text),
                       SizedBox(height: 8),
                       _buildTextFormField('Nome', (text) => nome = text),
                       SizedBox(height: 8),
@@ -124,23 +136,46 @@ class _CadastroPageState extends State<CadastroPage> {
               ),
             ),
             SizedBox(height: 15),
-            ElevatedButton(
+            SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 40,
+            child: ElevatedButton(
               onPressed: () {
-                //CHAMAR API PARA CADASTRAR
-                _cadastrarUsuario();
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Confirmação de cadastro"),
+                        content: Text("Deseja cadastrar?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () async {
+                              await _cadastrarUsuario();
+                              imagem ??= File('assets/images/imagem.png');
+                              ImageHelper.uploadImagem(response!, imagem);
+                              //await _buscarEmpregos();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoginPage(),
+                                ),
+                              );
+                            },
+                            child: Text("Sim"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("Cancelar"),
+                          ),
+                        ],
+                      );
+                    });
               },
-              child: Container(
-                width: double.infinity,
-                child: Text('Cadastrar', textAlign: TextAlign.center),
-              ),
-              style: ElevatedButton.styleFrom(
-                textStyle: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
+              child: Text('Cadastrar'),
             ),
+          ),
             Padding(
               padding: const EdgeInsets.all(8.0),
             ),
@@ -178,7 +213,7 @@ class _CadastroPageState extends State<CadastroPage> {
     );
   }
 
-  void _cadastrarUsuario() async {
+  Future<void> _cadastrarUsuario() async {
     // Construir o corpo da requisição com os dados do usuário
     final Map<String, dynamic> body = {
       'email': email,
@@ -186,7 +221,6 @@ class _CadastroPageState extends State<CadastroPage> {
       'nome': nome,
       'sobrenome': sobrenome,
       'telefone': telefone,
-      'dataNascimento': dataNascimento,
     };
 
     try {

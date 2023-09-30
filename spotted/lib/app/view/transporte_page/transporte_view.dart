@@ -8,6 +8,7 @@ import 'TransporteDetalhe_view.dart';
 
 class TransportePage extends StatefulWidget {
   const TransportePage({Key? key}) : super(key: key);
+  
   @override
   TransportePageState createState() => TransportePageState();
 }
@@ -16,6 +17,7 @@ class TransportePageState extends State<TransportePage> {
   List<Transporte> listaDeTransportes = [];
   List<Transporte> listaFiltradaDeTransportes = [];
   String cidadeSelecionada = 'Selecione uma cidade';
+  String _searchTerm = '';
 
   @override
   void initState() {
@@ -51,13 +53,20 @@ class TransportePageState extends State<TransportePage> {
 
   void _filtrarListaDeTransportes() {
     setState(() {
-      listaFiltradaDeTransportes = listaDeTransportes.where((Transporte) {
+      listaFiltradaDeTransportes = listaDeTransportes.where((transporte) {
         final atendeCriterioCidade =
             cidadeSelecionada == "Selecione uma cidade" ||
-                Transporte.cidadeTransporte?.toLowerCase() ==
+                transporte.cidadeTransporte?.toLowerCase() ==
                     cidadeSelecionada.toLowerCase();
 
-        return atendeCriterioCidade;
+      final searchTerm = _searchTerm.toLowerCase();
+            final titleContainsTerm =
+                transporte.tituloArtefato.toLowerCase().contains(searchTerm);
+            final descriptionContainsTerm =
+                transporte.descricaoArtefato.toLowerCase().contains(searchTerm);
+                
+        return atendeCriterioCidade &&
+            (titleContainsTerm || descriptionContainsTerm);
       }).toList();
     });
   }
@@ -106,7 +115,10 @@ class TransportePageState extends State<TransportePage> {
           padding: const EdgeInsets.all(8.0),
           child: TextField(
             onChanged: (valor) {
-              setState(() {});
+              setState(() {
+                _searchTerm = valor;
+              _filtrarListaDeTransportes();
+              });
             },
             decoration: InputDecoration(
               labelText: 'Pesquisar',
