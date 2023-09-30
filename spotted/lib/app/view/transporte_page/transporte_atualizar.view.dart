@@ -173,6 +173,8 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
           ElevatedButton(
             onPressed: () async {
               try {
+
+                Response<dynamic>? response = widget.transporte['idArtefato'];
                 imagem ??= File('assets/images/imagem.png');
                 ImageHelper.uploadImagem(response, imagem);
                 await _transporteRepository.updateTransporte(

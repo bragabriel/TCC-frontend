@@ -117,6 +117,7 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
           ElevatedButton(
             onPressed: () async {
               try {
+                Response<dynamic>? response = widget.objeto['idArtefato'];
                 imagem ??= File('assets/images/imagem.png');
                 ImageHelper.uploadImagem(response, imagem);
                 await _objetoRepository.updateObjeto(

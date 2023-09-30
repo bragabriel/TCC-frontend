@@ -195,6 +195,7 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
           ElevatedButton(
             onPressed: () async {
               try {
+                Response<dynamic>? response = widget.moradia['idArtefato'];
                 imagem ??= File('assets/images/imagem.png');
                 ImageHelper.uploadImagem(response, imagem);
                 await _moradiaRepository.updateMoradia(

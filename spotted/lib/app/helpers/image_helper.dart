@@ -56,7 +56,39 @@ class ImageHelper {
     }
   }
 
-  static uploadImagem(Response<dynamic>? idArtefato, imageFile) async {
+  static uploadImagem(
+    Response<dynamic>? idArtefato,
+    imageFile,
+  ) async {
+    print("\n\n\n\nid artefato::::::::::::");
+    var client = http.Client();
+    var uri = Uri.parse('$onlineApi/uploadImage/$idArtefato');
+    var request = http.MultipartRequest("POST", uri);
+
+    var multipartFile = http.MultipartFile(
+        'files', imageFile.openRead(), await imageFile.length(),
+        filename: basename(imageFile.path));
+
+    request.files.add(multipartFile);
+
+    print("ta no upload de imagens");
+    print(multipartFile);
+    print(request);
+
+    var response = await client.send(request);
+    client.close();
+    print(response.statusCode);
+
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+    });
+  }
+
+  static updateImagem(
+    int idArtefato,
+    imageFile,
+  ) async {
+    print("\n\n\n\nid artefato::::::::::::");
     print(idArtefato);
     var client = http.Client();
     var uri = Uri.parse('$onlineApi/uploadImage/$idArtefato');
@@ -70,7 +102,6 @@ class ImageHelper {
 
     print("ta no upload de imagens");
     print(multipartFile);
-    print(request.files.first);
     print(request);
 
     var response = await client.send(request);

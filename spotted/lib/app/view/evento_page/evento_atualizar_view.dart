@@ -107,7 +107,8 @@ class EventoEditarPageState extends State<EventoEditarView> {
           ElevatedButton(
             onPressed: () async {
               try {
-                               imagem ??= File('assets/images/imagem.png');
+              Response<dynamic>? response = widget.evento['idArtefato'];
+                imagem ??= File('assets/images/imagem.png');
                 ImageHelper.uploadImagem(response, imagem);
                 await _eventoRepository.updateEvento(body,
                     widget.evento['idArtefato']);

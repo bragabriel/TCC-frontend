@@ -218,6 +218,7 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
           ElevatedButton(
             onPressed: () async {
               try {
+                Response<dynamic>? response = widget.emprego['idArtefato'];
                 imagem ??= File('assets/images/imagem.png');
                 ImageHelper.uploadImagem(response, imagem);
                 await _empregoRepository.updateEmprego(

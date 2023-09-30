@@ -192,10 +192,9 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
           ),
           ElevatedButton(
             onPressed: () async {
-              try {
+              try {                
                 imagem ??= File('assets/images/imagem.png');
-
-                await ImageHelper.uploadImagem(null, widget.alimento['idArtefato'] );
+                ImageHelper.updateImagem( widget.alimento['idArtefato'], imagem);
                 print("terminou de subir a imagem em alimentos");
                 await _alimentoRepository.updateAlimento(
                     body, widget.alimento['idArtefato']);
