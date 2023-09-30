@@ -16,6 +16,7 @@ class TransportePageState extends State<TransportePage> {
   List<Transporte> listaDeTransportes = [];
   List<Transporte> listaFiltradaDeTransportes = [];
   String cidadeSelecionada = 'Selecione uma cidade';
+  String _searchTerm = '';
 
   @override
   void initState() {
@@ -57,7 +58,14 @@ class TransportePageState extends State<TransportePage> {
                 Transporte.cidadeTransporte?.toLowerCase() ==
                     cidadeSelecionada.toLowerCase();
 
-        return atendeCriterioCidade;
+      final searchTerm = _searchTerm.toLowerCase();
+            final titleContainsTerm =
+                Transporte.tituloArtefato.toLowerCase().contains(searchTerm);
+            final descriptionContainsTerm =
+                Transporte.descricaoArtefato.toLowerCase().contains(searchTerm);
+                
+        return atendeCriterioCidade &&
+            (titleContainsTerm || descriptionContainsTerm);
       }).toList();
     });
   }
@@ -106,12 +114,14 @@ class TransportePageState extends State<TransportePage> {
           padding: const EdgeInsets.all(8.0),
           child: TextField(
             onChanged: (valor) {
-              setState(() {});
+              setState(() {
+                _searchTerm = valor;
+              _filtrarListaDeTransportes();
+              });
             },
             decoration: InputDecoration(
               labelText: 'Pesquisar',
               prefixIcon: Icon(Icons.search),
-              border: OutlineInputBorder(),
             ),
           ),
         ),
@@ -123,6 +133,7 @@ class TransportePageState extends State<TransportePage> {
             onChanged: (novaCidade) {
               setState(() {
                 cidadeSelecionada = novaCidade!;
+                _searchTerm = novaCidade;
                 _filtrarListaDeTransportes();
               });
             },

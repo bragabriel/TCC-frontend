@@ -1,5 +1,5 @@
-import 'package:spotted/app/view/objeto_view/objetoDetalhe_view.dart';
 import 'package:flutter/material.dart';
+import 'package:spotted/app/view/objeto_view/objetoDetalhe_view.dart';
 import 'objetoCadastrar_view.dart';
 import '../../controller/objeto_controller.dart';
 import '../../helpers/image_helper.dart';
@@ -9,6 +9,7 @@ import '../home_page/home_view.dart';
 
 class ObjetoPage extends StatefulWidget {
   const ObjetoPage({Key? key}) : super(key: key);
+
   @override
   State<ObjetoPage> createState() => ObjetoPageState();
 }
@@ -16,11 +17,8 @@ class ObjetoPage extends StatefulWidget {
 class ObjetoPageState extends State<ObjetoPage> {
   List<Objeto> objetoList = [];
   List<Objeto> filteredobjetoList = [];
-  double? minPrice;
-  double? maxPrice;
-  bool showOnlyOffers = false;
-  List<String> selectedTypes = [];
   String _searchTerm = '';
+  String _searchLocalizacao = '';
 
   final _searchController = TextEditingController();
   final controller = ObjetoController();
@@ -143,18 +141,15 @@ class ObjetoPageState extends State<ObjetoPage> {
     setState(() {
       filteredobjetoList = objetoList.where((objeto) {
         final searchTerm = _searchTerm.toLowerCase();
-
-        final achadoCoitainsTerm =
-            objeto.localizacaoAchadoObjeto!.toLowerCase().contains(searchTerm);
-        final localizacaoAtualContainsTerm =
-            objeto.localizacaoAtualObjeto!.toLowerCase().contains(searchTerm);
         final titleContainsTerm =
             objeto.tituloArtefato.toLowerCase().contains(searchTerm);
         final descriptionContainsTerm =
             objeto.descricaoArtefato.toLowerCase().contains(searchTerm);
+        final achadoContainsTerm =
+            objeto.localizacaoAchadoObjeto!.toLowerCase().contains(_searchLocalizacao);
 
-        return achadoCoitainsTerm &&
-            localizacaoAtualContainsTerm &&
+
+        return achadoContainsTerm &&
             (titleContainsTerm || descriptionContainsTerm);
       }).toList();
     });
@@ -179,97 +174,71 @@ class ObjetoPageState extends State<ObjetoPage> {
         ),
       ),
       SizedBox(height: 10),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Column(
-            children: [
-              Text('Preço mínimo'),
-              SizedBox(height: 4),
-              SizedBox(
-                width: 100,
-                child: TextFormField(
-                  onChanged: (value) {
-                    setState(() {
-                      minPrice = value.isEmpty ? null : double.parse(value);
-                      _filterobjetoList();
-                    });
-                  },
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: '0.0',
-                  ),
-                ),
-              ),
-            ],
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextField(
+          onChanged: (value) {
+            setState(() {
+              // Update the localização search term
+              _searchLocalizacao = value.toLowerCase();
+              _filterobjetoList();
+            });
+          },
+          decoration: InputDecoration(
+            labelText: 'Localização que Perdeu o Objeto',
+            prefixIcon: Icon(Icons.location_on),
           ),
-          Column(
-            children: [
-              Text('Preço máximo'),
-              SizedBox(height: 4),
-              SizedBox(
-                width: 100,
-                child: TextFormField(
-                  onChanged: (value) {
-                    setState(() {
-                      maxPrice = value.isEmpty ? null : double.parse(value);
-                      _filterobjetoList();
-                    });
-                  },
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: '0.0',
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
       SizedBox(height: 10),
       Expanded(
         child: GridView.builder(
-            padding: const EdgeInsets.all(20),
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 2 / 3,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20),
-            itemCount: filteredobjetoList.length,
-            itemBuilder: (BuildContext ctx, index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return ObjetoDetalheView(filteredobjetoList[index]);
-                      },
-                    ),
-                  );
-                },
-                child: GridTile(
-                  key: ValueKey(filteredobjetoList[index].idArtefato),
-                  footer: GridTileBar(
-                    backgroundColor: const Color.fromARGB(137, 107, 98, 98),
-                    title: Text(
-                      filteredobjetoList[index].tituloArtefato,
-                      style: const TextStyle(
-                          fontSize: 15, fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                      "R\$ ${filteredobjetoList[index].localizacaoAchadoObjeto}",
-                      style: const TextStyle(
-                          fontSize: 13, fontWeight: FontWeight.bold),
+          padding: const EdgeInsets.all(20),
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            childAspectRatio: 2 / 3,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20,
+          ),
+          itemCount: filteredobjetoList.length,
+          itemBuilder: (BuildContext ctx, index) {
+            return InkWell(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return ObjetoDetalheView(filteredobjetoList[index]);
+                    },
+                  ),
+                );
+              },
+              child: GridTile(
+                key: ValueKey(filteredobjetoList[index].idArtefato),
+                footer: GridTileBar(
+                  backgroundColor: const Color.fromARGB(137, 107, 98, 98),
+                  title: Text(
+                    filteredobjetoList[index].tituloArtefato,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  child: ImageHelper.buildCarrousel(
-                      filteredobjetoList[index].listaImagens),
+                  subtitle: Text(
+                    filteredobjetoList[index].localizacaoAchadoObjeto!,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              );
-            }),
+                child: ImageHelper.buildCarrousel(
+                  filteredobjetoList[index].listaImagens,
+                ),
+              ),
+            );
+          },
+        ),
       )
     ]);
   }

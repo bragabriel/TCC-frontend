@@ -134,7 +134,6 @@ class AlimentoPageState extends State<AlimentoPage> {
   Future<void> _buscarAlimentos() async {
     try {
       final foodList = await AlimentoRepository().getAllAlimentos();
-      print("GetAllAlimentos com sucesso em AlimentoPage");
       setState(() {
         this.foodList = foodList;
         filteredFoodList = foodList;

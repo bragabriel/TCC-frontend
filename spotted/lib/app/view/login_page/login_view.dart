@@ -134,7 +134,6 @@ class _LoginPageState extends State<LoginPage> {
           emailUsuario: email,
           senhaUsuario: password,
           telefoneUsuario: response.usuario!.telefoneUsuario,
-          dataNascimento: response.usuario!.dataNascimento,
           listaArtefatosReponse: response.usuario!.listaArtefatosReponse);
 
       Provider.of<UserProvider>(context, listen: false).setUser(user);

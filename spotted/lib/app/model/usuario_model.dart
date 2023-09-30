@@ -5,7 +5,6 @@ class Usuario {
   String emailUsuario;
   String? senhaUsuario;
   String telefoneUsuario;
-  DateTime dataNascimento;
   String? url;
   String? fileName;
   List<dynamic>? listaArtefatosReponse;
@@ -19,7 +18,6 @@ class Usuario {
         emailUsuario = '',
         senhaUsuario = '',
         telefoneUsuario = '',
-        dataNascimento = DateTime.now(),
         url = '',
         fileName = '',
         listaArtefatosReponse = List.empty();
@@ -31,7 +29,6 @@ class Usuario {
     required this.emailUsuario,
     this.senhaUsuario,
     required this.telefoneUsuario,
-    required this.dataNascimento,
     this.url,
     this.fileName,
     this.listaArtefatosReponse
@@ -56,7 +53,6 @@ class Usuario {
         emailUsuario: emailUsuario ?? this.emailUsuario,
         senhaUsuario: senhaUsuario ?? this.senhaUsuario,
         telefoneUsuario: telefoneUsuario ?? this.telefoneUsuario,
-        dataNascimento: dataNascimento,
         url: url ?? this.url,
         fileName: fileName ?? this.fileName,
         listaArtefatosReponse: listaArtefatosReponse ?? this.listaArtefatosReponse
@@ -69,7 +65,6 @@ class Usuario {
         emailUsuario: json['emailUsuario'],
         senhaUsuario: json['senhaUsuario'] as String? ?? "",
         telefoneUsuario: json['telefoneUsuario'],
-        dataNascimento: DateTime.parse(json['dataNascimento']),
         fileName: json['fileName'] as String? ?? "",
         url: json['url'] as String? ?? "",
         listaArtefatosReponse: json['listaArtefatosReponse'],
@@ -82,7 +77,6 @@ class Usuario {
         'emailUsuario': emailUsuario,
         'senhaUsuario': senhaUsuario,
         'telefoneUsuario': telefoneUsuario,
-        'dataNascimento': dataNascimento.toIso8601String(),
         'url': url,
         'fileName': fileName,
         'listaArtefatosReponse': listaArtefatosReponse
