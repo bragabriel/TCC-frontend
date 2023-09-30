@@ -87,6 +87,7 @@ class HomePageState extends State<HomePage> {
     var userData = await sharedPref.getUser();
     if (userData != null) {
       userProvider.updateUserInfo(userData);
+      _usuario = userData;
     }
   }
 
@@ -97,13 +98,6 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     getUserPreferences();
-
-    Consumer<UserProvider>(
-      builder: (context, userProvider, _) {
-        _usuario = UsuarioHelper.getUser(context, userProvider);
-        return Container();
-      },
-    );
 
     return Scaffold(
       drawer: Drawer(
@@ -200,14 +194,14 @@ class HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(32),
                 child: Column(children: <Widget>[
                   Row(
                     children: [
                       Text(
-                        'Olá fulano de tal!',
-                        style: TextStyle(
+                        "Olá ${_usuario?.nomeUsuario}!",
+                        style: const TextStyle(
                             fontFamily: 'Avenir',
                             fontSize: 40,
                             color: Color(0xffffffff),
@@ -216,7 +210,7 @@ class HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  Text(
+                  const Text(
                     'O que oferecemos:',
                     style: TextStyle(
                         fontFamily: 'Avenir',

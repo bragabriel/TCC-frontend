@@ -8,6 +8,7 @@ import 'TransporteDetalhe_view.dart';
 
 class TransportePage extends StatefulWidget {
   const TransportePage({Key? key}) : super(key: key);
+  
   @override
   TransportePageState createState() => TransportePageState();
 }
@@ -52,17 +53,17 @@ class TransportePageState extends State<TransportePage> {
 
   void _filtrarListaDeTransportes() {
     setState(() {
-      listaFiltradaDeTransportes = listaDeTransportes.where((Transporte) {
+      listaFiltradaDeTransportes = listaDeTransportes.where((transporte) {
         final atendeCriterioCidade =
             cidadeSelecionada == "Selecione uma cidade" ||
-                Transporte.cidadeTransporte?.toLowerCase() ==
+                transporte.cidadeTransporte?.toLowerCase() ==
                     cidadeSelecionada.toLowerCase();
 
       final searchTerm = _searchTerm.toLowerCase();
             final titleContainsTerm =
-                Transporte.tituloArtefato.toLowerCase().contains(searchTerm);
+                transporte.tituloArtefato.toLowerCase().contains(searchTerm);
             final descriptionContainsTerm =
-                Transporte.descricaoArtefato.toLowerCase().contains(searchTerm);
+                transporte.descricaoArtefato.toLowerCase().contains(searchTerm);
                 
         return atendeCriterioCidade &&
             (titleContainsTerm || descriptionContainsTerm);
@@ -122,6 +123,7 @@ class TransportePageState extends State<TransportePage> {
             decoration: InputDecoration(
               labelText: 'Pesquisar',
               prefixIcon: Icon(Icons.search),
+              border: OutlineInputBorder(),
             ),
           ),
         ),
@@ -133,7 +135,6 @@ class TransportePageState extends State<TransportePage> {
             onChanged: (novaCidade) {
               setState(() {
                 cidadeSelecionada = novaCidade!;
-                _searchTerm = novaCidade;
                 _filtrarListaDeTransportes();
               });
             },
