@@ -8,7 +8,6 @@ import '../../helpers/usuario_helper.dart';
 import '../../helpers/image_helper.dart';
 import '../../model/usuario_model.dart';
 import '../../repository/moradia_repository.dart';
-import '../../model/moradia_model.dart';
 
 class MoradiaCadastrarView extends StatefulWidget {
   const MoradiaCadastrarView({Key? key}) : super(key: key);
@@ -103,7 +102,7 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastrar moradia'),
+        title: const Text('Cadastrar moradia'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
@@ -143,62 +142,62 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
 
   SingleChildScrollView _cadastrarMoradia() {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           TextField(
             controller: _tituloController,
-            decoration: InputDecoration(labelText: 'Titulo'),
+            decoration: const InputDecoration(labelText: 'Titulo'),
           ),
           TextField(
             controller: _descricaoController,
-            decoration: InputDecoration(labelText: 'Descrição'),
+            decoration: const InputDecoration(labelText: 'Descrição'),
           ),
           TextField(
             controller: _estadoMoradiaController,
-            decoration: InputDecoration(labelText: 'Estado'),
+            decoration: const InputDecoration(labelText: 'Estado'),
           ),
           TextField(
             controller: _cidadeMoradiaController,
-            decoration: InputDecoration(labelText: 'Cidade'),
+            decoration: const InputDecoration(labelText: 'Cidade'),
           ),
           TextField(
             controller: _bairroMoradiaController,
-            decoration: InputDecoration(labelText: 'Bairro'),
+            decoration: const InputDecoration(labelText: 'Bairro'),
           ),
           TextField(
             controller: _cepMoradiaController,
-            decoration: InputDecoration(labelText: 'CEP'),
+            decoration: const InputDecoration(labelText: 'CEP'),
           ),
           TextField(
             controller: _qtdMoradoresPermitidoController,
-            decoration: InputDecoration(labelText: 'Qtd Moradores Permitido'),
+            decoration: const InputDecoration(labelText: 'Qtd Moradores Permitido'),
             keyboardType: TextInputType.number,
           ),
           TextField(
             controller: _qtdMoradoresAtuaisController,
-            decoration: InputDecoration(labelText: 'Qtd Moradores Atuais'),
+            decoration: const InputDecoration(labelText: 'Qtd Moradores Atuais'),
             keyboardType: TextInputType.number,
           ),
           TextField(
             controller: _precoAluguelTotalController,
-            decoration: InputDecoration(labelText: 'Preço Aluguel Total'),
+            decoration: const InputDecoration(labelText: 'Preço Aluguel Total'),
             keyboardType: TextInputType.number,
           ),
           TextField(
             controller: _precoAluguelPorPessoaController,
-            decoration: InputDecoration(labelText: 'Preço Aluguel por Pessoa'),
+            decoration: const InputDecoration(labelText: 'Preço Aluguel por Pessoa'),
             keyboardType: TextInputType.number,
           ),
           TextField(
             controller: _vagaGaragemController,
-            decoration: InputDecoration(labelText: 'Vaga Garagem'),
+            decoration: const InputDecoration(labelText: 'Vaga Garagem'),
           ),
           TextField(
             controller: _animaisEstimacaoController,
-            decoration: InputDecoration(labelText: 'Animais Estimação'),
+            decoration: const InputDecoration(labelText: 'Animais Estimação'),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 40,
@@ -206,10 +205,10 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
               onPressed: () async {
                 imagem = await ImageHelper.selecionarImagem();
               },
-              child: Text('Inserir imagem'),
+              child: const Text('Inserir imagem'),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 40,
@@ -219,8 +218,8 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: Text("Confirmação de cadastro"),
-                      content: Text("Deseja cadastrar o alimento?"),
+                      title: const Text("Confirmação de cadastro"),
+                      content: const Text("Deseja cadastrar o alimento?"),
                       actions: [
                         TextButton(
                           onPressed: () async {
@@ -231,24 +230,24 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => MoradiaPage(),
+                                builder: (context) => const MoradiaPage(),
                               ),
                             );
                           },
-                          child: Text("Sim"),
+                          child: const Text("Sim"),
                         ),
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text("Cancelar"),
+                          child: const Text("Cancelar"),
                         ),
                       ],
                     );
                   },
                 );
               },
-              child: Text('Cadastrar'),
+              child: const Text('Cadastrar'),
             ),
           ),
         ],

@@ -33,12 +33,12 @@ class _EmpregoPageState extends State<EmpregoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Empregos"),
+        title: const Text("Empregos"),
         leading: BackButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           },
         ),
@@ -53,12 +53,12 @@ class _EmpregoPageState extends State<EmpregoPage> {
       ),
       body: _construirFiltrosELista(),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => EmpregoCadastrarView(),
+              builder: (context) => const EmpregoCadastrarView(),
             ),
           );
         },
@@ -157,14 +157,14 @@ class _EmpregoPageState extends State<EmpregoPage> {
                  _filtrarListaDeEmpregos();
               });
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Pesquisar',
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(),
             ),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: DropdownButtonFormField<String>(
@@ -182,13 +182,13 @@ class _EmpregoPageState extends State<EmpregoPage> {
                 child: Text(cidade),
               );
             }).toList(),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Cidade',
               border: OutlineInputBorder(),
             ),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: DropdownButtonFormField<String>(
@@ -206,13 +206,13 @@ class _EmpregoPageState extends State<EmpregoPage> {
                 child: Text(empresa),
               );
             }).toList(),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Empresa',
               border: OutlineInputBorder(),
             ),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: DropdownButtonFormField<String>(
@@ -223,7 +223,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
                 _filtrarListaDeEmpregos();
               });
             },
-            items: [
+            items: const [
               DropdownMenuItem<String>(
                 value: "Todos",
                 child: Text("Todos"),
@@ -241,13 +241,13 @@ class _EmpregoPageState extends State<EmpregoPage> {
                 child: Text("Híbrido"),
               ),
             ],
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Presencial/Remoto',
               border: OutlineInputBorder(),
             ),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Expanded(
           child: GridView.builder(
             padding: const EdgeInsets.all(20),

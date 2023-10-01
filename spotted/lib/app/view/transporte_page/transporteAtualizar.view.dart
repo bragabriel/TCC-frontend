@@ -11,7 +11,7 @@ import '../../repository/transporte_repository.dart';
 class TransporteEditarView extends StatefulWidget {
   final dynamic transporte;
 
-  TransporteEditarView(this.transporte);
+  const TransporteEditarView(this.transporte, {super.key});
 
   @override
   TransporteEditarPageState createState() => TransporteEditarPageState();
@@ -40,7 +40,7 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
   Usuario? _usuario;
 
   void _showSuccessMessage(BuildContext context) {
-    final snackBar = SnackBar(
+    const snackBar = SnackBar(
       content: Text('Informações atualizadas com sucesso!'),
       backgroundColor: Colors.green,
     );
@@ -92,7 +92,7 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
     print("entrou no update Transporte");
     return Scaffold(
       appBar: AppBar(
-        title: Text('Atualizar Transporte'),
+        title: const Text('Atualizar Transporte'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
@@ -121,44 +121,44 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
     };
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           TextFormField(
             controller: _tituloController,
-            decoration: InputDecoration(labelText: 'Título'),
+            decoration: const InputDecoration(labelText: 'Título'),
           ),
           TextFormField(
             controller: _descricaoController,
-            decoration: InputDecoration(labelText: 'Descrição'),
+            decoration: const InputDecoration(labelText: 'Descrição'),
           ),
           TextFormField(
             controller: _cidadeTransporteController,
-            decoration: InputDecoration(labelText: 'Cidade'),
+            decoration: const InputDecoration(labelText: 'Cidade'),
           ),
           TextFormField(
             controller: _periodoTransporteController,
-            decoration: InputDecoration(labelText: 'Turno'),
+            decoration: const InputDecoration(labelText: 'Turno'),
           ),
           TextFormField(
             controller: _informacoesVeiculoTransporteController,
-            decoration: InputDecoration(labelText: 'Informações do veículo'),
+            decoration: const InputDecoration(labelText: 'Informações do veículo'),
           ),
           TextFormField(
             controller: _informacoesCondutorTransporteController,
-            decoration: InputDecoration(labelText: 'Informações do condutor'),
+            decoration: const InputDecoration(labelText: 'Informações do condutor'),
           ),
           TextFormField(
             controller: _qtdAssentosPreenchidosTransporteController,
-            decoration: InputDecoration(labelText: 'Assentos ocupados'),
+            decoration: const InputDecoration(labelText: 'Assentos ocupados'),
           ),
           TextFormField(
             controller: _qtdAssentosTotalTransporteController,
-            decoration: InputDecoration(labelText: 'Capacidade maxíma'),
+            decoration: const InputDecoration(labelText: 'Capacidade maxíma'),
           ),
           TextFormField(
             controller: _valorTransporteController,
-            decoration: InputDecoration(labelText: 'Valor'),
+            decoration: const InputDecoration(labelText: 'Valor'),
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
@@ -167,7 +167,7 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
               onPressed: () async {
                 imagem = await ImageHelper.selecionarImagem();
               },
-              child: Text('Atualizar imagem'),
+              child: const Text('Atualizar imagem'),
             ),
           ),
           ElevatedButton(
@@ -186,7 +186,7 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
               await _buscarTransportes();
               Navigator.pop(context);
             },
-            child: Text('Atualizar'),
+            child: const Text('Atualizar'),
           )
         ]),
       ),

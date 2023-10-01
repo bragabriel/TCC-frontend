@@ -35,16 +35,16 @@ class _CadastroPageState extends State<CadastroPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
+          const Text(
             'Ops, algo de errado aconteceu',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               controller.startCadastro();
             },
-            child: Text('Tentar novamente'),
+            child: const Text('Tentar novamente'),
           ),
         ],
       ),
@@ -52,7 +52,7 @@ class _CadastroPageState extends State<CadastroPage> {
   }
 
   _loading() {
-    return Center(child: CircularProgressIndicator());
+    return const Center(child: CircularProgressIndicator());
   }
 
   _start() {
@@ -88,7 +88,7 @@ class _CadastroPageState extends State<CadastroPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
+            SizedBox(
               width: 100,
               height: 100,
               child: Image.asset('assets/images/logo.png'),
@@ -110,24 +110,24 @@ class _CadastroPageState extends State<CadastroPage> {
                           onPressed: () async {
                             imagem = await ImageHelper.selecionarImagem();
                           },
-                          child: Text('Inserir imagem'),
+                          child: const Text('Inserir imagem'),
                         ),
                       ),
                       _buildTextFormField('Usuário', (text) => user = text),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       _buildTextFormField('Email', (text) => email = text),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       _buildTextFormField('Senha', (text) => password = text),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       _buildTextFormField(
                           'Confirme a senha', (text) => confirmPassword = text),
-                      SizedBox(height: 8),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       _buildTextFormField('Nome', (text) => nome = text),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       _buildTextFormField(
                           'Sobrenome', (text) => sobrenome = text),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       _buildTextFormField(
                           'Telefone', (text) => telefone = text),
                     ],
@@ -135,7 +135,7 @@ class _CadastroPageState extends State<CadastroPage> {
                 ),
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 40,
@@ -145,8 +145,8 @@ class _CadastroPageState extends State<CadastroPage> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text("Confirmação de cadastro"),
-                        content: Text("Deseja cadastrar?"),
+                        title: const Text("Confirmação de cadastro"),
+                        content: const Text("Deseja cadastrar?"),
                         actions: [
                           TextButton(
                             onPressed: () async {
@@ -157,33 +157,33 @@ class _CadastroPageState extends State<CadastroPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => LoginPage(),
+                                  builder: (context) => const LoginPage(),
                                 ),
                               );
                             },
-                            child: Text("Sim"),
+                            child: const Text("Sim"),
                           ),
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text("Cancelar"),
+                            child: const Text("Cancelar"),
                           ),
                         ],
                       );
                     });
               },
-              child: Text('Cadastrar'),
+              child: const Text('Cadastrar'),
             ),
           ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
             ),
             GestureDetector(
               onTap: () {
                 Navigator.of(context).pushReplacementNamed('/');
               },
-              child: Text(
+              child: const Text(
                 'Já tem uma conta? Logar.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -205,9 +205,9 @@ class _CadastroPageState extends State<CadastroPage> {
         onChanged: onChanged,
         decoration: InputDecoration(
           labelText: label,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
           contentPadding:
-              EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+              const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
         ),
       ),
     );
@@ -234,10 +234,10 @@ class _CadastroPageState extends State<CadastroPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastro'),
+        title: const Text('Cadastro'),
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh_outlined),
+            icon: const Icon(Icons.refresh_outlined),
             onPressed: () {
               controller.startCadastro();
             },

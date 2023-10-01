@@ -53,7 +53,7 @@ class _DetailsState extends State<ObjetoDetalheView> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => ObjetoPage()),
+                                            builder: (context) => const ObjetoPage()),
                                       );
                                     },
                                     icon: const Icon(Icons.arrow_back_ios_new))
@@ -148,7 +148,7 @@ class _DetailsState extends State<ObjetoDetalheView> {
                             ),
                             Text(
                               objeto.descricaoArtefato,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
                               ),
@@ -169,7 +169,7 @@ class _DetailsState extends State<ObjetoDetalheView> {
                             ),
                             Text(
                               objeto.descricaoArtefato,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
                               ),

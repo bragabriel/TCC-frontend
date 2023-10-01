@@ -55,7 +55,7 @@ class _DetailsState extends State<AlimentoDetails> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                AlimentoPage()),
+                                                const AlimentoPage()),
                                       );
                                     },
                                     icon: const Icon(Icons.arrow_back_ios_new))
@@ -149,7 +149,7 @@ class _DetailsState extends State<AlimentoDetails> {
                             ),
                             Text(
                               alimento.descricaoArtefato,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
                               ),

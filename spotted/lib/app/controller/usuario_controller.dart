@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
@@ -30,7 +29,7 @@ class UsuarioController {
     try {
       Usuario? user = Provider.of<UserProvider>(context, listen: false).user;
 
-      await _repository.getUsuario(user!.idUsuario as num);
+      await _repository.getUsuario(user!.idUsuario);
       state.value = HomeState.success;
     } catch (e) {
       state.value = HomeState.error;

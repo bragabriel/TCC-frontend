@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/view/Moradia_page/Moradia_view.dart';
-import '../../helpers/button_helper.dart';
 import '../../model/moradia_model.dart';
 
 class MoradiaDetalheView extends StatefulWidget {
@@ -55,7 +54,7 @@ class _DetailsState extends State<MoradiaDetalheView> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                MoradiaPage()),
+                                                const MoradiaPage()),
                                       );
                                     },
                                     icon: const Icon(Icons.arrow_back_ios_new))
@@ -149,7 +148,7 @@ class _DetailsState extends State<MoradiaDetalheView> {
                             ),
                             Text(
                               moradia.descricaoArtefato,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
                               ),

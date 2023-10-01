@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../helpers/button_helper.dart';
 import '../../model/evento_model.dart';
 import 'evento_view.dart';
 
@@ -55,7 +54,7 @@ class EmpregoDetalheState extends State<EventoDetalhesView> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                EventoPage()),
+                                                const EventoPage()),
                                       );
                                     },
                                     icon: const Icon(Icons.arrow_back_ios_new))
@@ -140,7 +139,7 @@ class EmpregoDetalheState extends State<EventoDetalhesView> {
                             ),
                             Text(
                               evento.descricaoArtefato,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
                               ),

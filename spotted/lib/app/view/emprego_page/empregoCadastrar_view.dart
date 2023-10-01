@@ -120,7 +120,7 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastrar emprego'),
+        title: const Text('Cadastrar emprego'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
@@ -133,63 +133,63 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
 
   Widget _cadastrarEmprego() {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           TextField(
             controller: _tituloController,
-            decoration: InputDecoration(labelText: 'Título'),
+            decoration: const InputDecoration(labelText: 'Título'),
           ),
           TextField(
             controller: _descricaoController,
-            decoration: InputDecoration(labelText: 'Descrição'),
+            decoration: const InputDecoration(labelText: 'Descrição'),
           ),
           TextField(
             controller: _beneficiosController,
-            decoration: InputDecoration(labelText: 'Benefícios'),
+            decoration: const InputDecoration(labelText: 'Benefícios'),
           ),
           TextField(
             controller: _cidadeController,
-            decoration: InputDecoration(labelText: 'Cidade'),
+            decoration: const InputDecoration(labelText: 'Cidade'),
           ),
           TextField(
             controller: _contatoController,
-            decoration: InputDecoration(labelText: 'Contato'),
+            decoration: const InputDecoration(labelText: 'Contato'),
           ),
           TextField(
             controller: _empresaController,
-            decoration: InputDecoration(labelText: 'Empresa'),
+            decoration: const InputDecoration(labelText: 'Empresa'),
           ),
           TextField(
             controller: _estadoController,
-            decoration: InputDecoration(labelText: 'Estado'),
+            decoration: const InputDecoration(labelText: 'Estado'),
           ),
           TextField(
             controller: _experienciaController,
-            decoration: InputDecoration(labelText: 'Experiencia'),
+            decoration: const InputDecoration(labelText: 'Experiencia'),
           ),
           TextField(
             controller: _linkVagaController,
-            decoration: InputDecoration(labelText: 'Link da vaga'),
+            decoration: const InputDecoration(labelText: 'Link da vaga'),
           ),
           TextField(
             controller: _cidadeController,
-            decoration: InputDecoration(labelText: 'Localização'),
+            decoration: const InputDecoration(labelText: 'Localização'),
           ),
           TextField(
             controller: _presencialController,
-            decoration: InputDecoration(labelText: 'Presencial'),
+            decoration: const InputDecoration(labelText: 'Presencial'),
           ),
           TextField(
             controller: _requisitosController,
-            decoration: InputDecoration(labelText: 'Requisitos'),
+            decoration: const InputDecoration(labelText: 'Requisitos'),
           ),
           TextField(
             controller: _salarioController,
-            decoration: InputDecoration(labelText: 'Salário'),
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            decoration: const InputDecoration(labelText: 'Salário'),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           DropdownButtonFormField<String>(
             value: _selectedModalidade,
             onChanged: (String? newValue) {
@@ -208,12 +208,12 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
                 child: Text(value),
               );
             }).toList(),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Modalidade',
               border: OutlineInputBorder(),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 40,
@@ -221,10 +221,10 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
               onPressed: () async {
                 imagem = await ImageHelper.selecionarImagem();
               },
-              child: Text('Inserir imagem'),
+              child: const Text('Inserir imagem'),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 40,
@@ -234,8 +234,8 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text("Confirmação de cadastro"),
-                        content: Text("Deseja cadastrar o emprego?"),
+                        title: const Text("Confirmação de cadastro"),
+                        content: const Text("Deseja cadastrar o emprego?"),
                         actions: [
                           TextButton(
                             onPressed: () async {
@@ -246,23 +246,23 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => EmpregoPage(),
+                                  builder: (context) => const EmpregoPage(),
                                 ),
                               );
                             },
-                            child: Text("Sim"),
+                            child: const Text("Sim"),
                           ),
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text("Cancelar"),
+                            child: const Text("Cancelar"),
                           ),
                         ],
                       );
                     });
               },
-              child: Text('Cadastrar'),
+              child: const Text('Cadastrar'),
             ),
           ),
         ],

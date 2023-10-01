@@ -1,18 +1,16 @@
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../service/change_notifier.dart';
 import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
-import '../../model/alimento_model.dart';
 import '../../model/usuario_model.dart';
 import '../../repository/alimento_repository.dart';
 
 class AlimentoEditarView extends StatefulWidget {
   final dynamic alimento;
 
-  AlimentoEditarView(this.alimento);
+  const AlimentoEditarView(this.alimento, {super.key});
 
   @override
   AlimentoEditarPageState createState() => AlimentoEditarPageState();
@@ -31,10 +29,12 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
   late File? imagem;
   String _selectedTipo = 'OUTRO';
   String _selectedUnidade = 'OUTRO';
+  
+  // ignore: unused_field
   Usuario? _usuario;
 
   void _showSuccessMessage(BuildContext context) {
-    final snackBar = SnackBar(
+    const snackBar = SnackBar(
       content: Text('Informações atualizadas com sucesso!'),
       backgroundColor: Colors.green,
     );
@@ -78,7 +78,7 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
     print("entrou no update alimento");
     return Scaffold(
       appBar: AppBar(
-        title: Text('Atualizar alimento'),
+        title: const Text('Atualizar alimento'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
@@ -104,41 +104,41 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
 
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextFormField(
             controller: _tituloController,
-            decoration: InputDecoration(labelText: 'Título'),
+            decoration: const InputDecoration(labelText: 'Título'),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextFormField(
             controller: _descricaoController,
-            decoration: InputDecoration(labelText: 'Descrição'),
+            decoration: const InputDecoration(labelText: 'Descrição'),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextFormField(
             controller: _marcaController,
-            decoration: InputDecoration(labelText: 'Marca'),
+            decoration: const InputDecoration(labelText: 'Marca'),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextFormField(
             controller: _saborController,
-            decoration: InputDecoration(labelText: 'Sabor'),
+            decoration: const InputDecoration(labelText: 'Sabor'),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextFormField(
             controller: _precoController,
-            decoration: InputDecoration(labelText: 'Preço'),
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            decoration: const InputDecoration(labelText: 'Preço'),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextFormField(
             controller: _ofertaController,
-            decoration: InputDecoration(labelText: 'Oferta'),
+            decoration: const InputDecoration(labelText: 'Oferta'),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           DropdownButtonFormField<String>(
             value: _selectedUnidade,
             onChanged: (String? newValue) {
@@ -154,12 +154,12 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
                 child: Text(value),
               );
             }).toList(),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Unidade',
               border: OutlineInputBorder(),
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           DropdownButtonFormField<String>(
             value: _selectedTipo,
             onChanged: (String? newValue) {
@@ -175,7 +175,7 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
                 child: Text(value),
               );
             }).toList(),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Tipo',
               border: OutlineInputBorder(),
             ),
@@ -187,14 +187,14 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
               onPressed: () async {
                 imagem = await ImageHelper.selecionarImagem();
               },
-              child: Text('Atualizar imagem'),
+              child: const Text('Atualizar imagem'),
             ),
           ),
           ElevatedButton(
             onPressed: () async {
               try {                
                 imagem ??= File('assets/images/imagem.png');
-                ImageHelper.updateImagem( widget.alimento['idArtefato'], imagem);
+                ImageHelper.updateImagem(widget.alimento['idArtefato'], imagem);
                 print("terminou de subir a imagem em alimentos");
                 await _alimentoRepository.updateAlimento(
                     body, widget.alimento['idArtefato']);
@@ -207,7 +207,7 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
               await _buscarAlimentos();
               Navigator.pop(context);
             },
-            child: Text('Atualizar'),
+            child: const Text('Atualizar'),
           )
         ]),
       ),

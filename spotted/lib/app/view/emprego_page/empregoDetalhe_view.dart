@@ -55,7 +55,7 @@ class _DetailsState extends State<EmpregoDetalheView> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                EmpregoPage()),
+                                                const EmpregoPage()),
                                       );
                                     },
                                     icon: const Icon(Icons.arrow_back_ios_new))
@@ -149,7 +149,7 @@ class _DetailsState extends State<EmpregoDetalheView> {
                             ),
                             Text(
                               emprego.descricaoArtefato,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
                               ),

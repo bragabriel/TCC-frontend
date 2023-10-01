@@ -87,12 +87,12 @@ class MoradiaPageState extends State<MoradiaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Moradia"),
+        title: const Text("Moradia"),
         leading: BackButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           },
         ),
@@ -113,12 +113,12 @@ class MoradiaPageState extends State<MoradiaPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MoradiaCadastrarView(),
+              builder: (context) => const MoradiaCadastrarView(),
             ),
           );
         },
@@ -135,16 +135,16 @@ class MoradiaPageState extends State<MoradiaPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
+          const Text(
             'Ops, algo de errado aconteceu',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               controller.start();
             },
-            child: Text('Tentar novamente'),
+            child: const Text('Tentar novamente'),
           ),
         ],
       ),
@@ -152,7 +152,7 @@ class MoradiaPageState extends State<MoradiaPage> {
   }
 
   _loading() {
-    return Center(child: CircularProgressIndicator());
+    return const Center(child: CircularProgressIndicator());
   }
 
   _start() {
@@ -187,13 +187,13 @@ class MoradiaPageState extends State<MoradiaPage> {
                 _filtrareListarMoradia();
               });
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Pesquisar',
               prefixIcon: Icon(Icons.search),
             ),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -203,7 +203,7 @@ class MoradiaPageState extends State<MoradiaPage> {
                 (value) => qtdMoradoresFilter = value),
           ],
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         _buildDropdownButtonFormField(
           cidadeSelecionada,
           "Cidade",
@@ -226,7 +226,7 @@ class MoradiaPageState extends State<MoradiaPage> {
             });
           },
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Expanded(
           child: GridView.builder(
             padding: const EdgeInsets.all(20),
@@ -294,7 +294,7 @@ class MoradiaPageState extends State<MoradiaPage> {
         }).toList(),
         decoration: InputDecoration(
           labelText: labelText,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
       ),
     );
@@ -307,7 +307,7 @@ class MoradiaPageState extends State<MoradiaPage> {
   ) {
     return Column(
       children: [
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         SizedBox(
           width: 100,
           child: TextFormField(
@@ -319,7 +319,7 @@ class MoradiaPageState extends State<MoradiaPage> {
             },
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
               hintText: placeholder,
             ),
           ),

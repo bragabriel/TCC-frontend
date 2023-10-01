@@ -79,7 +79,7 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastrar evento'),
+        title: const Text('Cadastrar evento'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
@@ -95,22 +95,22 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
 
   SingleChildScrollView _cadastroevento() {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           TextField(
             controller: _tituloController,
-            decoration: InputDecoration(labelText: 'Titulo'),
+            decoration: const InputDecoration(labelText: 'Titulo'),
           ),
           TextField(
             controller: _descricaoController,
-            decoration: InputDecoration(labelText: 'Descrição'),
+            decoration: const InputDecoration(labelText: 'Descrição'),
           ),
           TextField(
             controller: _localizacaoController,
-            decoration: InputDecoration(labelText: 'Localização'),
+            decoration: const InputDecoration(labelText: 'Localização'),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 40,
@@ -118,10 +118,10 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
               onPressed: () async {
                 imagem = await ImageHelper.selecionarImagem();
               },
-              child: Text('Inserir imagem'),
+              child: const Text('Inserir imagem'),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 40,
@@ -131,8 +131,8 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: Text("Confirmação de cadastro"),
-                      content: Text("Deseja cadastrar o alimento?"),
+                      title: const Text("Confirmação de cadastro"),
+                      content: const Text("Deseja cadastrar o alimento?"),
                       actions: [
                         TextButton(
                           onPressed: () async {
@@ -143,24 +143,24 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EventoPage(),
+                                builder: (context) => const EventoPage(),
                               ),
                             );
                           },
-                          child: Text("Sim"),
+                          child: const Text("Sim"),
                         ),
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text("Cancelar"),
+                          child: const Text("Cancelar"),
                         ),
                       ],
                     );
                   },
                 );
               },
-              child: Text('Cadastrar'),
+              child: const Text('Cadastrar'),
             ),
           ),
         ],

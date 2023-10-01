@@ -1,6 +1,4 @@
-import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,7 +12,7 @@ class ButtonHelper{
         icon: Icon(icon, color: color, size: 50),
         onPressed: () => _openURL(textBase! + dado!),
       ),
-      SizedBox(height: 20),
+      const SizedBox(height: 20),
     ],
   );
 }

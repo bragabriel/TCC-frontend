@@ -11,7 +11,7 @@ import '../../repository/objeto_repository.dart';
 class ObjetoEditarView extends StatefulWidget {
   final dynamic objeto;
 
-  ObjetoEditarView(this.objeto);
+  const ObjetoEditarView(this.objeto, {super.key});
 
   @override
   ObjetoEditarPageState createState() => ObjetoEditarPageState();
@@ -29,7 +29,7 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
   Usuario? _usuario;
 
   void _showSuccessMessage(BuildContext context) {
-    final snackBar = SnackBar(
+    const snackBar = SnackBar(
       content: Text('Informações atualizadas com sucesso!'),
       backgroundColor: Colors.green,
     );
@@ -62,7 +62,7 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
     print("entrou no update Objeto");
     return Scaffold(
       appBar: AppBar(
-        title: Text('Atualizar Objeto'),
+        title: const Text('Atualizar Objeto'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
@@ -85,24 +85,24 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
 
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           TextFormField(
             controller: _tituloController,
-            decoration: InputDecoration(labelText: 'Título'),
+            decoration: const InputDecoration(labelText: 'Título'),
           ),
           TextFormField(
             controller: _descricaoController,
-            decoration: InputDecoration(labelText: 'Descrição'),
+            decoration: const InputDecoration(labelText: 'Descrição'),
           ),
           TextFormField(
             controller: _localizacaoAchado,
-            decoration: InputDecoration(labelText: 'Localização encontrado'),
+            decoration: const InputDecoration(labelText: 'Localização encontrado'),
           ),
           TextFormField(
             controller: _localizacaoAtual,
-            decoration: InputDecoration(labelText: 'Localização atual'),
+            decoration: const InputDecoration(labelText: 'Localização atual'),
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
@@ -111,7 +111,7 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
               onPressed: () async {
                 imagem = await ImageHelper.selecionarImagem();
               },
-              child: Text('Atualizar imagem'),
+              child: const Text('Atualizar imagem'),
             ),
           ),
           ElevatedButton(
@@ -130,7 +130,7 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
               await _buscarObjetos();
               Navigator.pop(context);
             },
-            child: Text('Atualizar'),
+            child: const Text('Atualizar'),
           )
         ]),
       ),

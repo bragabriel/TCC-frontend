@@ -75,12 +75,12 @@ class TransportePageState extends State<TransportePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Transportes"),
+        title: const Text("Transportes"),
         leading: BackButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           },
         ),
@@ -95,12 +95,12 @@ class TransportePageState extends State<TransportePage> {
       ),
       body: _construirFiltrosELista(),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => TransporteCadastrarView(),
+              builder: (context) => const TransporteCadastrarView(),
             ),
           );
         },
@@ -120,14 +120,14 @@ class TransportePageState extends State<TransportePage> {
               _filtrarListaDeTransportes();
               });
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Pesquisar',
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(),
             ),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: DropdownButtonFormField<String>(
@@ -145,13 +145,13 @@ class TransportePageState extends State<TransportePage> {
                 child: Text(cidade),
               );
             }).toList(),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Cidade',
               border: OutlineInputBorder(),
             ),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Expanded(
           child: GridView.builder(
             padding: const EdgeInsets.all(20),

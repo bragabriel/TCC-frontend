@@ -14,6 +14,8 @@ import '../view/profile_page/my_products.dart';
 import '../view/transporte_page/transporte_view.dart';
 
 class AppWidget extends StatelessWidget {
+  const AppWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -29,17 +31,17 @@ class AppWidget extends StatelessWidget {
           initialRoute: '/splash',
           routes: {
             '/splash': (context) => const SplashPage(),
-            '/cadastro': (context) => CadastroPage(),
-            '/perfil': (context) => ProfilePage(),
-            '/transporte': (context) => TransportePage(),
-            '/alimento': (context) => AlimentoPage(),
-            '/emprego': (context) => EmpregoPage(),
-            '/evento': (context) => EventoPage(),
-            '/moradia': (context) => MoradiaPage(),
-            '/objeto': (context) => ObjetoPage(),
-            '/meusprodutos': (context) => MyProductsPage(),
-            '/home': (context) => HomePage(),
-            '/': (context) => LoginPage(),
+            '/cadastro': (context) => const CadastroPage(),
+            '/perfil': (context) => const ProfilePage(),
+            '/transporte': (context) => const TransportePage(),
+            '/alimento': (context) => const AlimentoPage(),
+            '/emprego': (context) => const EmpregoPage(),
+            '/evento': (context) => const EventoPage(),
+            '/moradia': (context) => const MoradiaPage(),
+            '/objeto': (context) => const ObjetoPage(),
+            '/meusprodutos': (context) => const MyProductsPage(),
+            '/home': (context) => const HomePage(),
+            '/': (context) => const LoginPage(),
           },
         );
       },

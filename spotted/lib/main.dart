@@ -11,7 +11,7 @@ main(){
     ChangeNotifierProvider(
       create: (context) => UserProvider(),
       
-      child: AppWidget(),
+      child: const AppWidget(),
     ),
   );
 }
@@ -27,6 +27,6 @@ Widget build(BuildContext context) {
     debugShowCheckedModeBanner: false,
     title: 'Alimentação',
     routes: <String, WidgetBuilder>{
-        '/foodpage' : (BuildContext context) => new AlimentoPage(),
+        '/foodpage' : (BuildContext context) => const AlimentoPage(),
     },
  );}

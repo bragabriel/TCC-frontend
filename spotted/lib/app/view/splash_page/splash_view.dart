@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/service/prefs_service.dart';
 
@@ -19,7 +18,7 @@ class _SplashPageState extends State<SplashPage> {
 
     Future.wait([
       PrefsService.isAuth(),
-      Future.delayed(Duration(seconds: 2)),
+      Future.delayed(const Duration(seconds: 2)),
     ]).then((value) {
       if (value[0]) {
         // Acessar o UserProvider
@@ -39,7 +38,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.green.shade900,
-        child: Center(
+        child: const Center(
             child: CircularProgressIndicator(
           color: Colors.white60,
         )));

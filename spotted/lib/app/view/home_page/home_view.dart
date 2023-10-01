@@ -5,7 +5,6 @@ import 'package:spotted/service/prefs_service.dart';
 import '../../../service/change_notifier.dart';
 import '../../constants/constants.dart';
 import '../../controller/usuario_controller.dart';
-import '../../helpers/usuario_helper.dart';
 import '../../model/descriptions_model.dart';
 import '../../model/usuario_model.dart';
 import 'details_view.dart';
@@ -13,6 +12,8 @@ import 'details_view.dart';
 const String apiKey = '3dbbf29cb72728e380272e98fe760b41';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return HomePageState();
@@ -32,16 +33,16 @@ class HomePageState extends State<HomePage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
+          const Text(
             'Ops, algo de errado aconteceu',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               controller.start(context);
             },
-            child: Text('Tentar novamente'),
+            child: const Text('Tentar novamente'),
           ),
         ],
       ),
@@ -49,7 +50,7 @@ class HomePageState extends State<HomePage> {
   }
 
   _loading() {
-    return Center(child: CircularProgressIndicator());
+    return const Center(child: CircularProgressIndicator());
   }
 
   _start() {
@@ -109,65 +110,65 @@ class HomePageState extends State<HomePage> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.food_bank),
-            title: Text('Alimentos'),
-            subtitle: Text('Ai que fominha! 🍽'),
+            leading: const Icon(Icons.food_bank),
+            title: const Text('Alimentos'),
+            subtitle: const Text('Ai que fominha! 🍽'),
             onTap: () {
               Navigator.of(context).pushNamed('/alimento');
             },
           ),
           ListTile(
-            leading: Icon(Icons.business_center),
-            title: Text('Empregos'),
-            subtitle: Text('Bora trabalhar? 💻'),
+            leading: const Icon(Icons.business_center),
+            title: const Text('Empregos'),
+            subtitle: const Text('Bora trabalhar? 💻'),
             onTap: () {
               Navigator.of(context).pushNamed('/emprego');
             },
           ),
           ListTile(
-            leading: Icon(Icons.local_bar),
-            title: Text('Eventos'),
-            subtitle: Text('Partiu pra revoada? 🎉'),
+            leading: const Icon(Icons.local_bar),
+            title: const Text('Eventos'),
+            subtitle: const Text('Partiu pra revoada? 🎉'),
             onTap: () {
               Navigator.of(context).pushNamed('/evento');
             },
           ),
           ListTile(
-            leading: Icon(Icons.home_filled),
-            title: Text('Moradia'),
-            subtitle: Text('Lugares próximos ao campus? 🔑'),
+            leading: const Icon(Icons.home_filled),
+            title: const Text('Moradia'),
+            subtitle: const Text('Lugares próximos ao campus? 🔑'),
             onTap: () {
               Navigator.of(context).pushNamed('/moradia');
             },
           ),
           ListTile(
-            leading: Icon(Icons.food_bank_sharp),
-            title: Text('Objetos Perdidos'),
-            subtitle: Text('Perdeu seu casaco favorito? 👀'),
+            leading: const Icon(Icons.food_bank_sharp),
+            title: const Text('Objetos Perdidos'),
+            subtitle: const Text('Perdeu seu casaco favorito? 👀'),
             onTap: () {
               Navigator.of(context).pushNamed('/objeto');
             },
           ),
           ListTile(
-            leading: Icon(Icons.car_crash),
-            title: Text('Transportes'),
-            subtitle: Text('Naves para ir à faculdade? 🚗'),
+            leading: const Icon(Icons.car_crash),
+            title: const Text('Transportes'),
+            subtitle: const Text('Naves para ir à faculdade? 🚗'),
             onTap: () {
               Navigator.of(context).pushNamed('/transporte');
             },
           ),
           ListTile(
-            leading: Icon(Icons.verified_user),
-            title: Text('Perfil'),
-            subtitle: Text('Deixa eu ver meus dados 😍'),
+            leading: const Icon(Icons.verified_user),
+            title: const Text('Perfil'),
+            subtitle: const Text('Deixa eu ver meus dados 😍'),
             onTap: () {
               Navigator.of(context).pushNamed('/perfil');
             },
           ),
           ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('Logout'),
-            subtitle: Text('Finalizar sessão'),
+            leading: const Icon(Icons.logout),
+            title: const Text('Logout'),
+            subtitle: const Text('Finalizar sessão'),
             onTap: () async {
               // Limpar as informações do usuário no UserProvider
               Provider.of<UserProvider>(context, listen: false).logout();
@@ -182,7 +183,7 @@ class HomePageState extends State<HomePage> {
         ]),
       ),
       appBar: AppBar(
-        title: Text('Página inicial'),
+        title: const Text('Página inicial'),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -195,7 +196,7 @@ class HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.all(32),
+                padding: const EdgeInsets.all(32),
                 child: Column(children: <Widget>[
                   Row(
                     children: [

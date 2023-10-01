@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotted/service/change_notifier.dart';
 
 import '../app/model/usuario_model.dart';
 
 class PrefsService {
-  static final String _key = 'key';
-  static final String _userSaved = 'userSaved';
+  static const String _key = 'key';
+  static const String _userSaved = 'userSaved';
 
   static save(String user) async {
     var prefs = await SharedPreferences.getInstance();

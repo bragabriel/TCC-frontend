@@ -1,18 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spotted/app/repository/usuario_repository.dart';
-import 'package:spotted/app/view/emprego_page/emprego_atualizar_view.dart';
-import 'package:spotted/app/view/evento_page/evento_atualizar_view.dart';
-import 'package:spotted/app/view/moradia_page/moradia_atualizar_view.dart';
-import 'package:spotted/app/view/objeto_view/objeto_atualizar_view.dart';
-import 'package:spotted/app/view/transporte_page/transporte_atualizar.view.dart';
+import 'package:spotted/app/repository/alimento_repository.dart';
+import 'package:spotted/app/repository/emprego_repository.dart';
+import 'package:spotted/app/repository/evento_repository.dart';
+import 'package:spotted/app/repository/objeto_repository.dart';
+import 'package:spotted/app/repository/transporte_repository.dart';
+import 'package:spotted/app/view/alimento_page/alimentoDeletar_view.dart';
+import 'package:spotted/app/view/emprego_page/empregoAtualizar_view.dart';
+import 'package:spotted/app/view/evento_page/eventoAtualizar_view.dart';
+import 'package:spotted/app/view/evento_page/eventoDeletar_view.dart';
+import 'package:spotted/app/view/moradia_page/moradiaAtualizar_view.dart';
+import 'package:spotted/app/view/moradia_page/moradiaDeletar_view.dart';
+import 'package:spotted/app/view/objeto_view/objetoAtualizar_view.dart';
+import 'package:spotted/app/view/objeto_view/objetoDeletar_view.dart';
+import 'package:spotted/app/view/transporte_page/transporteAtualizar.view.dart';
+import 'package:spotted/app/view/transporte_page/transporteDeletar_view.dart';
 import '../../../service/change_notifier.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
-import '../alimento_page/alimento_atualizar_view.dart';
+import '../alimento_page/alimentoAtualizar_view.dart';
 import '../home_page/home_view.dart';
+import '../emprego_page/deleteEmprego_view.dart';
 
 class MyProductsPage extends StatefulWidget {
+  const MyProductsPage({super.key});
+
   @override
   _MyProductsPageState createState() => _MyProductsPageState();
 }
@@ -20,6 +32,11 @@ class MyProductsPage extends StatefulWidget {
 class _MyProductsPageState extends State<MyProductsPage> {
   @override
   void initState() {
+    _buscarAlimentos();
+    _buscarEmpregos();
+    _buscarEventos();
+    _buscarObjetos();
+    _buscarTransportes();
     super.initState();
   }
 
@@ -27,15 +44,15 @@ class _MyProductsPageState extends State<MyProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("entrou aqui na my products");
+    print("Entrou nos meus produtos cadastrados");
     return Scaffold(
       appBar: AppBar(
-        title: Text("Meus cadastros no app"),
+        title: const Text("Meus cadastros no app"),
         leading: BackButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           },
         ),
@@ -50,12 +67,8 @@ class _MyProductsPageState extends State<MyProductsPage> {
   }
 
   GridView _listarMeusProdutos() {
-    print("entrou no listar");
-
     var listaProdutos = _usuario?.listaArtefatosReponse;
-
     if (listaProdutos == null || listaProdutos.isEmpty) {
-      // Handle the case where the list is null or empty.
       return GridView.builder(
         padding: const EdgeInsets.all(20),
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -64,7 +77,7 @@ class _MyProductsPageState extends State<MyProductsPage> {
           crossAxisSpacing: 20,
           mainAxisSpacing: 20,
         ),
-        itemCount: 0, // No items to display.
+        itemCount: 0,
         itemBuilder: (BuildContext ctx, index) {
           return GridTile(
             child: Container(),
@@ -72,7 +85,6 @@ class _MyProductsPageState extends State<MyProductsPage> {
         },
       );
     }
-
     return GridView.builder(
       padding: const EdgeInsets.all(20),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -86,7 +98,6 @@ class _MyProductsPageState extends State<MyProductsPage> {
         var produto = _usuario?.listaArtefatosReponse?[index];
         String tipoArtefato =
             _usuario?.listaArtefatosReponse?[index]["tipoArtefato"];
-        print("tipo artefato" + tipoArtefato);
         return GridTile(
           key: ValueKey(produto),
           footer: GridTileBar(
@@ -109,7 +120,7 @@ class _MyProductsPageState extends State<MyProductsPage> {
               itemBuilder: (BuildContext context) => [
                 PopupMenuItem(
                   child: OutlinedButton(
-                    child: Text('Editar'),
+                    child: const Text('Editar'),
                     onPressed: () {
                       switch (tipoArtefato) {
                         case "EMPREGO":
@@ -162,7 +173,7 @@ class _MyProductsPageState extends State<MyProductsPage> {
                           );
                           break;
                         default:
-                          print("deu problema");
+                          print("Ocorreu um erro ao editar o produto.");
                           print(tipoArtefato);
                       }
                     },
@@ -170,11 +181,30 @@ class _MyProductsPageState extends State<MyProductsPage> {
                 ),
                 PopupMenuItem(
                   child: OutlinedButton(
-                    child: Text('Deletar'),
+                    child: const Text('Deletar'),
                     onPressed: () {
-                      setState(() {
-                        produto!.removeAt(index);
-                      });
+                      switch (tipoArtefato) {
+                        case "EMPREGO":
+                          EmpregoDeletarView(produto).inativar(context);
+                          break;
+                        case "ALIMENTO":
+                          AlimentoDeletarView(produto).inativar(context);
+                          break;
+                        case "EVENTO":
+                          EventoDeletarView(produto).inativar(context);
+                          break;
+                        case "OBJETO":
+                          ObjetoDeletarView(produto).inativar(context);
+                          break;
+                        case "MORADIA":
+                          MoradiaDeletarView(produto).inativar(context);
+                          break;
+                        case "TRANSPORTE":
+                          TransporteDeletarView(produto).inativar(context);
+                          break;
+                        default:
+                          print("Ocorreu um erro ao deletar o produto.");
+                      }
                     },
                   ),
                 ),
@@ -194,5 +224,48 @@ class _MyProductsPageState extends State<MyProductsPage> {
         );
       },
     );
+  }
+}
+
+Future<void> _buscarAlimentos() async {
+  try {
+    await AlimentoRepository().getAllAlimentos();
+    print("GetAllAlimentos com sucesso em AlimentoCadastrarView");
+  } catch (e) {
+    print('Erro ao obter a lista de alimentos em AlimentoCadastrarView: $e');
+  }
+}
+
+Future<void> _buscarEmpregos() async {
+  try {
+    await EmpregoRepository().getAllEmpregos();
+    print("GetAllEmpregos com suceso em EmpregoCadastrarView");
+  } catch (e) {
+    print('Erro ao obter a lista de empregos em EmpregoCadastrarView: $e');
+  }
+}
+
+Future<void> _buscarEventos() async {
+  try {
+    await EventoRepository().getAllEventos();
+    print("GetAllEventos concluído com sucesso em EventoCadastrarView");
+  } catch (e) {
+    print('Erro ao obter a lista de eventos em eventoCadastrarView: $e');
+  }
+}
+
+Future<void> _buscarObjetos() async {
+  try {
+    await ObjetoRepository().getAllObjetos();
+  } catch (e) {
+    print('Erro ao obter a lista de objetos: $e');
+  }
+}
+
+Future<void> _buscarTransportes() async {
+  try {
+    await TransporteRepository().getAllTransportes();
+  } catch (e) {
+    print('Erro ao obter a lista de Transportes: $e');
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/view/transporte_page/transporte_view.dart';
-import '../../helpers/button_helper.dart';
 import '../../model/transporte_model.dart';
 
 class TransporteDetalheView extends StatefulWidget {
@@ -57,7 +56,7 @@ class _DetailsState extends State<TransporteDetalheView> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => TransportePage(),
+                                      builder: (context) => const TransportePage(),
                                     ),
                                   );
                                 },
@@ -137,7 +136,7 @@ class _DetailsState extends State<TransporteDetalheView> {
               flex: 2,
               child: Container(
                 margin: const EdgeInsets.only(top: 5, left: 20, right: 30),
-                constraints: BoxConstraints(maxHeight: double.infinity), // Set valid constraints
+                constraints: const BoxConstraints(maxHeight: double.infinity), // Set valid constraints
                 width: double.infinity,
                 child: SingleChildScrollView(
                   child: Column(
@@ -156,7 +155,7 @@ class _DetailsState extends State<TransporteDetalheView> {
                       ),
                       Text(
                         transporte.descricaoArtefato,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
                         ),
@@ -177,7 +176,7 @@ class _DetailsState extends State<TransporteDetalheView> {
                       ),
                       Text(
                         transporte.informacoesCondutorTransporte.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
                         ),
@@ -198,7 +197,7 @@ class _DetailsState extends State<TransporteDetalheView> {
                       ),
                       Text(
                         transporte.informacoesVeiculoTransporte.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
                         ),
@@ -219,7 +218,7 @@ class _DetailsState extends State<TransporteDetalheView> {
                       ),
                       Text(
                         transporte.qtdAssentosTotalTransporte.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
                         ),
@@ -240,7 +239,7 @@ class _DetailsState extends State<TransporteDetalheView> {
                       ),
                       Text(
                         transporte.qtdAssentosPreenchidosTransporte.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
                         ),

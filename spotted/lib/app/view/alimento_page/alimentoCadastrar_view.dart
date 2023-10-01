@@ -92,7 +92,7 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastrar alimento'),
+        title: const Text('Cadastrar alimento'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
@@ -105,43 +105,43 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
 
   Widget _cadastroAlimento() {
     return ListView(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       children: <Widget>[
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: _tituloController,
-              decoration: InputDecoration(labelText: 'Título'),
+              decoration: const InputDecoration(labelText: 'Título'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: _descricaoController,
-              decoration: InputDecoration(labelText: 'Descrição'),
+              decoration: const InputDecoration(labelText: 'Descrição'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: _marcaController,
-              decoration: InputDecoration(labelText: 'Marca'),
+              decoration: const InputDecoration(labelText: 'Marca'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: _saborController,
-              decoration: InputDecoration(labelText: 'Sabor'),
+              decoration: const InputDecoration(labelText: 'Sabor'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: _precoController,
-              decoration: InputDecoration(labelText: 'Preço'),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              decoration: const InputDecoration(labelText: 'Preço'),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: _ofertaController,
-              decoration: InputDecoration(labelText: 'Oferta'),
+              decoration: const InputDecoration(labelText: 'Oferta'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             DropdownButtonFormField<String>(
               value: _selectedUnidade,
               onChanged: (String? newValue) {
@@ -157,12 +157,12 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                   child: Text(value),
                 );
               }).toList(),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Unidade',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             DropdownButtonFormField<String>(
               value: _selectedTipo,
               onChanged: (String? newValue) {
@@ -178,17 +178,17 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                   child: Text(value),
                 );
               }).toList(),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Tipo',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Container(
               child: ElevatedButton(
                 onPressed: () async =>
                     imagem = await ImageHelper.selecionarImagem(),
-                child: Text('Inserir imagem'),
+                child: const Text('Inserir imagem'),
               ),
             ),
             ElevatedButton(
@@ -197,8 +197,8 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: Text("Confirmação de cadastro"),
-                      content: Text("Deseja cadastrar o alimento?"),
+                      title: const Text("Confirmação de cadastro"),
+                      content: const Text("Deseja cadastrar o alimento?"),
                       actions: [
                         TextButton(
                           onPressed: () async {
@@ -209,24 +209,24 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AlimentoPage(),
+                                builder: (context) => const AlimentoPage(),
                               ),
                             );
                           },
-                          child: Text("Sim"),
+                          child: const Text("Sim"),
                         ),
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text("Cancelar"),
+                          child: const Text("Cancelar"),
                         ),
                       ],
                     );
                   },
                 );
               },
-              child: Text('Cadastrar'),
+              child: const Text('Cadastrar'),
             ),
           ],
         ),

@@ -12,7 +12,7 @@ import '../../model/usuario_model.dart';
 class EventoEditarView extends StatefulWidget {
   final dynamic evento;
 
-  EventoEditarView(this.evento);
+  const EventoEditarView(this.evento, {super.key});
 
   @override
   EventoEditarPageState createState() => EventoEditarPageState();
@@ -29,7 +29,7 @@ class EventoEditarPageState extends State<EventoEditarView> {
 
 
   void _showSuccessMessage(BuildContext context) {
-    final snackBar = SnackBar(
+    const snackBar = SnackBar(
       content: Text('Informações atualizadas com sucesso!'),
       backgroundColor: Colors.green,
     );
@@ -57,7 +57,7 @@ class EventoEditarPageState extends State<EventoEditarView> {
     print("entrou no update evento");
     return Scaffold(
       appBar: AppBar(
-        title: Text('Atualizar evento'),
+        title: const Text('Atualizar evento'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
@@ -78,21 +78,21 @@ class EventoEditarPageState extends State<EventoEditarView> {
 
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextFormField(
             controller: _tituloController,
-            decoration: InputDecoration(labelText: 'Titulo'),
+            decoration: const InputDecoration(labelText: 'Titulo'),
           ),
           TextFormField(
             controller: _descricaoController,
-            decoration: InputDecoration(labelText: 'Descrição'),
+            decoration: const InputDecoration(labelText: 'Descrição'),
           ),
           TextFormField(
             controller: _localizacaoController,
-            decoration: InputDecoration(labelText: 'Localização'),
+            decoration: const InputDecoration(labelText: 'Localização'),
           ),
                     SizedBox(
             width: MediaQuery.of(context).size.width,
@@ -101,7 +101,7 @@ class EventoEditarPageState extends State<EventoEditarView> {
               onPressed: () async {
                 imagem = await ImageHelper.selecionarImagem();
               },
-              child: Text('Atualizar imagem'),
+              child: const Text('Atualizar imagem'),
             ),
           ),
           ElevatedButton(
@@ -119,7 +119,7 @@ class EventoEditarPageState extends State<EventoEditarView> {
               await _buscareventos();
               Navigator.pop(context);
             },
-            child: Text('Atualizar'),
+            child: const Text('Atualizar'),
           )
         ]),
       ),

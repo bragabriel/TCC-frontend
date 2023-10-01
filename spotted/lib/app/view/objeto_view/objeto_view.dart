@@ -32,16 +32,16 @@ class ObjetoPageState extends State<ObjetoPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
+          const Text(
             'Ops, algo de errado aconteceu',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               controller.start();
             },
-            child: Text('Tentar novamente'),
+            child: const Text('Tentar novamente'),
           ),
         ],
       ),
@@ -49,7 +49,7 @@ class ObjetoPageState extends State<ObjetoPage> {
   }
 
   _loading() {
-    return Center(child: CircularProgressIndicator());
+    return const Center(child: CircularProgressIndicator());
   }
 
   _start() {
@@ -82,12 +82,12 @@ class ObjetoPageState extends State<ObjetoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Objetos perdidos"),
+        title: const Text("Objetos perdidos"),
         leading: BackButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           },
         ),
@@ -108,12 +108,12 @@ class ObjetoPageState extends State<ObjetoPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ObjetoCadastrarView(),
+              builder: (context) => const ObjetoCadastrarView(),
             ),
           );
         },
@@ -167,13 +167,13 @@ class ObjetoPageState extends State<ObjetoPage> {
               _filterobjetoList();
             });
           },
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             labelText: 'Pesquisar',
             prefixIcon: Icon(Icons.search),
           ),
         ),
       ),
-      SizedBox(height: 10),
+      const SizedBox(height: 10),
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextField(
@@ -184,13 +184,13 @@ class ObjetoPageState extends State<ObjetoPage> {
               _filterobjetoList();
             });
           },
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             labelText: 'Localização que Perdeu o Objeto',
             prefixIcon: Icon(Icons.location_on),
           ),
         ),
       ),
-      SizedBox(height: 10),
+      const SizedBox(height: 10),
       Expanded(
         child: GridView.builder(
           padding: const EdgeInsets.all(20),

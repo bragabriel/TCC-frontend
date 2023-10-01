@@ -10,6 +10,8 @@ import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
 
 class TransporteCadastrarView extends StatefulWidget {
+  const TransporteCadastrarView({super.key});
+
   @override
   _TransporteCadastrarViewState createState() =>
       _TransporteCadastrarViewState();
@@ -98,7 +100,7 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastrar transporte'),
+        title: const Text('Cadastrar transporte'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
@@ -111,46 +113,46 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
 
   Widget _cadastrarTransporte() {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           TextField(
             controller: _tituloController,
-            decoration: InputDecoration(labelText: 'Título'),
+            decoration: const InputDecoration(labelText: 'Título'),
           ),
           TextField(
             controller: _descricaoController,
-            decoration: InputDecoration(labelText: 'Descrição'),
+            decoration: const InputDecoration(labelText: 'Descrição'),
           ),
           TextField(
             controller: _cidadeTransporte,
-            decoration: InputDecoration(labelText: 'Cidade'),
+            decoration: const InputDecoration(labelText: 'Cidade'),
           ),
           TextField(
             controller: _periodoTransporte,
-            decoration: InputDecoration(labelText: 'Turno'),
+            decoration: const InputDecoration(labelText: 'Turno'),
           ),
           TextField(
             controller: _informacoesVeiculoTransporteController,
-            decoration: InputDecoration(labelText: 'Informações do veículo'),
+            decoration: const InputDecoration(labelText: 'Informações do veículo'),
           ),
           TextField(
             controller: _informacoesCondutorTransporteController,
-            decoration: InputDecoration(labelText: 'Informações do condutor'),
+            decoration: const InputDecoration(labelText: 'Informações do condutor'),
           ),
           TextField(
             controller: _qtdAssentosPreenchidosTransporteController,
-            decoration: InputDecoration(labelText: 'Assentos ocupados'),
+            decoration: const InputDecoration(labelText: 'Assentos ocupados'),
           ),
           TextField(
             controller: _qtdAssentosTotalTransporteController,
-            decoration: InputDecoration(labelText: 'Capacidade maxíma'),
+            decoration: const InputDecoration(labelText: 'Capacidade maxíma'),
           ),
           TextField(
             controller: _valorTransporteController,
-            decoration: InputDecoration(labelText: 'Valor'),
+            decoration: const InputDecoration(labelText: 'Valor'),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 40,
@@ -158,10 +160,10 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
               onPressed: () async {
                 imagem = await ImageHelper.selecionarImagem();
               },
-              child: Text('Inserir imagem'),
+              child: const Text('Inserir imagem'),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 40,
@@ -171,8 +173,8 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text("Confirmação de cadastro"),
-                        content: Text("Deseja cadastrar o emprego?"),
+                        title: const Text("Confirmação de cadastro"),
+                        content: const Text("Deseja cadastrar o emprego?"),
                         actions: [
                        TextButton(
                           onPressed: () async {
@@ -183,23 +185,23 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => TransportePage(),
+                                builder: (context) => const TransportePage(),
                               ),
                             );
                           },
-                          child: Text("Sim"),
+                          child: const Text("Sim"),
                         ),
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text("Cancelar"),
+                            child: const Text("Cancelar"),
                           ),
                         ],
                       );
                     });
               },
-              child: Text('Cadastrar'),
+              child: const Text('Cadastrar'),
             ),
           ),
         ],

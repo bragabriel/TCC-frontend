@@ -32,16 +32,16 @@ class EventoPageState extends State<EventoPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
+          const Text(
             'Ops, algo de errado aconteceu',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               controller.start();
             },
-            child: Text('Tentar novamente'),
+            child: const Text('Tentar novamente'),
           ),
         ],
       ),
@@ -49,7 +49,7 @@ class EventoPageState extends State<EventoPage> {
   }
 
   _loading() {
-    return Center(child: CircularProgressIndicator());
+    return const Center(child: CircularProgressIndicator());
   }
 
   _start() {
@@ -82,12 +82,12 @@ class EventoPageState extends State<EventoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Eventos"),
+        title: const Text("Eventos"),
         leading: BackButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           },
         ),
@@ -108,12 +108,12 @@ class EventoPageState extends State<EventoPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => EventoCadastrarView(),
+              builder: (context) => const EventoCadastrarView(),
             ),
           );
         },
@@ -170,13 +170,13 @@ class EventoPageState extends State<EventoPage> {
               _filterEventoList();
             });
           },
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             labelText: 'Pesquisar',
             prefixIcon: Icon(Icons.search),
           ),
         ),
       ),
-      SizedBox(height: 10),
+      const SizedBox(height: 10),
       Expanded(
         child: GridView.builder(
             padding: const EdgeInsets.all(20),

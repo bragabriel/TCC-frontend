@@ -11,7 +11,7 @@ import '../../repository/moradia_repository.dart';
 class MoradiaEditarView extends StatefulWidget {
   final dynamic moradia;
 
-  MoradiaEditarView(this.moradia);
+  const MoradiaEditarView(this.moradia, {super.key});
 
   @override
   MoradiaEditarPageState createState() => MoradiaEditarPageState();
@@ -45,7 +45,7 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
   Usuario? _usuario;
 
   void _showSuccessMessage(BuildContext context) {
-    final snackBar = SnackBar(
+    const snackBar = SnackBar(
       content: Text('Informações atualizadas com sucesso!'),
       backgroundColor: Colors.green,
     );
@@ -97,7 +97,7 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
     print("entrou no update Moradia");
     return Scaffold(
       appBar: AppBar(
-        title: Text('Atualizar Moradia'),
+        title: const Text('Atualizar Moradia'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
@@ -127,60 +127,60 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
 
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           TextFormField(
             controller: _tituloController,
-            decoration: InputDecoration(labelText: 'Titulo'),
+            decoration: const InputDecoration(labelText: 'Titulo'),
           ),
           TextFormField(
             controller: _descricaoController,
-            decoration: InputDecoration(labelText: 'Descrição'),
+            decoration: const InputDecoration(labelText: 'Descrição'),
           ),
           TextFormField(
             controller: _estadoMoradiaController,
-            decoration: InputDecoration(labelText: 'Estado'),
+            decoration: const InputDecoration(labelText: 'Estado'),
           ),
           TextFormField(
             controller: _cidadeMoradiaController,
-            decoration: InputDecoration(labelText: 'Cidade'),
+            decoration: const InputDecoration(labelText: 'Cidade'),
           ),
           TextFormField(
             controller: _bairroMoradiaController,
-            decoration: InputDecoration(labelText: 'Bairro'),
+            decoration: const InputDecoration(labelText: 'Bairro'),
           ),
           TextFormField(
             controller: _cepMoradiaController,
-            decoration: InputDecoration(labelText: 'CEP'),
+            decoration: const InputDecoration(labelText: 'CEP'),
           ),
           TextFormField(
             controller: _qtdMoradoresPermitidoController,
-            decoration: InputDecoration(labelText: 'Qtd Moradores Permitido'),
+            decoration: const InputDecoration(labelText: 'Qtd Moradores Permitido'),
             keyboardType: TextInputType.number,
           ),
           TextFormField(
             controller: _qtdMoradoresAtuaisController,
-            decoration: InputDecoration(labelText: 'Qtd Moradores Atuais'),
+            decoration: const InputDecoration(labelText: 'Qtd Moradores Atuais'),
             keyboardType: TextInputType.number,
           ),
           TextFormField(
             controller: _precoAluguelTotalController,
-            decoration: InputDecoration(labelText: 'Preço Aluguel Total'),
+            decoration: const InputDecoration(labelText: 'Preço Aluguel Total'),
             keyboardType: TextInputType.number,
           ),
           TextFormField(
             controller: _precoAluguelPorPessoaController,
-            decoration: InputDecoration(labelText: 'Preço Aluguel por Pessoa'),
+            decoration: const InputDecoration(labelText: 'Preço Aluguel por Pessoa'),
             keyboardType: TextInputType.number,
           ),
           TextFormField(
             controller: _vagaGaragemController,
-            decoration: InputDecoration(labelText: 'Vaga Garagem'),
+            decoration: const InputDecoration(labelText: 'Vaga Garagem'),
           ),
           TextFormField(
             controller: _animaisEstimacaoController,
-            decoration: InputDecoration(labelText: 'Animais Estimação'),
+            decoration: const InputDecoration(labelText: 'Animais Estimação'),
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
@@ -189,7 +189,7 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
               onPressed: () async {
                 imagem = await ImageHelper.selecionarImagem();
               },
-              child: Text('Atualizar imagem'),
+              child: const Text('Atualizar imagem'),
             ),
           ),
           ElevatedButton(
@@ -208,7 +208,7 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
               await _buscarMoradias();
               Navigator.pop(context);
             },
-            child: Text('Atualizar'),
+            child: const Text('Atualizar'),
           )
         ]),
       ),

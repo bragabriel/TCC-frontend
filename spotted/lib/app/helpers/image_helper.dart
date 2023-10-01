@@ -18,20 +18,20 @@ class ImageHelper {
         listaDeImagens![0].url,
         fit: BoxFit.cover,
       );
-    } else if (!listaDeImagens!.isEmpty) {
+    } else if (listaDeImagens!.isNotEmpty) {
       return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          final screenWidth = 16;
-          final screenHeight = 9;
-          final imageAspectRatio = screenWidth / screenHeight;
-          return Container(
+          const screenWidth = 16;
+          const screenHeight = 9;
+          const imageAspectRatio = screenWidth / screenHeight;
+          return SizedBox(
             width: double.infinity,
             child: CarouselSlider(
               options: CarouselOptions(
                 aspectRatio: imageAspectRatio,
                 autoPlay: true,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(milliseconds: 800),
                 autoPlayCurve: Curves.easeInExpo,
                 pauseAutoPlayOnTouch: true,
               ),

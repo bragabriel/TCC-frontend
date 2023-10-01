@@ -12,7 +12,7 @@ import '../../repository/emprego_repository.dart';
 class EmpregoEditarView extends StatefulWidget {
   final dynamic emprego;
 
-  EmpregoEditarView(this.emprego);
+  const EmpregoEditarView(this.emprego, {super.key});
 
   @override
   EmpregoEditarPageState createState() => EmpregoEditarPageState();
@@ -35,12 +35,14 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
   final TextEditingController _tipoVagaController = TextEditingController();
   final EmpregoRepository _empregoRepository = EmpregoRepository();
   Response<dynamic>? response;
+  
+  // ignore: unused_field
   Usuario? _usuario;
   late File? imagem;
   String _selectedModalidade = 'HIBRIDO';
 
   void _showSuccessMessage(BuildContext context) {
-    final snackBar = SnackBar(
+    const snackBar = SnackBar(
       content: Text('Informações atualizadas com sucesso!'),
       backgroundColor: Colors.green,
     );
@@ -92,7 +94,7 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
     print("entrou no update emprego");
     return Scaffold(
       appBar: AppBar(
-        title: Text('Atualizar emprego'),
+        title: const Text('Atualizar emprego'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
@@ -124,64 +126,64 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
     print("entrou no atualizar emprego");
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextFormField(
             controller: _tituloController,
-            decoration: InputDecoration(labelText: 'Título'),
+            decoration: const InputDecoration(labelText: 'Título'),
           ),
           TextFormField(
             controller: _descricaoController,
-            decoration: InputDecoration(labelText: 'Descrição'),
+            decoration: const InputDecoration(labelText: 'Descrição'),
           ),
           TextFormField(
             controller: _beneficiosController,
-            decoration: InputDecoration(labelText: 'Benefícios'),
+            decoration: const InputDecoration(labelText: 'Benefícios'),
           ),
           TextFormField(
             controller: _cidadeController,
-            decoration: InputDecoration(labelText: 'Cidade'),
+            decoration: const InputDecoration(labelText: 'Cidade'),
           ),
           TextFormField(
             controller: _contatoController,
-            decoration: InputDecoration(labelText: 'Contato'),
+            decoration: const InputDecoration(labelText: 'Contato'),
           ),
           TextFormField(
             controller: _empresaController,
-            decoration: InputDecoration(labelText: 'Empresa'),
+            decoration: const InputDecoration(labelText: 'Empresa'),
           ),
           TextFormField(
             controller: _estadoController,
-            decoration: InputDecoration(labelText: 'Estado'),
+            decoration: const InputDecoration(labelText: 'Estado'),
           ),
           TextFormField(
             controller: _experienciaController,
-            decoration: InputDecoration(labelText: 'Experiencia'),
+            decoration: const InputDecoration(labelText: 'Experiencia'),
           ),
           TextFormField(
             controller: _linkVagaController,
-            decoration: InputDecoration(labelText: 'Link da vaga'),
+            decoration: const InputDecoration(labelText: 'Link da vaga'),
           ),
           TextFormField(
             controller: _cidadeController,
-            decoration: InputDecoration(labelText: 'Localização'),
+            decoration: const InputDecoration(labelText: 'Localização'),
           ),
           TextFormField(
             controller: _presencialController,
-            decoration: InputDecoration(labelText: 'Presencial'),
+            decoration: const InputDecoration(labelText: 'Presencial'),
           ),
           TextFormField(
             controller: _requisitosController,
-            decoration: InputDecoration(labelText: 'Requisitos'),
+            decoration: const InputDecoration(labelText: 'Requisitos'),
           ),
           TextFormField(
             controller: _salarioController,
-            decoration: InputDecoration(labelText: 'Salário'),
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            decoration: const InputDecoration(labelText: 'Salário'),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           DropdownButtonFormField<String>(
             value: _selectedModalidade,
             onChanged: (String? newValue) {
@@ -200,7 +202,7 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
                 child: Text(value),
               );
             }).toList(),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Modalidade',
               border: OutlineInputBorder(),
             ),
@@ -212,15 +214,14 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
               onPressed: () async {
                 imagem = await ImageHelper.selecionarImagem();
               },
-              child: Text('Atualizar imagem'),
+              child: const Text('Atualizar imagem'),
             ),
           ),
           ElevatedButton(
             onPressed: () async {
               try {
-                Response<dynamic>? response = widget.emprego['idArtefato'];
                 imagem ??= File('assets/images/imagem.png');
-                ImageHelper.uploadImagem(response, imagem);
+                ImageHelper.updateImagem(widget.emprego['idArtefato'], imagem);
                 await _empregoRepository.updateEmprego(
                     body, widget.emprego['idArtefato']);
                 _showSuccessMessage(context);
@@ -229,7 +230,7 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
               }
               Navigator.pop(context);
             },
-            child: Text('Atualizar'),
+            child: const Text('Atualizar'),
           )
         ]),
       ),

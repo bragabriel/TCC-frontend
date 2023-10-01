@@ -10,6 +10,8 @@ import '../../repository/objeto_repository.dart';
 import 'objeto_view.dart';
 
 class ObjetoCadastrarView extends StatefulWidget {
+  const ObjetoCadastrarView({super.key});
+
   @override
   _ObjetoCadastrarViewState createState() => _ObjetoCadastrarViewState();
 }
@@ -74,7 +76,7 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastrar Objeto'),
+        title: const Text('Cadastrar Objeto'),
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
@@ -87,30 +89,30 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
 
   Widget _cadastrarObjeto() {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           TextField(
             controller: _tituloController,
-            decoration: InputDecoration(labelText: 'Título'),
+            decoration: const InputDecoration(labelText: 'Título'),
           ),
           TextField(
             controller: _descricaoController,
-            decoration: InputDecoration(labelText: 'Descrição'),
+            decoration: const InputDecoration(labelText: 'Descrição'),
           ),
           TextField(
             controller: _contatoController,
-            decoration: InputDecoration(labelText: 'Contato'),
+            decoration: const InputDecoration(labelText: 'Contato'),
           ),
           TextField(
             controller: _localizacaoAchado,
-            decoration: InputDecoration(labelText: 'Localização encontrado'),
+            decoration: const InputDecoration(labelText: 'Localização encontrado'),
           ),
           TextField(
             controller: _localizacaoAtual,
-            decoration: InputDecoration(labelText: 'Localização atual'),
+            decoration: const InputDecoration(labelText: 'Localização atual'),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 40,
@@ -118,10 +120,10 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
               onPressed: () async {
                 imagem = await ImageHelper.selecionarImagem();
               },
-              child: Text('Inserir imagem'),
+              child: const Text('Inserir imagem'),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 40,
@@ -131,8 +133,8 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text("Confirmação de cadastro"),
-                        content: Text("Deseja cadastrar o emprego?"),
+                        title: const Text("Confirmação de cadastro"),
+                        content: const Text("Deseja cadastrar o emprego?"),
                         actions: [
                           TextButton(
                             onPressed: () async {
@@ -143,23 +145,23 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ObjetoPage(),
+                                  builder: (context) => const ObjetoPage(),
                                 ),
                               );
                             },
-                            child: Text("Sim"),
+                            child: const Text("Sim"),
                           ),
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text("Cancelar"),
+                            child: const Text("Cancelar"),
                           ),
                         ],
                       );
                     });
               },
-              child: Text('Cadastrar'),
+              child: const Text('Cadastrar'),
             ),
           ),
         ],

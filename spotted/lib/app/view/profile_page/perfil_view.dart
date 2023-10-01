@@ -6,6 +6,8 @@ import '../../../service/change_notifier.dart';
 import '../../model/usuario_model.dart';
 
 class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     IconButton _newButton(Color color, IconData icon, Usuario? usuario) {
@@ -19,16 +21,16 @@ class ProfilePage extends StatelessWidget {
     Usuario? user = Usuario.empty();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Perfil'),
+        title: const Text('Perfil'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Consumer<UserProvider>(
           builder: (context, userProvider, _) {
             print('URL da imagem: ${userProvider.user?.url}');
             return Center(
               child: Container(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black), // Defina a cor da borda desejada
                 ),
@@ -38,12 +40,12 @@ class ProfilePage extends StatelessWidget {
                   children: [
                     userProvider.user?.url != null
                         ? Image.network(userProvider.user!.url!)
-                        : SizedBox(), 
+                        : const SizedBox(), 
                     _buildText('Nome: ${userProvider.user?.nomeUsuario}'),
                     _buildText('Sobrenome: ${userProvider.user?.sobrenomeUsuario}'),
                     _buildText('Telefone: ${userProvider.user?.telefoneUsuario}'),
                     _buildText('Email: ${userProvider.user?.emailUsuario}'),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
@@ -52,7 +54,7 @@ class ProfilePage extends StatelessWidget {
                             MaterialPageRoute(builder: (context) => UpdateProfilePage(userProvider.user!)),
                           );
                         },
-                        child: Text('Alterar Informações'),
+                        child: const Text('Alterar Informações'),
                       ),
                     ),
                      _newButton(Colors.black, Icons.list, user),
@@ -84,7 +86,7 @@ class ProfilePage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Text(
         text,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
           ), 

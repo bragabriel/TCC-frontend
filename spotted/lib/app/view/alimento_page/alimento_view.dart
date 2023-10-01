@@ -38,16 +38,16 @@ class AlimentoPageState extends State<AlimentoPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
+          const Text(
             'Ops, algo de errado aconteceu',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               controller.start();
             },
-            child: Text('Tentar novamente'),
+            child: const Text('Tentar novamente'),
           ),
         ],
       ),
@@ -55,7 +55,7 @@ class AlimentoPageState extends State<AlimentoPage> {
   }
 
   _loading() {
-    return Center(child: CircularProgressIndicator());
+    return const Center(child: CircularProgressIndicator());
   }
 
   _start() {
@@ -88,12 +88,12 @@ class AlimentoPageState extends State<AlimentoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Alimentação"),
+        title: const Text("Alimentação"),
         leading: BackButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           },
         ),
@@ -114,12 +114,12 @@ class AlimentoPageState extends State<AlimentoPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AlimentoCadastrarView(),
+              builder: (context) => const AlimentoCadastrarView(),
             ),
           );
         },
@@ -187,20 +187,20 @@ class AlimentoPageState extends State<AlimentoPage> {
               _alimentosFiltrados();
             });
           },
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             labelText: 'Pesquisar',
             prefixIcon: Icon(Icons.search),
           ),
         ),
       ),
-      SizedBox(height: 10),
+      const SizedBox(height: 10),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Column(
             children: [
-              Text('Preço mínimo'),
-              SizedBox(height: 4),
+              const Text('Preço mínimo'),
+              const SizedBox(height: 4),
               SizedBox(
                 width: 100,
                 child: TextFormField(
@@ -211,7 +211,7 @@ class AlimentoPageState extends State<AlimentoPage> {
                     });
                   },
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: '0.0',
                   ),
@@ -221,8 +221,8 @@ class AlimentoPageState extends State<AlimentoPage> {
           ),
           Column(
             children: [
-              Text('Preço máximo'),
-              SizedBox(height: 4),
+              const Text('Preço máximo'),
+              const SizedBox(height: 4),
               SizedBox(
                 width: 100,
                 child: TextFormField(
@@ -233,7 +233,7 @@ class AlimentoPageState extends State<AlimentoPage> {
                     });
                   },
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: '0.0',
                   ),
@@ -243,8 +243,8 @@ class AlimentoPageState extends State<AlimentoPage> {
           ),
           Column(
             children: [
-              Text('Oferta'),
-              SizedBox(height: 4),
+              const Text('Oferta'),
+              const SizedBox(height: 4),
               Checkbox(
                 value: !_showAllItems,
                 onChanged: (value) {
@@ -258,12 +258,12 @@ class AlimentoPageState extends State<AlimentoPage> {
           ),
         ],
       ),
-      SizedBox(height: 10),
+      const SizedBox(height: 10),
       Wrap(
         spacing: 8,
         children: [
           FilterChip(
-            label: Text('Salgado'),
+            label: const Text('Salgado'),
             selected: _isSalgadoSelected,
             onSelected: (selected) {
               setState(() {
@@ -273,7 +273,7 @@ class AlimentoPageState extends State<AlimentoPage> {
             },
           ),
           FilterChip(
-            label: Text('Doce'),
+            label: const Text('Doce'),
             selected: _isDoceSelected,
             onSelected: (selected) {
               setState(() {
@@ -283,7 +283,7 @@ class AlimentoPageState extends State<AlimentoPage> {
             },
           ),
           FilterChip(
-            label: Text('Outro'),
+            label: const Text('Outro'),
             selected: _isOutroSelected,
             onSelected: (selected) {
               setState(() {
@@ -294,7 +294,7 @@ class AlimentoPageState extends State<AlimentoPage> {
           )
         ],
       ),
-      SizedBox(height: 10),
+      const SizedBox(height: 10),
       Expanded(
         child: GridView.builder(
             padding: const EdgeInsets.all(20),

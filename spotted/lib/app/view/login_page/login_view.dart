@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
 import '../../../service/change_notifier.dart';
 import '../../model/usuario_model.dart';
@@ -27,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                       width: 300,
                       height: 300,
                       child: Image.asset('assets/images/LogoTcc.png')),
@@ -45,10 +44,10 @@ class _LoginPageState extends State<LoginPage> {
                             email = text;
                           },
                           keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               labelText: 'Email', border: OutlineInputBorder()),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         TextField(
@@ -56,35 +55,35 @@ class _LoginPageState extends State<LoginPage> {
                             password = text;
                           },
                           obscureText: true,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               labelText: 'Password',
                               border: OutlineInputBorder()),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         ElevatedButton(
                           onPressed: () async {
                             _logar();
                           },
-                          child: Container(
-                            width: double.infinity,
-                            child: Text('Entrar', textAlign: TextAlign.center),
-                          ),
                           style: ElevatedButton.styleFrom(
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.blue)),
+                          child: const SizedBox(
+                            width: double.infinity,
+                            child: Text('Entrar', textAlign: TextAlign.center),
+                          ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
                         ),
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context).pushNamed('/cadastro');
                           },
-                          child: Text(
+                          child: const Text(
                             'Novo aqui? Cadastre-se',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -130,8 +129,8 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Atenção"),
-            content: Text("Login realizado com sucesso!"),
+            title: const Text("Atenção"),
+            content: const Text("Login realizado com sucesso!"),
             actions: [
               ElevatedButton(
                 onPressed: () {
@@ -139,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.pushReplacementNamed(
                       context, '/home'); // Navegar para a tela home
                 },
-                child: Text("OK"),
+                child: const Text("OK"),
               )
             ],
           );
@@ -150,14 +149,14 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text("Atenção"),
-              content: Text("Credenciais inválidas."),
+              title: const Text("Atenção"),
+              content: const Text("Credenciais inválidas."),
               actions: [
                 ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text("OK"))
+                    child: const Text("OK"))
               ],
             );
           });
