@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:spotted/app/view/objeto_view/objetoDetalhe_view.dart';
 import 'objetoCadastrar_view.dart';
 import '../../controller/objeto_controller.dart';
 import '../../helpers/image_helper.dart';
 import '../../model/objeto_model.dart';
 import '../../repository/objeto_repository.dart';
 import '../home_page/home_view.dart';
+import 'objetoDetalhe_view.dart';
 
 class ObjetoPage extends StatefulWidget {
   const ObjetoPage({Key? key}) : super(key: key);

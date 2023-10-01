@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/view/transporte_page/transporteCadastrar_view.dart';
+import 'package:spotted/app/view/transporte_page/transporteDetalhe_view.dart';
 import '../../helpers/image_helper.dart';
 import '../../model/transporte_model.dart';
 import '../../repository/transporte_repository.dart';
 import '../home_page/home_view.dart';
-import 'TransporteDetalhe_view.dart';
 
 class TransportePage extends StatefulWidget {
   const TransportePage({Key? key}) : super(key: key);

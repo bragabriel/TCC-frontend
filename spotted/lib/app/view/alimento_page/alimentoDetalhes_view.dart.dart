@@ -67,7 +67,7 @@ class _DetailsState extends State<AlimentoDetails> {
                             alignment: Alignment.bottomCenter,
                             child: Container(
                               padding: const EdgeInsets.only(
-                                  top: 30, right: 30, left: 30),
+                                  top: 20, right: 30, left: 30),
                               height: 110,
                               width: double.infinity,
                               decoration: BoxDecoration(

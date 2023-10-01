@@ -1,160 +1,245 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-import '../../model/artefato_model.dart';
 import '../../model/objeto_model.dart';
 import 'objeto_view.dart';
 
 class ObjetoDetalheView extends StatefulWidget {
   @override
-  State<ObjetoDetalheView> createState() => ObjetoDetalheState();
+  State<ObjetoDetalheView> createState() => _DetailsState();
 
-  final Objeto filteredObjetoList;
-  const ObjetoDetalheView(this.filteredObjetoList, {super.key});
+  final Objeto filteredFoodList;
+  const ObjetoDetalheView(this.filteredFoodList, {super.key});
 }
 
-class ObjetoDetalheState extends State<ObjetoDetalheView> {
+class _DetailsState extends State<ObjetoDetalheView> {
   @override
   Widget build(BuildContext context) {
-    Objeto objeto = widget.filteredObjetoList;
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Detalhes'),
-          leading: BackButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ObjetoPage()),
-              );
-            },
-          ),
-        ),
-        body: ListView(
+    Objeto objeto = widget.filteredFoodList;
+
+    var listaDeImagens = objeto.listaImagens;
+
+    return Scaffold(
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        color: Colors.white,
+        child: Column(
           children: [
-            _buildCarrousel(objeto.listaImagens),
-            DetalhesObjeto(
-              objeto: objeto,
-            ),
-            BotaoObjeto(objeto: objeto),
+            Expanded(
+                flex: 4,
+                child: ClipRRect(
+                  child: SizedBox(
+                    height: double.infinity,
+                    width: double.infinity,
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: Image.network(
+                            listaDeImagens![0].url,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: 50, left: 20, right: 20),
+                            width: double.infinity,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                    color: Colors.blue,
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ObjetoPage()),
+                                      );
+                                    },
+                                    icon: const Icon(Icons.arrow_back_ios_new))
+                              ],
+                            ),
+                          ),
+                        ),
+                        Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                  top: 30, right: 30, left: 30),
+                              height: 110,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.blue.withOpacity(.2),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            objeto.tituloArtefato,
+                                            style: const TextStyle(
+                                                fontSize: 25,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                decoration:
+                                                    TextDecoration.none),
+                                          ),
+                                          Text(
+                                            objeto.localizacaoAchadoObjeto as String,
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w300,
+                                                decoration:
+                                                    TextDecoration.none),
+                                          ),
+                                          // Text(
+                                          //   Objeto.unidadeObjeto as String,
+                                          //   style: const TextStyle(
+                                          //       fontSize: 15,
+                                          //       color: Colors.white,
+                                          //       fontWeight: FontWeight.w200,
+                                          //       decoration:
+                                          //           TextDecoration.none),
+                                          // ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ))
+                      ],
+                    ),
+                  ),
+                )),
+            Expanded(
+                flex: 2,
+                child: Container(
+                  margin: const EdgeInsets.only(top: 20, left: 20, right: 30),
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Descrição",
+                              style: TextStyle(
+                                color: Colors.black.withOpacity(.5),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              objeto.descricaoArtefato,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                          child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox(
+                            width: 0,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Preço",
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(.6),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  const Text(
+                                    "\$",
+                                    style: TextStyle(
+                                        color: Colors.orange,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    objeto.localizacaoAchadoObjeto.toString(),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     ButtonHelper.newButton(
+                          //         Colors.blue,
+                          //         Icons.message,
+                          //         'https://api.whatsapp.com/send/?phone=55',
+                          //         Objeto.telefoneUsuario);
+                          //   },
+                          //   child: Container(
+                          //     height: 60,
+                          //     width: 250,
+                          //     decoration: BoxDecoration(
+                          //       color: Colors.blue,
+                          //       borderRadius: BorderRadius.circular(20),
+                          //     ),
+                          //     child: const Center(
+                          //       child: Text(
+                          //         "Entrar em contato",
+                          //         style: TextStyle(
+                          //           color: Colors.black,
+                          //           fontSize: 20,
+                          //           fontWeight: FontWeight.bold,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // )
+                        ],
+                      ))
+                    ],
+                  ),
+                )),
           ],
         ),
       ),
     );
   }
-}
-
-class BotaoObjeto extends StatelessWidget {
-  final Objeto objeto;
-
-  BotaoObjeto({required this.objeto});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _newButton(
-            Colors.blue.shade700, Icons.web, "", objeto.localizacaoAchadoObjeto)
-      ],
-    );
-  }
-}
-
-class DetalhesObjeto extends StatelessWidget {
-  final Objeto objeto;
-
-  DetalhesObjeto({required this.objeto});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(32),
-      child: Wrap(
-        children: [
-          Text(
-            "${objeto.tituloArtefato} - ${objeto.localizacaoAchadoObjeto} \n",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 27,
-            ),
-          ),
-          _buildText(objeto.descricaoArtefato),
-          _buildText("Encontrado em: ${objeto.localizacaoAchadoObjeto}"),
-          _buildText("Agora está em: ${objeto.localizacaoAtualObjeto}"),
-        ],
-      ),
-    );
-  }
-}
-
-void _openURL(String? url) async {
-  if (await canLaunch(url!)) {
-    await launch(url);
-  } else {
-    throw 'Não foi possível abrir $url';
-  }
-}
-
-Column _newButton(Color color, IconData icon, String? textBase, String? dado) {
-  return Column(
-    mainAxisSize: MainAxisSize.min,
-    mainAxisAlignment: MainAxisAlignment.end,
-    children: <Widget>[
-      IconButton(
-        icon: Icon(icon, color: color, size: 50),
-        onPressed: () => _openURL(textBase! + dado!),
-      ),
-      SizedBox(height: 20),
-    ],
-  );
-}
-
-Widget _buildCarrousel(List<Imagem>? listaDeImagens) {
-  if (!listaDeImagens!.isEmpty) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        final screenWidth = 16;
-        final screenHeight = 9;
-        final imageAspectRatio = screenWidth / screenHeight;
-        return Container(
-          width: double.infinity,
-          child: CarouselSlider(
-            options: CarouselOptions(
-              aspectRatio: imageAspectRatio,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              autoPlayCurve: Curves.easeInExpo,
-              pauseAutoPlayOnTouch: true,
-            ),
-            items: listaDeImagens.map((imagemPath) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Image.network(
-                    imagemPath.url,
-                    fit: BoxFit.cover,
-                  );
-                },
-              );
-            }).toList(),
-          ),
-        );
-      },
-    );
-  } else {
-    return Center(
-      child: Image.asset('assets/images/imagem.png'),
-    );
-  }
-}
-
-Text _buildText(String? text) {
-  return Text(
-    "$text \n",
-    style: TextStyle(
-      color: Colors.black,
-      fontSize: 18,
-    ),
-  );
 }
