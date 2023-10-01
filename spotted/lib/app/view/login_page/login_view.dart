@@ -104,20 +104,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    /*     body: Stack(
-      children: [
-        SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: Image.asset(
-              'assets/images/wallpaper.png',
-              fit: BoxFit.cover,
-            )),
-        Container(color: Colors.black.withOpacity(0.3)),
-        _body(),
-      ],
-    ) */
      body: Container(
-      color: Color.fromARGB(255, 7, 78, 59).withOpacity(0.8), // Defina a cor desejada aqui
+      color: Colors.blue.withOpacity(0.8),
       child: _body(),
     ),
     );

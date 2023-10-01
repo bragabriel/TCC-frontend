@@ -53,8 +53,7 @@ class _DetailsState extends State<ObjetoDetalheView> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                ObjetoPage()),
+                                            builder: (context) => ObjetoPage()),
                                       );
                                     },
                                     icon: const Icon(Icons.arrow_back_ios_new))
@@ -95,7 +94,8 @@ class _DetailsState extends State<ObjetoDetalheView> {
                                                     TextDecoration.none),
                                           ),
                                           Text(
-                                            objeto.localizacaoAchadoObjeto as String,
+                                            objeto.localizacaoAchadoObjeto
+                                                as String,
                                             style: const TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.white,
@@ -154,86 +154,32 @@ class _DetailsState extends State<ObjetoDetalheView> {
                               ),
                             ),
                             const SizedBox(
-                              height: 10,
+                              height: 30,
+                            ),
+                            Text(
+                              "Localização atual: ",
+                              style: TextStyle(
+                                color: Colors.black.withOpacity(.5),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              objeto.descricaoArtefato,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
                             ),
                           ],
                         ),
                       ),
-                      Expanded(
-                          child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const SizedBox(
-                            width: 0,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Preço",
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(.6),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  const Text(
-                                    "\$",
-                                    style: TextStyle(
-                                        color: Colors.orange,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    objeto.localizacaoAchadoObjeto.toString(),
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          // GestureDetector(
-                          //   onTap: () {
-                          //     ButtonHelper.newButton(
-                          //         Colors.blue,
-                          //         Icons.message,
-                          //         'https://api.whatsapp.com/send/?phone=55',
-                          //         Objeto.telefoneUsuario);
-                          //   },
-                          //   child: Container(
-                          //     height: 60,
-                          //     width: 250,
-                          //     decoration: BoxDecoration(
-                          //       color: Colors.blue,
-                          //       borderRadius: BorderRadius.circular(20),
-                          //     ),
-                          //     child: const Center(
-                          //       child: Text(
-                          //         "Entrar em contato",
-                          //         style: TextStyle(
-                          //           color: Colors.black,
-                          //           fontSize: 20,
-                          //           fontWeight: FontWeight.bold,
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // )
-                        ],
-                      ))
                     ],
                   ),
                 )),
