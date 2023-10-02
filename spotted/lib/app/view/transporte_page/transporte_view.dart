@@ -191,8 +191,8 @@ class TransportePageState extends State<TransportePage> {
                             fontSize: 13, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    child: ImageHelper.buildCarrousel(
-                        listaDeTransportes[index].listaImagens),
+                    child: Image.network(
+                        listaDeTransportes[index].imagem.url),
                   ));
             },
           ),

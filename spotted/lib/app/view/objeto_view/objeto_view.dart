@@ -232,8 +232,8 @@ class ObjetoPageState extends State<ObjetoPage> {
                     ),
                   ),
                 ),
-                child: ImageHelper.buildCarrousel(
-                  filteredobjetoList[index].listaImagens,
+                child: Image.network(
+                  filteredobjetoList[index].imagem.url,
                 ),
               ),
             );

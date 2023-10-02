@@ -331,8 +331,8 @@ class AlimentoPageState extends State<AlimentoPage> {
                           fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  child: ImageHelper.buildCarrousel(
-                      filteredFoodList[index].listaImagens),
+                  child: Image.network(
+                      filteredFoodList[index].imagem.url),
                 ),
               );
             }),

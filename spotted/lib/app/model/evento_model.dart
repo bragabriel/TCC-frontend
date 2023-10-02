@@ -12,7 +12,7 @@ class Evento extends Artefato {
     required String dataCadastro,
     required String? dataAtualizacao,
     required int idUsuario,
-    required List<Imagem> listaImagens,
+    required Imagem imagem,
     required this.localizacaoEvento,
   }) : super(
           idArtefato: idArtefato,
@@ -23,7 +23,7 @@ class Evento extends Artefato {
           dataCadastro: dataCadastro,
           dataAtualizacao: dataAtualizacao,
           idUsuario: idUsuario,
-          listaImagens: listaImagens,
+          imagem: imagem,
         );
 
   factory Evento.fromJson(Map<String, dynamic> json) {
@@ -36,7 +36,7 @@ class Evento extends Artefato {
       dataCadastro: json['dataCadastro'],
       dataAtualizacao: json['dataAtualizacao'],
       idUsuario: json['idUsuario'],
-      listaImagens: (json['listaImagens'] as List<dynamic>)
+      imagem: (json['imagem'])
           .map((image) => Imagem.fromJson(image))
           .toList(),
       localizacaoEvento: json['localizacaoEvento'],

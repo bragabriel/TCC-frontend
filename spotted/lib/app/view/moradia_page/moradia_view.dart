@@ -268,8 +268,8 @@ class MoradiaPageState extends State<MoradiaPage> {
                       ),
                     ),
                   ),
-                  child: ImageHelper.buildCarrousel(
-                      filteredMoradiaList[index].listaImagens),
+                  child: Image.network(
+                      filteredMoradiaList[index].imagem.url),
                 ),
               );
             },

@@ -17,7 +17,7 @@ class Transporte extends Artefato {
     required String dataCadastro,
     required String? dataAtualizacao,
     required int idUsuario,
-    required List<Imagem> listaImagens,
+    required Imagem imagem,
     required this.informacoesVeiculoTransporte,
     required this.informacoesCondutorTransporte,
     required this.qtdAssentosTotalTransporte,
@@ -33,7 +33,7 @@ class Transporte extends Artefato {
           dataCadastro: dataCadastro,
           dataAtualizacao: dataAtualizacao,
           idUsuario: idUsuario,
-          listaImagens: listaImagens,
+          imagem: imagem,
         );
 
   factory Transporte.fromJson(Map<String, dynamic> json) {
@@ -48,7 +48,7 @@ class Transporte extends Artefato {
       dataAtualizacao: json[
           'dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?
       idUsuario: json['idUsuario'],
-      listaImagens: (json['listaImagens'] as List<dynamic>)
+      imagem: (json['imagem'])
           .map((image) => Imagem.fromJson(image))
           .toList(),
       informacoesVeiculoTransporte: json['informacoesVeiculoTransporte'],
