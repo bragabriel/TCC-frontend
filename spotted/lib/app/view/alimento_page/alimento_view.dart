@@ -5,7 +5,6 @@ import 'package:spotted/app/view/alimento_page/alimentoDetalhes_view.dart.dart';
 import 'alimentoCadastrar_view.dart';
 import '../home_page/home_view.dart';
 import '../../controller/alimento_controller.dart';
-import '../../helpers/image_helper.dart';
 
 class AlimentoPage extends StatefulWidget {
   const AlimentoPage({Key? key}) : super(key: key);

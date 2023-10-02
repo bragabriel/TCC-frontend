@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'objetoCadastrar_view.dart';
 import '../../controller/objeto_controller.dart';
-import '../../helpers/image_helper.dart';
 import '../../model/objeto_model.dart';
 import '../../repository/objeto_repository.dart';
 import '../home_page/home_view.dart';

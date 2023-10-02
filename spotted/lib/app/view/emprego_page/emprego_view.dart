@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:spotted/app/repository/emprego_repository.dart';
 import 'package:spotted/app/model/emprego_model.dart';
 import 'empregoCadastrar_view.dart';
-import '../../helpers/image_helper.dart';
 import '../home_page/home_view.dart';
 import 'empregoDetalhe_view.dart';
 

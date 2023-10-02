@@ -1,14 +1,10 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../constants/constants.dart';
-import '../model/artefato_model.dart';
 
 class ImageHelper {
   static uploadImagem(

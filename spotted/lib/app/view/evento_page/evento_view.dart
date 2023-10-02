@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../helpers/image_helper.dart';
 import '../../controller/alimento_controller.dart';
 import '../../model/evento_model.dart';
 import '../../repository/evento_repository.dart';
