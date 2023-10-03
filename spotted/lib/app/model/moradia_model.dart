@@ -21,7 +21,7 @@ class Moradia extends Artefato {
     required String dataCadastro,
     required String? dataAtualizacao,
     required int idUsuario,
-    required Imagem imagem,
+    required List<Imagem> listaImagens,
     required this.cidadeMoradia,
     required this.bairroMoradia,
     required this.estadoMoradia,
@@ -41,7 +41,7 @@ class Moradia extends Artefato {
           dataCadastro: dataCadastro,
           dataAtualizacao: dataAtualizacao,
           idUsuario: idUsuario,
-          imagem: imagem,
+          listaImagens: listaImagens,
         );
 
   factory Moradia.fromJson(Map<String, dynamic> json) {
@@ -56,7 +56,7 @@ class Moradia extends Artefato {
       dataAtualizacao: json[
           'dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?
       idUsuario: json['idUsuario'],
-      imagem: (json['imagem'])
+      listaImagens: (json['listaImagens'] as List<dynamic>)
           .map((image) => Imagem.fromJson(image))
           .toList(),
       estadoMoradia: json['estadoMoradia'],

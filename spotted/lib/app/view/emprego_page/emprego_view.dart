@@ -286,8 +286,8 @@ class _EmpregoPageState extends State<EmpregoPage> {
                             fontSize: 13, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    child: Image.network(
-                        listaDeEmpregos[index].imagem.url),
+                    child: ImageHelper.buildCarrousel(
+                        listaDeEmpregos[index].listaImagens),
                   ));
             },
           ),

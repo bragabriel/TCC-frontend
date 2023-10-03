@@ -18,7 +18,7 @@ class Alimento extends Artefato {
     required String dataCadastro,
     required String? dataAtualizacao,
     required int idUsuario,
-    required Imagem imagem,
+    required List<Imagem>? listaImagens,
     this.telefoneUsuario,
     this.tipoAlimento,
     this.marcaAlimento,
@@ -35,7 +35,7 @@ class Alimento extends Artefato {
           dataCadastro: dataCadastro,
           dataAtualizacao: dataAtualizacao,
           idUsuario: idUsuario,
-          imagem: imagem,
+          listaImagens: listaImagens,
         );
 
   factory Alimento.fromJson(Map<String, dynamic> json) {
@@ -48,7 +48,7 @@ class Alimento extends Artefato {
       dataCadastro: json['dataCadastro'],
       dataAtualizacao: json['dataAtualizacao'],
       idUsuario: json['idUsuario'],
-      imagem: (json['imagem'])
+      listaImagens: (json['listaImagens'] as List<dynamic>)
           .map((image) => Imagem.fromJson(image))
           .toList(),
       tipoAlimento: json['tipoAlimento'],

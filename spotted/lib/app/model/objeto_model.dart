@@ -13,7 +13,7 @@ class Objeto extends Artefato {
     required String dataCadastro,
     required String? dataAtualizacao,
     required int idUsuario,
-    required Imagem imagem,
+    required List<Imagem> listaImagens,
     required this.localizacaoAchadoObjeto,
     required this.localizacaoAtualObjeto,
   }) : super(
@@ -25,7 +25,7 @@ class Objeto extends Artefato {
           dataCadastro: dataCadastro,
           dataAtualizacao: dataAtualizacao,
           idUsuario: idUsuario,
-          imagem: imagem,
+          listaImagens: listaImagens,
         );
 
   factory Objeto.fromJson(Map<String, dynamic> json) {
@@ -40,7 +40,7 @@ class Objeto extends Artefato {
       dataAtualizacao: json[
           'dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?
       idUsuario: json['idUsuario'],
-      imagem: (json['imagem'])
+      listaImagens: (json['listaImagens'] as List<dynamic>)
           .map((image) => Imagem.fromJson(image))
           .toList(),
       localizacaoAchadoObjeto: json['localizacaoAchadoObjeto'],

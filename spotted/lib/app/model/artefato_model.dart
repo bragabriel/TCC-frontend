@@ -7,7 +7,7 @@ class Artefato {
   final String dataCadastro;
   final String? dataAtualizacao;
   final int idUsuario;
-  final Imagem imagem;
+  final List<Imagem>? listaImagens;
   final String tipoArtefato;
 
   Artefato({
@@ -18,7 +18,7 @@ class Artefato {
     required this.tipoArtefato,
     required this.dataCadastro,
     required this.idUsuario,
-    required this.imagem,
+    required this.listaImagens,
     required this.dataAtualizacao,
   });
 
@@ -32,7 +32,7 @@ class Artefato {
       dataCadastro: json['dataCadastro'],
       dataAtualizacao: json['dataAtualizacao'],
       idUsuario: json['idUsuario'],
-      imagem: (json['imagem'])
+      listaImagens: (json['listaImagens'] as List<dynamic>)
           .map((image) => Imagem.fromJson(image))
           .toList(),
     );

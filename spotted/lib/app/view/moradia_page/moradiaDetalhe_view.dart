@@ -15,7 +15,7 @@ class _DetailsState extends State<MoradiaDetalheView> {
   Widget build(BuildContext context) {
     Moradia moradia = widget.filteredFoodList;
 
-    var listaDeImagens = moradia.imagem;
+    var listaDeImagens = moradia.listaImagens;
 
     return Scaffold(
       body: Container(
@@ -34,7 +34,7 @@ class _DetailsState extends State<MoradiaDetalheView> {
                       children: [
                         Positioned.fill(
                           child: Image.network(
-                            listaDeImagens.url,
+                            listaDeImagens![0].url,
                             fit: BoxFit.cover,
                           ),
                         ),

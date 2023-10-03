@@ -15,7 +15,7 @@ class _DetailsState extends State<ObjetoDetalheView> {
   Widget build(BuildContext context) {
     Objeto objeto = widget.filteredFoodList;
 
-    var listaDeImagens = objeto.imagem;
+    var listaDeImagens = objeto.listaImagens;
 
     return Scaffold(
       body: Container(
@@ -34,7 +34,7 @@ class _DetailsState extends State<ObjetoDetalheView> {
                       children: [
                         Positioned.fill(
                           child: Image.network(
-                            listaDeImagens.url,
+                            listaDeImagens![0].url,
                             fit: BoxFit.cover,
                           ),
                         ),

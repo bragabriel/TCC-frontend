@@ -212,8 +212,8 @@ class EventoPageState extends State<EventoPage> {
                           fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  child: Image.network(
-                      filteredEventoList[index].imagem.url),
+                  child: ImageHelper.buildCarrousel(
+                      filteredEventoList[index].listaImagens),
                 ),
               );
             }),
