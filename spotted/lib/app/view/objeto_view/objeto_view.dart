@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/helpers/image_helper.dart';
 import 'objetoCadastrar_view.dart';
 import '../../controller/objeto_controller.dart';
 import '../../model/objeto_model.dart';
@@ -144,9 +145,9 @@ class ObjetoPageState extends State<ObjetoPage> {
             objeto.tituloArtefato.toLowerCase().contains(searchTerm);
         final descriptionContainsTerm =
             objeto.descricaoArtefato.toLowerCase().contains(searchTerm);
-        final achadoContainsTerm =
-            objeto.localizacaoAchadoObjeto!.toLowerCase().contains(_searchLocalizacao);
-
+        final achadoContainsTerm = objeto.localizacaoAchadoObjeto!
+            .toLowerCase()
+            .contains(_searchLocalizacao);
 
         return achadoContainsTerm &&
             (titleContainsTerm || descriptionContainsTerm);
@@ -231,7 +232,7 @@ class ObjetoPageState extends State<ObjetoPage> {
                     ),
                   ),
                 ),
-                child: ImageHelper.buildCarrousel(
+                child: ImageHelper.loadImage(
                   filteredobjetoList[index].listaImagens,
                 ),
               ),

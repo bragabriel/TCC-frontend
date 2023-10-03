@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/helpers/image_helper.dart';
 import 'package:spotted/app/view/transporte_page/transporteCadastrar_view.dart';
 import 'package:spotted/app/view/transporte_page/transporteDetalhe_view.dart';
 import '../../model/transporte_model.dart';
@@ -7,7 +8,7 @@ import '../home_page/home_view.dart';
 
 class TransportePage extends StatefulWidget {
   const TransportePage({Key? key}) : super(key: key);
-  
+
   @override
   TransportePageState createState() => TransportePageState();
 }
@@ -58,12 +59,12 @@ class TransportePageState extends State<TransportePage> {
                 transporte.cidadeTransporte?.toLowerCase() ==
                     cidadeSelecionada.toLowerCase();
 
-      final searchTerm = _searchTerm.toLowerCase();
-            final titleContainsTerm =
-                transporte.tituloArtefato.toLowerCase().contains(searchTerm);
-            final descriptionContainsTerm =
-                transporte.descricaoArtefato.toLowerCase().contains(searchTerm);
-                
+        final searchTerm = _searchTerm.toLowerCase();
+        final titleContainsTerm =
+            transporte.tituloArtefato.toLowerCase().contains(searchTerm);
+        final descriptionContainsTerm =
+            transporte.descricaoArtefato.toLowerCase().contains(searchTerm);
+
         return atendeCriterioCidade &&
             (titleContainsTerm || descriptionContainsTerm);
       }).toList();
@@ -116,7 +117,7 @@ class TransportePageState extends State<TransportePage> {
             onChanged: (valor) {
               setState(() {
                 _searchTerm = valor;
-              _filtrarListaDeTransportes();
+                _filtrarListaDeTransportes();
               });
             },
             decoration: const InputDecoration(
@@ -190,7 +191,7 @@ class TransportePageState extends State<TransportePage> {
                             fontSize: 13, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    child: ImageHelper.buildCarrousel(
+                    child: ImageHelper.loadImage(
                         listaDeTransportes[index].listaImagens),
                   ));
             },

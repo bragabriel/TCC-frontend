@@ -27,7 +27,6 @@ class EventoEditarPageState extends State<EventoEditarView> {
   Usuario? _usuario;
   late File? imagem;
 
-
   void _showSuccessMessage(BuildContext context) {
     const snackBar = SnackBar(
       content: Text('Informações atualizadas com sucesso!'),
@@ -73,7 +72,7 @@ class EventoEditarPageState extends State<EventoEditarView> {
     final body = {
       "descricaoArtefato": _descricaoController.text,
       "tituloArtefato": _tituloController.text,
-      "localizacaoEvento": _localizacaoController.text,
+      "localizacaoFesta": _localizacaoController.text,
     };
 
     return SingleChildScrollView(
@@ -94,7 +93,7 @@ class EventoEditarPageState extends State<EventoEditarView> {
             controller: _localizacaoController,
             decoration: const InputDecoration(labelText: 'Localização'),
           ),
-                    SizedBox(
+          SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 40,
             child: ElevatedButton(
@@ -107,11 +106,11 @@ class EventoEditarPageState extends State<EventoEditarView> {
           ElevatedButton(
             onPressed: () async {
               try {
-              Response<dynamic>? response = widget.evento['idArtefato'];
+                Response<dynamic>? response = widget.evento['idArtefato'];
                 imagem ??= File('assets/images/imagem.png');
                 ImageHelper.uploadImagem(response, imagem);
-                await _eventoRepository.updateEvento(body,
-                    widget.evento['idArtefato']);
+                await _eventoRepository.updateEvento(
+                    body, widget.evento['idArtefato']);
                 _showSuccessMessage(context);
               } catch (e) {
                 print(e);

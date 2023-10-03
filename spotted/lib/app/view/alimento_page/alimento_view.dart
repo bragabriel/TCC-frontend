@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/helpers/image_helper.dart';
 import 'package:spotted/app/repository/alimento_repository.dart';
 import 'package:spotted/app/model/alimento_model.dart';
 import 'package:spotted/app/view/alimento_page/alimentoDetalhes_view.dart.dart';
@@ -330,7 +331,7 @@ class AlimentoPageState extends State<AlimentoPage> {
                           fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  child: ImageHelper.buildCarrousel(
+                  child: ImageHelper.loadImage(
                       filteredFoodList[index].listaImagens),
                 ),
               );

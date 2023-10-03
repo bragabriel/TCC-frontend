@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/helpers/image_helper.dart';
 import '../../controller/alimento_controller.dart';
 import '../../model/evento_model.dart';
 import '../../repository/evento_repository.dart';
@@ -142,7 +143,7 @@ class EventoPageState extends State<EventoPage> {
       filteredEventoList = filteredEventoList.where((evento) {
         final atendeCriterioCidade =
             cidadeSelecionada == "Selecione uma cidade" ||
-                evento.localizacaoEvento?.toLowerCase() ==
+                evento.localizacaoFesta?.toLowerCase() ==
                     cidadeSelecionada.toLowerCase();
 
         final searchTerm = _searchTerm.toLowerCase();
@@ -207,12 +208,12 @@ class EventoPageState extends State<EventoPage> {
                           fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(
-                      "R\$ ${filteredEventoList[index].localizacaoEvento}",
+                      "R\$ ${filteredEventoList[index].localizacaoFesta}",
                       style: const TextStyle(
                           fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  child: ImageHelper.buildCarrousel(
+                  child: ImageHelper.loadImage(
                       filteredEventoList[index].listaImagens),
                 ),
               );

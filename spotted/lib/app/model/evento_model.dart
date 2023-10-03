@@ -1,7 +1,7 @@
 import 'artefato_model.dart';
 
 class Evento extends Artefato {
-  final String? localizacaoEvento;
+  final String? localizacaoFesta;
 
   Evento({
     required int idArtefato,
@@ -13,7 +13,7 @@ class Evento extends Artefato {
     required String? dataAtualizacao,
     required int idUsuario,
     required List<Imagem> listaImagens,
-    required this.localizacaoEvento,
+    required this.localizacaoFesta,
   }) : super(
           idArtefato: idArtefato,
           tituloArtefato: tituloArtefato,
@@ -39,7 +39,7 @@ class Evento extends Artefato {
       listaImagens: (json['listaImagens'] as List<dynamic>)
           .map((image) => Imagem.fromJson(image))
           .toList(),
-      localizacaoEvento: json['localizacaoEvento'],
+      localizacaoFesta: json['localizacaoFesta'],
     );
   }
 }

@@ -62,63 +62,51 @@ class _DetailsState extends State<MoradiaDetalheView> {
                             ),
                           ),
                         ),
-                        Align(
+                       Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(
-                              padding: const EdgeInsets.only(
-                                  top: 30, right: 30, left: 30),
-                              height: 110,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.blue.withOpacity(.2),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                padding: const EdgeInsets.only(
+                                    top: 30, right: 30, left: 30),
+                                height: 110,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue.withOpacity(.2),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             moradia.tituloArtefato,
                                             style: const TextStyle(
-                                                fontSize: 25,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                decoration:
-                                                    TextDecoration.none),
+                                              fontSize: 25,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              decoration: TextDecoration.none,
+                                            ),
+                                            softWrap: true,
                                           ),
-                                          Text(
+                                           Text(
                                             moradia.bairroMoradia as String,
                                             style: const TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w300,
-                                                decoration:
-                                                    TextDecoration.none),
-                                          ),
-                                          Text(
-                                            "${moradia.cidadeMoradia} - ${moradia.estadoMoradia}",
-                                            style: const TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w200,
-                                                decoration:
-                                                    TextDecoration.none),
+                                              fontSize: 15,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w300,
+                                              decoration: TextDecoration.none,
+                                            ),
+                                            softWrap: true,
                                           ),
                                         ],
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ))
+                                      ),
+                                    ),
+                                  ],
+                                )))
                       ],
                     ),
                   ),

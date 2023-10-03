@@ -61,68 +61,56 @@ class _DetailsState extends State<ObjetoDetalheView> {
                             ),
                           ),
                         ),
-                        Align(
+                      Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(
-                              padding: const EdgeInsets.only(
-                                  top: 30, right: 30, left: 30),
-                              height: 110,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.blue.withOpacity(.2),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                padding: const EdgeInsets.only(
+                                    top: 30, right: 30, left: 30),
+                                height: 110,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue.withOpacity(.2),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             objeto.tituloArtefato,
                                             style: const TextStyle(
-                                                fontSize: 25,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                decoration:
-                                                    TextDecoration.none),
+                                              fontSize: 25,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              decoration: TextDecoration.none,
+                                            ),
+                                            softWrap: true,
                                           ),
                                           Text(
-                                            objeto.localizacaoAchadoObjeto
-                                                as String,
+                                           objeto.localizacaoAchadoObjeto as String,
                                             style: const TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w300,
-                                                decoration:
-                                                    TextDecoration.none),
+                                              fontSize: 15,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w300,
+                                              decoration: TextDecoration.none,
+                                            ),
+                                            softWrap: true,
                                           ),
-                                          // Text(
-                                          //   Objeto.unidadeObjeto as String,
-                                          //   style: const TextStyle(
-                                          //       fontSize: 15,
-                                          //       color: Colors.white,
-                                          //       fontWeight: FontWeight.w200,
-                                          //       decoration:
-                                          //           TextDecoration.none),
-                                          // ),
                                         ],
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ))
+                                      ),
+                                    ),
+                                  ],
+                                )))
                       ],
                     ),
                   ),
                 )),
+                 
             Expanded(
                 flex: 2,
                 child: Container(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/helpers/image_helper.dart';
 import 'package:spotted/app/view/alimento_page/alimento_view.dart';
 import '../../helpers/button_helper.dart';
 import '../../model/alimento_model.dart';
@@ -34,11 +35,7 @@ class _DetailsState extends State<AlimentoDetails> {
                     child: Stack(
                       children: [
                         Positioned.fill(
-                          child: Image.network(
-                            listaDeImagens![0].url,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                            child: ImageHelper.loadImage(listaDeImagens)),
                         Align(
                           alignment: Alignment.topLeft,
                           child: Container(
@@ -66,60 +63,58 @@ class _DetailsState extends State<AlimentoDetails> {
                         Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(
-                              padding: const EdgeInsets.only(
-                                  top: 20, right: 30, left: 30),
-                              height: 110,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.blue.withOpacity(.2),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                padding: const EdgeInsets.only(
+                                    top: 5, right: 30, left: 30),
+                                height: 110,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue.withOpacity(.2),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             alimento.tituloArtefato,
                                             style: const TextStyle(
-                                                fontSize: 25,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                decoration:
-                                                    TextDecoration.none),
+                                              fontSize: 25,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              decoration: TextDecoration.none,
+                                            ),
+                                            softWrap: true,
                                           ),
                                           Text(
                                             alimento.saborAlimento as String,
                                             style: const TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w300,
-                                                decoration:
-                                                    TextDecoration.none),
+                                              fontSize: 20,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w300,
+                                              decoration: TextDecoration.none,
+                                            ),
+                                            softWrap: true,
                                           ),
                                           Text(
                                             alimento.unidadeAlimento as String,
                                             style: const TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w200,
-                                                decoration:
-                                                    TextDecoration.none),
+                                              fontSize: 15,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w200,
+                                              decoration: TextDecoration.none,
+                                            ),
+                                            softWrap: true,
                                           ),
                                         ],
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ))
+                                      ),
+                                    ),
+                                  ],
+                                )))
                       ],
                     ),
                   ),

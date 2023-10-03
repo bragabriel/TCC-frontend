@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/helpers/image_helper.dart';
 import 'package:spotted/app/repository/moradia_repository.dart';
 import 'package:spotted/app/model/moradia_model.dart';
 import 'package:spotted/app/view/moradia_page/moradiaCadastrar_view.dart';
@@ -267,7 +268,7 @@ class MoradiaPageState extends State<MoradiaPage> {
                       ),
                     ),
                   ),
-                  child: ImageHelper.buildCarrousel(
+                  child: ImageHelper.loadImage(
                       filteredMoradiaList[index].listaImagens),
                 ),
               );

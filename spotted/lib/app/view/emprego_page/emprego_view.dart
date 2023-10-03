@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/helpers/image_helper.dart';
 import 'package:spotted/app/repository/emprego_repository.dart';
 import 'package:spotted/app/model/emprego_model.dart';
 import 'empregoCadastrar_view.dart';
@@ -28,7 +29,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
     _carregarEmpregos();
   }
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -131,18 +132,16 @@ class _EmpregoPageState extends State<EmpregoPage> {
         final titleContainsTerm =
             emprego.tituloArtefato.toLowerCase().contains(searchTerm);
         final descriptionContainsTerm =
-            emprego.descricaoArtefato.toLowerCase().contains(searchTerm);        
+            emprego.descricaoArtefato.toLowerCase().contains(searchTerm);
 
         return atendeCriterioCidade &&
             atendeCriterioEmpresa &&
             atendeCriterioPresencial &&
-            atendeCriterioSalario  &&
+            atendeCriterioSalario &&
             (titleContainsTerm || descriptionContainsTerm);
       }).toList();
     });
   }
-
-  
 
   Widget _construirFiltrosELista() {
     return Column(
@@ -152,8 +151,8 @@ class _EmpregoPageState extends State<EmpregoPage> {
           child: TextField(
             onChanged: (value) {
               setState(() {
-                 _searchTerm = value;
-                 _filtrarListaDeEmpregos();
+                _searchTerm = value;
+                _filtrarListaDeEmpregos();
               });
             },
             decoration: const InputDecoration(
@@ -286,7 +285,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
                             fontSize: 13, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    child: ImageHelper.buildCarrousel(
+                    child: ImageHelper.loadImage(
                         listaDeEmpregos[index].listaImagens),
                   ));
             },

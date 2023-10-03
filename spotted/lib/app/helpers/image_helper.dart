@@ -1,56 +1,32 @@
+import 'dart:ui';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:spotted/app/model/artefato_model.dart';
 import 'dart:convert';
 import '../constants/constants.dart';
 
 class ImageHelper {
-  static Widget buildCarrousel(List<Imagem>? listaDeImagens) {
-    if (listaDeImagens?.length == 1) {
-      // Se houver apenas uma imagem, exibe-a diretamente
-      return Image.network(
-        listaDeImagens![0].url,
-        fit: BoxFit.cover,
-      );
-    } else if (listaDeImagens!.isNotEmpty) {
-      return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          const screenWidth = 16;
-          const screenHeight = 9;
-          const imageAspectRatio = screenWidth / screenHeight;
-          return SizedBox(
-            width: double.infinity,
-            child: CarouselSlider(
-              options: CarouselOptions(
-                aspectRatio: imageAspectRatio,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 3),
-                autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                autoPlayCurve: Curves.easeInExpo,
-                pauseAutoPlayOnTouch: true,
-              ),
-              items: listaDeImagens.map((imagemPath) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Image.network(
-                      imagemPath.url,
-                      fit: BoxFit.cover,
-                    );
-                  },
-                );
-              }).toList(),
-            ),
-          );
-        },
-      );
-    } else {
+static Widget loadImage(List<Imagem>? listaDeImagens) {
+  return Image.network(
+    listaDeImagens![0].url,
+    fit: BoxFit.cover,
+    errorBuilder: (context, error, stackTrace) {
+      if (error is NetworkImageLoadException) {
+        return Image.asset('assets/images/imagem.png');
+      }
+
       return Center(
-        child: Image.asset('assets/images/imagem.png'),
+        child: Text('Error loading image'),
       );
-    }
-  }
+    },
+  ); 
+}
+
 
   static uploadImagem(
     Response<dynamic>? idArtefato,
