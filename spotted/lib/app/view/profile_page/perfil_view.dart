@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:spotted/app/view/profile_page/updatePerfil.dart';
 import '../../../service/user_provider.dart';
 import '../../model/usuario_model.dart';
+import '../../repository/usuario_repository.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -35,7 +36,6 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: const EdgeInsets.all(16.0),
         child: Consumer<UserProvider>(
           builder: (context, userProvider, _) {
-            print('URL da imagem: ${userProvider.user?.url}');
             return Center(
               child: Container(
                 padding: const EdgeInsets.all(16.0),
@@ -73,8 +73,6 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
-  // Restante do código...
 
   Widget _buildText(String text) {
     return Padding(

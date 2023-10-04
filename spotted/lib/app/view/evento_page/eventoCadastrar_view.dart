@@ -47,8 +47,6 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
       response = await EventoRepository().cadastrarEvento(body);
       var responseUser =
           await usuarioRepository.getUsuario(_usuario!.idUsuario);
-      print("\n\n\n RESPONSE USERRRR: ");
-      print(responseUser.idUsuario);
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       userProvider.updateUserInfo(responseUser);
       print('Cadastro realizado com sucesso em EventoCadastrarView');
@@ -84,9 +82,6 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           _usuario = UsuarioHelper.getUser(context, userProvider);
-          print("to no build");
-          print(_usuario!.idUsuario);
-          print(_usuario);
           return _cadastroevento();
         },
       ),

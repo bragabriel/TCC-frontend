@@ -259,7 +259,6 @@ class _CadastroPageState extends State<CadastroPage> {
           AnimatedBuilder(
             animation: controller.state,
             builder: (context, child) {
-              print('uaghy');
               print(controller.state.value);
               return stateManagement(controller.state.value);
             },

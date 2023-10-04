@@ -200,7 +200,6 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
                 ImageHelper.uploadImagem(response, imagem);
                 await _moradiaRepository.updateMoradia(
                     body, widget.moradia['idArtefato']);
-                print('finalizou');
                 _showSuccessMessage(context);
               } catch (e) {
                 print(e);

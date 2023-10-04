@@ -49,13 +49,12 @@ class UsuarioRepository {
     }
   }
 
-  Future<Usuario> getUsuario(num id) async {
+  Future<Usuario> getUsuario(int? id) async {
     try {
       String url = '$usuariosUrl/$id';
       final response = await Dio().get(url);
       if (response.statusCode == 200 && response.statusCode != null) {
         final responseData = response.data;
-        print(responseData);
         if (responseData != null && responseData is Map<String, dynamic>) {
           Usuario usuario = Usuario.fromJson(responseData);
           return usuario;

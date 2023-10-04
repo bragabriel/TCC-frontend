@@ -83,7 +83,6 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           _usuario = UsuarioHelper.getUser(context, userProvider);
-          print(widget.alimento['idArtefato']);
           return _atualizaAlimento();
         },
       ),
@@ -199,7 +198,6 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
                 await _alimentoRepository.updateAlimento(
                     body, widget.alimento['idArtefato']);
                 _showSuccessMessage(context);
-                print("deu bom atualizar essa porra");
               } catch (e) {
                 print("deu algum erro ao atualizar a porra do alimento");
                 print(e);

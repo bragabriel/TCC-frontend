@@ -25,25 +25,24 @@ class MyProductsPage extends StatefulWidget {
 }
 
 class _MyProductsPageState extends State<MyProductsPage> {
-  Usuario? _usuario;
+  Usuario? _usuarioProvider;
+  Usuario? _user;
 
   @override
   void initState() {
     super.initState();
     _loadUserData();
-    _buscarAlimentos();
-    _buscarEmpregos();
-    _buscarEventos();
-    _buscarObjetos();
-    _buscarTransportes();
   }
 
   Future<void> _loadUserData() async {
-    UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
-
-    setState(() {
-      _usuario = userProvider.user;
-    });
+    try {
+      final userProvider =
+      Provider.of<UserProvider>(context, listen: false);
+      _usuarioProvider = userProvider.user;
+      _buscarUsuario();
+    } catch (e) {
+      print('Erro ao carregar o usuário: $e');
+    }
   }
 
   @override
@@ -60,12 +59,37 @@ class _MyProductsPageState extends State<MyProductsPage> {
           },
         ),
       ),
-      body: _listarMeusProdutos(),
+      body: FutureBuilder<UserProvider>(
+        future: _loadUserProvider(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Erro ao carregar o usuário: ${snapshot.error}');
+          } else if (!snapshot.hasData || snapshot.data == null) {
+            return Text('Usuário não encontrado');
+          } else {
+            final userProvider = snapshot.data!;
+            print('Senhores, carregou o provider :)');
+            print(userProvider.user!.nomeUsuario);
+            _buscarUsuario();
+            return _listarMeusProdutos();
+          }
+        },
+      ),
     );
   }
 
+  Future<UserProvider> _loadUserProvider() async {
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: true);
+
+    print('foi?');
+    return userProvider;
+  }
+
   GridView _listarMeusProdutos() {
-    var listaProdutos = _usuario?.listaArtefatosReponse;
+    var listaProdutos = _usuarioProvider?.listaArtefatosReponse;
     if (listaProdutos == null || listaProdutos.isEmpty) {
       return GridView.builder(
         padding: const EdgeInsets.all(20),
@@ -93,22 +117,23 @@ class _MyProductsPageState extends State<MyProductsPage> {
       ),
       itemCount: listaProdutos.length,
       itemBuilder: (BuildContext ctx, index) {
-        var produto = _usuario?.listaArtefatosReponse?[index];
+        var produto = _usuarioProvider?.listaArtefatosReponse?[index];
         String tipoArtefato =
-            _usuario?.listaArtefatosReponse?[index]["tipoArtefato"];
+            _usuarioProvider?.listaArtefatosReponse?[index]["tipoArtefato"];
         return GridTile(
           key: ValueKey(produto),
           footer: GridTileBar(
             backgroundColor: const Color.fromARGB(137, 107, 98, 98),
             title: Text(
-              _usuario?.listaArtefatosReponse?[index]["tituloArtefato"],
+              _usuarioProvider?.listaArtefatosReponse?[index]["tituloArtefato"],
               style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
             ),
             subtitle: Text(
-              _usuario?.listaArtefatosReponse?[index]["descricaoArtefato"],
+              _usuarioProvider?.listaArtefatosReponse?[index]
+                  ["descricaoArtefato"],
               style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
@@ -224,47 +249,19 @@ class _MyProductsPageState extends State<MyProductsPage> {
     );
   }
 
-Future<void> _buscarAlimentos() async {
-  try {
-    await AlimentoRepository().getAllAlimentos();
-    print("GetAllAlimentos com sucesso em AlimentoCadastrarView");
-  } catch (e) {
-    print('Erro ao obter a lista de alimentos em AlimentoCadastrarView: $e');
+  Future<void> _buscarUsuario() async {
+    print('entrou aqui');
+    print(_usuarioProvider!.emailUsuario);
+    try {
+      if (_usuarioProvider != null) {
+        print('xuxu');
+        _user =
+            await UsuarioRepository().getUsuario(_usuarioProvider!.idUsuario);
+      } else {
+        print('O _usuarioProvider é nulo.');
+      }
+    } catch (e) {
+      print('Erro ao obter usuario: $e');
+    }
   }
-}
-
-Future<void> _buscarEmpregos() async {
-  try {
-    await EmpregoRepository().getAllEmpregos();
-    print("GetAllEmpregos com suceso em EmpregoCadastrarView");
-  } catch (e) {
-    print('Erro ao obter a lista de empregos em EmpregoCadastrarView: $e');
-  }
-}
-
-Future<void> _buscarEventos() async {
-  try {
-    await EventoRepository().getAllEventos();
-    print("GetAllEventos concluído com sucesso em EventoCadastrarView");
-  } catch (e) {
-    print('Erro ao obter a lista de eventos em eventoCadastrarView: $e');
-  }
-}
-
-Future<void> _buscarObjetos() async {
-  try {
-    await ObjetoRepository().getAllObjetos();
-  } catch (e) {
-    print('Erro ao obter a lista de objetos: $e');
-  }
-}
-
-Future<void> _buscarTransportes() async {
-  try {
-    await TransporteRepository().getAllTransportes();
-  } catch (e) {
-    print('Erro ao obter a lista de Transportes: $e');
-  }
-}
-
 }

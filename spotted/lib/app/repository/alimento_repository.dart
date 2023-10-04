@@ -9,7 +9,6 @@ class AlimentoRepository {
   Future<List<Alimento>> getAllAlimentos() async {
     try {
       final response = await Dio().get(alimentosUrl);
-      print(response.data);
       if (response.statusCode == 200) {
         final responseData = response.data;
         if (responseData != null &&

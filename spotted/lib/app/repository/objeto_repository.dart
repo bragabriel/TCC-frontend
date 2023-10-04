@@ -9,7 +9,6 @@ class ObjetoRepository {
   Future<List<Objeto>> getAllObjetos() async {
     try {
       final response = await Dio().get(objetosUrl);
-      print(response.data);
       if (response.statusCode == 200) {
         final responseData = response.data;
         if (responseData != null &&
