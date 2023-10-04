@@ -26,7 +26,6 @@ class MyProductsPage extends StatefulWidget {
 
 class _MyProductsPageState extends State<MyProductsPage> {
   Usuario? _usuarioProvider;
-  Usuario? _user;
   final UsuarioRepository usuarioRepository = UsuarioRepository();
 
   @override
@@ -35,25 +34,14 @@ class _MyProductsPageState extends State<MyProductsPage> {
     _loadUserData();
   }
 
-  Future<Usuario> _buscarUsuario(int id) async {
-    print('entou');
-    try {
-      var _user = await usuarioRepository.getUsuario(id);
-      print(_user.emailUsuario);
-    } catch (e) {
-      print('Erro ao obter usuário: $e');
-    }
-    return _user!;
-  }
-
   Future<void> _loadUserData() async {
     try {
       print('só quero dormir em paz');
       final userProvider = Provider.of<UserProvider>(context, listen: false);
-      var response = await _buscarUsuario(userProvider.user!.idUsuario);
+      var response = await usuarioRepository.getUsuario(userProvider.user!.idUsuario);
       print(response.nomeUsuario);
       userProvider.setUser(response);
-      _usuarioProvider = userProvider.user;
+      /* _usuarioProvider = userProvider.user; */
     } catch (e) {
       print('Erro ao carregar o usuário: $e');
     }

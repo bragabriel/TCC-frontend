@@ -58,8 +58,6 @@ class UsuarioRepository {
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = response.data;
         final Map<String, dynamic> usuarioData = data['objetoRetorno'];
-
-        print(Usuario.fromJson(usuarioData));
         return Usuario.fromJson(usuarioData);
       } else {
         throw Exception('Falha ao carregar o usuário');
