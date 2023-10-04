@@ -1,50 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spotted/app/repository/alimento_repository.dart';
-import 'package:spotted/app/repository/emprego_repository.dart';
-import 'package:spotted/app/repository/evento_repository.dart';
-import 'package:spotted/app/repository/objeto_repository.dart';
-import 'package:spotted/app/repository/transporte_repository.dart';
-import 'package:spotted/app/view/alimento_page/alimentoDeletar_view.dart';
-import 'package:spotted/app/view/emprego_page/empregoAtualizar_view.dart';
-import 'package:spotted/app/view/evento_page/eventoAtualizar_view.dart';
-import 'package:spotted/app/view/evento_page/eventoDeletar_view.dart';
-import 'package:spotted/app/view/moradia_page/moradiaAtualizar_view.dart';
-import 'package:spotted/app/view/moradia_page/moradiaDeletar_view.dart';
-import 'package:spotted/app/view/objeto_view/objetoAtualizar_view.dart';
-import 'package:spotted/app/view/objeto_view/objetoDeletar_view.dart';
-import 'package:spotted/app/view/transporte_page/transporteAtualizar.view.dart';
-import 'package:spotted/app/view/transporte_page/transporteDeletar_view.dart';
-import '../../../service/change_notifier.dart';
-import '../../helpers/usuario_helper.dart';
+import '../../repository/index.dart';
+import '../../../service/user_provider.dart';
 import '../../model/usuario_model.dart';
 import '../alimento_page/alimentoAtualizar_view.dart';
-import '../home_page/home_view.dart';
+import '../alimento_page/alimentoDeletar_view.dart';
 import '../emprego_page/deleteEmprego_view.dart';
+import '../emprego_page/empregoAtualizar_view.dart';
+import '../evento_page/eventoAtualizar_view.dart';
+import '../evento_page/eventoDeletar_view.dart';
+import '../home_page/home_view.dart';
+import '../moradia_page/moradiaAtualizar_view.dart';
+import '../moradia_page/moradiaDeletar_view.dart';
+import '../objeto_page/objetoAtualizar_view.dart';
+import '../objeto_page/objetoDeletar_view.dart';
+import '../transporte_page/transporteAtualizar.view.dart';
+import '../transporte_page/transporteDeletar_view.dart';
 
 class MyProductsPage extends StatefulWidget {
-  const MyProductsPage({super.key});
+  const MyProductsPage({Key? key}) : super(key: key);
 
   @override
   _MyProductsPageState createState() => _MyProductsPageState();
 }
 
 class _MyProductsPageState extends State<MyProductsPage> {
+  Usuario? _usuario;
+
   @override
   void initState() {
+    super.initState();
+    _loadUserData();
     _buscarAlimentos();
     _buscarEmpregos();
     _buscarEventos();
     _buscarObjetos();
     _buscarTransportes();
-    super.initState();
   }
 
-  Usuario? _usuario;
+  Future<void> _loadUserData() async {
+    UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    setState(() {
+      _usuario = userProvider.user;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    print("Entrou nos meus produtos cadastrados");
     return Scaffold(
       appBar: AppBar(
         title: const Text("Meus cadastros no app"),
@@ -57,12 +60,7 @@ class _MyProductsPageState extends State<MyProductsPage> {
           },
         ),
       ),
-      body: Consumer<UserProvider>(
-        builder: (context, userProvider, _) {
-          _usuario = UsuarioHelper.getUser(context, userProvider);
-          return _listarMeusProdutos();
-        },
-      ),
+      body: _listarMeusProdutos(),
     );
   }
 
@@ -225,7 +223,6 @@ class _MyProductsPageState extends State<MyProductsPage> {
       },
     );
   }
-}
 
 Future<void> _buscarAlimentos() async {
   try {
@@ -268,4 +265,6 @@ Future<void> _buscarTransportes() async {
   } catch (e) {
     print('Erro ao obter a lista de Transportes: $e');
   }
+}
+
 }

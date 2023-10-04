@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/repository/transporte_repository.dart';
 import 'package:spotted/app/view/transporte_page/transporte_view.dart';
-import '../../../service/change_notifier.dart';
+import '../../../service/user_provider.dart';
 import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
-import '../../../service/change_notifier.dart';
+import '../../../service/user_provider.dart';
 import '../../model/usuario_model.dart';
 
 class LoginPage extends StatefulWidget {
