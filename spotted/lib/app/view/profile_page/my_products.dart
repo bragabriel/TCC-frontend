@@ -27,6 +27,7 @@ class MyProductsPage extends StatefulWidget {
 class _MyProductsPageState extends State<MyProductsPage> {
   Usuario? _usuarioProvider;
   Usuario? _user;
+  final UsuarioRepository usuarioRepository = UsuarioRepository();
 
   @override
   void initState() {
@@ -34,12 +35,25 @@ class _MyProductsPageState extends State<MyProductsPage> {
     _loadUserData();
   }
 
+  Future<Usuario> _buscarUsuario(int id) async {
+    print('entou');
+    try {
+      var _user = await usuarioRepository.getUsuario(id);
+      print(_user.emailUsuario);
+    } catch (e) {
+      print('Erro ao obter usuário: $e');
+    }
+    return _user!;
+  }
+
   Future<void> _loadUserData() async {
     try {
-      final userProvider =
-      Provider.of<UserProvider>(context, listen: false);
+      print('só quero dormir em paz');
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      var response = await _buscarUsuario(userProvider.user!.idUsuario);
+      print(response.nomeUsuario);
+      userProvider.setUser(response);
       _usuarioProvider = userProvider.user;
-      _buscarUsuario();
     } catch (e) {
       print('Erro ao carregar o usuário: $e');
     }
@@ -48,44 +62,18 @@ class _MyProductsPageState extends State<MyProductsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Meus cadastros no app"),
-        leading: BackButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
-            );
-          },
+        appBar: AppBar(
+          title: const Text("Meus cadastros no app"),
+          leading: BackButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+              );
+            },
+          ),
         ),
-      ),
-      body: FutureBuilder<UserProvider>(
-        future: _loadUserProvider(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Erro ao carregar o usuário: ${snapshot.error}');
-          } else if (!snapshot.hasData || snapshot.data == null) {
-            return Text('Usuário não encontrado');
-          } else {
-            final userProvider = snapshot.data!;
-            print('Senhores, carregou o provider :)');
-            print(userProvider.user!.nomeUsuario);
-            _buscarUsuario();
-            return _listarMeusProdutos();
-          }
-        },
-      ),
-    );
-  }
-
-  Future<UserProvider> _loadUserProvider() async {
-    UserProvider userProvider =
-        Provider.of<UserProvider>(context, listen: true);
-
-    print('foi?');
-    return userProvider;
+        body: _listarMeusProdutos());
   }
 
   GridView _listarMeusProdutos() {
@@ -247,21 +235,5 @@ class _MyProductsPageState extends State<MyProductsPage> {
         );
       },
     );
-  }
-
-  Future<void> _buscarUsuario() async {
-    print('entrou aqui');
-    print(_usuarioProvider!.emailUsuario);
-    try {
-      if (_usuarioProvider != null) {
-        print('xuxu');
-        _user =
-            await UsuarioRepository().getUsuario(_usuarioProvider!.idUsuario);
-      } else {
-        print('O _usuarioProvider é nulo.');
-      }
-    } catch (e) {
-      print('Erro ao obter usuario: $e');
-    }
   }
 }
