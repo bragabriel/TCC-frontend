@@ -10,7 +10,6 @@ class TransporteRepository {
   Future<List<Transporte>> getAllTransportes() async {
     try {
       final response = await Dio().get(transportesUrl);
-      print(response.data);
       if (response.statusCode == 200) {
         final responseData = response.data;
         if (responseData != null &&

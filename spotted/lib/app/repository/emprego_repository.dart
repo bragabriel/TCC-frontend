@@ -10,7 +10,6 @@ class EmpregoRepository {
   Future<List<Emprego>> getAllEmpregos() async {
     try {
       final response = await Dio().get(empregosUrl);
-      print(response.data);
       if (response.statusCode == 200) {
         final responseData = response.data;
         if (responseData != null &&

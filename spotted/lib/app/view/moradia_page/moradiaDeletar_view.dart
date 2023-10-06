@@ -26,7 +26,7 @@ void _inativarArtefato(int idArtefato) async {
       final response = await Dio().put(apiUrl);
 
       if (response.statusCode == 200) {
-        print('Moradia deletado comm sucesso!');
+        print('Moradia deletado com sucesso!');
       } else {
         print('Erro ao deletar Moradia - Status code: ${response.statusCode}');
       }

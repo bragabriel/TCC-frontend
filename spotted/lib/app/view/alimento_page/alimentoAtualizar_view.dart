@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../service/change_notifier.dart';
+import '../../../service/user_provider.dart';
 import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
@@ -83,7 +83,6 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           _usuario = UsuarioHelper.getUser(context, userProvider);
-          print(widget.alimento['idArtefato']);
           return _atualizaAlimento();
         },
       ),
@@ -199,7 +198,6 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
                 await _alimentoRepository.updateAlimento(
                     body, widget.alimento['idArtefato']);
                 _showSuccessMessage(context);
-                print("deu bom atualizar essa porra");
               } catch (e) {
                 print("deu algum erro ao atualizar a porra do alimento");
                 print(e);

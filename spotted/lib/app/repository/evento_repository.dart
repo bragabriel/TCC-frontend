@@ -10,7 +10,6 @@ class EventoRepository {
   Future<List<Evento>> getAllEventos() async {
     try {
       final response = await Dio().get(eventosUrl);
-      print(response.data);
       if (response.statusCode == 200) {
         final responseData = response.data;
         if (responseData != null &&

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper_plus/flutter_swiper_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/service/prefs_service.dart';
-import '../../../service/change_notifier.dart';
+import '../../../service/user_provider.dart';
 import '../../constants/constants.dart';
 import '../../controller/usuario_controller.dart';
 import '../../model/descriptions_model.dart';
@@ -81,9 +81,8 @@ class HomePageState extends State<HomePage> {
   Future<void> getUserPreferences() async {
     PrefsService sharedPref = PrefsService();
 
-    // Acessar a instância do UserProvider
     UserProvider userProvider =
-        Provider.of<UserProvider>(context, listen: false);
+        Provider.of<UserProvider>(context, listen: true);
 
     var userData = await sharedPref.getUser();
     if (userData != null) {
@@ -103,7 +102,6 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: Drawer(
         child: Column(children: [
-          // aqui pegar usuario
           Consumer<UserProvider>(
             builder: (context, userProvider, _) {
               return buildUserDrawerHeader(context, userProvider);

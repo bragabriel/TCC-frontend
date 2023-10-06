@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../service/change_notifier.dart';
+import '../../../service/user_provider.dart';
 import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
 import '../../model/usuario_model.dart';
@@ -200,7 +200,6 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
                 ImageHelper.uploadImagem(response, imagem);
                 await _moradiaRepository.updateMoradia(
                     body, widget.moradia['idArtefato']);
-                print('finalizou');
                 _showSuccessMessage(context);
               } catch (e) {
                 print(e);

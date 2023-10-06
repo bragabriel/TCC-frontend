@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/model/usuario_model.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
-import '../../../service/change_notifier.dart';
+import '../../../service/user_provider.dart';
 
 class UpdateProfilePage extends StatefulWidget {
   final Usuario user;

@@ -49,24 +49,21 @@ class UsuarioRepository {
     }
   }
 
-  Future<Usuario> getUsuario(num id) async {
+
+  Future<Usuario> getUsuario(int id) async {
+    final dio = Dio();
     try {
-      String url = '$usuariosUrl/$id';
-      final response = await Dio().get(url);
-      if (response.statusCode == 200 && response.statusCode != null) {
-        final responseData = response.data;
-        print(responseData);
-        if (responseData != null && responseData is Map<String, dynamic>) {
-          Usuario usuario = Usuario.fromJson(responseData);
-          return usuario;
-        } else {
-          throw 'Resposta inválida da API - conteúdo ausente ou inválido';
-        }
+      final response = await dio.get('$onlineApi/usuario/$id');
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = response.data;
+        final Map<String, dynamic> usuarioData = data['objetoRetorno'];
+        return Usuario.fromJson(usuarioData);
       } else {
-        throw 'Erro na requisição da API';
+        throw Exception('Falha ao carregar o usuário');
       }
     } catch (e) {
-      throw 'Erro ao acessar a API em getUsuario: $e';
+      throw Exception('Erro na requisição: $e');
     }
   }
 
@@ -112,10 +109,10 @@ class UsuarioRepository {
     }
   }
 
-  Future<void> updateUserName(int idUsuario, String nomeUsuario, String sobrenomeUsuario) async {
-    
+  Future<void> updateUserName(
+      int idUsuario, String nomeUsuario, String sobrenomeUsuario) async {
     final String apiUrl = '$onlineApi/usuarioAtualizar/$idUsuario';
-    
+
     final Map<String, dynamic> body = {
       'nomeUsuario': nomeUsuario,
       'sobrenomeUsuario': sobrenomeUsuario,
@@ -125,13 +122,14 @@ class UsuarioRepository {
       'Content-Type': 'application/json',
     };
 
-     try {
+    try {
       final response = await Dio().put(apiUrl, data: body);
 
       if (response.statusCode == 200) {
         print('Usuário atualizado com sucesso!');
       } else {
-        print('Erro ao atualizar o usuário - Status code: ${response.statusCode}');
+        print(
+            'Erro ao atualizar o usuário - Status code: ${response.statusCode}');
       }
     } catch (error) {
       print('Erro ao atualizar o usuário: $error');
