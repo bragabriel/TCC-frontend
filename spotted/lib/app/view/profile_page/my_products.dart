@@ -36,12 +36,11 @@ class _MyProductsPageState extends State<MyProductsPage> {
 
   Future<void> _loadUserData() async {
     try {
-      print('só quero dormir em paz');
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       var response = await usuarioRepository.getUsuario(userProvider.user!.idUsuario);
       print(response.nomeUsuario);
       userProvider.setUser(response);
-      /* _usuarioProvider = userProvider.user; */
+     /*  _usuarioProvider = userProvider.user; */
     } catch (e) {
       print('Erro ao carregar o usuário: $e');
     }

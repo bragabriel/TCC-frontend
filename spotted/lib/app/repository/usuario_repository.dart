@@ -53,7 +53,7 @@ class UsuarioRepository {
   Future<Usuario> getUsuario(int id) async {
     final dio = Dio();
     try {
-      final response = await dio.get('https://191a-45-172-240-199.ngrok-free.app/api/usuario/1');
+      final response = await dio.get('$onlineApi/usuario/$id');
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = response.data;
