@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../repository/index.dart';
 import '../../../service/user_provider.dart';
-import '../../model/usuario_model.dart';
 import '../alimento_page/alimentoAtualizar_view.dart';
 import '../alimento_page/alimentoDeletar_view.dart';
 import '../emprego_page/deleteEmprego_view.dart';
@@ -25,28 +24,26 @@ class MyProductsPage extends StatefulWidget {
 }
 
 class _MyProductsPageState extends State<MyProductsPage> {
-  Usuario? _usuarioProvider;
   final UsuarioRepository usuarioRepository = UsuarioRepository();
+  bool _userDataLoaded = false; 
 
   @override
   void initState() {
     super.initState();
-    _loadUserData();
+    if (!_userDataLoaded) {
+      _loadUserData();
+    }
   }
-
-  @override
-void didChangeDependencies() {
-  super.didChangeDependencies();
-  _loadUserData();
-}
 
   Future<void> _loadUserData() async {
     try {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       var response =
           await usuarioRepository.getUsuario(userProvider.user!.idUsuario);
-      print(response.listaArtefatosReponse);
       userProvider.updateUserInfo(response);
+      setState(() {
+        _userDataLoaded = true;
+      });
     } catch (e) {
       print('Erro ao carregar o usuário: $e');
     }
@@ -96,24 +93,21 @@ void didChangeDependencies() {
             ),
             itemCount: listaProdutos.length,
             itemBuilder: (BuildContext ctx, index) {
-              var produto = userProvider.user?.listaArtefatosReponse?[index];
-              String tipoArtefato = userProvider
-                  .user?.listaArtefatosReponse?[index]["tipoArtefato"];
+              var produto = listaProdutos[index];
+              String tipoArtefato = produto["tipoArtefato"];
               return GridTile(
                 key: ValueKey(produto),
                 footer: GridTileBar(
                   backgroundColor: const Color.fromARGB(137, 107, 98, 98),
                   title: Text(
-                    userProvider.user?.listaArtefatosReponse?[index]
-                        ["tituloArtefato"],
+                    produto["tituloArtefato"],
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   subtitle: Text(
-                    userProvider.user?.listaArtefatosReponse?[index]
-                        ["descricaoArtefato"],
+                    produto["descricaoArtefato"],
                     style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,

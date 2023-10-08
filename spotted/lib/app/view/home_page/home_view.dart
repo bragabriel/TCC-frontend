@@ -86,7 +86,7 @@ class HomePageState extends State<HomePage> {
 
     var userData = await sharedPref.getUser();
     if (userData != null) {
-      userProvider.updateUserInfo(userData);
+      /* userProvider.updateUserInfo(userData); */
       _usuario = userData;
     }
   }
