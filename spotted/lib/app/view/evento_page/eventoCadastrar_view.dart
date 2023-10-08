@@ -1,4 +1,8 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+
 import '../../repository/usuario_repository.dart';
 import 'evento_view.dart';
 import 'package:dio/dio.dart';
@@ -132,7 +136,12 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
                         TextButton(
                           onPressed: () async {
                             await _cadastrar();
-                            imagem ??= File('assets/images/imagem.png');
+                             final ByteData data = await rootBundle
+                                .load('assets/images/imagem.png');
+                            final List<int> bytes = data.buffer.asUint8List();
+                            final File tempImage = File(
+                                '${(await getTemporaryDirectory()).path}/imagem.png');
+                            await tempImage.writeAsBytes(bytes);
                             ImageHelper.uploadImagem(response!, imagem);
                             await _buscarEventos();
                             Navigator.push(

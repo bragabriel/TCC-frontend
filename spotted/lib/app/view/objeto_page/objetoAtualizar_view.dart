@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:spotted/app/view/objeto_page/objeto_view.dart';
 import '../../../service/user_provider.dart';
 import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
@@ -25,7 +28,7 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
   final TextEditingController _localizacaoAtual = TextEditingController();
   final ObjetoRepository _objetoRepository = ObjetoRepository();
   Response<dynamic>? response;
-  late File? imagem;
+  File? imagem;
   Usuario? _usuario;
 
   void _showSuccessMessage(BuildContext context) {
@@ -98,7 +101,8 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
           ),
           TextFormField(
             controller: _localizacaoAchado,
-            decoration: const InputDecoration(labelText: 'Localização encontrado'),
+            decoration:
+                const InputDecoration(labelText: 'Localização encontrado'),
           ),
           TextFormField(
             controller: _localizacaoAtual,
@@ -117,33 +121,28 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
           ElevatedButton(
             onPressed: () async {
               try {
-                Response<dynamic>? response = widget.objeto['idArtefato'];
-                imagem ??= File('assets/images/imagem.png');
-                ImageHelper.uploadImagem(response, imagem);
+                final ByteData data =
+                    await rootBundle.load('assets/images/imagem.png');
+                final List<int> bytes = data.buffer.asUint8List();
+                final File tempImage =
+                    File('${(await getTemporaryDirectory()).path}/imagem.png');
+                await tempImage.writeAsBytes(bytes);
+                ImageHelper.updateImagem(widget.objeto['idArtefato'], imagem);
                 await _objetoRepository.updateObjeto(
                     body, widget.objeto['idArtefato']);
-
                 _showSuccessMessage(context);
               } catch (e) {
                 print(e);
               }
-              await _buscarObjetos();
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ObjetoPage()),
+              );
             },
             child: const Text('Atualizar'),
           )
         ]),
       ),
     );
-  }
-
-  Future<void> _buscarObjetos() async {
-    try {
-      await ObjetoRepository().getAllObjetos();
-      print("GetAllObjetos com sucesso em ObjetoCadastrarView");
-      setState(() {});
-    } catch (e) {
-      print('Erro ao obter a lista de Objetos em ObjetoCadastrarView: $e');
-    }
   }
 }

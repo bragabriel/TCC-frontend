@@ -207,17 +207,13 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                         TextButton(
                           onPressed: () async {
                             await _cadastrar();
-
-                            // Carregar a imagem dos recursos (assets) para um arquivo temporário
                             final ByteData data = await rootBundle
                                 .load('assets/images/imagem.png');
                             final List<int> bytes = data.buffer.asUint8List();
                             final File tempImage = File(
                                 '${(await getTemporaryDirectory()).path}/imagem.png');
                             await tempImage.writeAsBytes(bytes);
-
                             ImageHelper.uploadImagem(response!, tempImage);
-
                             await _buscarAlimentos();
                             Navigator.push(
                               context,
@@ -225,8 +221,6 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                                 builder: (context) => const AlimentoPage(),
                               ),
                             );
-
-                            // Remover o arquivo temporário após o uso
                             await tempImage.delete();
                           },
                           child: const Text("Sim"),

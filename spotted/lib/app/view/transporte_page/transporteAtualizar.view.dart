@@ -1,7 +1,11 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:spotted/app/view/transporte_page/transporte_view.dart';
 import '../../../service/user_provider.dart';
 import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
@@ -36,7 +40,7 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
       TextEditingController();
   final TransporteRepository _transporteRepository = TransporteRepository();
   Response<dynamic>? response;
-  late File? imagem;
+  File? imagem;
   Usuario? _usuario;
 
   void _showSuccessMessage(BuildContext context) {
@@ -142,11 +146,13 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
           ),
           TextFormField(
             controller: _informacoesVeiculoTransporteController,
-            decoration: const InputDecoration(labelText: 'Informações do veículo'),
+            decoration:
+                const InputDecoration(labelText: 'Informações do veículo'),
           ),
           TextFormField(
             controller: _informacoesCondutorTransporteController,
-            decoration: const InputDecoration(labelText: 'Informações do condutor'),
+            decoration:
+                const InputDecoration(labelText: 'Informações do condutor'),
           ),
           TextFormField(
             controller: _qtdAssentosPreenchidosTransporteController,
@@ -173,9 +179,12 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
           ElevatedButton(
             onPressed: () async {
               try {
-
-                Response<dynamic>? response = widget.transporte['idArtefato'];
-                imagem ??= File('assets/images/imagem.png');
+                final ByteData data =
+                    await rootBundle.load('assets/images/imagem.png');
+                final List<int> bytes = data.buffer.asUint8List();
+                final File tempImage =
+                    File('${(await getTemporaryDirectory()).path}/imagem.png');
+                await tempImage.writeAsBytes(bytes);
                 ImageHelper.uploadImagem(response, imagem);
                 await _transporteRepository.updateTransporte(
                     body, widget.transporte['idArtefato']);
@@ -183,24 +192,15 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
               } catch (e) {
                 print(e);
               }
-              await _buscarTransportes();
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const TransportePage()),
+              );
             },
             child: const Text('Atualizar'),
           )
         ]),
       ),
     );
-  }
-
-  Future<void> _buscarTransportes() async {
-    try {
-      await TransporteRepository().getAllTransportes();
-      print("GetAllTransportes com sucesso em TransporteCadastrarView");
-      setState(() {});
-    } catch (e) {
-      print(
-          'Erro ao obter a lista de Transportes em TransporteCadastrarView: $e');
-    }
   }
 }

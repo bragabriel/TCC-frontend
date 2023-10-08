@@ -209,7 +209,6 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
               } catch (e) {
                 print(e);
               }
-              await _buscarAlimentos();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const AlimentoPage()),
@@ -220,15 +219,5 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
         ]),
       ),
     );
-  }
-
-  Future<void> _buscarAlimentos() async {
-    try {
-      await AlimentoRepository().getAllAlimentos();
-      print("GetAllAlimentos com sucesso em AlimentoCadastrarView");
-      setState(() {});
-    } catch (e) {
-      print('Erro ao obter a lista de alimentos em AlimentoCadastrarView: $e');
-    }
   }
 }

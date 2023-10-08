@@ -1,9 +1,13 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/repository/evento_repository.dart';
+import 'package:spotted/app/view/evento_page/evento_view.dart';
 import '../../../service/user_provider.dart';
 import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
@@ -25,7 +29,7 @@ class EventoEditarPageState extends State<EventoEditarView> {
   final EventoRepository _eventoRepository = EventoRepository();
   Response<dynamic>? response;
   Usuario? _usuario;
-  late File? imagem;
+   File? imagem;
 
   void _showSuccessMessage(BuildContext context) {
     const snackBar = SnackBar(
@@ -106,8 +110,12 @@ class EventoEditarPageState extends State<EventoEditarView> {
           ElevatedButton(
             onPressed: () async {
               try {
-                Response<dynamic>? response = widget.evento['idArtefato'];
-                imagem ??= File('assets/images/imagem.png');
+                final ByteData data =
+                    await rootBundle.load('assets/images/imagem.png');
+                final List<int> bytes = data.buffer.asUint8List();
+                final File tempImage =
+                    File('${(await getTemporaryDirectory()).path}/imagem.png');
+                await tempImage.writeAsBytes(bytes);
                 ImageHelper.uploadImagem(response, imagem);
                 await _eventoRepository.updateEvento(
                     body, widget.evento['idArtefato']);
@@ -115,8 +123,10 @@ class EventoEditarPageState extends State<EventoEditarView> {
               } catch (e) {
                 print(e);
               }
-              await _buscareventos();
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const EventoPage()),
+              );
             },
             child: const Text('Atualizar'),
           )

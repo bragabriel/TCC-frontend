@@ -1,7 +1,11 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:spotted/app/view/moradia_page/moradia_view.dart';
 import '../../../service/user_provider.dart';
 import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
@@ -41,7 +45,7 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
 
   final MoradiaRepository _moradiaRepository = MoradiaRepository();
   Response<dynamic>? response;
-  late File? imagem;
+  File? imagem;
   Usuario? _usuario;
 
   void _showSuccessMessage(BuildContext context) {
@@ -156,12 +160,14 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
           ),
           TextFormField(
             controller: _qtdMoradoresPermitidoController,
-            decoration: const InputDecoration(labelText: 'Qtd Moradores Permitido'),
+            decoration:
+                const InputDecoration(labelText: 'Qtd Moradores Permitido'),
             keyboardType: TextInputType.number,
           ),
           TextFormField(
             controller: _qtdMoradoresAtuaisController,
-            decoration: const InputDecoration(labelText: 'Qtd Moradores Atuais'),
+            decoration:
+                const InputDecoration(labelText: 'Qtd Moradores Atuais'),
             keyboardType: TextInputType.number,
           ),
           TextFormField(
@@ -171,7 +177,8 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
           ),
           TextFormField(
             controller: _precoAluguelPorPessoaController,
-            decoration: const InputDecoration(labelText: 'Preço Aluguel por Pessoa'),
+            decoration:
+                const InputDecoration(labelText: 'Preço Aluguel por Pessoa'),
             keyboardType: TextInputType.number,
           ),
           TextFormField(
@@ -195,8 +202,12 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
           ElevatedButton(
             onPressed: () async {
               try {
-                Response<dynamic>? response = widget.moradia['idArtefato'];
-                imagem ??= File('assets/images/imagem.png');
+                final ByteData data =
+                    await rootBundle.load('assets/images/imagem.png');
+                final List<int> bytes = data.buffer.asUint8List();
+                final File tempImage =
+                    File('${(await getTemporaryDirectory()).path}/imagem.png');
+                await tempImage.writeAsBytes(bytes);
                 ImageHelper.uploadImagem(response, imagem);
                 await _moradiaRepository.updateMoradia(
                     body, widget.moradia['idArtefato']);
@@ -204,8 +215,10 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
               } catch (e) {
                 print(e);
               }
-              await _buscarMoradias();
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MoradiaPage()),
+              );
             },
             child: const Text('Atualizar'),
           )

@@ -1,8 +1,12 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:spotted/app/view/emprego_page/emprego_view.dart';
 import '../../../service/user_provider.dart';
 import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
@@ -35,10 +39,10 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
   final TextEditingController _tipoVagaController = TextEditingController();
   final EmpregoRepository _empregoRepository = EmpregoRepository();
   Response<dynamic>? response;
-  
+
   // ignore: unused_field
   Usuario? _usuario;
-  late File? imagem;
+  File? imagem;
   String _selectedModalidade = 'HIBRIDO';
 
   void _showSuccessMessage(BuildContext context) {
@@ -220,7 +224,12 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
           ElevatedButton(
             onPressed: () async {
               try {
-                imagem ??= File('assets/images/imagem.png');
+                final ByteData data =
+                    await rootBundle.load('assets/images/imagem.png');
+                final List<int> bytes = data.buffer.asUint8List();
+                final File tempImage =
+                    File('${(await getTemporaryDirectory()).path}/imagem.png');
+                await tempImage.writeAsBytes(bytes);
                 ImageHelper.updateImagem(widget.emprego['idArtefato'], imagem);
                 await _empregoRepository.updateEmprego(
                     body, widget.emprego['idArtefato']);
@@ -228,7 +237,10 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
               } catch (e) {
                 print(e);
               }
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const EmpregoPage()),
+              );
             },
             child: const Text('Atualizar'),
           )

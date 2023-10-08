@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../service/user_provider.dart';
 import '../../helpers/image_helper.dart';
@@ -139,7 +142,12 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
                           TextButton(
                             onPressed: () async {
                               await _cadastrar();
-                              imagem ??= File('assets/images/imagem.png');
+                               final ByteData data = await rootBundle
+                                .load('assets/images/imagem.png');
+                            final List<int> bytes = data.buffer.asUint8List();
+                            final File tempImage = File(
+                                '${(await getTemporaryDirectory()).path}/imagem.png');
+                            await tempImage.writeAsBytes(bytes);
                               ImageHelper.uploadImagem(response!, imagem);
                               await _buscarObjetos();
                               Navigator.push(

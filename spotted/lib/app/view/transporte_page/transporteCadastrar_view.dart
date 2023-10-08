@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/repository/transporte_repository.dart';
 import 'package:spotted/app/view/transporte_page/transporte_view.dart';
@@ -179,7 +182,12 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
                        TextButton(
                           onPressed: () async {
                             await _cadastrar();
-                            imagem ??= File('assets/images/imagem.png');
+                             final ByteData data = await rootBundle
+                                .load('assets/images/imagem.png');
+                            final List<int> bytes = data.buffer.asUint8List();
+                            final File tempImage = File(
+                                '${(await getTemporaryDirectory()).path}/imagem.png');
+                            await tempImage.writeAsBytes(bytes);
                             ImageHelper.uploadImagem(response!, imagem);
                             await _buscarTransportes();
                             Navigator.push(
