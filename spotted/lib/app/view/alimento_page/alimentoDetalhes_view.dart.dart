@@ -36,7 +36,10 @@ class AlimentoDetails extends StatelessWidget {
                     SizedBox(
                       height: 300,
                       width: double.infinity,
-                      child: ImageHelper.loadImage(listaDeImagens),
+                      child:  
+                        Positioned.fill(
+                          child: ImageHelper.loadImage(listaDeImagens),
+                        ),
                     ),
                     Positioned(
                       bottom: 0,
@@ -100,9 +103,9 @@ class AlimentoDetails extends StatelessWidget {
                       Text(
                         "Descrição",
                         style: TextStyle(
-                          color: Colors.black.withOpacity(.5),
+                          color: Colors.black.withOpacity(.6),
                           fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                          fontSize: 20,
                         ),
                       ),
                       const SizedBox(
@@ -112,7 +115,7 @@ class AlimentoDetails extends StatelessWidget {
                         alimento.descricaoArtefato,
                         style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 15,
+                          fontSize: 18,
                         ),
                       ),
                       const SizedBox(
@@ -123,7 +126,7 @@ class AlimentoDetails extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.black.withOpacity(.6),
                           fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                          fontSize: 20,
                         ),
                       ),
                       const SizedBox(
@@ -136,7 +139,7 @@ class AlimentoDetails extends StatelessWidget {
                             style: TextStyle(
                                 color: Colors.orange,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                                fontSize: 18),
                           ),
                           const SizedBox(
                             width: 10,
@@ -146,7 +149,7 @@ class AlimentoDetails extends StatelessWidget {
                             style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                              fontSize: 19,
                             ),
                           ),
                         ],

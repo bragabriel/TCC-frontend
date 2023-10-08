@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/helpers/image_helper.dart';
 import '../../helpers/button_helper.dart';
 import '../../model/emprego_model.dart';
 import 'emprego_view.dart';
@@ -19,225 +20,261 @@ class _DetailsState extends State<EmpregoDetalheView> {
     var listaDeImagens = emprego.listaImagens;
 
     return Scaffold(
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        color: Colors.white,
-        child: Column(
-          children: [
-            Expanded(
-                flex: 4,
-                child: ClipRRect(
-                  child: SizedBox(
-                    height: double.infinity,
-                    width: double.infinity,
-                    child: Stack(
-                      children: [
-                        Positioned.fill(
-                          child: Image.network(
-                            listaDeImagens![0].url,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: 50, left: 20, right: 20),
-                            width: double.infinity,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                IconButton(
-                                    color: Colors.blue,
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const EmpregoPage()),
-                                      );
-                                    },
-                                    icon: const Icon(Icons.arrow_back_ios_new))
-                              ],
-                            ),
-                          ),
-                        ),
-                         Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                                padding: const EdgeInsets.only(
-                                    top: 5, right: 30, left: 30),
-                                height: 110,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: Colors.blue.withOpacity(.2),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            emprego.tituloArtefato,
-                                            style: const TextStyle(
-                                              fontSize: 25,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              decoration: TextDecoration.none,
-                                            ),
-                                            softWrap: true,
-                                          ),
-                                          Text(
-                                            emprego.descricaoArtefato as String,
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w300,
-                                              decoration: TextDecoration.none,
-                                            ),
-                                            softWrap: true,
-                                          ),
-                                          Text(
-                                            emprego.cidadeEmprego as String,
-                                            style: const TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w200,
-                                              decoration: TextDecoration.none,
-                                            ),
-                                            softWrap: true,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                )))
-                      ],
+      appBar: AppBar(
+        title: const Text('Detalhes'),
+        leading: BackButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const EmpregoPage()),
+            );
+          },
+        ),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              children: [
+                Stack(
+                  children: [
+                    SizedBox(
+                      height: 300,
+                      width: double.infinity,
+                      child: Positioned.fill(
+                        child: ImageHelper.loadImage(listaDeImagens),
+                      ),
                     ),
-                  ),
-                )),
-            Expanded(
-                flex: 2,
-                child: Container(
-                  margin: const EdgeInsets.only(top: 20, left: 20, right: 30),
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      SingleChildScrollView(
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          top: 5,
+                          right: 15,
+                          left: 15,
+                        ),
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.purple.withOpacity(.5),
+                        ),
+                        alignment: Alignment.topLeft,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Descrição",
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(.5),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                              emprego.tituloArtefato,
+                              style: const TextStyle(
+                                fontSize: 25,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                decoration: TextDecoration.none,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 20,
+                              softWrap: true,
                             ),
                             Text(
-                              emprego.descricaoArtefato,
+                              emprego.cidadeEmprego.toString(),
                               style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                decoration: TextDecoration.none,
                               ),
+                              softWrap: true,
                             ),
-                            const SizedBox(
-                              height: 10,
+                            Text(
+                              emprego.empresaEmprego.toString(),
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                decoration: TextDecoration.none,
+                              ),
+                              softWrap: true,
                             ),
                           ],
                         ),
                       ),
-                      Expanded(
-                          child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Descrição",
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(.6),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        emprego.descricaoArtefato,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Benefícios",
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(.6),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        emprego.beneficiosEmprego.toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Requisitos",
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(.6),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        emprego.requisitosEmprego.toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Experiência",
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(.6),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        emprego.experienciaEmprego.toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Modalidade",
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(.6),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        emprego.presencialEmprego.toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Salário",
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(.6),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Row(
                         children: [
+                          const Text(
+                            "\$",
+                            style: TextStyle(
+                                color: Colors.orange,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
                           const SizedBox(
-                            width: 0,
+                            width: 10,
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Salário",
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(.6),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  const Text(
-                                    "\$",
-                                    style: TextStyle(
-                                        color: Colors.orange,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    emprego.salarioEmprego.toString(),
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              ButtonHelper.newButton(
-                                  Colors.blue,
-                                  Icons.message,
-                                  '',
-                                  emprego.linkVagaEmprego);
-                            },
-                            child: Container(
-                              height: 50,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  "Visualizar vaga",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
+                          Text(
+                            emprego.salarioEmprego.toString(),
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
                             ),
-                          )
+                          ),
                         ],
-                      ))
+                      ),
                     ],
                   ),
-                )),
-          ],
-        ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ButtonHelper.newButton(
+                  Colors.blue,
+                  Icons.message,
+                  'https://api.whatsapp.com/send/?phone=55',
+                  emprego.contatoEmprego,
+                ),
+                ButtonHelper.newButton(
+                  Colors.blue,
+                  Icons.maps_home_work,
+                  '',
+                  emprego.linkVagaEmprego,
+                ),
+                ButtonHelper.newButton(
+                  Colors.blue,
+                  Icons.map_outlined,
+                  'https://www.google.com/maps/place/',
+                  emprego.localizacaoEmprego,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
