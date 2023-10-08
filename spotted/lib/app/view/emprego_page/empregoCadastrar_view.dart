@@ -231,7 +231,7 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
                   builder: (context) {
                     return AlertDialog(
                       title: const Text("Confirmação de cadastro"),
-                      content: const Text("Deseja cadastrar o alimento?"),
+                      content: const Text("Deseja cadastrar o emprego?"),
                       actions: [
                         TextButton(
                           onPressed: () async {

@@ -124,7 +124,7 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
                 builder: (context) {
                   return AlertDialog(
                     title: const Text("Confirmação de cadastro"),
-                    content: const Text("Deseja cadastrar o alimento?"),
+                    content: const Text("Deseja cadastrar o evento?"),
                     actions: [
                       TextButton(
                         onPressed: () async {

@@ -116,62 +116,57 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
             decoration: const InputDecoration(labelText: 'Localização atual'),
           ),
           const SizedBox(height: 10),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 40,
-            child: ElevatedButton(
-              onPressed: () async {
-                imagem = await ImageHelper.selecionarImagem();
-              },
-              child: const Text('Inserir imagem'),
+         Container(
+              child: ElevatedButton(
+                onPressed: () async =>
+                    imagem = await ImageHelper.selecionarImagem(),
+                child: const Text('Inserir imagem'),
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 40,
-            child: ElevatedButton(
+            ElevatedButton(
               onPressed: () {
                 showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text("Confirmação de cadastro"),
-                        content: const Text("Deseja cadastrar o emprego?"),
-                        actions: [
-                          TextButton(
-                            onPressed: () async {
-                              await _cadastrar();
-                               final ByteData data = await rootBundle
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Confirmação de cadastro"),
+                      content: const Text("Deseja cadastrar o objeto?"),
+                      actions: [
+                        TextButton(
+                          onPressed: () async {
+                            await _cadastrar();
+                            final ByteData data = await rootBundle
                                 .load('assets/images/imagem.png');
                             final List<int> bytes = data.buffer.asUint8List();
                             final File tempImage = File(
                                 '${(await getTemporaryDirectory()).path}/imagem.png');
                             await tempImage.writeAsBytes(bytes);
-                              ImageHelper.uploadImagem(response!, imagem);
-                              await _buscarObjetos();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ObjetoPage(),
-                                ),
-                              );
-                            },
-                            child: const Text("Sim"),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text("Cancelar"),
-                          ),
-                        ],
-                      );
-                    });
+                            ImageHelper.uploadImagem(response!, tempImage);
+                            await _buscarObjetos();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ObjetoPage(),
+                              ),
+                            );
+                            await tempImage.delete();
+                          },
+                          child: const Text("Sim"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Cancelar"),
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
               child: const Text('Cadastrar'),
             ),
-          ),
+          
         ],
       ),
     );
