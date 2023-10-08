@@ -170,9 +170,7 @@ class HomePageState extends State<HomePage> {
             onTap: () async {
               // Limpar as informações do usuário no UserProvider
               Provider.of<UserProvider>(context, listen: false).logout();
-
               PrefsService.logout();
-
               // Redirecionar o usuário para a tela de login
               Navigator.of(context)
                   .pushNamedAndRemoveUntil('/', (route) => true);
@@ -204,8 +202,8 @@ class HomePageState extends State<HomePage> {
                             fontFamily: 'Avenir',
                             fontSize: 40,
                             color: Color(0xffffffff),
-                            fontWeight: FontWeight.w900),
-                        textAlign: TextAlign.left,
+                            fontWeight: FontWeight.w700),
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
@@ -216,7 +214,7 @@ class HomePageState extends State<HomePage> {
                         fontSize: 24,
                         color: Color(0x7cdbf1ff),
                         fontWeight: FontWeight.w500),
-                    textAlign: TextAlign.left,
+                    textAlign: TextAlign.center,
                   ),
                 ]),
               ),
