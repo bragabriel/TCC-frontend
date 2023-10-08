@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:spotted/app/view/profile_page/my_products.dart';
+import 'package:spotted/app/view/profile_page/perfil_view.dart';
 import '../../constants/constants.dart';
 
 class AlimentoDeletarView {
@@ -18,6 +20,10 @@ class AlimentoDeletarView {
     print("entrou  no delete");
     _inativarArtefato(alimento['idArtefato']);
     _showSuccessMessage(context);
+     Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => ProfilePage()), // Substitua NextPage() pela página que você deseja chamar.
+  );
   }
 
 void _inativarArtefato(int idArtefato) async {

@@ -1,6 +1,10 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:spotted/app/view/alimento_page/alimento_view.dart';
 import '../../../service/user_provider.dart';
 import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
@@ -26,10 +30,10 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
   final TextEditingController _precoController = TextEditingController();
   final TextEditingController _ofertaController = TextEditingController();
   final AlimentoRepository _alimentoRepository = AlimentoRepository();
-  late File? imagem;
+  File? imagem;
   String _selectedTipo = 'OUTRO';
   String _selectedUnidade = 'OUTRO';
-  
+
   // ignore: unused_field
   Usuario? _usuario;
 
@@ -191,19 +195,25 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
           ),
           ElevatedButton(
             onPressed: () async {
-              try {                
-                imagem ??= File('assets/images/imagem.png');
+              try {
+                final ByteData data =
+                    await rootBundle.load('assets/images/imagem.png');
+                final List<int> bytes = data.buffer.asUint8List();
+                final File tempImage =
+                    File('${(await getTemporaryDirectory()).path}/imagem.png');
+                await tempImage.writeAsBytes(bytes);
                 ImageHelper.updateImagem(widget.alimento['idArtefato'], imagem);
-                print("terminou de subir a imagem em alimentos");
                 await _alimentoRepository.updateAlimento(
                     body, widget.alimento['idArtefato']);
                 _showSuccessMessage(context);
               } catch (e) {
-                print("deu algum erro ao atualizar a porra do alimento");
                 print(e);
               }
               await _buscarAlimentos();
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AlimentoPage()),
+              );
             },
             child: const Text('Atualizar'),
           )

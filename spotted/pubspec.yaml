@@ -94,6 +94,7 @@ flutter:
     - assets/images/transporte.png
     - assets/images/objetos_perdidos.png
     - assets/images/evento.png
+    
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
