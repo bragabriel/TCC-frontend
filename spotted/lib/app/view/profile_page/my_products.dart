@@ -34,6 +34,12 @@ class _MyProductsPageState extends State<MyProductsPage> {
     _loadUserData();
   }
 
+  @override
+void didChangeDependencies() {
+  super.didChangeDependencies();
+  _loadUserData();
+}
+
   Future<void> _loadUserData() async {
     try {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
