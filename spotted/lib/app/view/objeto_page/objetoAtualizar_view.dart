@@ -121,15 +121,13 @@ class ObjetoEditarPageState extends State<ObjetoEditarView> {
           ElevatedButton(
             onPressed: () async {
               try {
-                final ByteData data =
-                    await rootBundle.load('assets/images/imagem.png');
+                final ByteData data =  await rootBundle.load('assets/images/imagem.png');
                 final List<int> bytes = data.buffer.asUint8List();
                 final File tempImage =
                     File('${(await getTemporaryDirectory()).path}/imagem.png');
                 await tempImage.writeAsBytes(bytes);
                 ImageHelper.updateImagem(widget.objeto['idArtefato'], imagem);
-                await _objetoRepository.updateObjeto(
-                    body, widget.objeto['idArtefato']);
+                await _objetoRepository.updateObjeto(  body, widget.objeto['idArtefato']);
                 _showSuccessMessage(context);
               } catch (e) {
                 print(e);

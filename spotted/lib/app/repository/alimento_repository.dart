@@ -50,11 +50,9 @@ class AlimentoRepository {
     }
   }
 
-  Future<void> updateAlimento(Map<String, dynamic> body,
-      int? idArtefato) async{
+  Future<void> updateAlimento(Map<String, dynamic> body, int? idArtefato) async{
+    
     final String apiUrl = '$onlineApi/alimentoAtualizar/$idArtefato';
-
-
     try {
       final response = await Dio().put(apiUrl, data: body);
 

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../../constants/constants.dart';
+import '../profile_page/perfil_view.dart';
 
 class TransporteDeletarView {
   final dynamic transporte;
@@ -14,29 +15,28 @@ class TransporteDeletarView {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  Future<bool> inativar(BuildContext context) {
+  void inativar(BuildContext context) {
     print("entrou  no delete");
-   return _inativarArtefato(transporte['idArtefato'], context);
+    _inativarArtefato(transporte['idArtefato']);
+    _showSuccessMessage(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ProfilePage()),
+    );
   }
 
-  Future<bool> _inativarArtefato(int idArtefato, context) async {
+  void _inativarArtefato(int idArtefato) async {
     final String apiUrl = '$onlineApi/transporteInativar/$idArtefato';
     try {
       final response = await Dio().put(apiUrl);
 
       if (response.statusCode == 200) {
-        print('Transporte deletado comm sucesso!');
-    _showSuccessMessage(context);
-
-        return true;
+        print('transporte deletado comm sucesso!');
       } else {
-        print(
-            'Erro ao deletar Transporte - Status code: ${response.statusCode}');
-        return false;
+        print('Erro ao deletar transporte - Status code: ${response.statusCode}');
       }
     } catch (error) {
-      print('Erro ao deletar o Transporte: $error');
+      print('Erro ao deletar o transporte: $error');
     }
-    return false;
   }
 }

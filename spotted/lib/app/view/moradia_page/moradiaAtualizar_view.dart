@@ -208,7 +208,7 @@ class MoradiaEditarPageState extends State<MoradiaEditarView> {
                 final File tempImage =
                     File('${(await getTemporaryDirectory()).path}/imagem.png');
                 await tempImage.writeAsBytes(bytes);
-                ImageHelper.uploadImagem(response, imagem);
+                ImageHelper.updateImagem(widget.moradia['idArtefato'], imagem);
                 await _moradiaRepository.updateMoradia(
                     body, widget.moradia['idArtefato']);
                 _showSuccessMessage(context);

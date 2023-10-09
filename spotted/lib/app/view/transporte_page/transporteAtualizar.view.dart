@@ -51,22 +51,22 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  // @override
-  // void dispose() {
-  //   _tituloController.dispose();
-  //   _descricaoController.dispose();
-  //   _tituloController.dispose();
-  //   _descricaoController.dispose();
-  //   _cidadeTransporteController.dispose();
-  //   _periodoTransporteController.dispose();
-  //   _qtdAssentosPreenchidosTransporteController.dispose();
-  //   _qtdAssentosTotalTransporteController.dispose();
-  //   // _telefoneUsuarioController.dispose();
-  //   _informacoesVeiculoTransporteController.dispose();
-  //   _informacoesCondutorTransporteController.dispose();
-  //   _valorTransporteController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _tituloController.dispose();
+    _descricaoController.dispose();
+    _tituloController.dispose();
+    _descricaoController.dispose();
+    _cidadeTransporteController.dispose();
+    _periodoTransporteController.dispose();
+    _qtdAssentosPreenchidosTransporteController.dispose();
+    _qtdAssentosTotalTransporteController.dispose();
+    // _telefoneUsuarioController.dispose();
+    _informacoesVeiculoTransporteController.dispose();
+    _informacoesCondutorTransporteController.dispose();
+    _valorTransporteController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -180,12 +180,12 @@ class TransporteEditarPageState extends State<TransporteEditarView> {
             onPressed: () async {
               try {
                 final ByteData data =
-                    await rootBundle.load('assets/images/imagem.png');
+                   await rootBundle.load('assets/images/imagem.png');
                 final List<int> bytes = data.buffer.asUint8List();
                 final File tempImage =
                     File('${(await getTemporaryDirectory()).path}/imagem.png');
                 await tempImage.writeAsBytes(bytes);
-                ImageHelper.uploadImagem(response, imagem);
+                ImageHelper.updateImagem(widget.transporte['idArtefato'], imagem);
                 await _transporteRepository.updateTransporte(
                     body, widget.transporte['idArtefato']);
                 _showSuccessMessage(context);

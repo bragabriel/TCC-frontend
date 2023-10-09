@@ -75,20 +75,20 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
   @override
   void initState() {
     super.initState();
-    _beneficiosController.text = widget.emprego['emprego']['beneficioEmprego'];
-    _cidadeController.text = widget.emprego['emprego']['cidadeEmprego'];
-    _contatoController.text = widget.emprego['emprego']['contatoEmprego'];
-    _empresaController.text = widget.emprego['emprego']['empresaEmprego'];
-    _estadoController.text = widget.emprego['emprego']['estadoEmprego'];
+    _beneficiosController.text = widget.emprego['emprego']['beneficioEmprego'].toString();
+    _cidadeController.text = widget.emprego['cidadeEmprego'].toString();
+    _contatoController.text = widget.emprego['contatoEmprego'].toString();
+    _empresaController.text = widget.emprego['empresaEmprego'].toString();
+    _estadoController.text = widget.emprego['estadoEmprego'].toString();
     _experienciaController.text =
-        widget.emprego['emprego']['experienciaEmprego'];
-    _linkVagaController.text = widget.emprego['emprego']['linkEmprego'];
+        widget.emprego['experienciaEmprego'].toString();
+    _linkVagaController.text = widget.emprego['linkEmprego'].toString();
     _localizacaoController.text =
-        widget.emprego['emprego']['localizacaoEmprego'];
-    _presencialController.text = widget.emprego['emprego']['presencialEmprego'];
-    _requisitosController.text = widget.emprego['emprego']['requisitosEmprego'];
-    _salarioController.text = widget.emprego['emprego']['salarioEmprego'];
-    _tipoVagaController.text = widget.emprego['emprego']['tipoVagaEmprego'];
+        widget.emprego['localizacaoEmprego'].toString();
+    _presencialController.text = widget.emprego['presencialEmprego'].toString();
+    _requisitosController.text = widget.emprego['requisitosEmprego'].toString();
+    _salarioController.text = widget.emprego['salarioEmprego'].toString();
+    _tipoVagaController.text = widget.emprego['tipoVagaEmprego'].toString();
     _tituloController.text = widget.emprego['tituloArtefato'];
     _descricaoController.text = widget.emprego['descricaoArtefato'];
   }

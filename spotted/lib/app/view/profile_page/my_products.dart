@@ -4,7 +4,7 @@ import '../../repository/index.dart';
 import '../../../service/user_provider.dart';
 import '../alimento_page/alimentoAtualizar_view.dart';
 import '../alimento_page/alimentoDeletar_view.dart';
-import '../emprego_page/deleteEmprego_view.dart';
+import '../emprego_page/empregoDeletar_view.dart';
 import '../emprego_page/empregoAtualizar_view.dart';
 import '../evento_page/eventoAtualizar_view.dart';
 import '../evento_page/eventoDeletar_view.dart';
