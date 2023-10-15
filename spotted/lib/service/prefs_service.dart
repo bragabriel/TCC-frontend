@@ -35,11 +35,14 @@ class PrefsService {
     prefs.setString(_userSaved, jsonEncode(user));
   }
 
-  getUser() async {
+  static getUser() async {
     var prefs = await SharedPreferences.getInstance();
     String? jsonString = prefs.getString(_userSaved);
 
     if (jsonString != null) {
+/*       var teste = Usuario.fromJson(json.decode(jsonString)); */
+ /*      print('a?');
+      print(teste.nomeUsuario); */
       return Usuario.fromJson(json.decode(jsonString));
     } else {
       return null;

@@ -176,7 +176,6 @@ class _MyProductsPageState extends State<MyProductsPage> {
                                 break;
                               default:
                                 print("Ocorreu um erro ao editar o produto.");
-                                print(tipoArtefato);
                             }
                           },
                         ),
