@@ -80,6 +80,22 @@ class _CadastroPageState extends State<CadastroPage> {
     controller.startCadastro();
   }
 
+  void _showSuccessMessage(BuildContext context) {
+    const snackBar = SnackBar(
+      content: Text('Cadastro realizado com sucesso!'),
+      backgroundColor: Colors.green,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _showErrorMessage(BuildContext context) {
+    const snackBar = SnackBar(
+      content: Text('Erro ao cadastrar. Por favor, tente novamente!'),
+      backgroundColor: Colors.red,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   Widget _body() {
     return SingleChildScrollView(
       child: Padding(
@@ -115,7 +131,8 @@ class _CadastroPageState extends State<CadastroPage> {
                     const SizedBox(height: 8),
                     _buildTextFormField('Nome', (text) => nome = text),
                     const SizedBox(height: 8),
-                    _buildTextFormField('Sobrenome', (text) => sobrenome = text),
+                    _buildTextFormField(
+                        'Sobrenome', (text) => sobrenome = text),
                     const SizedBox(height: 8),
                     _buildTextFormField('Telefone', (text) => telefone = text),
                   ],
@@ -152,7 +169,8 @@ class _CadastroPageState extends State<CadastroPage> {
                       builder: (context) {
                         return AlertDialog(
                           title: const Text("Erro"),
-                          content: const Text("Por favor, preencha todos os campos."),
+                          content: const Text(
+                              "Por favor, preencha todos os campos."),
                           actions: [
                             TextButton(
                               onPressed: () {
@@ -171,7 +189,8 @@ class _CadastroPageState extends State<CadastroPage> {
                       builder: (context) {
                         return AlertDialog(
                           title: const Text("Erro"),
-                          content: const Text("As senhas não coincidem. Por favor, verifique."),
+                          content: const Text(
+                              "As senhas não coincidem. Por favor, verifique."),
                           actions: [
                             TextButton(
                               onPressed: () {
@@ -271,9 +290,12 @@ class _CadastroPageState extends State<CadastroPage> {
 
     try {
       await UsuarioRepository().cadastrarUsuario(body);
+      _showSuccessMessage(context);
     } catch (e) {
       print('Erro ao cadastrar: $e');
+      _showErrorMessage(context);
     }
+    Navigator.of(context).pushReplacementNamed('/');
   }
 
   @override
