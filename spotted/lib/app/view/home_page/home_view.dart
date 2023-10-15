@@ -349,9 +349,6 @@ Widget _buildFotoPerfil(String? perfil) {
 
 Widget buildUserDrawerHeader(BuildContext context, UserProvider userProvider) {
   Usuario? user = userProvider.user;
-  if(user==null){
-    print('usuario null');
-  }
   return UserAccountsDrawerHeader(
     currentAccountPicture: ClipPath(
       child: _buildFotoPerfil(user?.url),

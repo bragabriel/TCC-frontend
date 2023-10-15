@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotted/app/model/usuario_model.dart';
 import 'package:spotted/service/prefs_service.dart';
 
@@ -28,8 +27,6 @@ class _SplashPageState extends State<SplashPage> {
             Provider.of<UserProvider>(context, listen: false);
 
         Usuario usuario = await PrefsService.getUser();
- /*        print('b?');
-        print(usuario.nomeUsuario); */
         userProvider.setUser(usuario);
 
         // Navegar para a tela home

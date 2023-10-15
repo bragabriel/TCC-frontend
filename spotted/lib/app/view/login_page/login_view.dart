@@ -16,6 +16,16 @@ class _LoginPageState extends State<LoginPage> {
   String password = '';
   late Usuario usuario;
 
+   @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+     body: Container(
+      color: Colors.blue.withOpacity(0.8),
+      child: _body(),
+    ),
+    );
+  }
+
   Widget _body() {
     return SingleChildScrollView(
         child: SizedBox(
@@ -64,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            _logar();
+                            await _logar();
                           },
                           style: ElevatedButton.styleFrom(
                               textStyle: const TextStyle(
@@ -100,16 +110,6 @@ class _LoginPageState extends State<LoginPage> {
             )));
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-     body: Container(
-      color: Colors.blue.withOpacity(0.8),
-      child: _body(),
-    ),
-    );
-  }
-
   Future<void> _logar() async {
     final response = await UsuarioRepository().logarUsuario(email, password);
 
@@ -121,7 +121,8 @@ class _LoginPageState extends State<LoginPage> {
           emailUsuario: email,
           senhaUsuario: password,
           telefoneUsuario: response.usuario!.telefoneUsuario,
-          listaArtefatosReponse: response.usuario!.listaArtefatosReponse);
+          listaArtefatosReponse: response.usuario!.listaArtefatosReponse,
+          url: response.usuario!.url);
 
       Provider.of<UserProvider>(context, listen: false).setUser(user);
 
@@ -134,9 +135,9 @@ class _LoginPageState extends State<LoginPage> {
             actions: [
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context); // Fechar o AlertDialog
+                  Navigator.pop(context); 
                   Navigator.pushReplacementNamed(
-                      context, '/home'); // Navegar para a tela home
+                      context, '/home');
                 },
                 child: const Text("OK"),
               )

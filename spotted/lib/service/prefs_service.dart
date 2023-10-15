@@ -40,9 +40,6 @@ class PrefsService {
     String? jsonString = prefs.getString(_userSaved);
 
     if (jsonString != null) {
-/*       var teste = Usuario.fromJson(json.decode(jsonString)); */
- /*      print('a?');
-      print(teste.nomeUsuario); */
       return Usuario.fromJson(json.decode(jsonString));
     } else {
       return null;
