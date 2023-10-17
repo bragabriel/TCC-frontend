@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/view/profile_page/edit_image.dart';
-import 'package:spotted/app/view/profile_page/updateEmail.dart';
 import 'package:spotted/app/view/profile_page/updateNome.dart';
 import 'package:spotted/app/view/profile_page/updateTelefone.dart';
 import 'package:spotted/app/widget/display_image_widget.dart';
@@ -65,11 +64,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       userProvider.user?.telefoneUsuario,
                       'Telefone',
                       UpdateTelefonePage(user),
-                    ),
-                    buildUserInfoDisplay(
-                      userProvider.user?.emailUsuario,
-                      'Email',
-                      UpdateEmailPage(user),
                     ),
                   ],
                 ),
