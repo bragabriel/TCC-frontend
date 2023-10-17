@@ -4,16 +4,16 @@ import 'package:spotted/app/model/usuario_model.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
 import '../../../service/user_provider.dart';
 
-class UpdateProfilePage extends StatefulWidget {
+class UpdateEmailPage extends StatefulWidget {
   final Usuario user;
 
-  const UpdateProfilePage(this.user, {super.key});
+  const UpdateEmailPage(this.user, {super.key});
 
   @override
-  _UpdateProfilePageState createState() => _UpdateProfilePageState();
+  _UpdateEmailPageState createState() => _UpdateEmailPageState();
 }
 
-class _UpdateProfilePageState extends State<UpdateProfilePage> {
+class _UpdateEmailPageState extends State<UpdateEmailPage> {
   
   final UsuarioRepository usuarioRepository = UsuarioRepository();
   final TextEditingController nomeController = TextEditingController();
@@ -42,7 +42,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Atualizar perfil'),
+        title: const Text('Atualizar e-mail'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -51,11 +51,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
           children: [
             TextFormField(
               controller: nomeController,
-              decoration: const InputDecoration(labelText: 'Nome'),
-            ),
-            TextFormField(
-              controller: sobrenomeController,
-              decoration: const InputDecoration(labelText: 'Sobrenome'),
+              decoration: const InputDecoration(labelText: 'E-mail'),
             ),
             const SizedBox(height: 20),
             Center(
