@@ -17,13 +17,13 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late IconButton _myIconButton; // Declare _myIconButton como uma variável
+  late IconButton _myIconButton;
 
   @override
   void initState() {
     super.initState();
     _myIconButton = IconButton(
-      icon: Icon(Icons.list, color: Colors.black, size: 50),
+      icon: Icon(Icons.list_alt, color: Colors.black, size: 50),
       onPressed: () => Navigator.of(context).pushNamed('/meusprodutos'),
     );
   }
@@ -39,32 +39,46 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: const EdgeInsets.all(16.0),
         child: Consumer<UserProvider>(
           builder: (context, userProvider, _) {
-            return Scaffold(
-              body: Column(
-                children: [
-                  AppBar(
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    toolbarHeight: 10,
-                  ),
-                  InkWell(
+            return Stack(
+              children: [
+                Column(
+                  children: [
+                    AppBar(
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      toolbarHeight: 10,
+                    ),
+                    InkWell(
                       onTap: () {
                         navigateSecondPage(EditImagePage());
                       },
                       child: DisplayImage(
                         imagePath: userProvider.user!.url!,
                         onPressed: () {},
-                      )),
-                  buildUserInfoDisplay(
+                    )),
+                    buildUserInfoDisplay(
                       "${userProvider.user?.nomeUsuario} ${userProvider.user?.sobrenomeUsuario}",
                       'Nome completo',
-                      UpdateProfilePage(user)),
-                  buildUserInfoDisplay(userProvider.user?.telefoneUsuario,
-                      'Telefone', UpdateTelefonePage(user)),
-                  buildUserInfoDisplay(userProvider.user?.emailUsuario, 'Email',
-                      UpdateEmailPage(user)),
-                ],
-              ),
+                      UpdateProfilePage(user),
+                    ),
+                    buildUserInfoDisplay(
+                      userProvider.user?.telefoneUsuario,
+                      'Telefone',
+                      UpdateTelefonePage(user),
+                    ),
+                    buildUserInfoDisplay(
+                      userProvider.user?.emailUsuario,
+                      'Email',
+                      UpdateEmailPage(user),
+                    ),
+                  ],
+                ),
+                // Botão no centro da parte inferior da página
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: _myIconButton,
+                ),
+              ],
             );
           },
         ),
@@ -72,52 +86,57 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildUserInfoDisplay(
-          String? getValue, String title, Widget editPage) =>
-      Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildUserInfoDisplay(String? getValue, String title, Widget editPage) => Padding(
+    padding: EdgeInsets.only(bottom: 10),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+            color: Colors.grey,
+          ),
+        ),
+        SizedBox(
+          height: 1,
+        ),
+        Container(
+          width: 350,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 1,
+              ),
+            ),
+          ),
+          child: Row(
             children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey,
+              Expanded(
+                child: TextButton(
+                  onPressed: () {
+                    navigateSecondPage(editPage);
+                  },
+                  child: Text(
+                    getValue!,
+                    style: TextStyle(fontSize: 16, height: 1.4),
+                  ),
                 ),
               ),
-              SizedBox(
-                height: 1,
-              ),
-              Container(
-                  width: 350,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      border: Border(
-                          bottom: BorderSide(
-                    color: Colors.grey,
-                    width: 1,
-                  ))),
-                  child: Row(children: [
-                    Expanded(
-                        child: TextButton(
-                            onPressed: () {
-                              navigateSecondPage(editPage);
-                            },
-                            child: Text(
-                              getValue!,
-                              style: TextStyle(fontSize: 16, height: 1.4),
-                            ))),
-                  ]))
             ],
-          ));
+          ),
+        ),
+      ],
+    ),
+  );
 
   FutureOr onGoBack(dynamic value) {
     setState(() {});
   }
 
-  // Handles navigation and prompts refresh.
   void navigateSecondPage(Widget editForm) {
     Route route = MaterialPageRoute(builder: (context) => editForm);
     Navigator.push(context, route).then(onGoBack);
