@@ -11,22 +11,20 @@ import 'dart:convert';
 import '../constants/constants.dart';
 
 class ImageHelper {
-static Widget loadImage(List<Imagem>? listaDeImagens) {
-  return Image.network(
-    listaDeImagens![0].url,
-    fit: BoxFit.cover,
-    errorBuilder: (context, error, stackTrace) {
-      if (error is NetworkImageLoadException) {
-        return Image.asset('assets/images/imagem.png');
-      }
-
-      return Center(
-        child: Text('Error loading image'),
-      );
-    },
-  ); 
-}
-
+  static Widget loadImage(List<Imagem>? listaDeImagens) {
+    return Image.network(
+      listaDeImagens![0].url,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        if (error is NetworkImageLoadException) {
+          return Image.asset('assets/images/imagem.png');
+        }
+        return Center(
+          child: Text('Error loading image'),
+        );
+      },
+    );
+  }
 
   static uploadImagem(
     Response<dynamic>? idArtefato,
@@ -60,8 +58,6 @@ static Widget loadImage(List<Imagem>? listaDeImagens) {
     int idArtefato,
     imageFile,
   ) async {
-    print("\n\n\n\nid artefato::::::::::::");
-    print(idArtefato);
     var client = http.Client();
     var uri = Uri.parse('$onlineApi/uploadImage/$idArtefato');
     var request = http.MultipartRequest("POST", uri);

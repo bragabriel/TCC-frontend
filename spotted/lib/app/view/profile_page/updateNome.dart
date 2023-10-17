@@ -42,7 +42,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Atualizar perfil'),
+        title: const Text('Atualizar dados'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
