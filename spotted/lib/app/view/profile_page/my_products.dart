@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../repository/index.dart';
@@ -25,7 +26,7 @@ class MyProductsPage extends StatefulWidget {
 
 class _MyProductsPageState extends State<MyProductsPage> {
   final UsuarioRepository usuarioRepository = UsuarioRepository();
-  bool _userDataLoaded = false; 
+  bool _userDataLoaded = false;
 
   @override
   void initState() {
@@ -95,138 +96,143 @@ class _MyProductsPageState extends State<MyProductsPage> {
             itemBuilder: (BuildContext ctx, index) {
               var produto = listaProdutos[index];
               String tipoArtefato = produto["tipoArtefato"];
-              return GridTile(
-                key: ValueKey(produto),
-                footer: GridTileBar(
-                  backgroundColor: const Color.fromARGB(137, 107, 98, 98),
-                  title: Text(
-                    produto["tituloArtefato"],
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
+              return CupertinoContextMenu(
+                actions: <Widget>[
+                  CupertinoContextMenuAction(
+                    child: Text('Editar'),
+                    onPressed: () {
+                      switch (tipoArtefato) {
+                        case "EMPREGO":
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EmpregoEditarView(produto),
+                            ),
+                          );
+                          break;
+                        case "ALIMENTO":
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AlimentoEditarView(produto),
+                            ),
+                          );
+                          break;
+                        case "EVENTO":
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EventoEditarView(produto),
+                            ),
+                          );
+                          break;
+                        case "OBJETO":
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ObjetoEditarView(produto),
+                            ),
+                          );
+                          break;
+                        case "MORADIA":
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MoradiaEditarView(produto),
+                            ),
+                          );
+                          break;
+                        case "TRANSPORTE":
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  TransporteEditarView(produto),
+                            ),
+                          );
+                          break;
+                        default:
+                          print("Ocorreu um erro ao editar o produto.");
+                      }
+                    },
                   ),
-                  subtitle: Text(
-                    produto["descricaoArtefato"],
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  CupertinoContextMenuAction(
+                    child: Text('Excluir'),
+                    onPressed: () {
+                      _showAlertDialog(context, tipoArtefato, produto);
+                    },
                   ),
-                  trailing: PopupMenuButton(
-                    itemBuilder: (BuildContext context) => [
-                      PopupMenuItem(
-                        child: OutlinedButton(
-                          child: const Text('Editar'),
-                          onPressed: () {
-                            switch (tipoArtefato) {
-                              case "EMPREGO":
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        EmpregoEditarView(produto),
-                                  ),
-                                );
-                                break;
-                              case "ALIMENTO":
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        AlimentoEditarView(produto),
-                                  ),
-                                );
-                                break;
-                              case "EVENTO":
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        EventoEditarView(produto),
-                                  ),
-                                );
-                                break;
-                              case "OBJETO":
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ObjetoEditarView(produto),
-                                  ),
-                                );
-                                break;
-                              case "MORADIA":
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        MoradiaEditarView(produto),
-                                  ),
-                                );
-                                break;
-                              case "TRANSPORTE":
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        TransporteEditarView(produto),
-                                  ),
-                                );
-                                break;
-                              default:
-                                print("Ocorreu um erro ao editar o produto.");
-                            }
-                          },
+                ],
+                child: GridTile(
+                  key: ValueKey(produto),
+                  child: Container(
+                    color: CupertinoColors.systemGrey,
+                    width: 200,
+                    height: 200,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Image.network(
+                            produto["listaImagens"][0]["url"],
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      PopupMenuItem(
-                        child: OutlinedButton(
-                          child: const Text('Deletar'),
-                          onPressed: () {
-                            switch (tipoArtefato) {
-                              case "EMPREGO":
-                                EmpregoDeletarView(produto).inativar(context);
-                                break;
-                              case "ALIMENTO":
-                                AlimentoDeletarView(produto).inativar(context);
-                                break;
-                              case "EVENTO":
-                                EventoDeletarView(produto).inativar(context);
-                                break;
-                              case "OBJETO":
-                                ObjetoDeletarView(produto).inativar(context);
-                                break;
-                              case "MORADIA":
-                                MoradiaDeletarView(produto).inativar(context);
-                                break;
-                              case "TRANSPORTE":
-                                TransporteDeletarView(produto)
-                                    .inativar(context);
-                                break;
-                              default:
-                                print("Ocorreu um erro ao deletar o produto.");
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Image.network(
-                        produto["listaImagens"][0]["url"],
-                        fit: BoxFit.cover,
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               );
             },
           );
         },
+      ),
+    );
+  }
+
+  void _showAlertDialog(BuildContext context, String tipo, dynamic produto) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text("Cuidado"),
+        content: Text("Você realmente deseja excluir o produto?"),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Não'),
+          ),
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+            onPressed: () {
+              // Perform deletion based on 'tipo'
+              switch (tipo) {
+                case "EMPREGO":
+                  EmpregoDeletarView(produto).inativar(context);
+                  break;
+                case "ALIMENTO":
+                  AlimentoDeletarView(produto).inativar(context);
+                  break;
+                case "EVENTO":
+                  EventoDeletarView(produto).inativar(context);
+                  break;
+                case "OBJETO":
+                  ObjetoDeletarView(produto).inativar(context);
+                  break;
+                case "MORADIA":
+                  MoradiaDeletarView(produto).inativar(context);
+                  break;
+                case "TRANSPORTE":
+                  TransporteDeletarView(produto).inativar(context);
+                  break;
+                default:
+                  print("Ocorreu um erro ao deletar o produto.");
+              }
+            },
+            child: const Text('Sim'),
+          ),
+        ],
       ),
     );
   }
