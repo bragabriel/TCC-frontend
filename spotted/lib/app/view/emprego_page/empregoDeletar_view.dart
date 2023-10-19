@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../../constants/constants.dart';
+import '../usuario_page/perfil_view.dart';
 
 class EmpregoDeletarView {
   final dynamic emprego;
@@ -18,6 +19,10 @@ class EmpregoDeletarView {
     print("entrou  no delete");
     _inativarArtefato(emprego['idArtefato']);
     _showSuccessMessage(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ProfilePage()),
+    );
   }
 
 void _inativarArtefato(int idArtefato) async {

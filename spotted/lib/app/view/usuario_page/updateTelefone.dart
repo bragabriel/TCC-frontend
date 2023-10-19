@@ -4,17 +4,16 @@ import 'package:spotted/app/model/usuario_model.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
 import '../../../service/user_provider.dart';
 
-class UpdateProfilePage extends StatefulWidget {
+class UpdateTelefonePage extends StatefulWidget {
   final Usuario user;
 
-  const UpdateProfilePage(this.user, {super.key});
+  const UpdateTelefonePage(this.user, {super.key});
 
   @override
-  _UpdateProfilePageState createState() => _UpdateProfilePageState();
+  _UpdateTelefonePageState createState() => _UpdateTelefonePageState();
 }
 
-class _UpdateProfilePageState extends State<UpdateProfilePage> {
-  
+class _UpdateTelefonePageState extends State<UpdateTelefonePage> {
   final UsuarioRepository usuarioRepository = UsuarioRepository();
   final TextEditingController nomeController = TextEditingController();
   final TextEditingController sobrenomeController = TextEditingController();
@@ -51,11 +50,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
           children: [
             TextFormField(
               controller: nomeController,
-              decoration: const InputDecoration(labelText: 'Nome'),
-            ),
-            TextFormField(
-              controller: sobrenomeController,
-              decoration: const InputDecoration(labelText: 'Sobrenome'),
+              keyboardType: TextInputType
+                  .number, // Defina o keyboardType para TextInputType.number
+              decoration: const InputDecoration(labelText: 'Telefone'),
             ),
             const SizedBox(height: 20),
             Center(
@@ -70,9 +67,13 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                   );
 
                   try {
-                    await usuarioRepository.updateUserName(updatedUser.idUsuario, updatedUser.nomeUsuario, updatedUser.sobrenomeUsuario);
+                    await usuarioRepository.updateUserName(
+                        updatedUser.idUsuario,
+                        updatedUser.nomeUsuario,
+                        updatedUser.sobrenomeUsuario);
 
-                    final userProvider = Provider.of<UserProvider>(context, listen: false);
+                    final userProvider =
+                        Provider.of<UserProvider>(context, listen: false);
                     userProvider.updateUserInfo(updatedUser);
 
                     _showSuccessMessage(context);

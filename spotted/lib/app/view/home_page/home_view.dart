@@ -349,11 +349,25 @@ Widget _buildFotoPerfil(String? perfil) {
 
 Widget buildUserDrawerHeader(BuildContext context, UserProvider userProvider) {
   Usuario? user = userProvider.user;
+
+  Widget _buildFotoPerfil(String? imageUrl) {
+    if (imageUrl != null) {
+      return CircleAvatar(
+        backgroundImage: NetworkImage(imageUrl),
+        radius: 40, // Ajuste o tamanho conforme necessário
+      );
+    } else {
+      return CircleAvatar(
+        child: Icon(Icons.person, size: 40), // Ícone de usuário padrão
+        radius: 30, // Ajuste o tamanho conforme necessário
+      );
+    }
+  }
+
   return UserAccountsDrawerHeader(
-    currentAccountPicture: ClipPath(
-      child: _buildFotoPerfil(user?.url),
-    ),
+    currentAccountPicture: _buildFotoPerfil(user?.url),
     accountName: Text(user?.nomeUsuario ?? 'Usuário não logado'),
     accountEmail: Text(user?.emailUsuario ?? ''),
   );
 }
+

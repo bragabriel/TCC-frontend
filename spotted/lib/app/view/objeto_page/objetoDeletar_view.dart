@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../../constants/constants.dart';
+import '../usuario_page/perfil_view.dart';
 
 class ObjetoDeletarView {
   final dynamic objeto;
@@ -18,9 +19,13 @@ class ObjetoDeletarView {
     print("entrou  no delete");
     _inativarArtefato(objeto['idArtefato']);
     _showSuccessMessage(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ProfilePage()),
+    );
   }
 
-void _inativarArtefato(int idArtefato) async {
+  void _inativarArtefato(int idArtefato) async {
     final String apiUrl = '$onlineApi/objetoInativar/$idArtefato';
     try {
       final response = await Dio().put(apiUrl);

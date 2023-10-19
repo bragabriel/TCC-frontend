@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../../constants/constants.dart';
+import '../usuario_page/perfil_view.dart';
 
 class MoradiaDeletarView {
   final dynamic moradia;
@@ -18,9 +19,13 @@ class MoradiaDeletarView {
     print("entrou  no delete");
     _inativarArtefato(moradia['idArtefato']);
     _showSuccessMessage(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ProfilePage()),
+    );
   }
 
-void _inativarArtefato(int idArtefato) async {
+  void _inativarArtefato(int idArtefato) async {
     final String apiUrl = '$onlineApi/moradiaInativar/$idArtefato';
     try {
       final response = await Dio().put(apiUrl);

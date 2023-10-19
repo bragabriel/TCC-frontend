@@ -56,7 +56,7 @@ class TransporteRepository {
     final String apiUrl = '$onlineApi/transporteAtualizar/$idArtefato';
 
     try {
-      final response = await Dio().post(apiUrl, data: body);
+      final response = await Dio().put(apiUrl, data: body);
       if (response.statusCode == 200) {
         print('Transporte atualizado com sucesso!');
       } else {

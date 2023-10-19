@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'moradia_view.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
@@ -198,34 +201,32 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
             decoration: const InputDecoration(labelText: 'Animais Estimação'),
           ),
           const SizedBox(height: 10),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 40,
-            child: ElevatedButton(
-              onPressed: () async {
-                imagem = await ImageHelper.selecionarImagem();
-              },
-              child: const Text('Inserir imagem'),
+          Container(
+              child: ElevatedButton(
+                onPressed: () async =>
+                    imagem = await ImageHelper.selecionarImagem(),
+                child: const Text('Inserir imagem'),
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 40,
-            child: ElevatedButton(
+            ElevatedButton(
               onPressed: () {
                 showDialog(
                   context: context,
                   builder: (context) {
                     return AlertDialog(
                       title: const Text("Confirmação de cadastro"),
-                      content: const Text("Deseja cadastrar o alimento?"),
+                      content: const Text("Deseja cadastrar a moradia?"),
                       actions: [
                         TextButton(
                           onPressed: () async {
                             await _cadastrar();
-                            imagem ??= File('assets/images/imagem.png');
-                            ImageHelper.uploadImagem(response!, imagem);
+                            final ByteData data = await rootBundle
+                                .load('assets/images/imagem.png');
+                            final List<int> bytes = data.buffer.asUint8List();
+                            final File tempImage = File(
+                                '${(await getTemporaryDirectory()).path}/imagem.png');
+                            await tempImage.writeAsBytes(bytes);
+                            ImageHelper.uploadImagem(response!, tempImage);
                             await _buscarMoradia();
                             Navigator.push(
                               context,
@@ -233,6 +234,7 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
                                 builder: (context) => const MoradiaPage(),
                               ),
                             );
+                            await tempImage.delete();
                           },
                           child: const Text("Sim"),
                         ),
@@ -249,7 +251,6 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
               },
               child: const Text('Cadastrar'),
             ),
-          ),
         ],
       ),
     );

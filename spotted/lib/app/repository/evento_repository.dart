@@ -52,10 +52,10 @@ class EventoRepository {
   }
 
   Future<void> updateEvento(Map<String, dynamic> body, int? idArtefato) async {
-    final String apiUrl = '$onlineApi/eventoAtualizar/$idArtefato';
 
+    final String apiUrl = '$onlineApi/eventoAtualizar/$idArtefato';
     try {
-      final response = await Dio().post(apiUrl, data: body);
+      final response = await Dio().put(apiUrl, data: body);
 
       if (response.statusCode == 200) {
         print('evento atualizado com sucesso!');

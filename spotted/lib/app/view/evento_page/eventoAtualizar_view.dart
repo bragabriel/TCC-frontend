@@ -1,9 +1,12 @@
 import 'dart:io';
-
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:spotted/app/repository/evento_repository.dart';
+import 'package:spotted/app/view/evento_page/evento_view.dart';
 import '../../../service/user_provider.dart';
 import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
@@ -22,10 +25,11 @@ class EventoEditarPageState extends State<EventoEditarView> {
   final TextEditingController _tituloController = TextEditingController();
   final TextEditingController _descricaoController = TextEditingController();
   final TextEditingController _localizacaoController = TextEditingController();
+  final TextEditingController _telefoneController = TextEditingController();
   final EventoRepository _eventoRepository = EventoRepository();
   Response<dynamic>? response;
   Usuario? _usuario;
-  late File? imagem;
+  File? imagem;
 
   void _showSuccessMessage(BuildContext context) {
     const snackBar = SnackBar(
@@ -40,16 +44,17 @@ class EventoEditarPageState extends State<EventoEditarView> {
     _tituloController.dispose();
     _descricaoController.dispose();
     _localizacaoController.dispose();
+    _telefoneController.dispose();
     super.dispose();
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _descricaoController.text = widget.evento['descricaoArtefato'];
-  //   _tituloController.text = widget.evento['tituloArtefato'];
-  //   _localizacaoController.text = widget.evento['evento']['localizacaoFesta'];
-  // }
+  @override
+  void initState() {
+    super.initState();
+    _descricaoController.text = widget.evento['descricaoArtefato'];
+    _tituloController.text = widget.evento['tituloArtefato'];
+    _localizacaoController.text = widget.evento['localizacaoEvento'].toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +77,7 @@ class EventoEditarPageState extends State<EventoEditarView> {
     final body = {
       "descricaoArtefato": _descricaoController.text,
       "tituloArtefato": _tituloController.text,
-      "localizacaoFesta": _localizacaoController.text,
+      "localizacaoEvento": _localizacaoController.text,
     };
 
     return SingleChildScrollView(
@@ -93,6 +98,10 @@ class EventoEditarPageState extends State<EventoEditarView> {
             controller: _localizacaoController,
             decoration: const InputDecoration(labelText: 'Localização'),
           ),
+          //  TextFormField(
+          //   controller: _telefoneController,
+          //   decoration: const InputDecoration(labelText: 'Telefone'),
+          // ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 40,
@@ -106,32 +115,28 @@ class EventoEditarPageState extends State<EventoEditarView> {
           ElevatedButton(
             onPressed: () async {
               try {
-                Response<dynamic>? response = widget.evento['idArtefato'];
-                imagem ??= File('assets/images/imagem.png');
-                ImageHelper.uploadImagem(response, imagem);
+                final ByteData data =
+                   await rootBundle.load('assets/images/imagem.png');
+                final List<int> bytes = data.buffer.asUint8List();
+                final File tempImage =
+                    File('${(await getTemporaryDirectory()).path}/imagem.png');
+                await tempImage.writeAsBytes(bytes);
+                ImageHelper.updateImagem(widget.evento['idArtefato'], imagem);
                 await _eventoRepository.updateEvento(
                     body, widget.evento['idArtefato']);
                 _showSuccessMessage(context);
               } catch (e) {
                 print(e);
               }
-              await _buscareventos();
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const EventoPage()),
+              );
             },
             child: const Text('Atualizar'),
           )
         ]),
       ),
     );
-  }
-
-  Future<void> _buscareventos() async {
-    try {
-      await _eventoRepository.getAllEventos();
-      print("GetAlleventos com sucesso em eventoCadastrarView");
-      setState(() {});
-    } catch (e) {
-      print('Erro ao obter a lista de eventos em eventoCadastrarView: $e');
-    }
   }
 }

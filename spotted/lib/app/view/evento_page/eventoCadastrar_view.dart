@@ -1,4 +1,8 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+
 import '../../repository/usuario_repository.dart';
 import 'evento_view.dart';
 import 'package:dio/dio.dart';
@@ -106,57 +110,55 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
             decoration: const InputDecoration(labelText: 'Localização'),
           ),
           const SizedBox(height: 10),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 40,
+          Container(
             child: ElevatedButton(
-              onPressed: () async {
-                imagem = await ImageHelper.selecionarImagem();
-              },
+              onPressed: () async =>
+                  imagem = await ImageHelper.selecionarImagem(),
               child: const Text('Inserir imagem'),
             ),
           ),
-          const SizedBox(height: 10),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 40,
-            child: ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text("Confirmação de cadastro"),
-                      content: const Text("Deseja cadastrar o alimento?"),
-                      actions: [
-                        TextButton(
-                          onPressed: () async {
-                            await _cadastrar();
-                            imagem ??= File('assets/images/imagem.png');
-                            ImageHelper.uploadImagem(response!, imagem);
-                            await _buscarEventos();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const EventoPage(),
-                              ),
-                            );
-                          },
-                          child: const Text("Sim"),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text("Cancelar"),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: const Text('Cadastrar'),
-            ),
+          ElevatedButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text("Confirmação de cadastro"),
+                    content: const Text("Deseja cadastrar o evento?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () async {
+                          await _cadastrar();
+                          final ByteData data =
+                              await rootBundle.load('assets/images/imagem.png');
+                          final List<int> bytes = data.buffer.asUint8List();
+                          final File tempImage = File(
+                              '${(await getTemporaryDirectory()).path}/imagem.png');
+                          await tempImage.writeAsBytes(bytes);
+                          ImageHelper.uploadImagem(response!, tempImage);
+                          await _buscarEventos();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EventoPage(),
+                            ),
+                          );
+                          await tempImage.delete();
+                        },
+                        child: const Text("Sim"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("Cancelar"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: const Text('Cadastrar'),
           ),
         ],
       ),
