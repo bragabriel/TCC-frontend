@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spotted/app/view/profile_page/updatePerfil.dart';
+import 'package:spotted/app/view/usuario_page/usuarioAtualizar_view.dart';
 import '../../../service/user_provider.dart';
 import '../../model/usuario_model.dart';
 import '../../repository/usuario_repository.dart';

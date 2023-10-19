@@ -215,7 +215,7 @@ class _CadastroPageState extends State<CadastroPage> {
                               onPressed: () async {
                                 await _cadastrarUsuario();
                                 imagem ??= File('assets/images/imagem.png');
-                                ImageHelper.uploadImagem(response!, imagem);
+                                ImageHelper.uploadImagemUsuarioTeste(response!, imagem);
                                 //await _buscarEmpregos();
                                 Navigator.push(
                                   context,
@@ -290,12 +290,11 @@ class _CadastroPageState extends State<CadastroPage> {
 
     try {
       await UsuarioRepository().cadastrarUsuario(body);
-      _showSuccessMessage(context);
+      /* _showSuccessMessage(context); */
     } catch (e) {
       print('Erro ao cadastrar: $e');
-      _showErrorMessage(context);
+    /*   _showErrorMessage(context); */
     }
-    Navigator.of(context).pushReplacementNamed('/');
   }
 
   @override
@@ -314,13 +313,6 @@ class _CadastroPageState extends State<CadastroPage> {
       ),
       body: Stack(
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: Image.asset(
-              'assets/images/wallpaper.png',
-              fit: BoxFit.cover,
-            ),
-          ),
           Container(
             color: Colors.black.withOpacity(0.3),
           ),
