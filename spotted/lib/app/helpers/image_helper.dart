@@ -30,7 +30,6 @@ class ImageHelper {
     Response<dynamic>? idArtefato,
     imageFile,
   ) async {
-    print("\n\n\n\nid artefato::::::::::::");
     var client = http.Client();
     var uri = Uri.parse('$onlineApi/uploadImage/$idArtefato');
     var request = http.MultipartRequest("POST", uri);
@@ -41,13 +40,8 @@ class ImageHelper {
 
     request.files.add(multipartFile);
 
-    print("ta no upload de imagens");
-    print(multipartFile);
-    print(request);
-
     var response = await client.send(request);
     client.close();
-    print(response.statusCode);
 
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
@@ -68,40 +62,8 @@ class ImageHelper {
 
     request.files.add(multipartFile);
 
-    print("ta no upload de imagens");
-    print(multipartFile);
-    print(request);
-
     var response = await client.send(request);
     client.close();
-    print(response.statusCode);
-
-    response.stream.transform(utf8.decoder).listen((value) {
-      print(value);
-    });
-  }
-
-  static uploadImagemUsuario(
-    Response<dynamic>? idUsuario,
-    imageFile,
-  ) async {
-    var client = http.Client();
-    var uri = Uri.parse('$onlineApi/usuarioUploadImage/$idUsuario');
-    var request = http.MultipartRequest("POST", uri);
-
-    var multipartFile = http.MultipartFile(
-        'files', imageFile.openRead(), await imageFile.length(),
-        filename: basename(imageFile.path));
-
-    request.files.add(multipartFile);
-
-    print("user upload img");
-    print(multipartFile);
-    print(request);
-
-    var response = await client.send(request);
-    client.close();
-    print(response.statusCode);
 
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
@@ -109,38 +71,33 @@ class ImageHelper {
   }
 
   static Future<Map<String, dynamic>> uploadImagemUsuarioTeste(
-  Response<dynamic>? idUsuario,
-  imageFile,
-) async {
-  print('entrou aquai');
+    int idUsuario,
+    imageFile,
+  ) async {
+    var client = http.Client();
+    var uri = Uri.parse('$onlineApi/usuarioUploadImage/$idUsuario');
+    var request = http.MultipartRequest("POST", uri);
 
-  var client = http.Client();
-  var uri = Uri.parse('$onlineApi/usuarioUploadImage/$idUsuario');
-  var request = http.MultipartRequest("POST", uri);
+    var multipartFile = http.MultipartFile(
+      'files',
+      imageFile.openRead(),
+      await imageFile.length(),
+      filename: basename(imageFile.path),
+    );
 
-  var multipartFile = http.MultipartFile(
-    'files',
-    imageFile.openRead(),
-    await imageFile.length(),
-    filename: basename(imageFile.path),
-  );
+    request.files.add(multipartFile);
 
-  request.files.add(multipartFile);
+    var response = await client.send(request);
+    var responseBody =
+        await response.stream.toBytes(); // Read the response body as bytes
+    var responseString = utf8.decode(responseBody); // Convert bytes to a string
 
-  var response = await client.send(request);
-  var responseBody = await response.stream.toBytes(); // Read the response body as bytes
-  var responseString = utf8.decode(responseBody); // Convert bytes to a string
+    client.close();
 
-  client.close();
+    final jsonResponse = json.decode(responseString);
 
-  final jsonResponse = json.decode(responseString);
-
-  print(response.statusCode);
-  print(jsonResponse);
-
-  return jsonResponse; // Return the parsed JSON response
-}
-
+    return jsonResponse; // Return the parsed JSON response
+  }
 
   static Future<File?> selecionarImagem() async {
     final picker = ImagePicker();

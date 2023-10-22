@@ -32,7 +32,7 @@ class UsuarioRepository {
     }
   }
 
-  Future<void> cadastrarUsuario(Map<String, dynamic> body) async {
+  Future<Response<dynamic>> cadastrarUsuario(Map<String, dynamic> body) async {
     const String usuariosUrl = "$onlineApi/usuario";
 
     try {
@@ -40,7 +40,7 @@ class UsuarioRepository {
           data: body, options: Options(contentType: 'application/json'));
 
       if (response.statusCode == 201) {
-        print('Cadastro realizado com sucesso');
+        return response;
       } else {
         throw 'Erro ao cadastrar: ${response.statusCode}';
       }
@@ -48,7 +48,6 @@ class UsuarioRepository {
       throw 'Erro ao acessar a API em cadastrar usuario: $e';
     }
   }
-
 
   Future<Usuario> getUsuario(int id) async {
     final dio = Dio();
@@ -128,8 +127,7 @@ class UsuarioRepository {
       if (response.statusCode == 200) {
         print('Usuário atualizado com sucesso!');
       } else {
-        print(
-            'Erro ao atualizar o usuário - Status code: ${response.statusCode}');
+        print('Erro ao atualizar o usuário - Status code: ${response.statusCode}');
       }
     } catch (error) {
       print('Erro ao atualizar o usuário: $error');
