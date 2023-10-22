@@ -1,5 +1,9 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:spotted/app/model/usuario_model.dart';
 import 'package:spotted/app/view/login_page/login_view.dart';
 import '../../helpers/image_helper.dart';
 import 'package:flutter/material.dart';
@@ -213,16 +217,44 @@ class _CadastroPageState extends State<CadastroPage> {
                           actions: [
                             TextButton(
                               onPressed: () async {
-                                await _cadastrarUsuario();
-                                imagem ??= File('assets/images/imagem.png');
-                                ImageHelper.uploadImagem(response!, imagem);
-                                //await _buscarEmpregos();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoginPage(),
-                                  ),
-                                );
+                                try {
+                                  await _cadastrarUsuario();
+                                  final ByteData data = await rootBundle
+                                      .load('assets/images/imagem.png');
+                                  final List<int> bytes =
+                                      data.buffer.asUint8List();
+                                  final File tempImage = File(
+                                      '${(await getTemporaryDirectory()).path}/imagem.png');
+                                  await tempImage.writeAsBytes(bytes);
+                                  await ImageHelper.uploadImagemUsuarioTeste(
+                                      response!.data, imagem);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const LoginPage(),
+                                    ),
+                                  );
+                                } catch (e) {
+                                  // Trate a exceção aqui, você pode imprimir ou exibir uma mensagem de erro.
+                                  print('Erro: $e');
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: const Text("Erro"),
+                                        content: Text("Ocorreu um erro: $e"),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text("OK"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               child: const Text("Sim"),
                             ),
@@ -289,13 +321,11 @@ class _CadastroPageState extends State<CadastroPage> {
     };
 
     try {
-      await UsuarioRepository().cadastrarUsuario(body);
+      response = await UsuarioRepository().cadastrarUsuario(body);
       _showSuccessMessage(context);
     } catch (e) {
-      print('Erro ao cadastrar: $e');
       _showErrorMessage(context);
     }
-    Navigator.of(context).pushReplacementNamed('/');
   }
 
   @override
@@ -314,13 +344,6 @@ class _CadastroPageState extends State<CadastroPage> {
       ),
       body: Stack(
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: Image.asset(
-              'assets/images/wallpaper.png',
-              fit: BoxFit.cover,
-            ),
-          ),
           Container(
             color: Colors.black.withOpacity(0.3),
           ),

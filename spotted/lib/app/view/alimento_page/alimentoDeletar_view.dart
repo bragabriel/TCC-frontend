@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:spotted/app/view/profile_page/perfil_view.dart';
+import 'package:spotted/app/view/usuario_page/perfil_view.dart';
 import '../../constants/constants.dart';
 
 class AlimentoDeletarView {

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../../constants/constants.dart';
-import '../profile_page/perfil_view.dart';
+import '../usuario_page/perfil_view.dart';
 
 class EmpregoDeletarView {
   final dynamic emprego;
