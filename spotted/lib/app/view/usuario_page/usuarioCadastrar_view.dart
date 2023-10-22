@@ -322,9 +322,9 @@ class _CadastroPageState extends State<CadastroPage> {
 
     try {
       response = await UsuarioRepository().cadastrarUsuario(body);
+      _showSuccessMessage(context);
     } catch (e) {
-      print('Erro ao cadastrar: $e');
-      throw e; // Rejeite a exceção para que ela possa ser tratada em outro lugar, se necessário.
+      _showErrorMessage(context);
     }
   }
 
