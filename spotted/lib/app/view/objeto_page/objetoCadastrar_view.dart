@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:spotted/app/helpers/message_helper.dart';
 import '../../../service/user_provider.dart';
 import '../../helpers/image_helper.dart';
 import '../../helpers/usuario_helper.dart';
@@ -51,8 +52,10 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
     try {
       response = await ObjetoRepository().cadastrarObjeto(body);
       print('Cadastro realizado com sucesso em ObjetoCadastrarView');
+      showSuccessMessage(context);
     } catch (e) {
       print('Erro ao cadastrar: $e');
+      showErrorMessage(context);
     }
   }
 
@@ -109,64 +112,64 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
           ),
           TextField(
             controller: _localizacaoAchado,
-            decoration: const InputDecoration(labelText: 'Localização encontrado'),
+            decoration:
+                const InputDecoration(labelText: 'Localização encontrado'),
           ),
           TextField(
             controller: _localizacaoAtual,
             decoration: const InputDecoration(labelText: 'Localização atual'),
           ),
           const SizedBox(height: 10),
-         Container(
-              child: ElevatedButton(
-                onPressed: () async =>
-                    imagem = await ImageHelper.selecionarImagem(),
-                child: const Text('Inserir imagem'),
-              ),
+          Container(
+            child: ElevatedButton(
+              onPressed: () async =>
+                  imagem = await ImageHelper.selecionarImagem(),
+              child: const Text('Inserir imagem'),
             ),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text("Confirmação de cadastro"),
-                      content: const Text("Deseja cadastrar o objeto?"),
-                      actions: [
-                        TextButton(
-                          onPressed: () async {
-                            await _cadastrar();
-                            final ByteData data = await rootBundle
-                                .load('assets/images/imagem.png');
-                            final List<int> bytes = data.buffer.asUint8List();
-                            final File tempImage = File(
-                                '${(await getTemporaryDirectory()).path}/imagem.png');
-                            await tempImage.writeAsBytes(bytes);
-                            ImageHelper.uploadImagem(response!, tempImage);
-                            await _buscarObjetos();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ObjetoPage(),
-                              ),
-                            );
-                            await tempImage.delete();
-                          },
-                          child: const Text("Sim"),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text("Cancelar"),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: const Text('Cadastrar'),
-            ),
-          
+          ),
+          ElevatedButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text("Confirmação de cadastro"),
+                    content: const Text("Deseja cadastrar o objeto?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () async {
+                          await _cadastrar();
+                          final ByteData data =
+                              await rootBundle.load('assets/images/imagem.png');
+                          final List<int> bytes = data.buffer.asUint8List();
+                          final File tempImage = File(
+                              '${(await getTemporaryDirectory()).path}/imagem.png');
+                          await tempImage.writeAsBytes(bytes);
+                          ImageHelper.uploadImagem(response!, tempImage);
+                          await _buscarObjetos();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ObjetoPage(),
+                            ),
+                          );
+                          await tempImage.delete();
+                        },
+                        child: const Text("Sim"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("Cancelar"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: const Text('Cadastrar'),
+          ),
         ],
       ),
     );

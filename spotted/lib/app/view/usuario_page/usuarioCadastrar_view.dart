@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:spotted/app/helpers/message_helper.dart';
 import 'package:spotted/app/model/usuario_model.dart';
 import 'package:spotted/app/view/login_page/login_view.dart';
 import '../../helpers/image_helper.dart';
@@ -82,22 +83,6 @@ class _CadastroPageState extends State<CadastroPage> {
   void initState() {
     super.initState();
     controller.startCadastro();
-  }
-
-  void _showSuccessMessage(BuildContext context) {
-    const snackBar = SnackBar(
-      content: Text('Cadastro realizado com sucesso!'),
-      backgroundColor: Colors.green,
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
-
-  void _showErrorMessage(BuildContext context) {
-    const snackBar = SnackBar(
-      content: Text('Erro ao cadastrar. Por favor, tente novamente!'),
-      backgroundColor: Colors.red,
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   Widget _body() {
@@ -322,9 +307,9 @@ class _CadastroPageState extends State<CadastroPage> {
 
     try {
       response = await UsuarioRepository().cadastrarUsuario(body);
-      _showSuccessMessage(context);
+      showSuccessMessage(context);
     } catch (e) {
-      _showErrorMessage(context);
+      showErrorMessage(context);
     }
   }
 

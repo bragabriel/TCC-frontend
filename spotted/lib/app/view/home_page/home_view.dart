@@ -354,12 +354,12 @@ Widget buildUserDrawerHeader(BuildContext context, UserProvider userProvider) {
     if (imageUrl != null) {
       return CircleAvatar(
         backgroundImage: NetworkImage(imageUrl),
-        radius: 40, // Ajuste o tamanho conforme necessário
+        radius: 40, 
       );
     } else {
-      return CircleAvatar(
-        child: Icon(Icons.person, size: 40), // Ícone de usuário padrão
-        radius: 30, // Ajuste o tamanho conforme necessário
+      return const CircleAvatar(
+        child: Icon(Icons.person, size: 40), 
+        radius: 30, 
       );
     }
   }

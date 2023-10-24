@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:path/path.dart';
+import 'package:spotted/app/helpers/message_helper.dart';
 import 'package:spotted/app/model/alimento_model.dart';
 import 'dart:async';
 import '../constants/constants.dart';
@@ -38,6 +40,7 @@ class AlimentoRepository {
 
       if (response.statusCode == 201) {
         print('Cadastro realizado com sucesso');
+         
         return response;
       } else {
         print('Erro ao cadastrar: ${response.statusCode}');

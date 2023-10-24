@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:spotted/app/helpers/message_helper.dart';
 import 'package:spotted/app/view/emprego_page/emprego_view.dart';
 import '../../../service/user_provider.dart';
 import '../../helpers/image_helper.dart';
@@ -85,8 +86,10 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
     try {
       response = await EmpregoRepository().cadastrarEmprego(body);
       print('Cadastro realizado com sucesso em EmpregoCadastrar');
+      showSuccessMessage(context);
     } catch (e) {
       print('Erro ao cadastrar em EmpregoCadastraer: $e');
+      showErrorMessage(context);
     }
   }
 
@@ -216,57 +219,57 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
               border: OutlineInputBorder(),
             ),
           ),
-            const SizedBox(height: 16),
-            Container(
-              child: ElevatedButton(
-                onPressed: () async =>
-                    imagem = await ImageHelper.selecionarImagem(),
-                child: const Text('Inserir imagem'),
-              ),
+          const SizedBox(height: 16),
+          Container(
+            child: ElevatedButton(
+              onPressed: () async =>
+                  imagem = await ImageHelper.selecionarImagem(),
+              child: const Text('Inserir imagem'),
             ),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text("Confirmação de cadastro"),
-                      content: const Text("Deseja cadastrar o emprego?"),
-                      actions: [
-                        TextButton(
-                          onPressed: () async {
-                            await _cadastrar();
-                            final ByteData data = await rootBundle
-                                .load('assets/images/imagem.png');
-                            final List<int> bytes = data.buffer.asUint8List();
-                            final File tempImage = File(
-                                '${(await getTemporaryDirectory()).path}/imagem.png');
-                            await tempImage.writeAsBytes(bytes);
-                            ImageHelper.uploadImagem(response!, tempImage);
-                            await _buscarEmpregos();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const EmpregoPage(),
-                              ),
-                            );
-                            await tempImage.delete();
-                          },
-                          child: const Text("Sim"),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text("Cancelar"),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: const Text('Cadastrar'),
-            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text("Confirmação de cadastro"),
+                    content: const Text("Deseja cadastrar o emprego?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () async {
+                          await _cadastrar();
+                          final ByteData data =
+                              await rootBundle.load('assets/images/imagem.png');
+                          final List<int> bytes = data.buffer.asUint8List();
+                          final File tempImage = File(
+                              '${(await getTemporaryDirectory()).path}/imagem.png');
+                          await tempImage.writeAsBytes(bytes);
+                          ImageHelper.uploadImagem(response!, tempImage);
+                          await _buscarEmpregos();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EmpregoPage(),
+                            ),
+                          );
+                          await tempImage.delete();
+                        },
+                        child: const Text("Sim"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("Cancelar"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: const Text('Cadastrar'),
+          ),
         ],
       ),
     );

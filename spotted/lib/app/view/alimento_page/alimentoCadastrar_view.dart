@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:spotted/app/helpers/message_helper.dart';
 import 'alimento_view.dart';
 import '../../../service/user_provider.dart';
 import '../../helpers/image_helper.dart';
@@ -63,8 +64,10 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
     try {
       response = await AlimentoRepository().cadastrarAlimento(body);
       print('Cadastro realizado com sucesso em AlimentoCadastrar');
+      showSuccessMessage(context);
     } catch (e) {
       print('Erro ao cadastrar em AlimentoCadastrar: $e');
+      showErrorMessage(context);
     }
   }
 

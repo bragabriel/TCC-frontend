@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:spotted/app/helpers/message_helper.dart';
 import 'moradia_view.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
@@ -95,9 +96,10 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
     try {
       response = await MoradiaRepository().cadastrarMoradia(body);
       print('Cadastro realizado com sucesso em MoradiaCadastrarView');
-      print(response);
+      showSuccessMessage(context);
     } catch (e) {
       print('Erro ao cadastrar em MoradiaCadastrarView: $e');
+      showErrorMessage(context);
     }
   }
 
@@ -174,12 +176,14 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
           ),
           TextField(
             controller: _qtdMoradoresPermitidoController,
-            decoration: const InputDecoration(labelText: 'Qtd Moradores Permitido'),
+            decoration:
+                const InputDecoration(labelText: 'Qtd Moradores Permitido'),
             keyboardType: TextInputType.number,
           ),
           TextField(
             controller: _qtdMoradoresAtuaisController,
-            decoration: const InputDecoration(labelText: 'Qtd Moradores Atuais'),
+            decoration:
+                const InputDecoration(labelText: 'Qtd Moradores Atuais'),
             keyboardType: TextInputType.number,
           ),
           TextField(
@@ -189,7 +193,8 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
           ),
           TextField(
             controller: _precoAluguelPorPessoaController,
-            decoration: const InputDecoration(labelText: 'Preço Aluguel por Pessoa'),
+            decoration:
+                const InputDecoration(labelText: 'Preço Aluguel por Pessoa'),
             keyboardType: TextInputType.number,
           ),
           TextField(
@@ -202,55 +207,55 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
           ),
           const SizedBox(height: 10),
           Container(
-              child: ElevatedButton(
-                onPressed: () async =>
-                    imagem = await ImageHelper.selecionarImagem(),
-                child: const Text('Inserir imagem'),
-              ),
+            child: ElevatedButton(
+              onPressed: () async =>
+                  imagem = await ImageHelper.selecionarImagem(),
+              child: const Text('Inserir imagem'),
             ),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text("Confirmação de cadastro"),
-                      content: const Text("Deseja cadastrar a moradia?"),
-                      actions: [
-                        TextButton(
-                          onPressed: () async {
-                            await _cadastrar();
-                            final ByteData data = await rootBundle
-                                .load('assets/images/imagem.png');
-                            final List<int> bytes = data.buffer.asUint8List();
-                            final File tempImage = File(
-                                '${(await getTemporaryDirectory()).path}/imagem.png');
-                            await tempImage.writeAsBytes(bytes);
-                            ImageHelper.uploadImagem(response!, tempImage);
-                            await _buscarMoradia();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const MoradiaPage(),
-                              ),
-                            );
-                            await tempImage.delete();
-                          },
-                          child: const Text("Sim"),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text("Cancelar"),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: const Text('Cadastrar'),
-            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text("Confirmação de cadastro"),
+                    content: const Text("Deseja cadastrar a moradia?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () async {
+                          await _cadastrar();
+                          final ByteData data =
+                              await rootBundle.load('assets/images/imagem.png');
+                          final List<int> bytes = data.buffer.asUint8List();
+                          final File tempImage = File(
+                              '${(await getTemporaryDirectory()).path}/imagem.png');
+                          await tempImage.writeAsBytes(bytes);
+                          ImageHelper.uploadImagem(response!, tempImage);
+                          await _buscarMoradia();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MoradiaPage(),
+                            ),
+                          );
+                          await tempImage.delete();
+                        },
+                        child: const Text("Sim"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("Cancelar"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: const Text('Cadastrar'),
+          ),
         ],
       ),
     );

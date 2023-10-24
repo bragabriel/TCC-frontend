@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:spotted/app/helpers/message_helper.dart';
 
 import '../../repository/usuario_repository.dart';
 import 'evento_view.dart';
@@ -63,9 +64,11 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
     try {
       await EventoRepository().getAllEventos();
       print("GetAllEventos concluído com sucesso em EventoCadastrarView");
+      showSuccessMessage(context);
       setState(() {});
     } catch (e) {
       print('Erro ao obter a lista de eventos em eventoCadastrarView: $e');
+       showErrorMessage(context);
     }
   }
 
