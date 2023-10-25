@@ -108,22 +108,22 @@ class _CadastroPageState extends State<CadastroPage> {
                 padding: const EdgeInsets.all(12),
                 child: Column(
                   children: [
-                    _buildTextFormField('Usuário', (text) => user = text),
+                    _buildTextFormField('Usuário', (text) => user = text, false),
                     const SizedBox(height: 8),
-                    _buildTextFormField('Email', (text) => email = text),
+                    _buildTextFormField('Email', (text) => email = text, false),
                     const SizedBox(height: 8),
-                    _buildTextFormField('Senha', (text) => password = text),
-                    const SizedBox(height: 8),
-                    _buildTextFormField(
-                        'Confirme a senha', (text) => confirmPassword = text),
-                    const SizedBox(height: 8),
-                    const SizedBox(height: 8),
-                    _buildTextFormField('Nome', (text) => nome = text),
+                    _buildTextFormField('Senha', (text) => password = text, true),
                     const SizedBox(height: 8),
                     _buildTextFormField(
-                        'Sobrenome', (text) => sobrenome = text),
+                        'Confirme a senha', (text) => confirmPassword = text, true),
                     const SizedBox(height: 8),
-                    _buildTextFormField('Telefone', (text) => telefone = text),
+                    const SizedBox(height: 8),
+                    _buildTextFormField('Nome', (text) => nome = text, false),
+                    const SizedBox(height: 8),
+                    _buildTextFormField(
+                        'Sobrenome', (text) => sobrenome = text, false),
+                    const SizedBox(height: 8),
+                    _buildTextFormField('Telefone', (text) => telefone = text, false),
                   ],
                 ),
               ),
@@ -280,11 +280,12 @@ class _CadastroPageState extends State<CadastroPage> {
     );
   }
 
-  Widget _buildTextFormField(String label, Function(String) onChanged) {
+  Widget _buildTextFormField(String label, Function(String) onChanged, bool isPassword) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: TextFormField(
         onChanged: onChanged,
+        obscureText: isPassword, 
         decoration: InputDecoration(
           labelText: label,
           border: const OutlineInputBorder(),
