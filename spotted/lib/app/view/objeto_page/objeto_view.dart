@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/constants/constants.dart';
 import 'package:spotted/app/helpers/image_helper.dart';
 import 'objetoCadastrar_view.dart';
 import '../../controller/objeto_controller.dart';
@@ -216,7 +217,7 @@ class ObjetoPageState extends State<ObjetoPage> {
               child: GridTile(
                 key: ValueKey(filteredobjetoList[index].idArtefato),
                 footer: GridTileBar(
-                  backgroundColor: const Color.fromARGB(137, 107, 98, 98),
+                  backgroundColor: cardColor,
                   title: Text(
                     filteredobjetoList[index].tituloArtefato,
                     style: const TextStyle(

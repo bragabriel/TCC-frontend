@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/constants/constants.dart';
 import 'package:spotted/app/helpers/image_helper.dart';
 import 'package:spotted/app/view/alimento_page/alimento_view.dart';
 import '../../helpers/button_helper.dart';
@@ -36,10 +37,9 @@ class AlimentoDetails extends StatelessWidget {
                     SizedBox(
                       height: 300,
                       width: double.infinity,
-                      child:  
-                        Positioned.fill(
-                          child: ImageHelper.loadImage(listaDeImagens),
-                        ),
+                      child: Positioned.fill(
+                        child: ImageHelper.loadImage(listaDeImagens),
+                      ),
                     ),
                     Positioned(
                       bottom: 0,
@@ -53,7 +53,7 @@ class AlimentoDetails extends StatelessWidget {
                         ),
                         height: 100,
                         decoration: BoxDecoration(
-                          color: Colors.purple.withOpacity(.5),
+                          color: cardColor,
                         ),
                         alignment: Alignment.topLeft,
                         child: Column(

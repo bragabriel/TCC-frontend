@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/constants/constants.dart';
 import 'package:spotted/app/helpers/image_helper.dart';
 import 'package:spotted/app/repository/emprego_repository.dart';
 import 'package:spotted/app/model/emprego_model.dart';
@@ -272,7 +273,7 @@ class _EmpregoPageState extends State<EmpregoPage> {
                   child: GridTile(
                     key: ValueKey(listaFiltradaDeEmpregos[index].idArtefato),
                     footer: GridTileBar(
-                      backgroundColor: const Color.fromARGB(137, 107, 98, 98),
+                      backgroundColor: cardColor,
                       title: Text(
                         listaFiltradaDeEmpregos[index].tituloArtefato,
                         style: const TextStyle(

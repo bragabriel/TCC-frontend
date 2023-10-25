@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/constants/constants.dart';
 import '../../model/objeto_model.dart';
 import 'objeto_view.dart';
 
@@ -53,7 +54,8 @@ class _DetailsState extends State<ObjetoDetalheView> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => const ObjetoPage()),
+                                            builder: (context) =>
+                                                const ObjetoPage()),
                                       );
                                     },
                                     icon: const Icon(Icons.arrow_back_ios_new))
@@ -61,7 +63,7 @@ class _DetailsState extends State<ObjetoDetalheView> {
                             ),
                           ),
                         ),
-                      Align(
+                        Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(
                                 padding: const EdgeInsets.only(
@@ -69,7 +71,7 @@ class _DetailsState extends State<ObjetoDetalheView> {
                                 height: 110,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: Colors.blue.withOpacity(.2),
+                                  color: cardColor,
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
@@ -86,17 +88,18 @@ class _DetailsState extends State<ObjetoDetalheView> {
                                             style: const TextStyle(
                                               fontSize: 25,
                                               color: Colors.white,
-                                              fontWeight: FontWeight.bold,
+                                              fontWeight: FontWeight.w900,
                                               decoration: TextDecoration.none,
                                             ),
                                             softWrap: true,
                                           ),
                                           Text(
-                                           objeto.localizacaoAchadoObjeto as String,
+                                            objeto.localizacaoAchadoObjeto
+                                                as String,
                                             style: const TextStyle(
-                                              fontSize: 15,
+                                              fontSize: 20,
                                               color: Colors.white,
-                                              fontWeight: FontWeight.w300,
+                                              fontWeight: FontWeight.w800,
                                               decoration: TextDecoration.none,
                                             ),
                                             softWrap: true,
@@ -110,7 +113,6 @@ class _DetailsState extends State<ObjetoDetalheView> {
                     ),
                   ),
                 )),
-                 
             Expanded(
                 flex: 2,
                 child: Container(

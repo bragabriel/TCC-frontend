@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/constants/constants.dart';
 import 'package:spotted/app/view/transporte_page/transporte_view.dart';
 import '../../model/transporte_model.dart';
 
@@ -25,48 +26,49 @@ class _DetailsState extends State<TransporteDetalheView> {
         child: Column(
           children: [
             Expanded(
-              flex: 4,
-              child: ClipRRect(
-                child: SizedBox(
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: Image.network(
-                          listaDeImagens![0].url,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Container(
-                          margin: const EdgeInsets.only(
-                            top: 50,
-                            left: 20,
-                            right: 20,
-                          ),
-                          width: double.infinity,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton(
-                                color: Colors.blue,
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const TransportePage(),
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(Icons.arrow_back_ios_new),
-                              ),
-                            ],
+                flex: 4,
+                child: ClipRRect(
+                  child: SizedBox(
+                    height: double.infinity,
+                    width: double.infinity,
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: Image.network(
+                            listaDeImagens![0].url,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      ),
-                     Align(
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                              top: 50,
+                              left: 20,
+                              right: 20,
+                            ),
+                            width: double.infinity,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                  color: Colors.blue,
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TransportePage(),
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(Icons.arrow_back_ios_new),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(
                                 padding: const EdgeInsets.only(
@@ -74,7 +76,7 @@ class _DetailsState extends State<TransporteDetalheView> {
                                 height: 110,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: Colors.blue.withOpacity(.2),
+                                  color: cardColor,
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
@@ -91,22 +93,22 @@ class _DetailsState extends State<TransporteDetalheView> {
                                             style: const TextStyle(
                                               fontSize: 25,
                                               color: Colors.white,
-                                              fontWeight: FontWeight.bold,
+                                              fontWeight: FontWeight.w900,
                                               decoration: TextDecoration.none,
                                             ),
                                             softWrap: true,
                                           ),
                                           Text(
-                                           transporte.cidadeTransporte as String,
+                                            transporte.cidadeTransporte
+                                                as String,
                                             style: const TextStyle(
-                                              fontSize: 15,
+                                              fontSize: 20,
                                               color: Colors.white,
-                                              fontWeight: FontWeight.w300,
+                                              fontWeight: FontWeight.w800,
                                               decoration: TextDecoration.none,
                                             ),
                                             softWrap: true,
                                           ),
-                                          
                                         ],
                                       ),
                                     ),
@@ -116,12 +118,12 @@ class _DetailsState extends State<TransporteDetalheView> {
                     ),
                   ),
                 )),
-             
             Expanded(
               flex: 2,
               child: Container(
                 margin: const EdgeInsets.only(top: 5, left: 20, right: 30),
-                constraints: const BoxConstraints(maxHeight: double.infinity), // Set valid constraints
+                constraints: const BoxConstraints(
+                    maxHeight: double.infinity), // Set valid constraints
                 width: double.infinity,
                 child: SingleChildScrollView(
                   child: Column(

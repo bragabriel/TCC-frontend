@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/constants/constants.dart';
 import 'package:spotted/app/helpers/button_helper.dart';
 import 'package:spotted/app/helpers/image_helper.dart';
 import 'package:spotted/app/view/moradia_page/moradia_view.dart';
@@ -57,7 +58,7 @@ class _DetailsState extends State<MoradiaDetalheView> {
                         ),
                         height: 100,
                         decoration: BoxDecoration(
-                          color: Colors.purple.withOpacity(.5),
+                          color: cardColor,
                         ),
                         alignment: Alignment.topLeft,
                         child: Column(

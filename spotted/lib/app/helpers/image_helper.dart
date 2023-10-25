@@ -33,10 +33,12 @@ class ImageHelper {
     var client = http.Client();
     var uri = Uri.parse('$onlineApi/uploadImage/$idArtefato');
     var request = http.MultipartRequest("POST", uri);
+    print(idArtefato);
 
     var multipartFile = http.MultipartFile(
         'files', imageFile.openRead(), await imageFile.length(),
         filename: basename(imageFile.path));
+
 
     request.files.add(multipartFile);
 

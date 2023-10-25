@@ -231,7 +231,8 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
                           final File tempImage = File(
                               '${(await getTemporaryDirectory()).path}/imagem.png');
                           await tempImage.writeAsBytes(bytes);
-                          ImageHelper.uploadImagem(response!, tempImage);
+                          ImageHelper.uploadImagem(
+                              response!, imagem ?? tempImage);
                           await _buscarMoradia();
                           Navigator.push(
                             context,

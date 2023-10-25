@@ -192,7 +192,8 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
                           final File tempImage = File(
                               '${(await getTemporaryDirectory()).path}/imagem.png');
                           await tempImage.writeAsBytes(bytes);
-                          ImageHelper.uploadImagem(response!, tempImage);
+                          ImageHelper.uploadImagem(
+                              response!, imagem ?? tempImage);
                           await _buscarTransportes();
                           Navigator.push(
                             context,

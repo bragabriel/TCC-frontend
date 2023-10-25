@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/constants/constants.dart';
 import 'package:spotted/app/helpers/image_helper.dart';
 import 'package:spotted/app/repository/alimento_repository.dart';
 import 'package:spotted/app/model/alimento_model.dart';
@@ -319,7 +320,7 @@ class AlimentoPageState extends State<AlimentoPage> {
                 child: GridTile(
                   key: ValueKey(filteredFoodList[index].idArtefato),
                   footer: GridTileBar(
-                    backgroundColor: const Color.fromARGB(137, 107, 98, 98),
+                    backgroundColor:  cardColor,
                     title: Text(
                       filteredFoodList[index].tituloArtefato,
                       style: const TextStyle(

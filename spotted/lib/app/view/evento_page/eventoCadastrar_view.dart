@@ -68,7 +68,7 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
       setState(() {});
     } catch (e) {
       print('Erro ao obter a lista de eventos em eventoCadastrarView: $e');
-       showErrorMessage(context);
+      showErrorMessage(context);
     }
   }
 
@@ -138,7 +138,8 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
                           final File tempImage = File(
                               '${(await getTemporaryDirectory()).path}/imagem.png');
                           await tempImage.writeAsBytes(bytes);
-                          ImageHelper.uploadImagem(response!, tempImage);
+                          ImageHelper.uploadImagem(
+                              response!, imagem ?? tempImage);
                           await _buscarEventos();
                           Navigator.push(
                             context,

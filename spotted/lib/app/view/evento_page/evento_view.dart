@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/constants/constants.dart';
 import 'package:spotted/app/helpers/image_helper.dart';
 import '../../controller/alimento_controller.dart';
 import '../../model/evento_model.dart';
@@ -201,7 +202,7 @@ class EventoPageState extends State<EventoPage> {
                 child: GridTile(
                   key: ValueKey(filteredEventoList[index].idArtefato),
                   footer: GridTileBar(
-                    backgroundColor: const Color.fromARGB(137, 107, 98, 98),
+                    backgroundColor:  cardColor,
                     title: Text(
                       filteredEventoList[index].tituloArtefato,
                       style: const TextStyle(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/constants/constants.dart';
 import 'package:spotted/app/helpers/image_helper.dart';
 import 'package:spotted/app/view/transporte_page/transporteCadastrar_view.dart';
 import 'package:spotted/app/view/transporte_page/transporteDetalhe_view.dart';
@@ -178,7 +179,7 @@ class TransportePageState extends State<TransportePage> {
                   child: GridTile(
                     key: ValueKey(listaFiltradaDeTransportes[index].idArtefato),
                     footer: GridTileBar(
-                      backgroundColor: const Color.fromARGB(137, 107, 98, 98),
+                      backgroundColor: cardColor,
                       title: Text(
                         listaFiltradaDeTransportes[index].tituloArtefato,
                         style: const TextStyle(

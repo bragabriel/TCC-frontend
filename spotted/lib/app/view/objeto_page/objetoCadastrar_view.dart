@@ -145,7 +145,8 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
                           final File tempImage = File(
                               '${(await getTemporaryDirectory()).path}/imagem.png');
                           await tempImage.writeAsBytes(bytes);
-                          ImageHelper.uploadImagem(response!, tempImage);
+                          ImageHelper.uploadImagem(
+                              response!, imagem ?? tempImage);
                           await _buscarObjetos();
                           Navigator.push(
                             context,

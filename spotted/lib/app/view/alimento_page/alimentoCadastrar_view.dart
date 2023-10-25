@@ -216,7 +216,8 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                             final File tempImage = File(
                                 '${(await getTemporaryDirectory()).path}/imagem.png');
                             await tempImage.writeAsBytes(bytes);
-                            ImageHelper.uploadImagem(response!, tempImage);
+                            ImageHelper.uploadImagem(
+                                response!, imagem ?? tempImage);
                             await _buscarAlimentos();
                             Navigator.push(
                               context,

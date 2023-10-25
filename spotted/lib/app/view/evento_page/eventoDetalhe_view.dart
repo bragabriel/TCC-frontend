@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/app/constants/constants.dart';
 import 'package:spotted/app/helpers/button_helper.dart';
 import 'package:spotted/app/helpers/image_helper.dart';
 import '../../model/evento_model.dart';
@@ -57,7 +58,7 @@ class EmpregoDetalheState extends State<EventoDetalhesView> {
                         ),
                         height: 100,
                         decoration: BoxDecoration(
-                          color: Colors.purple.withOpacity(.5),
+                          color: cardColor,
                         ),
                         alignment: Alignment.topLeft,
                         child: Column(
