@@ -138,9 +138,8 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
   }
 
   Widget _cadastrarEmprego() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
+    return ListView(padding: const EdgeInsets.all(16), children: <Widget>[
+      Column(
         children: [
           TextField(
             controller: _tituloController,
@@ -224,9 +223,14 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
             child: ElevatedButton(
               onPressed: () async =>
                   imagem = await ImageHelper.selecionarImagem(),
-              child: const Text('Inserir imagem'),
+              child: const SizedBox(
+                width: double.infinity,
+                height: 48.0,
+                child: Center(child: Text('Inserir imagem')),
+              ),
             ),
           ),
+          const SizedBox(height: 10.0),
           ElevatedButton(
             onPressed: () {
               showDialog(
@@ -269,10 +273,14 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
                 },
               );
             },
-            child: const Text('Cadastrar'),
+            child: const SizedBox(
+              width: double.infinity,
+              height: 48.0,
+              child: Center(child: Text('Cadastrar')),
+            ),
           ),
         ],
       ),
-    );
+    ]);
   }
 }

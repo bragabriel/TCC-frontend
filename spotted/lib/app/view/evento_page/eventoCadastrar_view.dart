@@ -117,9 +117,14 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
             child: ElevatedButton(
               onPressed: () async =>
                   imagem = await ImageHelper.selecionarImagem(),
-              child: const Text('Inserir imagem'),
+              child: const SizedBox(
+                width: double.infinity,
+                height: 48.0,
+                child: Center(child: Text('Inserir imagem')),
+              ),
             ),
           ),
+          const SizedBox(height: 10.0),
           ElevatedButton(
             onPressed: () {
               showDialog(
@@ -162,7 +167,11 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
                 },
               );
             },
-            child: const Text('Cadastrar'),
+            child: const SizedBox(
+                width: double.infinity,
+                height: 48.0,
+                child: Center(child: Text('Cadastrar')),
+              ),
           ),
         ],
       ),
