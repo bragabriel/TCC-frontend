@@ -116,7 +116,9 @@ class UsuarioRepository {
       'nomeUsuario': nomeUsuario,
       'sobrenomeUsuario': sobrenomeUsuario,
     };
-
+    print(idUsuario);
+    print(nomeUsuario);
+    print(sobrenomeUsuario);
     final headers = {
       'Content-Type': 'application/json',
     };
@@ -126,8 +128,10 @@ class UsuarioRepository {
 
       if (response.statusCode == 200) {
         print('Usuário atualizado com sucesso!');
+        print(response.data);
       } else {
-        print('Erro ao atualizar o usuário - Status code: ${response.statusCode}');
+        print(
+            'Erro ao atualizar o usuário - Status code: ${response.statusCode}');
       }
     } catch (error) {
       print('Erro ao atualizar o usuário: $error');

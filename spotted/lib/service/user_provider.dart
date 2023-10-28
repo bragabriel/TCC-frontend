@@ -18,6 +18,7 @@ class UserProvider with ChangeNotifier {
     print('DentroDoProvider Update');
     _user = newUser;
     _isAuthenticated = true;
+
     notifyListeners();
   }
 

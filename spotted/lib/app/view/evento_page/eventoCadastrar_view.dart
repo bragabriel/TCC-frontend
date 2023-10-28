@@ -49,12 +49,12 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
     };
 
     try {
-      response = await EventoRepository().cadastrarEvento(body);
-      var responseUser =
-          await usuarioRepository.getUsuario(_usuario!.idUsuario);
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
-      userProvider.updateUserInfo(responseUser);
-      print('Cadastro realizado com sucesso em EventoCadastrarView');
+      await EventoRepository().cadastrarEvento(body);
+      // var responseUser =
+      //     await usuarioRepository.getUsuario(_usuario!.idUsuario);
+      // final userProvider = Provider.of<UserProvider>(context, listen: false);
+      // userProvider.updateUserInfo(responseUser);
+      // print('Cadastro realizado com sucesso em EventoCadastrarView');
     } catch (e) {
       print('Erro ao cadastrar em EventoCadastrarView: $e');
     }

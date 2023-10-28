@@ -14,20 +14,15 @@ class UpdateProfilePage extends StatefulWidget {
 }
 
 class _UpdateProfilePageState extends State<UpdateProfilePage> {
-  
   final UsuarioRepository usuarioRepository = UsuarioRepository();
   final TextEditingController nomeController = TextEditingController();
   final TextEditingController sobrenomeController = TextEditingController();
-  final TextEditingController telefoneController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     nomeController.text = widget.user.nomeUsuario;
     sobrenomeController.text = widget.user.sobrenomeUsuario;
-    telefoneController.text = widget.user.telefoneUsuario;
-    emailController.text = widget.user.emailUsuario;
   }
 
   void _showSuccessMessage(BuildContext context) {
@@ -42,7 +37,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Atualizar dados'),
+        title: const Text('Atualizar perfil'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -67,19 +62,22 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                     sobrenomeUsuario: sobrenomeController.text,
                     telefoneUsuario: widget.user.telefoneUsuario,
                     emailUsuario: widget.user.emailUsuario,
+                    url: widget.user.url,
                   );
 
                   try {
-                    await usuarioRepository.updateUserName(updatedUser.idUsuario, updatedUser.nomeUsuario, updatedUser.sobrenomeUsuario);
+                    await usuarioRepository.updateUserName(
+                        updatedUser.idUsuario,
+                        updatedUser.nomeUsuario,
+                        updatedUser.sobrenomeUsuario);
 
-                    final userProvider = Provider.of<UserProvider>(context, listen: false);
+                    final userProvider =
+                        Provider.of<UserProvider>(context, listen: false);
                     userProvider.updateUserInfo(updatedUser);
-
-                    _showSuccessMessage(context);
+                    _showSuccessMessage(context);      
                   } catch (e) {
                     print(e);
                   }
-
                   Navigator.pop(context);
                 },
                 child: const Text('Atualizar'),

@@ -1,8 +1,7 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spotted/app/repository/usuario_repository.dart';
 import 'package:spotted/app/view/usuario_page/usuarioAtualizar_view.dart';
-import 'package:spotted/app/widget/display_image_widget.dart';
 import '../../../service/user_provider.dart';
 import '../../model/usuario_model.dart';
 
@@ -15,19 +14,37 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   late IconButton _myIconButton;
+  bool _userDataLoaded = false;
+  final UsuarioRepository usuarioRepository = UsuarioRepository();
 
   @override
   void initState() {
     super.initState();
+    if (!_userDataLoaded) {
+      _loadUserData();
+    }
     _myIconButton = IconButton(
-      icon: Icon(Icons.list_alt, color: Colors.black, size: 50),
+      icon: Icon(Icons.list, color: Colors.black, size: 50),
       onPressed: () => Navigator.of(context).pushNamed('/meusprodutos'),
     );
   }
 
+  Future<void> _loadUserData() async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      var response =
+          await usuarioRepository.getUsuario(userProvider.user!.idUsuario);
+      userProvider.updateUserInfo(response);
+      setState(() {
+        _userDataLoaded = true;
+      });
+    } catch (e) {
+      print('Erro ao carregar o usuário: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Usuario? user = Usuario.empty();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Perfil'),
@@ -36,19 +53,16 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: const EdgeInsets.all(16.0),
         child: Consumer<UserProvider>(
           builder: (context, userProvider, _) {
-            return Stack(
-              children: [
-                Column(
+            return Center(
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
                   children: [
                     ClipOval(
-                      child: Container(
-                        width: 150,
-                        height: 150,
-                        child: Image.network(
-                          userProvider.user!.url!,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                      child: SizedBox(
+                          width: 150,
+                          height: 150,
+                          child: Image.network(userProvider.user!.url!)),
                     ),
                     const SizedBox(
                       height: 50,
@@ -57,15 +71,25 @@ class _ProfilePageState extends State<ProfilePage> {
                     buildUserInfoDisplay(
                       "${userProvider.user?.nomeUsuario} ${userProvider.user?.sobrenomeUsuario}",
                       'Nome completo',
-                      UpdateProfilePage(user),
                     ),
+                    const SizedBox(height: 30),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    UpdateProfilePage(userProvider.user!)),
+                          );
+                        },
+                        child: const Text('Alterar Informações'),
+                      ),
+                    ),
+                    _myIconButton,
                   ],
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: _myIconButton,
-                ),
-              ],
+              ),
             );
           },
         ),
@@ -73,10 +97,8 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildUserInfoDisplay(
-          String? getValue, String title, Widget editPage) =>
-      Padding(
-        padding: EdgeInsets.only(bottom: 10),
+  Widget buildUserInfoDisplay(String? getValue, String title) => Padding(
+        padding: const EdgeInsets.only(bottom: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -105,14 +127,9 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Row(
                 children: [
                   Expanded(
-                    child: TextButton(
-                      onPressed: () {
-                        navigateSecondPage(editPage);
-                      },
-                      child: Text(
-                        getValue!,
-                        style: TextStyle(fontSize: 16, height: 1.4),
-                      ),
+                    child: Text(
+                      getValue!,
+                      style: TextStyle(fontSize: 16, height: 1.4),
                     ),
                   ),
                 ],
@@ -121,13 +138,4 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       );
-
-  FutureOr onGoBack(dynamic value) {
-    setState(() {});
-  }
-
-  void navigateSecondPage(Widget editForm) {
-    Route route = MaterialPageRoute(builder: (context) => editForm);
-    Navigator.push(context, route).then(onGoBack);
-  }
 }

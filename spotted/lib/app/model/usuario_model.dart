@@ -4,7 +4,7 @@ class Usuario {
   String sobrenomeUsuario;
   String emailUsuario;
   String? senhaUsuario;
-  String telefoneUsuario;
+  String? telefoneUsuario;
   String? url;
   String? fileName;
   List<dynamic>? listaArtefatosReponse;
@@ -22,18 +22,16 @@ class Usuario {
         fileName = '',
         listaArtefatosReponse = List.empty();
 
-  Usuario({
-    required this.idUsuario,
-    required this.nomeUsuario,
-    required this.sobrenomeUsuario,
-    required this.emailUsuario,
-    this.senhaUsuario,
-    required this.telefoneUsuario,
-    this.url,
-    this.fileName,
-    this.listaArtefatosReponse
-  });
-
+  Usuario(
+      {required this.idUsuario,
+      required this.nomeUsuario,
+      required this.sobrenomeUsuario,
+      required this.emailUsuario,
+      this.senhaUsuario,
+      this.telefoneUsuario,
+      this.url,
+      this.fileName,
+      this.listaArtefatosReponse});
 
   Usuario copy({
     int? idUsuario,
@@ -48,16 +46,16 @@ class Usuario {
     List<dynamic>? listaArtefatosReponse,
   }) =>
       Usuario(
-        idUsuario: idUsuario ?? this.idUsuario,
-        nomeUsuario: nomeUsuario ?? this.nomeUsuario,
-        sobrenomeUsuario: sobrenomeUsuario ?? this.sobrenomeUsuario,
-        emailUsuario: emailUsuario ?? this.emailUsuario,
-        senhaUsuario: senhaUsuario ?? this.senhaUsuario,
-        telefoneUsuario: telefoneUsuario ?? this.telefoneUsuario,
-        url: url ?? this.url,
-        fileName: fileName ?? this.fileName,
-        listaArtefatosReponse: listaArtefatosReponse ?? this.listaArtefatosReponse
-      );
+          idUsuario: idUsuario ?? this.idUsuario,
+          nomeUsuario: nomeUsuario ?? this.nomeUsuario,
+          sobrenomeUsuario: sobrenomeUsuario ?? this.sobrenomeUsuario,
+          emailUsuario: emailUsuario ?? this.emailUsuario,
+          senhaUsuario: senhaUsuario ?? this.senhaUsuario,
+          telefoneUsuario: telefoneUsuario ?? this.telefoneUsuario,
+          url: url ?? this.url,
+          fileName: fileName ?? this.fileName,
+          listaArtefatosReponse:
+              listaArtefatosReponse ?? this.listaArtefatosReponse);
 
   static Usuario fromJson(Map<String, dynamic> json) => Usuario(
         idUsuario: json['idUsuario'],
