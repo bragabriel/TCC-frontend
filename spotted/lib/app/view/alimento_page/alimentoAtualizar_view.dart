@@ -72,8 +72,6 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
         widget.alimento['alimento']['precoAlimento'].toString();
     _marcaController.text =
         widget.alimento['alimento']['marcaAlimento'].toString();
-    _ofertaController.text =
-        widget.alimento['alimento']['ofertaAlimento'].toString();
     _tituloController.text = widget.alimento['tituloArtefato'];
   }
 

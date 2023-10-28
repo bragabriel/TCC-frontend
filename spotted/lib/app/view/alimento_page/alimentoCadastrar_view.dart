@@ -49,7 +49,7 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
       "marcaAlimento":
           _marcaController.text.isNotEmpty ? _marcaController.text : null,
       "ofertaAlimento":
-          _ofertaController.text.isNotEmpty ? _ofertaController.text : null,
+          _ofertaController.text.isNotEmpty ? _ofertaController.text : "Sem oferta disponível",
       "precoAlimento": _precoController.text.isNotEmpty
           ? double.parse(_precoController.text)
           : null,

@@ -53,7 +53,7 @@ class EventoEditarPageState extends State<EventoEditarView> {
     super.initState();
     _descricaoController.text = widget.evento['descricaoArtefato'];
     _tituloController.text = widget.evento['tituloArtefato'];
-    _localizacaoController.text = widget.evento['localizacaoEvento'].toString();
+    _localizacaoController.text = widget.evento['festa']['localizacaoEvento'].toString();
   }
 
   @override
