@@ -14,33 +14,15 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   late IconButton _myIconButton;
-  bool _userDataLoaded = false;
   final UsuarioRepository usuarioRepository = UsuarioRepository();
 
   @override
   void initState() {
     super.initState();
-    if (!_userDataLoaded) {
-      _loadUserData();
-    }
     _myIconButton = IconButton(
       icon: Icon(Icons.list, color: Colors.black, size: 50),
       onPressed: () => Navigator.of(context).pushNamed('/meusprodutos'),
     );
-  }
-
-  Future<void> _loadUserData() async {
-    try {
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
-      var response =
-          await usuarioRepository.getUsuario(userProvider.user!.idUsuario);
-      userProvider.updateUserInfo(response);
-      setState(() {
-        _userDataLoaded = true;
-      });
-    } catch (e) {
-      print('Erro ao carregar o usuário: $e');
-    }
   }
 
   @override
@@ -86,7 +68,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: const Text('Alterar Informações'),
                       ),
                     ),
-                    _myIconButton,
+                      Expanded(
+                  child: Container(), // Empty container to expand
+                ),
+                _myIconButton,
                   ],
                 ),
               ),
