@@ -161,14 +161,15 @@ class HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text('Página inicial'),
         ),
-        body: Consumer<UserProvider>(
-          builder: (context, userProvider, _) {
+        body: Consumer<UserProvider>(builder: (context, userProvider, _) {
           return Container(
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [gradientStartColor, gradientEndColor],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter)),
+              color: gradientStartColor,
+              // gradient: LinearGradient(
+              //     colors: [gradientStartColor, gradientEndColor],
+              //     begin: Alignment.topCenter,
+              //     end: Alignment.bottomCenter)
+            ),
             child: SafeArea(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,7 +184,7 @@ class HomePageState extends State<HomePage> {
                             style: const TextStyle(
                                 fontFamily: 'Avenir',
                                 fontSize: 40,
-                                color: Color(0xffffffff),
+                                color: Color.fromARGB(255, 0, 0, 0),
                                 fontWeight: FontWeight.w700),
                             textAlign: TextAlign.center,
                           ),
@@ -194,7 +195,7 @@ class HomePageState extends State<HomePage> {
                         style: TextStyle(
                             fontFamily: 'Avenir',
                             fontSize: 24,
-                            color: Color(0x7cdbf1ff),
+                            color: Color.fromARGB(255, 0, 0, 0),
                             fontWeight: FontWeight.w500),
                         textAlign: TextAlign.center,
                       ),
@@ -263,7 +264,9 @@ class HomePageState extends State<HomePage> {
                                                 height: 100,
                                               ),
                                               Text(
-                                                artefatos[index].name.toString(),
+                                                artefatos[index]
+                                                    .name
+                                                    .toString(),
                                                 style: const TextStyle(
                                                   fontSize: 21,
                                                   fontFamily: 'Avenir',
@@ -350,12 +353,12 @@ Widget buildUserDrawerHeader(BuildContext context, UserProvider userProvider) {
     if (imageUrl != null) {
       return CircleAvatar(
         backgroundImage: NetworkImage(imageUrl),
-        radius: 40, 
+        radius: 40,
       );
     } else {
       return const CircleAvatar(
         radius: 30,
-        child: Icon(Icons.person, size: 40), 
+        child: Icon(Icons.person, size: 40),
       );
     }
   }
@@ -366,4 +369,3 @@ Widget buildUserDrawerHeader(BuildContext context, UserProvider userProvider) {
     accountEmail: Text(user?.emailUsuario ?? ''),
   );
 }
-

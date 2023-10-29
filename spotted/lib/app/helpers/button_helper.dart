@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:spotted/app/constants/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ButtonHelper {
@@ -8,21 +9,20 @@ class ButtonHelper {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: Colors.deepPurple, // Set the border color
-          width: 2.0, // Set the border width
+          color: gradientStartColor,
+          width: 2.0,
         ),
-        color: Colors.deepPurple,
-
-        borderRadius: BorderRadius.circular(30.0), // Set border radius
+        color: gradientStartColor,
+        borderRadius: BorderRadius.circular(30.0),
       ),
       child: CupertinoButton(
         onPressed: () => _showActionSheet(textBase, dado),
         child: Text(
-        textButton,
-        style: const TextStyle(
-          color: Colors.white, 
+          textButton,
+          style: const TextStyle(
+            color: Colors.white,
+          ),
         ),
-      ),
       ),
     );
   }

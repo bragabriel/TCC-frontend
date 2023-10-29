@@ -14,8 +14,7 @@ class _DetailsViewState extends State<DetailsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Color.fromARGB(255, 89, 69, 119), // Defina a cor cinza aqui
+      backgroundColor: gradientStartColor, // Defina a cor cinza aqui
       body: SafeArea(
           child: Stack(
         children: <Widget>[

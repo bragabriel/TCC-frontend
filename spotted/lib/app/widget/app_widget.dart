@@ -23,7 +23,7 @@ class AppWidget extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           theme: ThemeData(
-            primarySwatch: Colors.deepPurple,
+            primarySwatch: Colors.orange,
             brightness: AppController.instance.isDartTheme
                 ? Brightness.dark
                 : Brightness.light,
@@ -32,7 +32,7 @@ class AppWidget extends StatelessWidget {
           routes: {
             '/splash': (context) => const SplashPage(),
             '/cadastro': (context) => const CadastroPage(),
-            '/perfil': (context) =>  const ProfilePage(),
+            '/perfil': (context) => const ProfilePage(),
             '/transporte': (context) => const TransportePage(),
             '/alimento': (context) => const AlimentoPage(),
             '/emprego': (context) => const EmpregoPage(),
