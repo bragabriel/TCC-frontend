@@ -170,7 +170,7 @@ class HomePageState extends State<HomePage> {
           return Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [gradientEndColor, gradientStartColor],
+                    colors: [gradientStartColor, gradientEndColor],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter)),
             child: SafeArea(

@@ -250,6 +250,7 @@ class _DetailsState extends State<EmpregoDetalheView> {
             ),
           ),
           Container(
+            padding: const EdgeInsets.all(15),
             alignment: Alignment.bottomCenter,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -258,19 +259,19 @@ class _DetailsState extends State<EmpregoDetalheView> {
                   Colors.blue,
                   Icons.message,
                   'https://api.whatsapp.com/send/?phone=55',
-                  emprego.contatoEmprego,
+                  emprego.contatoEmprego, "Contato"
                 ),
                 ButtonHelper.newButton(
                   Colors.blue,
                   Icons.maps_home_work,
                   '',
-                  emprego.linkVagaEmprego,
+                  emprego.linkVagaEmprego, "Link"
                 ),
                 ButtonHelper.newButton(
                   Colors.blue,
                   Icons.map_outlined,
                   'https://www.google.com/maps/place/',
-                  emprego.localizacaoEmprego,
+                  emprego.localizacaoEmprego, "Mapa"
                 ),
               ],
             ),

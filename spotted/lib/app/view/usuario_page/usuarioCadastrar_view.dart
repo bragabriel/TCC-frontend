@@ -220,7 +220,6 @@ class _CadastroPageState extends State<CadastroPage> {
                                     ),
                                   );
                                 } catch (e) {
-                                  // Trate a exceção aqui, você pode imprimir ou exibir uma mensagem de erro.
                                   print('Erro: $e');
                                   showDialog(
                                     context: context,

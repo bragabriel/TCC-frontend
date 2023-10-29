@@ -44,21 +44,21 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
         "idUsuario": _usuario?.idUsuario,
         "tipoArtefato": "ALIMENTO",
         "tituloArtefato":
-            _tituloController.text.isNotEmpty ? _tituloController.text : null,
+            _tituloController.text.isNotEmpty ? _tituloController.text : "Não disponível",
       },
       "marcaAlimento":
-          _marcaController.text.isNotEmpty ? _marcaController.text : null,
+          _marcaController.text.isNotEmpty ? _marcaController.text : "Sem marca",
       "ofertaAlimento":
           _ofertaController.text.isNotEmpty ? _ofertaController.text : "Sem oferta disponível",
       "precoAlimento": _precoController.text.isNotEmpty
           ? double.parse(_precoController.text)
-          : null,
+          : "0.0",
       "saborAlimento":
-          _saborController.text.isNotEmpty ? _saborController.text : null,
+          _saborController.text.isNotEmpty ? _saborController.text : "Sem sabor cadastrado",
       "tipoAlimento":
-          _tipoController.text.isNotEmpty ? _tipoController.text : null,
+          _tipoController.text.isNotEmpty ? _tipoController.text : "Indefinido",
       "unidadeAlimento":
-          _unidadeController.text.isNotEmpty ? _unidadeController.text : null,
+          _unidadeController.text.isNotEmpty ? _unidadeController.text : "Não identificado",
     };
 
     try {

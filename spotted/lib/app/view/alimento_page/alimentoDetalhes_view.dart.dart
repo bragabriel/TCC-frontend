@@ -161,12 +161,13 @@ class AlimentoDetails extends StatelessWidget {
             ),
           ),
           Container(
+            padding: const EdgeInsets.all(15),
             alignment: Alignment.bottomCenter,
             child: ButtonHelper.newButton(
               Colors.blue,
               Icons.message,
               'https://api.whatsapp.com/send/?phone=55',
-              alimento.telefoneUsuario,
+              alimento.telefoneUsuario, "Contato"
             ),
           ),
         ],

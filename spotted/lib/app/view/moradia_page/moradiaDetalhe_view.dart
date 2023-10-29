@@ -199,12 +199,13 @@ class _DetailsState extends State<MoradiaDetalheView> {
             ),
           ),
           Container(
+            padding: const EdgeInsets.all(15),
             alignment: Alignment.bottomCenter,
             child: ButtonHelper.newButton(
               Colors.blue,
               Icons.map_outlined,
               'https://www.google.com/maps/place/',
-              moradia.bairroMoradia,
+              moradia.bairroMoradia, "Mapa"
             ),
           ),
         ],
