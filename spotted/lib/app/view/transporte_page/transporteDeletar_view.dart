@@ -21,7 +21,7 @@ class TransporteDeletarView {
     _showSuccessMessage(context);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ProfilePage()),
+      MaterialPageRoute(builder: (context) => const ProfilePage()),
     );
   }
 

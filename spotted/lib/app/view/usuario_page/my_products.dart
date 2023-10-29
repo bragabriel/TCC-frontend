@@ -99,7 +99,7 @@ class _MyProductsPageState extends State<MyProductsPage> {
               return CupertinoContextMenu(
                 actions: <Widget>[
                   CupertinoContextMenuAction(
-                    child: Text('Editar'),
+                    child: const Text('Editar'),
                     onPressed: () {
                       switch (tipoArtefato) {
                         case "EMPREGO":
@@ -157,7 +157,7 @@ class _MyProductsPageState extends State<MyProductsPage> {
                     },
                   ),
                   CupertinoContextMenuAction(
-                    child: Text('Excluir'),
+                    child: const Text('Excluir'),
                     onPressed: () {
                       _showAlertDialog(context, tipoArtefato, produto);
                     },
@@ -193,8 +193,8 @@ class _MyProductsPageState extends State<MyProductsPage> {
     showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
-        title: Text("Cuidado"),
-        content: Text("Você realmente deseja excluir o produto?"),
+        title: const Text("Cuidado"),
+        content: const Text("Você realmente deseja excluir o produto?"),
         actions: <CupertinoDialogAction>[
           CupertinoDialogAction(
             isDefaultAction: true,

@@ -358,8 +358,8 @@ Widget buildUserDrawerHeader(BuildContext context, UserProvider userProvider) {
       );
     } else {
       return const CircleAvatar(
+        radius: 30,
         child: Icon(Icons.person, size: 40), 
-        radius: 30, 
       );
     }
   }

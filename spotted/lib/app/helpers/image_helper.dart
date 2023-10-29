@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,7 @@ class ImageHelper {
         if (error is NetworkImageLoadException) {
           return Image.asset('assets/images/imagem.png');
         }
-        return Center(
+        return const Center(
           child: Text('Error loading image'),
         );
       },

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
 import 'package:spotted/app/view/usuario_page/usuarioAtualizar_view.dart';
 import '../../../service/user_provider.dart';
-import '../../model/usuario_model.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -20,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     _myIconButton = IconButton(
-      icon: Icon(Icons.list, color: Colors.black, size: 50),
+      icon: const Icon(Icons.list, color: Colors.black, size: 50),
       onPressed: () => Navigator.of(context).pushNamed('/meusprodutos'),
     );
   }
@@ -89,19 +88,19 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
                 color: Colors.grey,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 1,
             ),
             Container(
               width: 350,
               height: 40,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
                     color: Colors.grey,
@@ -114,7 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Expanded(
                     child: Text(
                       getValue!,
-                      style: TextStyle(fontSize: 16, height: 1.4),
+                      style: const TextStyle(fontSize: 16, height: 1.4),
                     ),
                   ),
                 ],

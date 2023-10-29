@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/constants/constants.dart';
-import 'package:spotted/app/helpers/button_helper.dart';
 import 'package:spotted/app/helpers/image_helper.dart';
 import '../../model/objeto_model.dart';
 import 'objeto_view.dart';

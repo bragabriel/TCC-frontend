@@ -1,10 +1,8 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:spotted/app/helpers/message_helper.dart';
-import 'package:spotted/app/model/usuario_model.dart';
 import 'package:spotted/app/view/login_page/login_view.dart';
 import '../../helpers/image_helper.dart';
 import 'package:flutter/material.dart';
