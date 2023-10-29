@@ -9,8 +9,6 @@ import '../../model/descriptions_model.dart';
 import '../../model/usuario_model.dart';
 import 'details_view.dart';
 
-const String apiKey = '3dbbf29cb72728e380272e98fe760b41';
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -94,7 +92,7 @@ class HomePageState extends State<HomePage> {
             ListTile(
               leading: const Icon(Icons.food_bank),
               title: const Text('Alimentos'),
-              subtitle: const Text('Ai que fominha! 🍽'),
+              subtitle: const Text('Opções de comidas 🍕'),
               onTap: () {
                 Navigator.of(context).pushNamed('/alimento');
               },
@@ -102,7 +100,7 @@ class HomePageState extends State<HomePage> {
             ListTile(
               leading: const Icon(Icons.business_center),
               title: const Text('Empregos'),
-              subtitle: const Text('Bora trabalhar? 💻'),
+              subtitle: const Text('Buscar trabalhos 💻'),
               onTap: () {
                 Navigator.of(context).pushNamed('/emprego');
               },
@@ -110,7 +108,7 @@ class HomePageState extends State<HomePage> {
             ListTile(
               leading: const Icon(Icons.local_bar),
               title: const Text('Eventos'),
-              subtitle: const Text('Partiu pra revoada? 🎉'),
+              subtitle: const Text('Festas e eventos 🎉'),
               onTap: () {
                 Navigator.of(context).pushNamed('/evento');
               },
@@ -118,7 +116,7 @@ class HomePageState extends State<HomePage> {
             ListTile(
               leading: const Icon(Icons.home_filled),
               title: const Text('Moradia'),
-              subtitle: const Text('Lugares próximos ao campus? 🔑'),
+              subtitle: const Text('Um novo lar? 🔑'),
               onTap: () {
                 Navigator.of(context).pushNamed('/moradia');
               },
@@ -134,7 +132,7 @@ class HomePageState extends State<HomePage> {
             ListTile(
               leading: const Icon(Icons.car_crash),
               title: const Text('Transportes'),
-              subtitle: const Text('Naves para ir à faculdade? 🚗'),
+              subtitle: const Text('Carona, ônibus ou van? 🚗'),
               onTap: () {
                 Navigator.of(context).pushNamed('/transporte');
               },
@@ -142,7 +140,7 @@ class HomePageState extends State<HomePage> {
             ListTile(
               leading: const Icon(Icons.verified_user),
               title: const Text('Perfil'),
-              subtitle: const Text('Deixa eu ver meus dados 😍'),
+              subtitle: const Text('Dados e cadastros 👤'),
               onTap: () {
                 Navigator.of(context).pushNamed('/perfil');
               },

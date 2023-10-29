@@ -153,7 +153,7 @@ class AlimentoPageState extends State<AlimentoPage> {
 
         final meetsOfferCriteria = _showAllItems
             ? true // Sem filtro de oferta, mostrar todos os itens
-            : food.ofertaAlimento?.isNotEmpty ??
+            : food.ofertaAlimento == "Sem oferta disponível" ??
                 false; // Exibir apenas os itens em oferta
 
         final meetsTypeCriteria =
