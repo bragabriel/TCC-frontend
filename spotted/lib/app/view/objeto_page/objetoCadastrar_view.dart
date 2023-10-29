@@ -42,11 +42,11 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
       "contatoObjeto":
-          _contatoController.text.isNotEmpty ? _contatoController.text : null,
+          _contatoController.text.isNotEmpty ? _contatoController.text : "Contato não cadastrado",
       "localizacaoAchadoObjeto":
-          _localizacaoAchado.text.isNotEmpty ? _localizacaoAchado.text : null,
+          _localizacaoAchado.text.isNotEmpty ? _localizacaoAchado.text : "Localização não informada",
       "localizacaoAtualObjeto":
-          _localizacaoAtual.text.isNotEmpty ? _localizacaoAtual.text : null,
+          _localizacaoAtual.text.isNotEmpty ? _localizacaoAtual.text : "Localização não informada",
     };
 
     try {
@@ -124,7 +124,7 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
             child: ElevatedButton(
               onPressed: () async =>
                   imagem = await ImageHelper.selecionarImagem(),
-               child: const SizedBox(
+              child: const SizedBox(
                 width: double.infinity,
                 height: 48.0,
                 child: Center(child: Text('Inserir imagem')),
@@ -134,51 +134,73 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
           const SizedBox(height: 10.0),
           ElevatedButton(
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text("Confirmação de cadastro"),
-                    content: const Text("Deseja cadastrar o objeto?"),
-                    actions: [
-                      TextButton(
-                        onPressed: () async {
-                          await _cadastrar();
-                          final ByteData data =
-                              await rootBundle.load('assets/images/imagem.png');
-                          final List<int> bytes = data.buffer.asUint8List();
-                          final File tempImage = File(
-                              '${(await getTemporaryDirectory()).path}/imagem.png');
-                          await tempImage.writeAsBytes(bytes);
-                          ImageHelper.uploadImagem(
-                              response!, imagem ?? tempImage);
-                          await _buscarObjetos();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ObjetoPage(),
-                            ),
-                          );
-                          await tempImage.delete();
-                        },
-                        child: const Text("Sim"),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text("Cancelar"),
-                      ),
-                    ],
-                  );
-                },
-              );
+              if (_descricaoController.text.isEmpty ||
+                  _tituloController.text.isEmpty) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Erro"),
+                      content:
+                          const Text("Por favor, preencha todos os campos."),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Ok"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Confirmação de cadastro"),
+                      content: const Text("Deseja cadastrar o objeto?"),
+                      actions: [
+                        TextButton(
+                          onPressed: () async {
+                            await _cadastrar();
+                            final ByteData data = await rootBundle
+                                .load('assets/images/imagem.png');
+                            final List<int> bytes = data.buffer.asUint8List();
+                            final File tempImage = File(
+                                '${(await getTemporaryDirectory()).path}/imagem.png');
+                            await tempImage.writeAsBytes(bytes);
+                            ImageHelper.uploadImagem(
+                                response!, imagem ?? tempImage);
+                            await _buscarObjetos();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ObjetoPage(),
+                              ),
+                            );
+                            await tempImage.delete();
+                          },
+                          child: const Text("Sim"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Cancelar"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             },
-             child: const SizedBox(
-                width: double.infinity,
-                height: 48.0,
-                child: Center(child: Text('Cadastrar')),
-              ),
+            child: const SizedBox(
+              width: double.infinity,
+              height: 48.0,
+              child: Center(child: Text('Cadastrar')),
+            ),
           ),
         ],
       ),

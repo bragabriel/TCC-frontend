@@ -54,28 +54,28 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
       "cidadeTransporte":
-          _cidadeTransporte.text.isNotEmpty ? _cidadeTransporte.text : null,
+          _cidadeTransporte.text.isNotEmpty ? _cidadeTransporte.text : "Cidade indisponível",
       "informacoesCondutorTransporte":
           _informacoesCondutorTransporteController.text.isNotEmpty
               ? _informacoesCondutorTransporteController.text
-              : null,
+              : "Informações não cadastradas",
       "informacoesVeiculoTransporte":
           _informacoesVeiculoTransporteController.text.isNotEmpty
               ? _informacoesVeiculoTransporteController.text
-              : null,
+              : "Sem informações do veículo",
       "periodoTransporte":
-          _periodoTransporte.text.isNotEmpty ? _periodoTransporte.text : null,
+          _periodoTransporte.text.isNotEmpty ? _periodoTransporte.text : "Não informado",
       "qtdAssentosPreenchidosTransporte":
           _qtdAssentosPreenchidosTransporteController.text.isNotEmpty
               ? int.parse(_qtdAssentosPreenchidosTransporteController.text)
-              : null,
+              : "Sem informações cadastradas",
       "qtdAssentosTotalTransporte":
           _qtdAssentosTotalTransporteController.text.isNotEmpty
               ? int.parse(_qtdAssentosTotalTransporteController.text)
-              : null,
+              : "Sem informações cadastradas",
       "valorTransporte": _valorTransporteController.text.isNotEmpty
           ? double.parse(_valorTransporteController.text)
-          : null,
+          : "Sem valor cadastrado",
     };
 
     try {
@@ -181,45 +181,67 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
           const SizedBox(height: 10.0),
           ElevatedButton(
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text("Confirmação de cadastro"),
-                    content: const Text("Deseja cadastrar o transporte?"),
-                    actions: [
-                      TextButton(
-                        onPressed: () async {
-                          await _cadastrar();
-                          final ByteData data =
-                              await rootBundle.load('assets/images/imagem.png');
-                          final List<int> bytes = data.buffer.asUint8List();
-                          final File tempImage = File(
-                              '${(await getTemporaryDirectory()).path}/imagem.png');
-                          await tempImage.writeAsBytes(bytes);
-                          ImageHelper.uploadImagem(
-                              response!, imagem ?? tempImage);
-                          await _buscarTransportes();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const TransportePage(),
-                            ),
-                          );
-                          await tempImage.delete();
-                        },
-                        child: const Text("Sim"),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text("Cancelar"),
-                      ),
-                    ],
-                  );
-                },
-              );
+              if (_descricaoController.text.isEmpty ||
+                  _tituloController.text.isEmpty) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Erro"),
+                      content:
+                          const Text("Por favor, preencha todos os campos."),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Ok"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Confirmação de cadastro"),
+                      content: const Text("Deseja cadastrar o transporte?"),
+                      actions: [
+                        TextButton(
+                          onPressed: () async {
+                            await _cadastrar();
+                            final ByteData data = await rootBundle
+                                .load('assets/images/imagem.png');
+                            final List<int> bytes = data.buffer.asUint8List();
+                            final File tempImage = File(
+                                '${(await getTemporaryDirectory()).path}/imagem.png');
+                            await tempImage.writeAsBytes(bytes);
+                            ImageHelper.uploadImagem(
+                                response!, imagem ?? tempImage);
+                            await _buscarTransportes();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const TransportePage(),
+                              ),
+                            );
+                            await tempImage.delete();
+                          },
+                          child: const Text("Sim"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Cancelar"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             },
             child: const SizedBox(
               width: double.infinity,

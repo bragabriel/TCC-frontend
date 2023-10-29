@@ -59,36 +59,36 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
       },
       "bairroMoradia": _bairroMoradiaController.text.isNotEmpty
           ? _bairroMoradiaController.text
-          : null,
+          : "Bairro não cadastrado",
       "cepMoradia": _cepMoradiaController.text.isNotEmpty
           ? _cepMoradiaController.text
-          : null,
+          : "CEP não informado",
       "cidadeMoradia": _cidadeMoradiaController.text.isNotEmpty
           ? _cidadeMoradiaController.text
-          : null,
+          : "Cidade não cadastrada",
       "estadoMoradia": _estadoMoradiaController.text.isNotEmpty
           ? _estadoMoradiaController.text
-          : null,
+          : "Estado não cadastrado",
       "precoAluguelPorPessoaMoradia":
           _precoAluguelPorPessoaController.text.isNotEmpty
               ? num.parse(_precoAluguelPorPessoaController.text)
-              : null,
+              : "Preço não informado",
       "precoAluguelTotalMoradia": _precoAluguelTotalController.text.isNotEmpty
           ? num.parse(_precoAluguelTotalController.text)
-          : null,
+          : "Preço não informado",
       "qtdMoradoresAtuaisMoradia": _qtdMoradoresAtuaisController.text.isNotEmpty
           ? num.parse(_qtdMoradoresAtuaisController.text)
-          : null,
+          : "Não informado",
       "qtdMoradoresPermitidoMoradia":
           _qtdMoradoresPermitidoController.text.isNotEmpty
               ? num.parse(_qtdMoradoresPermitidoController.text)
-              : null,
+              : "Não informado",
       "vagaGaragemMoradia": _vagaGaragemController.text.isNotEmpty
           ? _vagaGaragemController.text
-          : null,
+          : "Não informado",
       "animaisEstimacaoMoradia": _animaisEstimacaoController.text.isNotEmpty
           ? _animaisEstimacaoController.text
-          : null,
+          : "Não informado",
       "contatoMoradia":
           _contatoController.text.isNotEmpty ? _contatoController.text : null,
     };
@@ -210,7 +210,7 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
             child: ElevatedButton(
               onPressed: () async =>
                   imagem = await ImageHelper.selecionarImagem(),
-              child:  const SizedBox(
+              child: const SizedBox(
                 width: double.infinity,
                 height: 48.0,
                 child: Center(child: Text('Inserir imagem')),
@@ -220,51 +220,73 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
           const SizedBox(height: 10.0),
           ElevatedButton(
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text("Confirmação de cadastro"),
-                    content: const Text("Deseja cadastrar a moradia?"),
-                    actions: [
-                      TextButton(
-                        onPressed: () async {
-                          await _cadastrar();
-                          final ByteData data =
-                              await rootBundle.load('assets/images/imagem.png');
-                          final List<int> bytes = data.buffer.asUint8List();
-                          final File tempImage = File(
-                              '${(await getTemporaryDirectory()).path}/imagem.png');
-                          await tempImage.writeAsBytes(bytes);
-                          ImageHelper.uploadImagem(
-                              response!, imagem ?? tempImage);
-                          await _buscarMoradia();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MoradiaPage(),
-                            ),
-                          );
-                          await tempImage.delete();
-                        },
-                        child: const Text("Sim"),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text("Cancelar"),
-                      ),
-                    ],
-                  );
-                },
-              );
+              if (_descricaoController.text.isEmpty ||
+                  _tituloController.text.isEmpty) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Erro"),
+                      content:
+                          const Text("Por favor, preencha todos os campos."),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Ok"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Confirmação de cadastro"),
+                      content: const Text("Deseja cadastrar a moradia?"),
+                      actions: [
+                        TextButton(
+                          onPressed: () async {
+                            await _cadastrar();
+                            final ByteData data = await rootBundle
+                                .load('assets/images/imagem.png');
+                            final List<int> bytes = data.buffer.asUint8List();
+                            final File tempImage = File(
+                                '${(await getTemporaryDirectory()).path}/imagem.png');
+                            await tempImage.writeAsBytes(bytes);
+                            ImageHelper.uploadImagem(
+                                response!, imagem ?? tempImage);
+                            await _buscarMoradia();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const MoradiaPage(),
+                              ),
+                            );
+                            await tempImage.delete();
+                          },
+                          child: const Text("Sim"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Cancelar"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             },
-             child: const SizedBox(
-                width: double.infinity,
-                height: 48.0,
-                child: Center(child: Text('Cadastrar')),
-              ),
+            child: const SizedBox(
+              width: double.infinity,
+              height: 48.0,
+              child: Center(child: Text('Cadastrar')),
+            ),
           ),
         ],
       ),

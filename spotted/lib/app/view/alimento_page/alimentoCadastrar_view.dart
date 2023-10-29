@@ -43,22 +43,27 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
             : null,
         "idUsuario": _usuario?.idUsuario,
         "tipoArtefato": "ALIMENTO",
-        "tituloArtefato":
-            _tituloController.text.isNotEmpty ? _tituloController.text : "Não disponível",
+        "tituloArtefato": _tituloController.text.isNotEmpty
+            ? _tituloController.text
+            : null,
       },
-      "marcaAlimento":
-          _marcaController.text.isNotEmpty ? _marcaController.text : "Sem marca",
-      "ofertaAlimento":
-          _ofertaController.text.isNotEmpty ? _ofertaController.text : "Sem oferta disponível",
+      "marcaAlimento": _marcaController.text.isNotEmpty
+          ? _marcaController.text
+          : "Sem marca",
+      "ofertaAlimento": _ofertaController.text.isNotEmpty
+          ? _ofertaController.text
+          : "Sem oferta disponível",
       "precoAlimento": _precoController.text.isNotEmpty
           ? double.parse(_precoController.text)
           : "0.0",
-      "saborAlimento":
-          _saborController.text.isNotEmpty ? _saborController.text : "Sem sabor cadastrado",
+      "saborAlimento": _saborController.text.isNotEmpty
+          ? _saborController.text
+          : "Sem sabor cadastrado",
       "tipoAlimento":
           _tipoController.text.isNotEmpty ? _tipoController.text : "Indefinido",
-      "unidadeAlimento":
-          _unidadeController.text.isNotEmpty ? _unidadeController.text : "Não identificado",
+      "unidadeAlimento": _unidadeController.text.isNotEmpty
+          ? _unidadeController.text
+          : "Não identificado",
     };
 
     try {
@@ -110,96 +115,112 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
   }
 
   Widget _cadastroAlimento() {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 16),
-            TextField(
-              controller: _tituloController,
-              decoration: const InputDecoration(labelText: 'Título'),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _descricaoController,
-              decoration: const InputDecoration(labelText: 'Descrição'),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _marcaController,
-              decoration: const InputDecoration(labelText: 'Marca'),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _saborController,
-              decoration: const InputDecoration(labelText: 'Sabor'),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _precoController,
-              decoration: const InputDecoration(labelText: 'Preço'),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _ofertaController,
-              decoration: const InputDecoration(labelText: 'Oferta'),
-            ),
-            const SizedBox(height: 16),
-            DropdownButtonFormField<String>(
-              value: _selectedUnidade,
-              onChanged: (String? newValue) {
-                setState(() {
-                  _selectedUnidade = newValue ?? '';
-                });
-              },
-              items: <String>['PEDAÇO', 'UNIDADE', 'PACK', 'OUTRO']
-                  .map<DropdownMenuItem<String>>((String value) {
-                _unidadeController.text = value;
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
+    return ListView(padding: const EdgeInsets.all(16), children: <Widget>[
+      Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        const SizedBox(height: 16),
+        TextField(
+          controller: _tituloController,
+          decoration: const InputDecoration(labelText: 'Título'),
+        ),
+        const SizedBox(height: 16),
+        TextField(
+          controller: _descricaoController,
+          decoration: const InputDecoration(labelText: 'Descrição'),
+        ),
+        const SizedBox(height: 16),
+        TextField(
+          controller: _marcaController,
+          decoration: const InputDecoration(labelText: 'Marca'),
+        ),
+        const SizedBox(height: 16),
+        TextField(
+          controller: _saborController,
+          decoration: const InputDecoration(labelText: 'Sabor'),
+        ),
+        const SizedBox(height: 16),
+        TextField(
+          controller: _precoController,
+          decoration: const InputDecoration(labelText: 'Preço'),
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        ),
+        const SizedBox(height: 16),
+        TextField(
+          controller: _ofertaController,
+          decoration: const InputDecoration(labelText: 'Oferta'),
+        ),
+        const SizedBox(height: 16),
+        DropdownButtonFormField<String>(
+          value: _selectedUnidade,
+          onChanged: (String? newValue) {
+            setState(() {
+              _selectedUnidade = newValue ?? '';
+            });
+          },
+          items: <String>['PEDAÇO', 'UNIDADE', 'PACK', 'OUTRO']
+              .map<DropdownMenuItem<String>>((String value) {
+            _unidadeController.text = value;
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          decoration: const InputDecoration(
+            labelText: 'Unidade',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 16),
+        DropdownButtonFormField<String>(
+          value: _selectedTipo,
+          onChanged: (String? newValue) {
+            setState(() {
+              _selectedTipo = newValue ?? '';
+            });
+          },
+          items: <String>['DOCE', 'SALGADO', 'OUTRO']
+              .map<DropdownMenuItem<String>>((String value) {
+            _tipoController.text = value;
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          decoration: const InputDecoration(
+            labelText: 'Tipo',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Container(
+          child: ElevatedButton(
+            onPressed: () async =>
+                imagem = await ImageHelper.selecionarImagem(),
+            child: const Text('Inserir imagem'),
+          ),
+        ),
+        ElevatedButton(
+            onPressed: () {
+              if (_descricaoController.text.isEmpty ||
+                  _tituloController.text.isEmpty) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Erro"),
+                      content:
+                          const Text("Por favor, preencha todos os campos."),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Ok"),
+                        ),
+                      ],
+                    );
+                  },
                 );
-              }).toList(),
-              decoration: const InputDecoration(
-                labelText: 'Unidade',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 16),
-            DropdownButtonFormField<String>(
-              value: _selectedTipo,
-              onChanged: (String? newValue) {
-                setState(() {
-                  _selectedTipo = newValue ?? '';
-                });
-              },
-              items: <String>['DOCE', 'SALGADO', 'OUTRO']
-                  .map<DropdownMenuItem<String>>((String value) {
-                _tipoController.text = value;
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              decoration: const InputDecoration(
-                labelText: 'Tipo',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Container(
-              child: ElevatedButton(
-                onPressed: () async =>
-                    imagem = await ImageHelper.selecionarImagem(),
-                child: const Text('Inserir imagem'),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
+              } else {
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -239,12 +260,10 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
                     );
                   },
                 );
-              },
-              child: const Text('Cadastrar'),
-            ),
-          ],
-        ),
-      ],
-    );
+              }
+            },
+            child: const Text('Cadastrar'))
+      ])
+    ]);
   }
 }

@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:spotted/app/helpers/message_helper.dart';
-
 import '../../repository/usuario_repository.dart';
 import 'evento_view.dart';
 import 'package:dio/dio.dart';
@@ -45,16 +44,11 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
       },
       "localizacaoFesta": _localizacaoController.text.isNotEmpty
           ? _localizacaoController.text
-          : null,
+          : "Localização não informada",
     };
 
     try {
       await EventoRepository().cadastrarEvento(body);
-      // var responseUser =
-      //     await usuarioRepository.getUsuario(_usuario!.idUsuario);
-      // final userProvider = Provider.of<UserProvider>(context, listen: false);
-      // userProvider.updateUserInfo(responseUser);
-      // print('Cadastro realizado com sucesso em EventoCadastrarView');
     } catch (e) {
       print('Erro ao cadastrar em EventoCadastrarView: $e');
     }
@@ -127,51 +121,73 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
           const SizedBox(height: 10.0),
           ElevatedButton(
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text("Confirmação de cadastro"),
-                    content: const Text("Deseja cadastrar o evento?"),
-                    actions: [
-                      TextButton(
-                        onPressed: () async {
-                          await _cadastrar();
-                          final ByteData data =
-                              await rootBundle.load('assets/images/imagem.png');
-                          final List<int> bytes = data.buffer.asUint8List();
-                          final File tempImage = File(
-                              '${(await getTemporaryDirectory()).path}/imagem.png');
-                          await tempImage.writeAsBytes(bytes);
-                          ImageHelper.uploadImagem(
-                              response!, imagem ?? tempImage);
-                          await _buscarEventos();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const EventoPage(),
-                            ),
-                          );
-                          await tempImage.delete();
-                        },
-                        child: const Text("Sim"),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text("Cancelar"),
-                      ),
-                    ],
-                  );
-                },
-              );
+              if (_descricaoController.text.isEmpty ||
+                  _tituloController.text.isEmpty) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Erro"),
+                      content:
+                          const Text("Por favor, preencha todos os campos."),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Ok"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Confirmação de cadastro"),
+                      content: const Text("Deseja cadastrar o evento?"),
+                      actions: [
+                        TextButton(
+                          onPressed: () async {
+                            await _cadastrar();
+                            final ByteData data = await rootBundle
+                                .load('assets/images/imagem.png');
+                            final List<int> bytes = data.buffer.asUint8List();
+                            final File tempImage = File(
+                                '${(await getTemporaryDirectory()).path}/imagem.png');
+                            await tempImage.writeAsBytes(bytes);
+                            ImageHelper.uploadImagem(
+                                response!, imagem ?? tempImage);
+                            await _buscarEventos();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const EventoPage(),
+                              ),
+                            );
+                            await tempImage.delete();
+                          },
+                          child: const Text("Sim"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Cancelar"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             },
             child: const SizedBox(
-                width: double.infinity,
-                height: 48.0,
-                child: Center(child: Text('Cadastrar')),
-              ),
+              width: double.infinity,
+              height: 48.0,
+              child: Center(child: Text('Cadastrar')),
+            ),
           ),
         ],
       ),

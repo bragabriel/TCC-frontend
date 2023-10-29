@@ -53,18 +53,18 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
       },
       "beneficiosEmprego": _beneficiosController.text.isNotEmpty
           ? _beneficiosController.text
-          : null,
+          : "Sem benefícios",
       "cidadeEmprego":
-          _cidadeController.text.isNotEmpty ? _cidadeController.text : null,
+          _cidadeController.text.isNotEmpty ? _cidadeController.text : "Não informado",
       "contatoEmprego":
           _contatoController.text.isNotEmpty ? _contatoController.text : null,
       "empresaEmprego":
-          _empresaController.text.isNotEmpty ? _empresaController.text : null,
+          _empresaController.text.isNotEmpty ? _empresaController.text : "Não informado",
       "estadoEmprego":
-          _estadoController.text.isNotEmpty ? _estadoController.text : null,
+          _estadoController.text.isNotEmpty ? _estadoController.text : "Não informado",
       "experienciaEmprego": _experienciaController.text.isNotEmpty
           ? _experienciaController.text
-          : null,
+          : "Não informado",
       "linkVagaEmprego":
           _linkVagaController.text.isNotEmpty ? _linkVagaController.text : null,
       "localizacaoEmprego": _localizacaoController.text.isNotEmpty
@@ -72,12 +72,12 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
           : null,
       "presencialEmprego": _presencialController.text.isNotEmpty
           ? _presencialController.text
-          : null,
+          : "Não informado",
       "requisitosEmprego": _requisitosController.text.isNotEmpty
           ? _requisitosController.text
-          : null,
+          : "Não informado",
       "tipovagaEmprego":
-          _tipoVagaController.text.isNotEmpty ? _tipoVagaController.text : null,
+          _tipoVagaController.text.isNotEmpty ? _tipoVagaController.text : "Não informado",
       "salarioEmprego": _salarioController.text.isNotEmpty
           ? double.parse(_salarioController.text)
           : null,
@@ -233,45 +233,67 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
           const SizedBox(height: 10.0),
           ElevatedButton(
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text("Confirmação de cadastro"),
-                    content: const Text("Deseja cadastrar o emprego?"),
-                    actions: [
-                      TextButton(
-                        onPressed: () async {
-                          await _cadastrar();
-                          final ByteData data =
-                              await rootBundle.load('assets/images/imagem.png');
-                          final List<int> bytes = data.buffer.asUint8List();
-                          final File tempImage = File(
-                              '${(await getTemporaryDirectory()).path}/imagem.png');
-                          await tempImage.writeAsBytes(bytes);
-                          ImageHelper.uploadImagem(
-                              response!, imagem ?? tempImage);
-                          await _buscarEmpregos();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const EmpregoPage(),
-                            ),
-                          );
-                          await tempImage.delete();
-                        },
-                        child: const Text("Sim"),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text("Cancelar"),
-                      ),
-                    ],
-                  );
-                },
-              );
+              if (_descricaoController.text.isEmpty ||
+                  _tituloController.text.isEmpty) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Erro"),
+                      content:
+                          const Text("Por favor, preencha todos os campos."),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Ok"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Confirmação de cadastro"),
+                      content: const Text("Deseja cadastrar o emprego?"),
+                      actions: [
+                        TextButton(
+                          onPressed: () async {
+                            await _cadastrar();
+                            final ByteData data = await rootBundle
+                                .load('assets/images/imagem.png');
+                            final List<int> bytes = data.buffer.asUint8List();
+                            final File tempImage = File(
+                                '${(await getTemporaryDirectory()).path}/imagem.png');
+                            await tempImage.writeAsBytes(bytes);
+                            ImageHelper.uploadImagem(
+                                response!, imagem ?? tempImage);
+                            await _buscarEmpregos();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const EmpregoPage(),
+                              ),
+                            );
+                            await tempImage.delete();
+                          },
+                          child: const Text("Sim"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Cancelar"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             },
             child: const SizedBox(
               width: double.infinity,
