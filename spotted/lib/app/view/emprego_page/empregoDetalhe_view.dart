@@ -243,6 +243,27 @@ class _DetailsState extends State<EmpregoDetalheView> {
                           ),
                         ],
                       ),
+                       Text(
+                        "Entrar em contato com",
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(.6),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                       Text(
+                        emprego.contatoEmprego.toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      )
                     ],
                   ),
                 ),
@@ -255,17 +276,10 @@ class _DetailsState extends State<EmpregoDetalheView> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ButtonHelper.newButton(
-                    Colors.blue,
-                    Icons.message,
-                    'https://api.whatsapp.com/send/?phone=55',
-                    emprego.contatoEmprego,
-                    "Contato"),
-                ButtonHelper.newButton(Colors.blue, Icons.maps_home_work, '',
+                ButtonHelper.newButton(Colors.blue, '',
                     emprego.linkVagaEmprego, "Link"),
                 ButtonHelper.newButton(
                     Colors.blue,
-                    Icons.map_outlined,
                     'https://www.google.com/maps/place/',
                     emprego.localizacaoEmprego,
                     "Mapa"),

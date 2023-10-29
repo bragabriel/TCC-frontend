@@ -14,7 +14,6 @@ class _DetailsViewState extends State<DetailsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: gradientStartColor, // Defina a cor cinza aqui
       body: SafeArea(
           child: Stack(
         children: <Widget>[
@@ -31,24 +30,6 @@ class _DetailsViewState extends State<DetailsView> {
                   Text(
                     widget.artefatoInfo!.name.toString(),
                     style: TextStyle(
-                        shadows: const [
-                          Shadow(
-                              // bottomLeft
-                              offset: Offset(-1.0, -1.5),
-                              color: Color.fromARGB(255, 53, 43, 159)),
-                          Shadow(
-                              // bottomRight
-                              offset: Offset(1.0, -1.5),
-                              color: Color.fromARGB(255, 53, 43, 159)),
-                          Shadow(
-                              // topRight
-                              offset: Offset(1.0, 1.5),
-                              color: Color.fromARGB(255, 53, 43, 159)),
-                          Shadow(
-                              // topLeft
-                              offset: Offset(-1.0, 1.5),
-                              color: Color.fromARGB(255, 53, 43, 159)),
-                        ],
                         fontSize: 55,
                         fontFamily: 'Avenir',
                         color: primaryTextColor,
@@ -80,6 +61,7 @@ class _DetailsViewState extends State<DetailsView> {
                   const SizedBox(
                     height: 30,
                   ),
+
                 ],
               ),
             ),
@@ -88,11 +70,7 @@ class _DetailsViewState extends State<DetailsView> {
               right: -70,
               child: Hero(
                   tag: widget.artefatoInfo!.position,
-                  child: Image.asset(
-                    widget.artefatoInfo!.iconImage.toString(),
-                    width: 340,
-                    height: 340,
-                  ))),
+                  child: Image.asset(widget.artefatoInfo!.iconImage.toString(), width: 340, height: 340,))),
           Positioned(
               top: 60,
               left: 32,
@@ -107,10 +85,7 @@ class _DetailsViewState extends State<DetailsView> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: const Icon(
-                Icons.arrow_back_ios_new,
-                color: Colors.white,
-              ))
+              icon: const Icon(Icons.arrow_back_ios_new))
         ],
       )),
     );

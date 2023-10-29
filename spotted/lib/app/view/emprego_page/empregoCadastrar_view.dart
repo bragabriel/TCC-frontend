@@ -65,10 +65,10 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
           ? _experienciaController.text
           : "Não informado",
       "linkVagaEmprego":
-          _linkVagaController.text.isNotEmpty ? _linkVagaController.text : null,
+          _linkVagaController.text.isNotEmpty ? _linkVagaController.text :  "Não informado",
       "localizacaoEmprego": _localizacaoController.text.isNotEmpty
           ? _localizacaoController.text
-          : null,
+          :  "Não informado",
       "presencialEmprego": _presencialController.text.isNotEmpty
           ? _presencialController.text
           : "Não informado",

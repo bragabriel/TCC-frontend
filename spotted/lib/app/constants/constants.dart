@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const String onlineApi = "https://036f-45-172-240-49.ngrok-free.app/api";
 
-Color primaryTextColor = const Color(0xFF414C6B);
+Color primaryTextColor = Color.fromARGB(255, 63, 63, 63);
 Color secondaryTextColor = const Color.fromARGB(255, 162, 228, 151);
 Color titleTextColor = Colors.white;
 Color contentTextColor = const Color(0xff868686);

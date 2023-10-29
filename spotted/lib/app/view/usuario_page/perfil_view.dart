@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spotted/app/helpers/button_helper.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
 import 'package:spotted/app/view/usuario_page/usuarioAtualizar_view.dart';
 import '../../../service/user_provider.dart';
@@ -12,15 +13,15 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late IconButton _myIconButton;
+  late FilledButton _myIconButton;
   final UsuarioRepository usuarioRepository = UsuarioRepository();
 
   @override
   void initState() {
     super.initState();
-    _myIconButton = IconButton(
-      icon: const Icon(Icons.list, color: Colors.black, size: 50),
+    _myIconButton = FilledButton(
       onPressed: () => Navigator.of(context).pushNamed('/meusprodutos'),
+      child: const Text("Meus produtos"),
     );
   }
 
@@ -65,12 +66,18 @@ class _ProfilePageState extends State<ProfilePage> {
                           );
                         },
                         child: const Text('Alterar Informações'),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                20),
+                          ),
+                        ),
                       ),
                     ),
-                      Expanded(
-                  child: Container(), // Empty container to expand
-                ),
-                _myIconButton,
+                    Expanded(
+                      child: Container(),
+                    ),
+                    _myIconButton,
                   ],
                 ),
               ),

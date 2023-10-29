@@ -203,7 +203,6 @@ class _DetailsState extends State<MoradiaDetalheView> {
             alignment: Alignment.bottomCenter,
             child: ButtonHelper.newButton(
                 Colors.blue,
-                Icons.map_outlined,
                 'https://www.google.com/maps/place/',
                 moradia.bairroMoradia,
                 "Mapa"),

@@ -127,7 +127,6 @@ class EmpregoDetalheState extends State<EventoDetalhesView> {
             alignment: Alignment.bottomCenter,
             child: ButtonHelper.newButton(
                 Colors.blue,
-                Icons.map_outlined,
                 'https://www.google.com/maps/place/',
                 evento.localizacaoFesta,
                 "Mapa"),

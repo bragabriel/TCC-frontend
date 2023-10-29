@@ -152,9 +152,9 @@ class HomePageState extends State<HomePage> {
               title: const Text('Logout'),
               subtitle: const Text('Finalizar sessão'),
               onTap: () async {
-                                Provider.of<UserProvider>(context, listen: false).logout();
+                Provider.of<UserProvider>(context, listen: false).logout();
                 PrefsService.logout();
-                                Navigator.of(context)
+                Navigator.of(context)
                     .pushNamedAndRemoveUntil('/', (route) => true);
               },
             )
@@ -172,23 +172,19 @@ class HomePageState extends State<HomePage> {
                     end: Alignment.bottomCenter)),
             child: SafeArea(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(32),
                     child: Column(children: <Widget>[
-                      Row(
-                        children: [
-                          Text(
-                            "Olá ${userProvider.user?.nomeUsuario ?? 'Usuário não logado'}!",
-                            style: const TextStyle(
-                                fontFamily: 'Avenir',
-                                fontSize: 40,
-                                color: Color(0xffffffff),
-                                fontWeight: FontWeight.w700),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+                      Text(
+                        "Olá ${userProvider.user?.nomeUsuario ?? 'Usuário não logado'}!",
+                        style: const TextStyle(
+                            fontFamily: 'Avenir',
+                            fontSize: 40,
+                            color: Color(0xffffffff),
+                            fontWeight: FontWeight.w700),
+                        textAlign: TextAlign.center,
                       ),
                       const Text(
                         'O que oferecemos:',
@@ -353,12 +349,12 @@ Widget buildUserDrawerHeader(BuildContext context, UserProvider userProvider) {
     if (imageUrl != null) {
       return CircleAvatar(
         backgroundImage: NetworkImage(imageUrl),
-        radius: 40, 
+        radius: 40,
       );
     } else {
       return const CircleAvatar(
-                radius: 30, 
-child: Icon(Icons.person, size: 40),
+        radius: 30,
+        child: Icon(Icons.person, size: 40),
       );
     }
   }
