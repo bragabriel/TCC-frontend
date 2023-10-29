@@ -9,6 +9,8 @@ import '../../model/descriptions_model.dart';
 import '../../model/usuario_model.dart';
 import 'details_view.dart';
 
+const String apiKey = '3dbbf29cb72728e380272e98fe760b41';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -150,9 +152,9 @@ class HomePageState extends State<HomePage> {
               title: const Text('Logout'),
               subtitle: const Text('Finalizar sessão'),
               onTap: () async {
-                Provider.of<UserProvider>(context, listen: false).logout();
+                                Provider.of<UserProvider>(context, listen: false).logout();
                 PrefsService.logout();
-                Navigator.of(context)
+                                Navigator.of(context)
                     .pushNamedAndRemoveUntil('/', (route) => true);
               },
             )
@@ -164,12 +166,10 @@ class HomePageState extends State<HomePage> {
         body: Consumer<UserProvider>(builder: (context, userProvider, _) {
           return Container(
             decoration: BoxDecoration(
-              color: gradientStartColor,
-              // gradient: LinearGradient(
-              //     colors: [gradientStartColor, gradientEndColor],
-              //     begin: Alignment.topCenter,
-              //     end: Alignment.bottomCenter)
-            ),
+                gradient: LinearGradient(
+                    colors: [gradientEndColor, gradientStartColor],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter)),
             child: SafeArea(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,7 +184,7 @@ class HomePageState extends State<HomePage> {
                             style: const TextStyle(
                                 fontFamily: 'Avenir',
                                 fontSize: 40,
-                                color: Color.fromARGB(255, 0, 0, 0),
+                                color: Color(0xffffffff),
                                 fontWeight: FontWeight.w700),
                             textAlign: TextAlign.center,
                           ),
@@ -195,7 +195,7 @@ class HomePageState extends State<HomePage> {
                         style: TextStyle(
                             fontFamily: 'Avenir',
                             fontSize: 24,
-                            color: Color.fromARGB(255, 0, 0, 0),
+                            color: Color(0x7cdbf1ff),
                             fontWeight: FontWeight.w500),
                         textAlign: TextAlign.center,
                       ),
@@ -353,12 +353,12 @@ Widget buildUserDrawerHeader(BuildContext context, UserProvider userProvider) {
     if (imageUrl != null) {
       return CircleAvatar(
         backgroundImage: NetworkImage(imageUrl),
-        radius: 40,
+        radius: 40, 
       );
     } else {
       return const CircleAvatar(
-        radius: 30,
-        child: Icon(Icons.person, size: 40),
+                radius: 30, 
+child: Icon(Icons.person, size: 40),
       );
     }
   }
