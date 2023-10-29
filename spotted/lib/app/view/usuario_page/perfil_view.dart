@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spotted/app/helpers/button_helper.dart';
 import 'package:spotted/app/repository/usuario_repository.dart';
 import 'package:spotted/app/view/usuario_page/usuarioAtualizar_view.dart';
 import '../../../service/user_provider.dart';
@@ -65,13 +64,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                     UpdateProfilePage(userProvider.user!)),
                           );
                         },
-                        child: const Text('Alterar Informações'),
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 20),
                           ),
                         ),
+                        child: const Text('Alterar Informações'),
                       ),
                     ),
                     Expanded(
