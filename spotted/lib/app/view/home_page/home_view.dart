@@ -150,10 +150,8 @@ class HomePageState extends State<HomePage> {
               title: const Text('Logout'),
               subtitle: const Text('Finalizar sessão'),
               onTap: () async {
-                // Limpar as informações do usuário no UserProvider
                 Provider.of<UserProvider>(context, listen: false).logout();
                 PrefsService.logout();
-                // Redirecionar o usuário para a tela de login
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil('/', (route) => true);
               },
@@ -208,7 +206,7 @@ class HomePageState extends State<HomePage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 32.0),
                         child: Swiper(
-                          itemCount: planets.length,
+                          itemCount: artefatos.length,
                           fade: 0.3,
                           itemWidth: MediaQuery.of(context).size.width - 2 * 69,
                           layout: SwiperLayout.STACK,
@@ -228,7 +226,7 @@ class HomePageState extends State<HomePage> {
                                       opaque: false,
                                       pageBuilder: (context, a, b) =>
                                           DetailsView(
-                                        artefatoInfo: planets[index],
+                                        artefatoInfo: artefatos[index],
                                       ),
                                       transitionsBuilder: (BuildContext context,
                                           Animation<double> animation,
@@ -265,7 +263,7 @@ class HomePageState extends State<HomePage> {
                                                 height: 100,
                                               ),
                                               Text(
-                                                planets[index].name.toString(),
+                                                artefatos[index].name.toString(),
                                                 style: const TextStyle(
                                                   fontSize: 21,
                                                   fontFamily: 'Avenir',
@@ -309,9 +307,9 @@ class HomePageState extends State<HomePage> {
                                   Align(
                                     alignment: Alignment.topCenter,
                                     child: Hero(
-                                      tag: planets[index].position,
+                                      tag: artefatos[index].position,
                                       child: Image.asset(
-                                        planets[index].iconImage.toString(),
+                                        artefatos[index].iconImage.toString(),
                                         width: 200,
                                         height: 200,
                                       ),

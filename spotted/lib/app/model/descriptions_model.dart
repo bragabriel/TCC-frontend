@@ -11,7 +11,7 @@ class ArtefatoInfo {
   });
 }
 
-List<ArtefatoInfo> planets = [
+List<ArtefatoInfo> artefatos = [
   ArtefatoInfo(
     1,
     name: 'Alimentos',
