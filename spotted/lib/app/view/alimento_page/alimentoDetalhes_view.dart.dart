@@ -74,7 +74,7 @@ class AlimentoDetails extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w600,
                                 decoration: TextDecoration.none,
                               ),
                               softWrap: true,
@@ -164,11 +164,11 @@ class AlimentoDetails extends StatelessWidget {
             padding: const EdgeInsets.all(15),
             alignment: Alignment.bottomCenter,
             child: ButtonHelper.newButton(
-              Colors.blue,
-              Icons.message,
-              'https://api.whatsapp.com/send/?phone=55',
-              alimento.telefoneUsuario, "Contato"
-            ),
+                Colors.blue,
+                Icons.message,
+                'https://api.whatsapp.com/send/?phone=55',
+                alimento.telefoneUsuario,
+                "Contato"),
           ),
         ],
       ),

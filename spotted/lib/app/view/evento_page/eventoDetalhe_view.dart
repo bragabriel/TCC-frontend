@@ -79,7 +79,7 @@ class EmpregoDetalheState extends State<EventoDetalhesView> {
                               style: const TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w600,
                                 decoration: TextDecoration.none,
                               ),
                               softWrap: true,
@@ -126,11 +126,11 @@ class EmpregoDetalheState extends State<EventoDetalhesView> {
             padding: const EdgeInsets.all(15),
             alignment: Alignment.bottomCenter,
             child: ButtonHelper.newButton(
-              Colors.blue,
-              Icons.map_outlined,
-              'https://www.google.com/maps/place/',
-              evento.localizacaoFesta, "Mapa"
-            ),
+                Colors.blue,
+                Icons.map_outlined,
+                'https://www.google.com/maps/place/',
+                evento.localizacaoFesta,
+                "Mapa"),
           ),
         ],
       ),

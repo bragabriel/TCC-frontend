@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/app/constants/constants.dart';
+import 'package:spotted/app/helpers/button_helper.dart';
+import 'package:spotted/app/helpers/image_helper.dart';
 import '../../model/objeto_model.dart';
 import 'objeto_view.dart';
 
@@ -19,162 +21,144 @@ class _DetailsState extends State<ObjetoDetalheView> {
     var listaDeImagens = objeto.listaImagens;
 
     return Scaffold(
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        color: Colors.white,
-        child: Column(
-          children: [
-            Expanded(
-                flex: 4,
-                child: ClipRRect(
-                  child: SizedBox(
-                    height: double.infinity,
-                    width: double.infinity,
-                    child: Stack(
-                      children: [
-                        Positioned.fill(
-                          child: Image.network(
-                            listaDeImagens![0].url,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: 50, left: 20, right: 20),
-                            width: double.infinity,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                IconButton(
-                                    color: Colors.blue,
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ObjetoPage()),
-                                      );
-                                    },
-                                    icon: const Icon(Icons.arrow_back_ios_new))
-                              ],
-                            ),
-                          ),
-                        ),
-                        Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                                padding: const EdgeInsets.only(
-                                    top: 30, right: 30, left: 30),
-                                height: 110,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: cardColor,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            objeto.tituloArtefato,
-                                            style: const TextStyle(
-                                              fontSize: 25,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w900,
-                                              decoration: TextDecoration.none,
-                                            ),
-                                            softWrap: true,
-                                          ),
-                                          Text(
-                                            objeto.localizacaoAchadoObjeto
-                                                as String,
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w800,
-                                              decoration: TextDecoration.none,
-                                            ),
-                                            softWrap: true,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                )))
-                      ],
+      appBar: AppBar(
+        title: const Text('Detalhes'),
+        leading: BackButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ObjetoPage()),
+            );
+          },
+        ),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              children: [
+                Stack(
+                  children: [
+                    SizedBox(
+                      height: 300,
+                      width: double.infinity,
+                      child: Positioned.fill(
+                        child: ImageHelper.loadImage(listaDeImagens),
+                      ),
                     ),
-                  ),
-                )),
-            Expanded(
-                flex: 2,
-                child: Container(
-                  margin: const EdgeInsets.only(top: 20, left: 20, right: 30),
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      SingleChildScrollView(
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          top: 5,
+                          right: 15,
+                          left: 15,
+                        ),
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: cardColor,
+                        ),
+                        alignment: Alignment.topLeft,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Descrição",
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(.5),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              objeto.descricaoArtefato,
+                              objeto.tituloArtefato,
                               style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
+                                fontSize: 25,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                decoration: TextDecoration.none,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 30,
+                              softWrap: true,
                             ),
                             Text(
-                              "Localização atual: ",
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(.5),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              objeto.descricaoArtefato,
+                              objeto.localizacaoAchadoObjeto as String,
                               style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                decoration: TextDecoration.none,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 30,
+                              softWrap: true,
                             ),
                           ],
                         ),
                       ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Descrição",
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(.6),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        objeto.descricaoArtefato,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Localização achado",
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(.6),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        objeto.localizacaoAchadoObjeto.toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Localização atual",
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(.6),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        objeto.localizacaoAtualObjeto.toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                     ],
                   ),
-                )),
-          ],
-        ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

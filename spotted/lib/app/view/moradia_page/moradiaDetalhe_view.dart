@@ -79,7 +79,7 @@ class _DetailsState extends State<MoradiaDetalheView> {
                               style: const TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w600,
                                 decoration: TextDecoration.none,
                               ),
                               softWrap: true,
@@ -202,11 +202,11 @@ class _DetailsState extends State<MoradiaDetalheView> {
             padding: const EdgeInsets.all(15),
             alignment: Alignment.bottomCenter,
             child: ButtonHelper.newButton(
-              Colors.blue,
-              Icons.map_outlined,
-              'https://www.google.com/maps/place/',
-              moradia.bairroMoradia, "Mapa"
-            ),
+                Colors.blue,
+                Icons.map_outlined,
+                'https://www.google.com/maps/place/',
+                moradia.bairroMoradia,
+                "Mapa"),
           ),
         ],
       ),
