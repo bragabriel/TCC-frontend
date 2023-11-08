@@ -153,8 +153,7 @@ class AlimentoPageState extends State<AlimentoPage> {
 
         final meetsOfferCriteria = _showAllItems
             ? true // Sem filtro de oferta, mostrar todos os itens
-            : food.ofertaAlimento == "Sem oferta disponível" ??
-                false; // Exibir apenas os itens em oferta
+            : food.ofertaAlimento != "Sem oferta disponível" ?? false;
 
         final meetsTypeCriteria =
             (_isSalgadoSelected && food.tipoAlimento == 'SALGADO') ||
@@ -320,7 +319,7 @@ class AlimentoPageState extends State<AlimentoPage> {
                 child: GridTile(
                   key: ValueKey(filteredFoodList[index].idArtefato),
                   footer: GridTileBar(
-                    backgroundColor:  cardColor,
+                    backgroundColor: cardColor,
                     title: Text(
                       filteredFoodList[index].tituloArtefato,
                       style: const TextStyle(

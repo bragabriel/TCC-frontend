@@ -156,14 +156,17 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
           TextField(
             controller: _qtdAssentosPreenchidosTransporteController,
             decoration: const InputDecoration(labelText: 'Assentos ocupados'),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
           TextField(
             controller: _qtdAssentosTotalTransporteController,
             decoration: const InputDecoration(labelText: 'Capacidade maxíma'),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
           TextField(
             controller: _valorTransporteController,
             decoration: const InputDecoration(labelText: 'Valor'),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
           const SizedBox(height: 10),
           Container(
