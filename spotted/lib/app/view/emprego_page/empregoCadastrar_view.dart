@@ -56,7 +56,7 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
       "cidadeEmprego":
           _cidadeController.text.isNotEmpty ? _cidadeController.text : "Não informado",
       "contatoEmprego":
-          _contatoController.text.isNotEmpty ? _contatoController.text : null,
+          _contatoController.text.isNotEmpty ? _contatoController.text : "Não informado",
       "empresaEmprego":
           _empresaController.text.isNotEmpty ? _empresaController.text : "Não informado",
       "estadoEmprego":
@@ -79,7 +79,7 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
           _tipoVagaController.text.isNotEmpty ? _tipoVagaController.text : "Não informado",
       "salarioEmprego": _salarioController.text.isNotEmpty
           ? double.parse(_salarioController.text)
-          : null,
+          : 0,
     };
 
     try {

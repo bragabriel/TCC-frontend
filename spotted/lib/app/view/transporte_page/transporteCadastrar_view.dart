@@ -67,14 +67,14 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
       "qtdAssentosPreenchidosTransporte":
           _qtdAssentosPreenchidosTransporteController.text.isNotEmpty
               ? int.parse(_qtdAssentosPreenchidosTransporteController.text)
-              : "Sem informações cadastradas",
+              : 0,
       "qtdAssentosTotalTransporte":
           _qtdAssentosTotalTransporteController.text.isNotEmpty
               ? int.parse(_qtdAssentosTotalTransporteController.text)
-              : "Sem informações cadastradas",
+              : 0,
       "valorTransporte": _valorTransporteController.text.isNotEmpty
           ? double.parse(_valorTransporteController.text)
-          : "Sem valor cadastrado",
+          : 0,
     };
 
     try {

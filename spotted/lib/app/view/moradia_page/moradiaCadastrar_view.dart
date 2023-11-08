@@ -71,17 +71,17 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
       "precoAluguelPorPessoaMoradia":
           _precoAluguelPorPessoaController.text.isNotEmpty
               ? num.parse(_precoAluguelPorPessoaController.text)
-              : "Preço não informado",
+              : 0,
       "precoAluguelTotalMoradia": _precoAluguelTotalController.text.isNotEmpty
           ? num.parse(_precoAluguelTotalController.text)
-          : "Preço não informado",
+          : 0,
       "qtdMoradoresAtuaisMoradia": _qtdMoradoresAtuaisController.text.isNotEmpty
           ? num.parse(_qtdMoradoresAtuaisController.text)
-          : "Não informado",
+          : 0,
       "qtdMoradoresPermitidoMoradia":
           _qtdMoradoresPermitidoController.text.isNotEmpty
               ? num.parse(_qtdMoradoresPermitidoController.text)
-              : "Não informado",
+              : 0,
       "vagaGaragemMoradia": _vagaGaragemController.text.isNotEmpty
           ? _vagaGaragemController.text
           : "Não informado",
@@ -89,7 +89,7 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
           ? _animaisEstimacaoController.text
           : "Não informado",
       "contatoMoradia":
-          _contatoController.text.isNotEmpty ? _contatoController.text : null,
+          _contatoController.text.isNotEmpty ? _contatoController.text : "Não informado",
     };
 
     try {

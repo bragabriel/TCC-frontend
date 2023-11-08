@@ -106,14 +106,16 @@ class _CadastroPageState extends State<CadastroPage> {
                 padding: const EdgeInsets.all(12),
                 child: Column(
                   children: [
-                    _buildTextFormField('Usuário', (text) => user = text, false),
+                    _buildTextFormField(
+                        'Usuário', (text) => user = text, false),
                     const SizedBox(height: 8),
                     _buildTextFormField('Email', (text) => email = text, false),
                     const SizedBox(height: 8),
-                    _buildTextFormField('Senha', (text) => password = text, true),
-                    const SizedBox(height: 8),
                     _buildTextFormField(
-                        'Confirme a senha', (text) => confirmPassword = text, true),
+                        'Senha', (text) => password = text, true),
+                    const SizedBox(height: 8),
+                    _buildTextFormField('Confirme a senha',
+                        (text) => confirmPassword = text, true),
                     const SizedBox(height: 8),
                     const SizedBox(height: 8),
                     _buildTextFormField('Nome', (text) => nome = text, false),
@@ -121,10 +123,15 @@ class _CadastroPageState extends State<CadastroPage> {
                     _buildTextFormField(
                         'Sobrenome', (text) => sobrenome = text, false),
                     const SizedBox(height: 8),
-                    _buildTextFormField('Telefone', (text) => telefone = text, false),
+                    _buildTextFormField(
+                        'Telefone', (text) => telefone = text, false),
                   ],
                 ),
               ),
+            ),
+            SizedBox(
+              width: 10,
+              height: 10,
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
@@ -277,12 +284,13 @@ class _CadastroPageState extends State<CadastroPage> {
     );
   }
 
-  Widget _buildTextFormField(String label, Function(String) onChanged, bool isPassword) {
+  Widget _buildTextFormField(
+      String label, Function(String) onChanged, bool isPassword) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: TextFormField(
         onChanged: onChanged,
-        obscureText: isPassword, 
+        obscureText: isPassword,
         decoration: InputDecoration(
           labelText: label,
           border: const OutlineInputBorder(),
@@ -314,6 +322,7 @@ class _CadastroPageState extends State<CadastroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue,
       appBar: AppBar(
         title: const Text('Cadastro'),
         actions: [
@@ -327,9 +336,6 @@ class _CadastroPageState extends State<CadastroPage> {
       ),
       body: Stack(
         children: [
-          Container(
-            color: Colors.black.withOpacity(0.3),
-          ),
           AnimatedBuilder(
             animation: controller.state,
             builder: (context, child) {

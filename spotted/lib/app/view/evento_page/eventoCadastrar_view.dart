@@ -47,7 +47,7 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
     };
 
     try {
-      await EventoRepository().cadastrarEvento(body);
+      response = await EventoRepository().cadastrarEvento(body);
     } catch (e) {
       print('Erro ao cadastrar em EventoCadastrarView: $e');
     }
