@@ -41,7 +41,7 @@ class EventoCadastrarPageState extends State<EventoCadastrarView> {
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
-      "localizacaoFesta": _localizacaoController.text.isNotEmpty
+      "localizacaoEvento": _localizacaoController.text.isNotEmpty
           ? _localizacaoController.text
           : "Localização não informada",
     };
