@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'dart:async';
-
 import '../constants/constants.dart';
 import '../model/evento_model.dart';
 
@@ -52,7 +51,6 @@ class EventoRepository {
   }
 
   Future<void> updateEvento(Map<String, dynamic> body, int? idArtefato) async {
-
     final String apiUrl = '$onlineApi/eventoAtualizar/$idArtefato';
     try {
       final response = await Dio().put(apiUrl, data: body);

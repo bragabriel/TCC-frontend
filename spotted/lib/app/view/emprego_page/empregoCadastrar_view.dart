@@ -53,30 +53,36 @@ class EmpregoCadastrarViewState extends State<EmpregoCadastrarView> {
       "beneficiosEmprego": _beneficiosController.text.isNotEmpty
           ? _beneficiosController.text
           : "Sem benefícios",
-      "cidadeEmprego":
-          _cidadeController.text.isNotEmpty ? _cidadeController.text : "Não informado",
-      "contatoEmprego":
-          _contatoController.text.isNotEmpty ? _contatoController.text : "Não informado",
-      "empresaEmprego":
-          _empresaController.text.isNotEmpty ? _empresaController.text : "Não informado",
-      "estadoEmprego":
-          _estadoController.text.isNotEmpty ? _estadoController.text : "Não informado",
+      "cidadeEmprego": _cidadeController.text.isNotEmpty
+          ? _cidadeController.text
+          : "Não informado",
+      "contatoEmprego": _contatoController.text.isNotEmpty
+          ? _contatoController.text
+          : "Não informado",
+      "empresaEmprego": _empresaController.text.isNotEmpty
+          ? _empresaController.text
+          : "Não informado",
+      "estadoEmprego": _estadoController.text.isNotEmpty
+          ? _estadoController.text
+          : "Não informado",
       "experienciaEmprego": _experienciaController.text.isNotEmpty
           ? _experienciaController.text
           : "Não informado",
-      "linkVagaEmprego":
-          _linkVagaController.text.isNotEmpty ? _linkVagaController.text :  "Não informado",
+      "linkVagaEmprego": _linkVagaController.text.isNotEmpty
+          ? _linkVagaController.text
+          : "Não informado",
       "localizacaoEmprego": _localizacaoController.text.isNotEmpty
           ? _localizacaoController.text
-          :  "Não informado",
+          : "Não informado",
       "presencialEmprego": _presencialController.text.isNotEmpty
           ? _presencialController.text
           : "Não informado",
       "requisitosEmprego": _requisitosController.text.isNotEmpty
           ? _requisitosController.text
           : "Não informado",
-      "tipovagaEmprego":
-          _tipoVagaController.text.isNotEmpty ? _tipoVagaController.text : "Não informado",
+      "tipovagaEmprego": _tipoVagaController.text.isNotEmpty
+          ? _tipoVagaController.text
+          : "Não informado",
       "salarioEmprego": _salarioController.text.isNotEmpty
           ? double.parse(_salarioController.text)
           : 0,

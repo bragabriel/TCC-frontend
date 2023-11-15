@@ -50,9 +50,8 @@ class ObjetoRepository {
     }
   }
 
-    Future<void> updateObjeto(Map<String, dynamic> body,  int? idArtefato) async{
+  Future<void> updateObjeto(Map<String, dynamic> body, int? idArtefato) async {
     final String apiUrl = '$onlineApi/objetoAtualizar/$idArtefato';
-
 
     try {
       final response = await Dio().put(apiUrl, data: body);

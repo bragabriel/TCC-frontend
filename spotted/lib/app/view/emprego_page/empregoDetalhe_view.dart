@@ -243,7 +243,7 @@ class _DetailsState extends State<EmpregoDetalheView> {
                           ),
                         ],
                       ),
-                       Text(
+                      Text(
                         "Entrar em contato com",
                         style: TextStyle(
                           color: Colors.black.withOpacity(.6),
@@ -254,7 +254,7 @@ class _DetailsState extends State<EmpregoDetalheView> {
                       const SizedBox(
                         height: 5,
                       ),
-                       Text(
+                      Text(
                         emprego.contatoEmprego.toString(),
                         style: const TextStyle(
                           color: Colors.black,
@@ -276,8 +276,8 @@ class _DetailsState extends State<EmpregoDetalheView> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ButtonHelper.newButton(Colors.blue, '',
-                    emprego.linkVagaEmprego, "Link"),
+                ButtonHelper.newButton(
+                    Colors.blue, '', emprego.linkVagaEmprego, "Link"),
                 ButtonHelper.newButton(
                     Colors.blue,
                     'https://www.google.com/maps/place/',

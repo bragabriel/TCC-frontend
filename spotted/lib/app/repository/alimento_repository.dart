@@ -38,7 +38,7 @@ class AlimentoRepository {
 
       if (response.statusCode == 201) {
         print('Cadastro realizado com sucesso');
-         
+
         return response;
       } else {
         print('Erro ao cadastrar: ${response.statusCode}');
@@ -51,8 +51,8 @@ class AlimentoRepository {
     }
   }
 
-  Future<void> updateAlimento(Map<String, dynamic> body, int? idArtefato) async{
-    
+  Future<void> updateAlimento(
+      Map<String, dynamic> body, int? idArtefato) async {
     final String apiUrl = '$onlineApi/alimentoAtualizar/$idArtefato';
     try {
       final response = await Dio().put(apiUrl, data: body);

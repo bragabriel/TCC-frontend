@@ -202,7 +202,7 @@ class EventoPageState extends State<EventoPage> {
                 child: GridTile(
                   key: ValueKey(filteredEventoList[index].idArtefato),
                   footer: GridTileBar(
-                    backgroundColor:  cardColor,
+                    backgroundColor: cardColor,
                     title: Text(
                       filteredEventoList[index].tituloArtefato,
                       style: const TextStyle(

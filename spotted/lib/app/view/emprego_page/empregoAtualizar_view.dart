@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -74,20 +73,30 @@ class EmpregoEditarPageState extends State<EmpregoEditarView> {
   @override
   void initState() {
     super.initState();
-    _beneficiosController.text = widget.emprego['emprego']['beneficiosEmprego'].toString();
-    _cidadeController.text = widget.emprego['emprego']['cidadeEmprego'].toString();
-    _contatoController.text = widget.emprego['emprego']['contatoEmprego'].toString();
-    _empresaController.text = widget.emprego['emprego']['empresaEmprego'].toString();
-    _estadoController.text = widget.emprego['emprego']['estadoEmprego'].toString();
+    _beneficiosController.text =
+        widget.emprego['emprego']['beneficiosEmprego'].toString();
+    _cidadeController.text =
+        widget.emprego['emprego']['cidadeEmprego'].toString();
+    _contatoController.text =
+        widget.emprego['emprego']['contatoEmprego'].toString();
+    _empresaController.text =
+        widget.emprego['emprego']['empresaEmprego'].toString();
+    _estadoController.text =
+        widget.emprego['emprego']['estadoEmprego'].toString();
     _experienciaController.text =
         widget.emprego['emprego']['experienciaEmprego'].toString();
-    _linkVagaController.text = widget.emprego['emprego']['linkVagaEmprego'].toString();
+    _linkVagaController.text =
+        widget.emprego['emprego']['linkVagaEmprego'].toString();
     _localizacaoController.text =
         widget.emprego['emprego']['localizacaoEmprego'].toString();
-    _presencialController.text = widget.emprego['emprego']['presencialEmprego'].toString();
-    _requisitosController.text = widget.emprego['emprego']['requisitosEmprego'].toString();
-    _salarioController.text = widget.emprego['emprego']['salarioEmprego'].toString();
-    _tipoVagaController.text = widget.emprego['emprego']['tipoVagaEmprego'].toString();
+    _presencialController.text =
+        widget.emprego['emprego']['presencialEmprego'].toString();
+    _requisitosController.text =
+        widget.emprego['emprego']['requisitosEmprego'].toString();
+    _salarioController.text =
+        widget.emprego['emprego']['salarioEmprego'].toString();
+    _tipoVagaController.text =
+        widget.emprego['emprego']['tipoVagaEmprego'].toString();
     _tituloController.text = widget.emprego['tituloArtefato'];
     _descricaoController.text = widget.emprego['descricaoArtefato'];
   }

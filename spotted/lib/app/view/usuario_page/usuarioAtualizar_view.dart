@@ -74,7 +74,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                     final userProvider =
                         Provider.of<UserProvider>(context, listen: false);
                     userProvider.updateUserInfo(updatedUser);
-                    _showSuccessMessage(context);      
+                    _showSuccessMessage(context);
                   } catch (e) {
                     print(e);
                   }

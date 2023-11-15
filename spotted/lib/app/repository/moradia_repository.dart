@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'dart:async';
 import 'package:spotted/app/model/moradia_model.dart';
-
 import '../constants/constants.dart';
 
 class MoradiaRepository {

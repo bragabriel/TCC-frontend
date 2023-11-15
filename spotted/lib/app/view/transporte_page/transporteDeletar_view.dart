@@ -33,7 +33,8 @@ class TransporteDeletarView {
       if (response.statusCode == 200) {
         print('transporte deletado comm sucesso!');
       } else {
-        print('Erro ao deletar transporte - Status code: ${response.statusCode}');
+        print(
+            'Erro ao deletar transporte - Status code: ${response.statusCode}');
       }
     } catch (error) {
       print('Erro ao deletar o transporte: $error');

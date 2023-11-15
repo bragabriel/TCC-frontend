@@ -164,7 +164,7 @@ class ObjetoPageState extends State<ObjetoPage> {
           controller: _searchController,
           onChanged: (value) {
             setState(() {
-              _searchTerm = value; // Update the _searchTerm variable
+              _searchTerm = value;
               _filterobjetoList();
             });
           },

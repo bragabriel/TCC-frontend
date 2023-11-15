@@ -2,12 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:spotted/app/model/alimento_model.dart';
 import '../repository/alimento_repository.dart';
 
-class AlimentoController{
+class AlimentoController {
   List<Alimento> listResponse = [];
 
   final _repository = AlimentoRepository();
-
-  //Setando estado inicial
   final state = ValueNotifier<HomeState>(HomeState.start);
 
   start() async {
@@ -21,6 +19,4 @@ class AlimentoController{
   }
 }
 
-enum HomeState {
-  start, loading, success, error
-}
+enum HomeState { start, loading, success, error }

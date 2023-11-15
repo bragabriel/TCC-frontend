@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:spotted/app/model/emprego_model.dart';
 import 'dart:async';
-
 import '../constants/constants.dart';
 
 class EmpregoRepository {
@@ -51,8 +50,7 @@ class EmpregoRepository {
     }
   }
 
-  Future<void> updateEmprego(Map<String, dynamic> body,
-      int? idArtefato) async {
+  Future<void> updateEmprego(Map<String, dynamic> body, int? idArtefato) async {
     final String apiUrl = '$onlineApi/empregoAtualizar/$idArtefato';
 
     try {

@@ -16,13 +16,13 @@ class _LoginPageState extends State<LoginPage> {
   String password = '';
   late Usuario usuario;
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-     body: Container(
-      color: Colors.blue.withOpacity(0.8),
-      child: _body(),
-    ),
+      body: Container(
+        color: Colors.blue.withOpacity(0.8),
+        child: _body(),
+      ),
     );
   }
 
@@ -125,7 +125,6 @@ class _LoginPageState extends State<LoginPage> {
           url: response.usuario!.url);
 
       Provider.of<UserProvider>(context, listen: false).setUser(user);
-
       showDialog(
         context: context,
         builder: (context) {
@@ -135,9 +134,8 @@ class _LoginPageState extends State<LoginPage> {
             actions: [
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context); 
-                  Navigator.pushReplacementNamed(
-                      context, '/home');
+                  Navigator.pop(context);
+                  Navigator.pushReplacementNamed(context, '/home');
                 },
                 child: const Text("OK"),
               )

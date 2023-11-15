@@ -9,8 +9,6 @@ class Usuario {
   String? fileName;
   List<dynamic>? listaArtefatosReponse;
 
-  // Constructor
-
   Usuario.empty()
       : idUsuario = 0,
         nomeUsuario = '',

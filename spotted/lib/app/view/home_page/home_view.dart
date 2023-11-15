@@ -9,8 +9,6 @@ import '../../model/descriptions_model.dart';
 import '../../model/usuario_model.dart';
 import 'details_view.dart';
 
-const String apiKey = '3dbbf29cb72728e380272e98fe760b41';
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -330,22 +328,10 @@ class HomePageState extends State<HomePage> {
   }
 }
 
-Widget _buildFotoPerfil(String? perfil) {
-  if (perfil != null) {
-    return Center(
-      child: Image.network(perfil),
-    );
-  } else {
-    return Center(
-      child: Image.asset('assets/images/perfil.png'),
-    );
-  }
-}
-
 Widget buildUserDrawerHeader(BuildContext context, UserProvider userProvider) {
   Usuario? user = userProvider.user;
 
-  Widget _buildFotoPerfil(String? imageUrl) {
+  Widget buildFotoPerfil(String? imageUrl) {
     if (imageUrl != null) {
       return CircleAvatar(
         backgroundImage: NetworkImage(imageUrl),
@@ -360,7 +346,7 @@ Widget buildUserDrawerHeader(BuildContext context, UserProvider userProvider) {
   }
 
   return UserAccountsDrawerHeader(
-    currentAccountPicture: _buildFotoPerfil(user?.url),
+    currentAccountPicture: buildFotoPerfil(user?.url),
     accountName: Text(user?.nomeUsuario ?? 'Usuário não logado'),
     accountEmail: Text(user?.emailUsuario ?? ''),
   );

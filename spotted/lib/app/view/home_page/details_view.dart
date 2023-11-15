@@ -61,7 +61,6 @@ class _DetailsViewState extends State<DetailsView> {
                   const SizedBox(
                     height: 30,
                   ),
-
                 ],
               ),
             ),
@@ -70,7 +69,11 @@ class _DetailsViewState extends State<DetailsView> {
               right: -70,
               child: Hero(
                   tag: widget.artefatoInfo!.position,
-                  child: Image.asset(widget.artefatoInfo!.iconImage.toString(), width: 340, height: 340,))),
+                  child: Image.asset(
+                    widget.artefatoInfo!.iconImage.toString(),
+                    width: 340,
+                    height: 340,
+                  ))),
           Positioned(
               top: 60,
               left: 32,

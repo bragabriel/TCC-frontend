@@ -152,7 +152,7 @@ class AlimentoPageState extends State<AlimentoPage> {
                 (maxPrice == null || food.precoAlimento! <= maxPrice!);
 
         final meetsOfferCriteria = _showAllItems
-            ? true // Sem filtro de oferta, mostrar todos os itens
+            ? true
             : food.ofertaAlimento != "Sem oferta disponível" ?? false;
 
         final meetsTypeCriteria =

@@ -66,8 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                20),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                         ),
                         child: const Text('Alterar Informações'),

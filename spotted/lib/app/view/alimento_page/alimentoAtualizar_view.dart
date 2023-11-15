@@ -200,7 +200,8 @@ class AlimentoEditarPageState extends State<AlimentoEditarView> {
                     File('${(await getTemporaryDirectory()).path}/imagem.png');
                 await tempImage.writeAsBytes(bytes);
                 ImageHelper.updateImagem(widget.alimento['idArtefato'], imagem);
-                await _alimentoRepository.updateAlimento( body, widget.alimento['idArtefato']);
+                await _alimentoRepository.updateAlimento(
+                    body, widget.alimento['idArtefato']);
                 _showSuccessMessage(context);
               } catch (e) {
                 print(e);

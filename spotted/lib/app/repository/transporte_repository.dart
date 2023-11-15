@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:spotted/app/model/transporte_model.dart';
 import 'dart:async';
-
 import '../constants/constants.dart';
 
 class TransporteRepository {
@@ -52,7 +51,8 @@ class TransporteRepository {
     }
   }
 
-  Future<void> updateTransporte(Map<String, dynamic> body, int idArtefato) async {
+  Future<void> updateTransporte(
+      Map<String, dynamic> body, int idArtefato) async {
     final String apiUrl = '$onlineApi/transporteAtualizar/$idArtefato';
 
     try {

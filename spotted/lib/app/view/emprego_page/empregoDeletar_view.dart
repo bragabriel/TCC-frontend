@@ -25,7 +25,7 @@ class EmpregoDeletarView {
     );
   }
 
-void _inativarArtefato(int idArtefato) async {
+  void _inativarArtefato(int idArtefato) async {
     final String apiUrl = '$onlineApi/empregoInativar/$idArtefato';
     try {
       final response = await Dio().put(apiUrl);

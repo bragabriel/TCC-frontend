@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -37,7 +36,6 @@ class ImageHelper {
     var multipartFile = http.MultipartFile(
         'files', imageFile.openRead(), await imageFile.length(),
         filename: basename(imageFile.path));
-
 
     request.files.add(multipartFile);
 
@@ -89,15 +87,13 @@ class ImageHelper {
     request.files.add(multipartFile);
 
     var response = await client.send(request);
-    var responseBody =
-        await response.stream.toBytes(); // Read the response body as bytes
-    var responseString = utf8.decode(responseBody); // Convert bytes to a string
+    var responseBody = await response.stream.toBytes();
+    var responseString = utf8.decode(responseBody);
 
     client.close();
 
-    final jsonResponse = json.decode(responseString);
+    return json.decode(responseString);
 
-    return jsonResponse; // Return the parsed JSON response
   }
 
   static Future<File?> selecionarImagem() async {

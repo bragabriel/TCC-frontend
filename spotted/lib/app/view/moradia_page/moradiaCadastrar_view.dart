@@ -88,8 +88,9 @@ class MoradiaCadastrarPageState extends State<MoradiaCadastrarView> {
       "animaisEstimacaoMoradia": _animaisEstimacaoController.text.isNotEmpty
           ? _animaisEstimacaoController.text
           : "Não informado",
-      "contatoMoradia":
-          _contatoController.text.isNotEmpty ? _contatoController.text : "Não informado",
+      "contatoMoradia": _contatoController.text.isNotEmpty
+          ? _contatoController.text
+          : "Não informado",
     };
 
     try {

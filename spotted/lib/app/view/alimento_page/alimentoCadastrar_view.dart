@@ -42,9 +42,8 @@ class AlimentoCadastrarPageState extends State<AlimentoCadastrarView> {
             : null,
         "idUsuario": _usuario?.idUsuario,
         "tipoArtefato": "ALIMENTO",
-        "tituloArtefato": _tituloController.text.isNotEmpty
-            ? _tituloController.text
-            : null,
+        "tituloArtefato":
+            _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
       "marcaAlimento": _marcaController.text.isNotEmpty
           ? _marcaController.text

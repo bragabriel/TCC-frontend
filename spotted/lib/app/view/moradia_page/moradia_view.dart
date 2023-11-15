@@ -253,7 +253,7 @@ class MoradiaPageState extends State<MoradiaPage> {
                 child: GridTile(
                   key: ValueKey(filteredMoradiaList[index].idArtefato),
                   footer: GridTileBar(
-                    backgroundColor:  cardColor,
+                    backgroundColor: cardColor,
                     title: Text(
                       filteredMoradiaList[index].tituloArtefato,
                       style: const TextStyle(

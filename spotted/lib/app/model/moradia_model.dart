@@ -54,7 +54,7 @@ class Moradia extends Artefato {
       tipoArtefato: json['tipoArtefato'],
       dataCadastro: json['dataCadastro'],
       dataAtualizacao: json[
-          'dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?
+          'dataAtualizacao'],
       idUsuario: json['idUsuario'],
       listaImagens: (json['listaImagens'] as List<dynamic>)
           .map((image) => Imagem.fromJson(image))

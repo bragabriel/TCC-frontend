@@ -129,7 +129,7 @@ class _CadastroPageState extends State<CadastroPage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
               height: 10,
             ),
@@ -149,7 +149,6 @@ class _CadastroPageState extends State<CadastroPage> {
               height: 40,
               child: ElevatedButton(
                 onPressed: () {
-                  // Verificações de validação
                   if (user.isEmpty ||
                       email.isEmpty ||
                       password.isEmpty ||
@@ -157,7 +156,6 @@ class _CadastroPageState extends State<CadastroPage> {
                       nome.isEmpty ||
                       sobrenome.isEmpty ||
                       telefone.isEmpty) {
-                    // Um ou mais campos estão vazios, exiba uma mensagem de erro.
                     showDialog(
                       context: context,
                       builder: (context) {
@@ -177,7 +175,6 @@ class _CadastroPageState extends State<CadastroPage> {
                       },
                     );
                   } else if (password != confirmPassword) {
-                    // As senhas não coincidem, exiba uma mensagem de erro.
                     showDialog(
                       context: context,
                       builder: (context) {
@@ -197,7 +194,6 @@ class _CadastroPageState extends State<CadastroPage> {
                       },
                     );
                   } else {
-                    // Todos os campos estão preenchidos e as senhas coincidem, continue com o processo de cadastro.
                     showDialog(
                       context: context,
                       builder: (context) {
@@ -302,7 +298,6 @@ class _CadastroPageState extends State<CadastroPage> {
   }
 
   Future<void> _cadastrarUsuario() async {
-    // Construir o corpo da requisição com os dados do usuário
     final Map<String, dynamic> body = {
       'email': email,
       'senha': password,

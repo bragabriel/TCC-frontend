@@ -12,7 +12,6 @@ class UsuarioController {
       builder: (context, userProvider, _) {
         Usuario? user = userProvider.user;
         return UserAccountsDrawerHeader(
-          // utilizando o usuario
           accountName: Text(user?.nomeUsuario ?? 'Usuário não logado'),
           accountEmail: Text(user?.emailUsuario ?? ''),
         );
@@ -20,12 +19,11 @@ class UsuarioController {
     );
   }
 
-  //Setando estado inicial
   final state = ValueNotifier<HomeState>(HomeState.start);
 
   Future<void> start(BuildContext context) async {
     state.value = HomeState.loading;
-    
+
     try {
       Usuario? user = Provider.of<UserProvider>(context, listen: false).user;
 
@@ -36,7 +34,7 @@ class UsuarioController {
     }
   }
 
-   Future<void> startCadastro() async {
+  Future<void> startCadastro() async {
     state.value = HomeState.loading;
     try {
       await _repository.getAllUsuarios();

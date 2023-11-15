@@ -53,12 +53,10 @@ class Emprego extends Artefato {
       idArtefato: json['idArtefato'],
       tituloArtefato: json['tituloArtefato'],
       descricaoArtefato: json['descricaoArtefato'],
-
       ativo: json['ativo'],
       tipoArtefato: json['tipoArtefato'],
       dataCadastro: json['dataCadastro'],
-      dataAtualizacao: json[
-          'dataAtualizacao'], // Remoção da conversão, mantendo o valor como String?
+      dataAtualizacao: json['dataAtualizacao'],
       idUsuario: json['idUsuario'],
       listaImagens: (json['listaImagens'] as List<dynamic>)
           .map((image) => Imagem.fromJson(image))

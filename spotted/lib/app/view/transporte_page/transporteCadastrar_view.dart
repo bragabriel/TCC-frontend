@@ -52,8 +52,9 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
-      "cidadeTransporte":
-          _cidadeTransporte.text.isNotEmpty ? _cidadeTransporte.text : "Cidade indisponível",
+      "cidadeTransporte": _cidadeTransporte.text.isNotEmpty
+          ? _cidadeTransporte.text
+          : "Cidade indisponível",
       "informacoesCondutorTransporte":
           _informacoesCondutorTransporteController.text.isNotEmpty
               ? _informacoesCondutorTransporteController.text
@@ -62,8 +63,9 @@ class _TransporteCadastrarViewState extends State<TransporteCadastrarView> {
           _informacoesVeiculoTransporteController.text.isNotEmpty
               ? _informacoesVeiculoTransporteController.text
               : "Sem informações do veículo",
-      "periodoTransporte":
-          _periodoTransporte.text.isNotEmpty ? _periodoTransporte.text : "Não informado",
+      "periodoTransporte": _periodoTransporte.text.isNotEmpty
+          ? _periodoTransporte.text
+          : "Não informado",
       "qtdAssentosPreenchidosTransporte":
           _qtdAssentosPreenchidosTransporteController.text.isNotEmpty
               ? int.parse(_qtdAssentosPreenchidosTransporteController.text)
