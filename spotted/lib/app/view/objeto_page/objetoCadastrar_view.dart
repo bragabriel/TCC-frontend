@@ -40,12 +40,12 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
         "tituloArtefato":
             _tituloController.text.isNotEmpty ? _tituloController.text : null,
       },
-      "contatoObjeto":
-          _contatoController.text.isNotEmpty ? _contatoController.text : "Contato não cadastrado",
-      "localizacaoAchadoObjeto":
-          _localizacaoAchado.text.isNotEmpty ? _localizacaoAchado.text : "Localização não informada",
-      "localizacaoAtualObjeto":
-          _localizacaoAtual.text.isNotEmpty ? _localizacaoAtual.text : "Localização não informada",
+      "localizacaoAchadoObjeto": _localizacaoAchado.text.isNotEmpty
+          ? _localizacaoAchado.text
+          : "Localização não informada",
+      "localizacaoAtualObjeto": _localizacaoAtual.text.isNotEmpty
+          ? _localizacaoAtual.text
+          : "Localização não informada",
     };
 
     try {
@@ -104,10 +104,6 @@ class _ObjetoCadastrarViewState extends State<ObjetoCadastrarView> {
           TextField(
             controller: _descricaoController,
             decoration: const InputDecoration(labelText: 'Descrição'),
-          ),
-          TextField(
-            controller: _contatoController,
-            decoration: const InputDecoration(labelText: 'Contato'),
           ),
           TextField(
             controller: _localizacaoAchado,
